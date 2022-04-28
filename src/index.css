@@ -28,7 +28,11 @@
   src: url(./fonts/Roboto-Bold.ttf);
 }
 
+@font-face {
+  font-family: 'Roboto-medium';
+  src: url(./fonts/Roboto-Medium.ttf);
+}
+
 #root {
-  width: 1900px;
   margin: 0 auto;
 }

@@ -38,6 +38,12 @@
   font-size: 36px;
   line-height: 42px;
   color: #E5E5E5;
+  cursor: pointer;
+}
+
+.header-logo-text:hover {
+  color: #FFA800;
+  transition: color 0.3s;
 }
 
 .header-nav {
@@ -55,8 +61,9 @@
   list-style: none;
 }
 
-.header-nav-item {
-
+.header-nav-item > a:hover {
+  color: #FFA800;
+  transition: color 0.3s;
 }
 
 .header-nav-item > a {
