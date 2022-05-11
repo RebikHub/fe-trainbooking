@@ -1,0 +1,121 @@
+.footer {
+  display: flex;
+  flex-direction: column;
+  height: 520px;
+  background: #2D2B2F;
+  color: white;
+}
+
+.footer-content {
+  display: flex;
+}
+
+.footer-contacts {
+  margin-top: 50px;
+  margin-left: 340px;
+  width: 415px;
+}
+
+.contacts-title {
+
+}
+
+.contacts-list {
+
+}
+
+.contacts-item {
+
+}
+
+.footer-subscribe {
+  margin-top: 50px;
+  margin-left: 190px;
+}
+
+.subscribe-title {
+
+}
+
+.subscribe-form {
+
+}
+
+.subscribe-form > label {
+
+}
+
+.subscribe-form > input {
+
+}
+
+.subscribe-form > button {
+
+}
+
+.subscribe-links {
+
+}
+
+.sub-links-title {
+
+}
+
+.sub-links-list {
+
+}
+
+.sub-link {
+
+}
+
+.link-youtube {
+
+}
+
+.link-linkedin {
+
+}
+
+.link-googleplus {
+
+}
+
+.link-facebook {
+
+}
+
+.link-twitter {
+
+}
+
+.footer-line {
+  margin-top: auto;
+  height: 95px;
+}
+
+.footer-logo {
+
+}
+
+.footer-logo-text {
+
+}
+
+.footer-up {
+
+}
+
+.footer-date {
+
+}
+
+.footer-date-text {
+
+}
+
+.logo-text {
+  width: 1px;
+  height: 1px;
+  clip: rect(1px, 1px, 1px, 1px);
+}
