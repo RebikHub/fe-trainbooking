@@ -9,16 +9,16 @@ export default function Footer() {
           <h4 className='contacts-title'>Свяжитесь с нами</h4>
           <ul className='contacts-list'>
             <li>
-              <a className='contacts-item' href="tel:88000000000">8 (800) 000 00 00</a>
+              <a className='contacts-item cont-phone' href="tel:88000000000">8 (800) 000 00 00</a>
             </li>
             <li>
-              <a className='contacts-item' href="mailto:inbox@mail.ru">inbox@mail.ru</a>
+              <a className='contacts-item cont-email' href="mailto:inbox@mail.ru">inbox@mail.ru</a>
             </li>
             <li>
-              <a className='contacts-item' target="_blank" href="tu.train.tickets">tu.train.tickets</a>
+              <a className='contacts-item cont-skype' target="_blank" href="tu.train.tickets">tu.train.tickets</a>
             </li>
             <li>
-              <a className='contacts-item' target="_blank" href="google.maps.com">г. Москва ул. Московская 27-35 555 555</a>
+              <a className='contacts-item cont-address' target="_blank" href="google.maps.com">г. Москва ул. Московская 27-35 555 555</a>
             </li>
           </ul>
         </div>
@@ -26,38 +26,36 @@ export default function Footer() {
         <div className='footer-subscribe'>
           <h4 className='subscribe-title'>Подписка</h4>
           <form className='subscribe-form'>
-            <label htmlFor="sub">
-              Будьте в курсе событий
-              <input type="text" name="sub" placeholder="e-mail" />
-            </label>
-            <button type="button">отправить</button>
+            <h5 className='sub-form-title'>Будьте в курсе событий</h5>
+            <input className='sub-form-input' type="text" name="sub" placeholder="e-mail" />
+            <button className='sub-form-btn' type="button">отправить</button>
           </form>
           <div className='subscribe-links'>
             <h5 className='sub-links-title'>Подписывайтесь на нас</h5>
             <ul className='sub-links-list'>
               <li>
                 <a className='sub-link link-youtube' target="_blank" href="youtube.com">
-                  <span className='logo-text'>youtube</span>
+                  <span className='sub-logo-text'>youtube</span>
                 </a>
               </li>
               <li>
                 <a className='sub-link link-linkedin' target="_blank" href="linkedin.com">
-                  <span className='logo-text'>linkedin</span>
+                  <span className='sub-logo-text'>linkedin</span>
                 </a>
               </li>
               <li>
                 <a className='sub-link link-googleplus' target="_blank" href="plus.google.com">
-                  <span className='logo-text'>googleplus</span>
+                  <span className='sub-logo-text'>googleplus</span>
                 </a>
               </li>
               <li>
                 <a className='sub-link link-facebook' target="_blank" href="facebook.com">
-                  <span className='logo-text'>facebook</span>
+                  <span className='sub-logo-text'>facebook</span>
                 </a>
               </li>
               <li>
                 <a className='sub-link link-twitter' target="_blank" href="twitter.com">
-                  <span className='logo-text'>twitter</span>
+                  <span className='sub-logo-text'>twitter</span>
                 </a>
               </li>
             </ul>

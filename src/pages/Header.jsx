@@ -1,5 +1,5 @@
 import React from 'react';
-import Calendar from '../components/Calendar';
+import SearchWidget from '../components/SearchWidget';
 import '../styles/header.css';
 
 export default function Header() {
@@ -31,7 +31,7 @@ export default function Header() {
         <h4 className='header-title-text'>
           Вся жизнь - <span>путешествие!</span>
         </h4>
-        <Calendar/>
+        <SearchWidget/>
       </div>
 
       <div className='header-endline'></div>
