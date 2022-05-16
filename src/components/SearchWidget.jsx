@@ -18,7 +18,6 @@ export default function SearchWidget() {
   };
 
   function getCalendar() {
-    console.log('click');
     if (hidden === '') {
       setHidden('none');
     } else {

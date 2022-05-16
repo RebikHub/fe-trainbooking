@@ -7,7 +7,13 @@ const date = {
   numDate,
   year,
   month,
+  numberMonth,
+  choiceDate: (year, month, day) => new Intl.DateTimeFormat("ru").format(new Date(year, month, day)),
+  nameMonth: (year, month) => new Intl.DateTimeFormat('ru-RU', { month: 'long'}).format(new Date(year, month))
 }
+
+// console.log(new Intl.DateTimeFormat("ru").format(new Date(year, month, numDate)));
+// console.log(new Intl.DateTimeFormat('ru-RU', { month: 'long'}).format(new Date(year, month)));
 
 function dayOfMonth(year, month) {
   const date = new Date(year, month, 0);
@@ -19,7 +25,7 @@ function dayOfMonth(year, month) {
   return arrDay;
 }
 
-function monthInWeeks() {
+function monthInWeeks(numberMonth) {
   const numMonth = numberMonth + 1;
   const arrCurDays = dayOfMonth(year, numMonth);
   const arrPrevDays = new Date(year, numMonth - 1, 0).getDate();
@@ -29,7 +35,8 @@ function monthInWeeks() {
     second: [],
     third: [],
     fourth: [],
-    fifth: []
+    fifth: [],
+    sixth: []
   };
 
   for (let i = 0; i < arrCurDays.length; i++) {
@@ -68,6 +75,12 @@ function monthInWeeks() {
           weeks.fifth[index] = arrCurDays[i];
         }
       });
+    } else if (weeks.sixth.length < 7) {
+      wd.forEach((e, index) => {
+        if (firstDayMonthOfWeek === e) {
+          weeks.sixth[index] = arrCurDays[i];
+        }
+      });
     }
   }
 
@@ -86,11 +99,17 @@ function monthInWeeks() {
       weeks.fifth[i] = count;
     }
   }
+  
+  for (let i = 0; i < 7; i++) {
+    if (!weeks.sixth[i]) {
+      count += 1;
+      weeks.sixth[i] = count;
+    }
+  }
 
   return weeks;
 }
 
-const days = monthInWeeks();
+// const days = monthInWeeks();
 
-console.log(date);
-console.log(days);
+export {date, monthInWeeks};
