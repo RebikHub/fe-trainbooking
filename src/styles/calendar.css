@@ -1,4 +1,12 @@
-.calendar {
+.calendar-from {
+  position: absolute;
+  width: 325px;
+  height: 300px;
+  top: 60px;
+  z-index: 1;
+}
+
+.calendar-to {
   position: absolute;
   width: 325px;
   height: 300px;

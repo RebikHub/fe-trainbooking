@@ -1,6 +1,5 @@
 import React from 'react';
 import '../styles/main.css';
-
 import { reviews } from '../reviews';
 
 export default function Main() {
@@ -12,7 +11,7 @@ export default function Main() {
           <div className='about-line'></div>
           <div>
             <p className='about-text-first'>
-              Мы рады видеть вас! Мы рботаем для Вас с 2003 года. 14 лет мы наблюдаем, как с каждым днем 
+              Мы рады видеть вас! Мы работаем для Вас с 2003 года. 14 лет мы наблюдаем, как с каждым днем 
               все больше людей заказывают жд билеты через интернет.
             </p>
             <p className='about-text-second'>

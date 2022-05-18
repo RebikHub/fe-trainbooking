@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import '../styles/searchwidget.css';
 import Calendar from './Calendar';
 
@@ -8,6 +9,17 @@ export default function SearchWidget() {
     to: ''
   });
   const [hidden, setHidden] = useState('none');
+  const { fromDate, toDate } = useSelector((state) => state.sliceDate);
+
+  useEffect(() => {
+    if (fromDate !== null) {
+      setDate((prev) => ({...prev, from: fromDate}));
+    };
+
+    if (toDate !== null) {
+      setDate((prev) => ({...prev, to: fromDate}));
+    };
+  }, [fromDate, toDate]);
 
   function handleDateFrom(ev) {
     setDate((prev) => ({...prev, from: ev.target.value}));

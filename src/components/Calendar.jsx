@@ -1,52 +1,54 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/calendar.css';
 import { date, monthInWeeks } from '../date';
+import { useDispatch } from 'react-redux';
+import { choiceDateFrom } from '../store/sliceDate';
 
 export default function Calendar({none}) {
-  const [month, setMonth] = useState(date.numberMonth);
+  const [numMonth, setNumMonth] = useState(date.numberMonth);
+  const [nameMonth, setNameMonth] = useState(date.month);
   const [days, setDays] = useState(null);
-  console.log(date);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const weeks = monthInWeeks(month);
+    const weeks = monthInWeeks(numMonth);
     setDays(weeks);
-    console.log(days);
-  }, [month]);
+  }, [numMonth]);
 
-  function daysInWeek(array, date, week = '') {
+  function daysInWeek(array, date, currentMonth, otherMonth) {
     return array.map((el, i) => {
-      if (week === 'first' && array[array.length-1] < el) {
-        return <td className="date-other-month" key={el + i}>{el}</td>
-      } else if (week === 'last' && array[array.length-1] < array[0] && array[array.length-1] >= el) {
-        return <td className="date-other-month" key={el + i}>{el}</td>
-      } else if (week === 'last' && array[array.length-1] > array[0]) {
-        return <td key={el + i}>{el}</td>
-      } else if (week === '' && array[array.length-1] > array[0] && el === date) {
-        return <td className="date-today" key={el + i}>{el}</td>
-      } else if (week === '' && array[array.length-1] > array[0]) {
-        return <td key={el + i}>{el}</td>
-      } else if (el === date) {
-        return <td className="date-today" key={el + i}>{el}</td>
-      } else {
-        return <td key={el + i}>{el}</td>
+      if (el.curDay !== 'this') {
+        return <td className="date-other-month" onClick={() => onChoiceDate(el.numDay, otherMonth)} key={el.numDay + i}>{el.numDay}</td>
+      } else if (el.curDay === 'this' && el.numDay === date && currentMonth === otherMonth) {
+        return <td className="date-today" onClick={() => onChoiceDate(el.numDay, otherMonth)} key={el.numDay + i}>{el.numDay}</td>
+      } else if (el.curDay === 'this') {
+        return <td onClick={() => onChoiceDate(el.numDay, otherMonth)} key={el.numDay + i}>{el.numDay}</td>
       }
+      return null;
     })
   };
 
+  function onChoiceDate(day, month) {
+    const dateFrom = date.choiceDate(date.year, month, day);
+    dispatch(choiceDateFrom(dateFrom));
+  };
+
   function prevMonth() {
-    setMonth((prev) => (prev - 1));
+    setNumMonth((prev) => (prev - 1));
+    setNameMonth(date.nameMonth(date.year, numMonth - 1));
   };
 
   function nextMonth() {
-    setMonth((prev) => (prev + 1));
+    setNumMonth((prev) => (prev + 1));
+    setNameMonth(date.nameMonth(date.year, numMonth + 1));
   };
   return (
-    <div className={`calendar ${none}`}>
+    <div className={none}>
       <div className='cal-triangle'></div>
       <div className='cal-main'>
         <div className='cal-month'>
           <button className='prev-month' onClick={prevMonth} type='button'></button>
-          <p className='cal-month-text'>{date.month}</p>
+          <p className='cal-month-text'>{nameMonth}</p>
           <button className='next-month' onClick={nextMonth} type='button'></button>
         </div>
         <table className='cal-table'>
@@ -71,12 +73,12 @@ export default function Calendar({none}) {
             </tr>
           </thead>
             {days !== null ? <tbody>
-              <tr>{daysInWeek(days.first, date.numDate, 'first')}</tr>
-              <tr>{daysInWeek(days.second, date.numDate)}</tr>
-              <tr>{daysInWeek(days.third, date.numDate)}</tr>
-              <tr>{daysInWeek(days.fourth, date.numDate)}</tr>
-              <tr>{daysInWeek(days.fifth, date.numDate, 'last')}</tr>
-              <tr>{daysInWeek(days.sixth, date.numDate, 'last')}</tr>
+              <tr>{daysInWeek(days.first, date.numDate, date.numberMonth, numMonth)}</tr>
+              <tr>{daysInWeek(days.second, date.numDate, date.numberMonth, numMonth)}</tr>
+              <tr>{daysInWeek(days.third, date.numDate, date.numberMonth, numMonth)}</tr>
+              <tr>{daysInWeek(days.fourth, date.numDate, date.numberMonth, numMonth)}</tr>
+              <tr>{daysInWeek(days.fifth, date.numDate, date.numberMonth, numMonth)}</tr>
+              <tr>{daysInWeek(days.sixth, date.numDate, date.numberMonth, numMonth)}</tr>
             </tbody> : null}
         </table>
       </div>
