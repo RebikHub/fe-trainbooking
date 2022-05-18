@@ -30,7 +30,7 @@ export default function SearchWidget() {
   };
 
   function getCalendar() {
-    if (hidden === '') {
+    if (hidden === '' && fromDate !== null) {
       setHidden('none');
     } else {
       setHidden('');
