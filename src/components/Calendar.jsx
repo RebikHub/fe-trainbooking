@@ -8,7 +8,7 @@ export default function Calendar({none, getDate}) {
   const [numMonth, setNumMonth] = useState(date.numberMonth);
   const [nameMonth, setNameMonth] = useState(date.month);
   const [days, setDays] = useState(null);
-  const { fromDate } = useSelector((state) => state.sliceDate);
+  const { fromDate } = useSelector((state) => state.sliceChoice);
 
   useEffect(() => {
     const weeks = monthInWeeks(numMonth);

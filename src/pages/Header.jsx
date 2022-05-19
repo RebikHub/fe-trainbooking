@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import SearchWidget from '../components/SearchWidget';
 import '../styles/header.css';
 
@@ -13,16 +14,16 @@ export default function Header() {
       <div className='header-nav'>
         <ul className='header-nav-list'>
           <li className='header-nav-item'>
-            <a href="#">О нас</a>
+            <Link to={{pathname: '/', hash: "main-about"}}>О нас</Link>
           </li>
           <li className='header-nav-item'>
-            <a href="#">Как это работает</a>
+            <Link to="#main-how">Как это работает</Link>
           </li>
           <li className='header-nav-item'>
-            <a href="#">Отзывы</a>
+            <Link to="#main-reviews">Отзывы</Link>
           </li>
           <li className='header-nav-item'>
-            <a href="#">Контакты</a>
+            <Link to="#">Контакты</Link>
           </li>
         </ul>
       </div>

@@ -1,36 +1,28 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { choiceDateFrom, choiceDateTo, clearDate } from '../store/sliceDate';
+import { choiceCityFrom, choiceCityTo, choiceDateFrom, choiceDateTo } from '../store/sliceChoice';
 import '../styles/searchwidget.css';
 import Calendar from './Calendar';
 
 export default function SearchWidget() {
-  const [date, setDate] = useState({
-    from: '',
-    to: ''
-  });
-  const [city, setCity] = useState({
-    from: '',
-    to: ''
-  });
   const [hidden, setHidden] = useState('none');
-  const { fromDate, toDate } = useSelector((state) => state.sliceDate);
+  const { fromDate, toDate, fromCity, toCity } = useSelector((state) => state.sliceChoice);
   const dispatch = useDispatch();
 
   function inputDateFrom(ev) {
-    setDate({...date, from: ev.target.value});
+    dispatch(choiceDateFrom(ev.target.value));
   };
 
   function inputDateTo(ev) {
-    setDate({...date, to: ev.target.value});
+    dispatch(choiceDateTo(ev.target.value));
   };
 
   function inputCityFrom(ev) {
-    setCity({...city, from: ev.target.value});
+    dispatch(choiceCityFrom(ev.target.value));
   };
 
   function inputCityTo(ev) {
-    setCity({...city, to: ev.target.value});
+    dispatch(choiceCityTo(ev.target.value));
   };
 
   function getCalendar() {
@@ -45,13 +37,11 @@ export default function SearchWidget() {
 
   function getDate(choiceDate) {
     if (hidden === 'calendar-from') {
-      setDate({...date, from: choiceDate});
       dispatch(choiceDateFrom(choiceDate));
       setHidden('none');
     };
 
     if (hidden === 'calendar-to') {
-      setDate({...date, to: choiceDate});
       dispatch(choiceDateTo(choiceDate));
       setHidden('none');
     };
@@ -59,9 +49,7 @@ export default function SearchWidget() {
   };
 
   function submit() {
-    dispatch(clearDate());
-    dispatch(choiceDateFrom(date.from));
-    dispatch(choiceDateTo(date.to));
+    console.log('submit');
   };
 
   return (
@@ -70,11 +58,11 @@ export default function SearchWidget() {
         <h4 className='search-dir-text'>Направление</h4>
         <div className='search-dir-inputs'>
           <input className='dir-input-from' type="text" placeholder="Откуда"
-            value={city.from}
+            value={fromCity}
             onChange={inputCityFrom}/>
           <button className='dir-btn' type="button"></button>
           <input className='dir-input-to' type="text" placeholder="Куда"
-            value={city.to}
+            value={toCity}
             onChange={inputCityTo}/>
         </div>
       </div>
@@ -83,11 +71,11 @@ export default function SearchWidget() {
         <h4 className='search-date-text'>Дата</h4>
           <div className='search-date-inputs'>
             <input className='date-input-from' type="text" placeholder="ДД.ММ.ГГ"
-              value={date.from}
+              value={fromDate}
               onClick={getCalendar}
               onChange={inputDateFrom}/>
             <input className='date-input-to' type="text" placeholder="ДД.ММ.ГГ"
-              value={date.to}
+              value={toDate}
               onClick={getCalendar}
               onChange={inputDateTo}/>
             <Calendar none={hidden} getDate={getDate}/>

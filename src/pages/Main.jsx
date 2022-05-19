@@ -5,7 +5,7 @@ import { reviews } from '../reviews';
 export default function Main() {
   return (
     <main className='main'>
-      <div className='main-about'>
+      <div id='main-about' className='main-about'>
         <h4 className='about-title'>о нас</h4>
         <div className='about-content'>
           <div className='about-line'></div>
@@ -26,7 +26,7 @@ export default function Main() {
         </div>
       </div>
 
-      <div className='main-how'>
+      <div id='main-how' className='main-how'>
         <div className='how-title'>
           <h4 className='how-title-text'>как это работает</h4>
           <button className='how-title-btn' type='button'>Узнать больше</button>
@@ -47,7 +47,7 @@ export default function Main() {
         </div>
       </div>
 
-      <div className='main-reviews'>
+      <div id='main-reviews' className='main-reviews'>
         <div className='reviews-title'>отзывы</div>
         <div className='reviews'>
           {reviews.map((el, i) => (

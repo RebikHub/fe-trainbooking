@@ -1,15 +1,15 @@
 import React from "react";
-import Footer from "./pages/Footer";
-import Header from "./pages/Header";
+import { Route, Routes } from "react-router-dom";
+import HeaderAndFooter from "./pages/HeaderAndFooter";
 import Main from "./pages/Main";
 
 function App() {
   return (
-    <>
-      <Header/>
-      <Main/>
-      <Footer/>
-    </>
+    <Routes>
+      <Route path='/' element={<HeaderAndFooter/>}>
+        <Route index element={<Main/>}/>
+      </Route>
+    </Routes>
   );
 }
 
