@@ -13,9 +13,15 @@ export const sliceDate = createSlice({
     choiceDateTo: (state, actions) => {
       state.toDate = actions.payload;
     },
-    clearDate: (state, actions) => {
+    clearDateFrom: (state, actions) => {
       state.fromDate = null;
+    },
+    clearDateTo: (state, actions) => {
       state.toDate = null;
+    },
+    clearDate: (state, actions) => {
+      state.toDate = null;
+      state.fromDate = null;
     }
   }
 });
@@ -23,6 +29,8 @@ export const sliceDate = createSlice({
 export const {
   choiceDateFrom,
   choiceDateTo,
+  clearDateFrom,
+  clearDateTo,
   clearDate
 } = sliceDate.actions;
 

@@ -1,36 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/calendar.css';
 import { date, monthInWeeks } from '../date';
-import { useDispatch } from 'react-redux';
-import { choiceDateFrom } from '../store/sliceDate';
+import DaysInWeek from './DaysInWeek';
+import { useSelector } from 'react-redux';
 
-export default function Calendar({none}) {
+export default function Calendar({none, getDate}) {
   const [numMonth, setNumMonth] = useState(date.numberMonth);
   const [nameMonth, setNameMonth] = useState(date.month);
   const [days, setDays] = useState(null);
-  const dispatch = useDispatch();
+  const { fromDate } = useSelector((state) => state.sliceDate);
 
   useEffect(() => {
     const weeks = monthInWeeks(numMonth);
     setDays(weeks);
   }, [numMonth]);
 
-  function daysInWeek(array, date, currentMonth, otherMonth) {
-    return array.map((el, i) => {
-      if (el.curDay !== 'this') {
-        return <td className="date-other-month" onClick={() => onChoiceDate(el.numDay, otherMonth)} key={el.numDay + i}>{el.numDay}</td>
-      } else if (el.curDay === 'this' && el.numDay === date && currentMonth === otherMonth) {
-        return <td className="date-today" onClick={() => onChoiceDate(el.numDay, otherMonth)} key={el.numDay + i}>{el.numDay}</td>
-      } else if (el.curDay === 'this') {
-        return <td onClick={() => onChoiceDate(el.numDay, otherMonth)} key={el.numDay + i}>{el.numDay}</td>
-      }
-      return null;
-    })
-  };
-
   function onChoiceDate(day, month) {
-    const dateFrom = date.choiceDate(date.year, month, day);
-    dispatch(choiceDateFrom(dateFrom));
+    const choiceDate = date.choiceDate(date.year, month, day);
+    const today = date.choiceDate(date.year, date.numberMonth, date.numDate);
+
+    if (fromDate === null && today < choiceDate) {
+      getDate(choiceDate);
+    } else if (fromDate !== null && fromDate < choiceDate) {
+      getDate(choiceDate);
+    };
   };
 
   function prevMonth() {
@@ -42,6 +35,7 @@ export default function Calendar({none}) {
     setNumMonth((prev) => (prev + 1));
     setNameMonth(date.nameMonth(date.year, numMonth + 1));
   };
+
   return (
     <div className={none}>
       <div className='cal-triangle'></div>
@@ -73,12 +67,15 @@ export default function Calendar({none}) {
             </tr>
           </thead>
             {days !== null ? <tbody>
-              <tr>{daysInWeek(days.first, date.numDate, date.numberMonth, numMonth)}</tr>
-              <tr>{daysInWeek(days.second, date.numDate, date.numberMonth, numMonth)}</tr>
-              <tr>{daysInWeek(days.third, date.numDate, date.numberMonth, numMonth)}</tr>
-              <tr>{daysInWeek(days.fourth, date.numDate, date.numberMonth, numMonth)}</tr>
-              <tr>{daysInWeek(days.fifth, date.numDate, date.numberMonth, numMonth)}</tr>
-              <tr>{daysInWeek(days.sixth, date.numDate, date.numberMonth, numMonth)}</tr>
+              {Object.entries(days).map((el) => 
+                <DaysInWeek
+                  array={el[1]}
+                  date={date.numDate}
+                  currentMonth={date.numberMonth}
+                  otherMonth={numMonth}
+                  onChoiceDate={onChoiceDate}
+                  key={el[0]}/>
+              )}
             </tbody> : null}
         </table>
       </div>

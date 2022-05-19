@@ -36,6 +36,12 @@
 }
 
 .dir-input-from, .dir-input-to {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 21px;
+  color: #292929;
   border: none;
   border-radius: 3px;
   width: 325px;
