@@ -6,7 +6,8 @@ export const sliceChoice = createSlice({
     fromDate: '',
     toDate: '',
     fromCity: '',
-    toCity: ''
+    toCity: '',
+    searchCity: ''
   },
   reducers: {
     choiceDateFrom: (state, actions) => {
@@ -21,7 +22,10 @@ export const sliceChoice = createSlice({
     choiceCityTo: (state, actions) => {
       state.toCity = actions.payload;
     },
-    clearDate: (state, actions) => {
+    searchCity: (state, actions) => {
+      state.searchCity = actions.payload;
+    },
+    clearAll: (state, actions) => {
       state.toDate = '';
       state.fromDate = '';
       state.toCity = '';
@@ -35,7 +39,8 @@ export const {
   choiceDateTo,
   choiceCityFrom,
   choiceCityTo,
-  clearDate
+  searchCity,
+  clearAll
 } = sliceChoice.actions;
 
 export default sliceChoice.reducer;

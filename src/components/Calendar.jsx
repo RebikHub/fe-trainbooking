@@ -17,11 +17,14 @@ export default function Calendar({none, getDate}) {
 
   function onChoiceDate(day, month) {
     const choiceDate = date.choiceDate(date.year, month, day);
-    const today = date.choiceDate(date.year, date.numberMonth, date.numDate);
+    const compareChoiceDate = new Date(date.year, month, day).getTime();
+    const compareToday = new Date(date.year, date.numberMonth, date.numDate).getTime();
+    const arrDate = fromDate.split('.');
+    const compareFromDate = new Date(arrDate[2], +arrDate[1] - 1, arrDate[0]);
 
-    if (fromDate === null && today < choiceDate) {
+    if (fromDate === '' && compareToday < compareChoiceDate) {
       getDate(choiceDate);
-    } else if (fromDate !== null && fromDate < choiceDate) {
+    } else if (fromDate !== '' && compareFromDate < compareChoiceDate) {
       getDate(choiceDate);
     };
   };

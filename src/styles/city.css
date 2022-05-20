@@ -1,0 +1,42 @@
+.city-from {
+  position: absolute;
+  top: 185px;
+  z-index: 1;
+}
+
+.city-to {
+  position: absolute;
+  top: 185px;
+  left: 383px;
+  z-index: 1;
+}
+
+.city-list {
+  padding: 5px 20px;
+  box-sizing: border-box;
+  width: 325px;
+  min-height: 57px;
+  background: #F5F4F6;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 3px;
+}
+
+.city-list > p {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 21px;
+  font-variant: small-caps;
+  color: #292929;
+  margin-bottom: 3px;
+  cursor: pointer;
+}
+
+.city-list > p:hover {
+  background-color: #2929293a;
+}
+
+.none {
+  display: none;
+}

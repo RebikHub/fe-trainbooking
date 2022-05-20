@@ -1,11 +1,17 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { choiceCityFrom, choiceCityTo, choiceDateFrom, choiceDateTo } from '../store/sliceChoice';
+import { choiceCityFrom, choiceCityTo, choiceDateFrom, choiceDateTo, searchCity } from '../store/sliceChoice';
+import { clearCities } from '../store/sliceGetCity';
 import '../styles/searchwidget.css';
 import Calendar from './Calendar';
+import CityList from './CityList';
 
 export default function SearchWidget() {
-  const [hidden, setHidden] = useState('none');
+  const [hidden, setHidden] = useState({
+    date: 'none',
+    city: 'none'
+  });
+  const [city, setCity] = useState('');
   const { fromDate, toDate, fromCity, toCity } = useSelector((state) => state.sliceChoice);
   const dispatch = useDispatch();
 
@@ -17,39 +23,63 @@ export default function SearchWidget() {
     dispatch(choiceDateTo(ev.target.value));
   };
 
-  function inputCityFrom(ev) {
-    dispatch(choiceCityFrom(ev.target.value));
-  };
-
-  function inputCityTo(ev) {
-    dispatch(choiceCityTo(ev.target.value));
+  function inputCity(ev) {
+    setCity(ev.target.value);
+    dispatch(searchCity(ev.target.value));
+    getCityList();
   };
 
   function getCalendar() {
-    if (hidden === 'none' && fromDate == null && toDate === null) {
-      setHidden('calendar-from');
-    } else if (hidden === 'none' && fromDate !== null && toDate === null) {
-      setHidden('calendar-to');
+    if (hidden.date === 'none' && fromDate === '' && toDate === '') {
+      setHidden({...hidden, date: 'calendar-from'});
+    } else if (hidden.date === 'none' && fromDate !== '' && toDate === '') {
+      setHidden({...hidden, date: 'calendar-to'});
     } else {
-      setHidden('none');
+      setHidden({...hidden, date: 'none'});
     }
   };
 
   function getDate(choiceDate) {
-    if (hidden === 'calendar-from') {
+    if (hidden.date === 'calendar-from') {
       dispatch(choiceDateFrom(choiceDate));
-      setHidden('none');
+      setHidden({...hidden, date: 'none'});
     };
 
-    if (hidden === 'calendar-to') {
+    if (hidden.date === 'calendar-to') {
       dispatch(choiceDateTo(choiceDate));
-      setHidden('none');
+      setHidden({...hidden, date: 'none'});
+    };
+  };
+
+  function getCityList() {
+    if (hidden.city === 'none' && fromCity === '' && toCity === '') {
+      setHidden({...hidden, city: 'city-from'});
+    } else if (hidden.city === 'none' && fromCity !== '' && toCity === '') {
+      setHidden({...hidden, city: 'city-to'});
+    } else if (city === '') {
+      setHidden({...hidden, city: 'none'});
+    }
+  };
+
+  function getCity(choiceCity) {
+    if (hidden.city === 'city-from') {
+      dispatch(choiceCityFrom(choiceCity));
+      setHidden({...hidden, city: 'none'});
+      setCity('');
+    };
+
+    if (hidden.city === 'city-to') {
+      dispatch(choiceCityTo(choiceCity));
+      setHidden({...hidden, city: 'none'});
+      setCity('');
     };
 
   };
 
   function submit() {
     console.log('submit');
+    console.log(fromDate, toDate, fromCity, toCity);
+    dispatch(clearCities());
   };
 
   return (
@@ -58,12 +88,13 @@ export default function SearchWidget() {
         <h4 className='search-dir-text'>Направление</h4>
         <div className='search-dir-inputs'>
           <input className='dir-input-from' type="text" placeholder="Откуда"
-            value={fromCity}
-            onChange={inputCityFrom}/>
+            value={fromCity === '' ? city : fromCity}
+            onChange={inputCity}/>
           <button className='dir-btn' type="button"></button>
           <input className='dir-input-to' type="text" placeholder="Куда"
-            value={toCity}
-            onChange={inputCityTo}/>
+            value={fromCity !== '' && toCity === '' ? city : toCity}
+            onChange={inputCity}/>
+            <CityList none={hidden.city} getCity={getCity}/>
         </div>
       </div>
 
@@ -78,7 +109,7 @@ export default function SearchWidget() {
               value={toDate}
               onClick={getCalendar}
               onChange={inputDateTo}/>
-            <Calendar none={hidden} getDate={getDate}/>
+            <Calendar none={hidden.date} getDate={getDate}/>
           </div>
       </div>
 

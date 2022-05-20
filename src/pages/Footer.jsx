@@ -1,9 +1,10 @@
 import React from 'react';
+import { HashLink } from 'react-router-hash-link';
 import '../styles/footer.css';
 
 export default function Footer() {
   return (
-    <footer className='footer'>
+    <footer id='footer' className='footer'>
       <div className='footer-content'>
         <div className='footer-contacts'>
           <h4 className='contacts-title'>Свяжитесь с нами</h4>
@@ -67,7 +68,8 @@ export default function Footer() {
         <div className='footer-logo'>
           <h3 className='footer-logo-text'>Лого</h3>
         </div>
-        <div className='footer-up'></div>
+        {/* <div id='footer-up' className='footer-up'></div> */}
+        <HashLink to='#top' className='footer-up'/>
         <div className='footer-date'>
           <p className='footer-date-text'>2022 web</p>
         </div>
