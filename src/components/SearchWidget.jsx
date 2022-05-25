@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { choiceCityFrom, choiceCityTo, choiceDateFrom, choiceDateTo, searchCity } from '../store/sliceChoice';
 import { clearCities } from '../store/sliceGetCity';
-import { transformHeader, transformHeaderToMain } from '../store/sliceHeaderTransform';
 import '../styles/searchwidget.css';
 import Calendar from './Calendar';
 import CityList from './CityList';
-import ButtonSearch from './UI/buttonSearch/ButtonSearch';
 
 export default function SearchWidget({classStyle}) {
   const [hidden, setHidden] = useState({
@@ -19,6 +17,7 @@ export default function SearchWidget({classStyle}) {
   const { transform } = useSelector((state) => state.sliceHeaderTransform);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  let location = useLocation();
 
   function inputDateFrom(ev) {
     dispatch(choiceDateFrom(ev.target.value));
@@ -83,13 +82,9 @@ export default function SearchWidget({classStyle}) {
 
   function submit() {
     console.log(transform);
-    if (!transform) {
-      dispatch(transformHeader());
+    if (!transform && location.pathname === '/') {
       navigate('/search');
-    } else {
-      dispatch(transformHeaderToMain());
-      navigate('/');
-    }
+    };
     
     console.log('submit');
     console.log(fromDate, toDate, fromCity, toCity);
