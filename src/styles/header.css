@@ -109,3 +109,48 @@
   top: 977px;
   background: #FFA800;
 }
+
+/* transform - header */
+
+.header-transform {
+  display: flex;
+  position: relative;
+  width: 100%;
+  height: 554px;
+}
+  
+.header-transform::before {
+  content: '';
+  position:absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: url(../images/main-search.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 0.89;
+}
+
+.search-transform {
+  display: flex;
+  flex-direction: column;
+  width: 1490px;
+  height: 285px;
+  margin: auto auto 8px auto;
+  background-color: #0000009e;
+  z-index: 1;
+}
+
+.endline-transform {
+  position: absolute;
+  width: 100%;
+  height: 8px;
+  left: 0px;
+  top: 546px;
+  background: #FFA800;
+}
+
+.none {
+  display: none;
+}

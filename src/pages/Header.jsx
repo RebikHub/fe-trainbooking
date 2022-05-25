@@ -1,11 +1,13 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { HashLink } from 'react-router-hash-link';
 import SearchWidget from '../components/SearchWidget';
 import '../styles/header.css';
 
 export default function Header() {
+  const {classHeader, classSearch, classTitle, classLine} = useSelector((state) => state.sliceHeaderTransform)
   return (
-    <header className='header'>
+    <header className={classHeader}>
 
       <div className='header-logo'>
         <h3 className='header-logo-text'>Лого</h3>
@@ -28,14 +30,15 @@ export default function Header() {
         </ul>
       </div>
 
-      <div className='header-title'>
+      <div className={classTitle}>
         <h4 className='header-title-text'>
           Вся жизнь - <span>путешествие!</span>
         </h4>
-        <SearchWidget/>
       </div>
 
-      <div className='header-endline'></div>
+      <SearchWidget classStyle={classSearch}/>
+
+      <div className={classLine}></div>
     </header>
   )
 }

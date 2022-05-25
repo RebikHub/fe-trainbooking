@@ -1,19 +1,24 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { choiceCityFrom, choiceCityTo, choiceDateFrom, choiceDateTo, searchCity } from '../store/sliceChoice';
 import { clearCities } from '../store/sliceGetCity';
+import { transformHeader, transformHeaderToMain } from '../store/sliceHeaderTransform';
 import '../styles/searchwidget.css';
 import Calendar from './Calendar';
 import CityList from './CityList';
+import ButtonSearch from './UI/buttonSearch/ButtonSearch';
 
-export default function SearchWidget() {
+export default function SearchWidget({classStyle}) {
   const [hidden, setHidden] = useState({
     date: 'none',
     city: 'none'
   });
   const [city, setCity] = useState('');
   const { fromDate, toDate, fromCity, toCity } = useSelector((state) => state.sliceChoice);
+  const { transform } = useSelector((state) => state.sliceHeaderTransform);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   function inputDateFrom(ev) {
     dispatch(choiceDateFrom(ev.target.value));
@@ -77,43 +82,56 @@ export default function SearchWidget() {
   };
 
   function submit() {
+    console.log(transform);
+    if (!transform) {
+      dispatch(transformHeader());
+      navigate('/search');
+    } else {
+      dispatch(transformHeaderToMain());
+      navigate('/');
+    }
+    
     console.log('submit');
     console.log(fromDate, toDate, fromCity, toCity);
     dispatch(clearCities());
   };
 
   return (
-    <div className='search-widget'>
-      <div className='search-direction'>
-        <h4 className='search-dir-text'>Направление</h4>
-        <div className='search-dir-inputs'>
-          <input className='dir-input-from' type="text" placeholder="Откуда"
-            value={fromCity === '' ? city : fromCity}
-            onChange={inputCity}/>
-          <button className='dir-btn' type="button"></button>
-          <input className='dir-input-to' type="text" placeholder="Куда"
-            value={fromCity !== '' && toCity === '' ? city : toCity}
-            onChange={inputCity}/>
-            <CityList none={hidden.city} getCity={getCity}/>
+    <div className={classStyle}>
+      <div className='search-inputs'>
+        <div className='search-direction'>
+          <h4 className='search-dir-text'>Направление</h4>
+          <div className='search-dir-inputs'>
+            <input className='dir-input-from' type="text" placeholder="Откуда"
+              value={fromCity === '' ? city : fromCity}
+              onChange={inputCity}/>
+            <button className='dir-btn' type="button"></button>
+            <input className='dir-input-to' type="text" placeholder="Куда"
+              value={fromCity !== '' && toCity === '' ? city : toCity}
+              onChange={inputCity}/>
+              <CityList none={hidden.city} getCity={getCity}/>
+          </div>
+        </div>
+
+        <div className='search-date'>
+          <h4 className='search-date-text'>Дата</h4>
+            <div className='search-date-inputs'>
+              <input className='date-input-from' type="text" placeholder="ДД.ММ.ГГ"
+                value={fromDate}
+                onClick={getCalendar}
+                onChange={inputDateFrom}/>
+              <input className='date-input-to' type="text" placeholder="ДД.ММ.ГГ"
+                value={toDate}
+                onClick={getCalendar}
+                onChange={inputDateTo}/>
+              <Calendar none={hidden.date} getDate={getDate}/>
+            </div>
         </div>
       </div>
 
-      <div className='search-date'>
-        <h4 className='search-date-text'>Дата</h4>
-          <div className='search-date-inputs'>
-            <input className='date-input-from' type="text" placeholder="ДД.ММ.ГГ"
-              value={fromDate}
-              onClick={getCalendar}
-              onChange={inputDateFrom}/>
-            <input className='date-input-to' type="text" placeholder="ДД.ММ.ГГ"
-              value={toDate}
-              onClick={getCalendar}
-              onChange={inputDateTo}/>
-            <Calendar none={hidden.date} getDate={getDate}/>
-          </div>
-      </div>
-
       <button className='search-btn' onClick={submit} type='button'>найти билеты</button>
+      {/* <ButtonSearch className='tr-btn' onClick={submit}>найти билеты</ButtonSearch> */}
+
     </div>
   )
 }
