@@ -68,7 +68,6 @@ export default function Footer() {
         <div className='footer-logo'>
           <h3 className='footer-logo-text'>Лого</h3>
         </div>
-        {/* <div id='footer-up' className='footer-up'></div> */}
         <HashLink to='#top' className='footer-up'/>
         <div className='footer-date'>
           <p className='footer-date-text'>2022 web</p>

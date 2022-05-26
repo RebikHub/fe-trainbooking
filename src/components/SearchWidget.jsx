@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { choiceCityFrom, choiceCityTo, choiceDateFrom, choiceDateTo, searchCity } from '../store/sliceChoice';
 import { clearCities } from '../store/sliceGetCity';
+import { getRouteRequest } from '../store/sliceGetRoute';
 import '../styles/searchwidget.css';
 import Calendar from './Calendar';
 import CityList from './CityList';
@@ -83,7 +84,8 @@ export default function SearchWidget({classStyle}) {
   function submit() {
     console.log(transform);
     if (!transform && location.pathname === '/') {
-      navigate('/search');
+      navigate('/route');
+      dispatch(getRouteRequest());
     };
     
     console.log('submit');
@@ -125,7 +127,6 @@ export default function SearchWidget({classStyle}) {
       </div>
 
       <button className='search-btn' onClick={submit} type='button'>найти билеты</button>
-      {/* <ButtonSearch className='tr-btn' onClick={submit}>найти билеты</ButtonSearch> */}
 
     </div>
   )
