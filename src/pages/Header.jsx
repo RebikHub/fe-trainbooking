@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
+import ProgressLine from '../components/ProgressLine';
 import SearchWidget from '../components/SearchWidget';
 import { transformHeader, transformHeaderToMain } from '../store/sliceHeaderTransform';
 import '../styles/header.css';
@@ -50,8 +51,8 @@ export default function Header() {
       </div>
 
       <SearchWidget classStyle={classSearch}/>
-
-      <div className={classLine}></div>
+      <div classStyle={classLine}></div>
+      {classLine === 'none' ? <ProgressLine/> : null}
     </header>
   )
 }

@@ -1,21 +1,27 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { choiceCityFrom, choiceCityTo, choiceDateFrom, choiceDateTo, searchCity } from '../store/sliceChoice';
+import { choiceCityFrom, choiceCityTo, choiceDateFrom, choiceDateTo, clearChoiceCity, searchCity } from '../store/sliceChoice';
 import { clearCities } from '../store/sliceGetCity';
 import { getRouteRequest } from '../store/sliceGetRoute';
-import '../styles/searchwidget.css';
+import '../styles/search-widget.css';
 import Calendar from './Calendar';
 import CityList from './CityList';
+import Error from './Error';
 
 export default function SearchWidget({classStyle}) {
   const [hidden, setHidden] = useState({
     date: 'none',
     city: 'none'
   });
-  const [city, setCity] = useState('');
+  const [city, setCity] = useState({
+    from: '',
+    to: ''
+  });
+  const [error, setError] = useState(false);
   const { fromDate, toDate, fromCity, toCity } = useSelector((state) => state.sliceChoice);
   const { transform } = useSelector((state) => state.sliceHeaderTransform);
+  const { cities } = useSelector((state) => state.sliceGetCity);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   let location = useLocation();
@@ -28,10 +34,28 @@ export default function SearchWidget({classStyle}) {
     dispatch(choiceDateTo(ev.target.value));
   };
 
-  function inputCity(ev) {
-    setCity(ev.target.value);
-    dispatch(searchCity(ev.target.value));
-    getCityList();
+  function inputFromCity(ev) {
+    setCity({...city, from: ev.target.value});
+    if (ev.target.value.trim() !== '') {
+      dispatch(searchCity(ev.target.value));
+      if (cities.length !== 0) {
+        setHidden({...hidden, city: 'city-from'});
+      };
+    } else {
+      setHidden({...hidden, city: 'none'});
+    };
+  };
+
+  function inputToCity(ev) {
+    setCity({...city, to: ev.target.value});
+    if (ev.target.value.trim() !== '') {
+      dispatch(searchCity(ev.target.value));
+      if (cities.length !== 0) {
+        setHidden({...hidden, city: 'city-to'});
+      };
+    } else {
+      setHidden({...hidden, city: 'none'});
+    };
   };
 
   function getCalendar() {
@@ -56,57 +80,62 @@ export default function SearchWidget({classStyle}) {
     };
   };
 
-  function getCityList() {
-    if (hidden.city === 'none' && fromCity === '' && toCity === '') {
-      setHidden({...hidden, city: 'city-from'});
-    } else if (hidden.city === 'none' && fromCity !== '' && toCity === '') {
-      setHidden({...hidden, city: 'city-to'});
-    } else if (city === '') {
-      setHidden({...hidden, city: 'none'});
-    }
-  };
-
   function getCity(choiceCity) {
     if (hidden.city === 'city-from') {
       dispatch(choiceCityFrom(choiceCity));
       setHidden({...hidden, city: 'none'});
-      setCity('');
+      setCity({...city, from: choiceCity.name});
     };
 
     if (hidden.city === 'city-to') {
       dispatch(choiceCityTo(choiceCity));
       setHidden({...hidden, city: 'none'});
-      setCity('');
+      setCity({...city, to: choiceCity.name});
     };
 
   };
-
+  console.log(fromCity, toCity);
   function submit() {
     console.log(transform);
-    if (!transform && location.pathname === '/') {
+    if (!transform && location.pathname === '/' && fromCity !== null && toCity !== null) {
       navigate('/route');
-      dispatch(getRouteRequest());
+      dispatch(getRouteRequest({fromDate, toDate, fromCity, toCity}));
+    } else if (transform && location.pathname === '/route' && fromCity !== null && toCity !== null) {
+      dispatch(getRouteRequest({fromDate, toDate, fromCity, toCity}));
+    }  else {
+      setError(true)
     };
     
     console.log('submit');
     console.log(fromDate, toDate, fromCity, toCity);
-    dispatch(clearCities());
   };
+
+  useEffect(() => {
+    if (error) {
+      setTimeout(() => setError(false), 2 * 1000);
+    };
+    if (city.from === '' && city.to === '') {
+      dispatch(clearChoiceCity());
+    };
+  });
 
   return (
     <div className={classStyle}>
+    
+      <Error classStyle={error ? 'error' : 'none'}/>
+
       <div className='search-inputs'>
         <div className='search-direction'>
           <h4 className='search-dir-text'>Направление</h4>
           <div className='search-dir-inputs'>
             <input className='dir-input-from' type="text" placeholder="Откуда"
-              value={fromCity === '' ? city : fromCity}
-              onChange={inputCity}/>
+              value={city.from}
+              onChange={inputFromCity}/>
             <button className='dir-btn' type="button"></button>
             <input className='dir-input-to' type="text" placeholder="Куда"
-              value={fromCity !== '' && toCity === '' ? city : toCity}
-              onChange={inputCity}/>
-              <CityList none={hidden.city} getCity={getCity}/>
+              value={city.to}
+              onChange={inputToCity}/>
+              <CityList none={`${hidden.city}${transform ? '-transform' : ''}`} getCity={getCity}/>
           </div>
         </div>
 

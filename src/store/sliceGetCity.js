@@ -21,7 +21,11 @@ export const sliceGetCity = createSlice({
     successGetCity: (state, actions) => {
       state.loading = false;
       state.success = true;
-      state.cities = actions.payload
+      if (actions.payload.error) {
+        state.error = actions.payload;
+      } else {
+        state.cities = actions.payload;
+      };
     },
     clearCities: (state, actions) => {
       state.loading = false;

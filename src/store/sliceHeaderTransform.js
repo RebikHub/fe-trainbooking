@@ -14,7 +14,7 @@ export const sliceHeaderTransform = createSlice({
       state.classHeader = 'header-transform';
       state.classSearch = 'search-transform';
       state.classTitle = 'none';
-      state.classLine = 'endline-transform';
+      state.classLine = 'none';
       state.transform = true;
     },
     transformHeaderToMain: (state, actions) => {

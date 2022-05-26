@@ -1,13 +1,26 @@
 .city-from {
   position: absolute;
-  top: 185px;
+  top: 190px;
   z-index: 1;
 }
 
 .city-to {
   position: absolute;
-  top: 185px;
+  top: 190px;
   left: 383px;
+  z-index: 1;
+}
+
+.city-from-transform {
+  position: absolute;
+  top: 140px;
+  z-index: 1;
+}
+
+.city-to-transform {
+  position: absolute;
+  top: 140px;
+  left: 401px;
   z-index: 1;
 }
 
@@ -37,6 +50,6 @@
   background-color: #2929293a;
 }
 
-.none {
+.none, .none-transform {
   display: none;
 }

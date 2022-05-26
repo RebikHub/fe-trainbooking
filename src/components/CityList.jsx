@@ -8,7 +8,7 @@ export default function CityList({none, getCity}) {
   return (
     <div className={none}>
       <div className='city-list'>
-        {cities.map((el) => <p onClick={() => getCity(el.name)} key={el._id}>{el.name}</p>)}
+        {cities.map((el) => <p onClick={() => getCity(el)} key={el._id}>{el.name}</p>)}
       </div>
     </div>
   )

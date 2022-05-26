@@ -15,8 +15,11 @@ export const sliceGetRoute = createSlice({
     },
     getRouteSuccess: (state, actions) => {
       state.loading = false;
-      state.route = actions.payload;
-      state.error = false;
+      if (actions.payload.error) {
+        state.error = actions.payload;
+      } else {
+        state.route = actions.payload;
+      };
     },
     getRouteError: (state, actions) => {
       state.loading = false;

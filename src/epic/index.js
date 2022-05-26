@@ -13,15 +13,20 @@ export const getCitiesEpic = (action$) => action$.pipe(
   switchMap((o) => {
     return ajax.getJSON(`${process.env.REACT_APP_API_ROUTES_CITIES}?name=${o.payload}`).pipe(
     retry(3),
-    map((o) => successGetCity(o)),
+    map((o) => {
+      console.log(o);
+      return successGetCity(o)
+    }),
     catchError((e) => of(errorGetCity(e)))
   )})
 );
 
 export const getRoute = (action$) => action$.pipe(
   ofType(getRouteRequest),
+  debounceTime(2000),
+  tap((o) => console.log(o)),
   switchMap((o) => {
-    return ajax.getJSON(process.env.REACT_APP_API_ROUTES).pipe(
+    return ajax.getJSON(`${process.env.REACT_APP_API_ROUTES}?from_city_id=${o.payload.fromCity._id}&to_city_id=${o.payload.toCity._id}`).pipe(
     retry(3),
     tap((obj) => console.log(obj)),
     map((o) => getRouteSuccess(o)),
