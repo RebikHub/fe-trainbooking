@@ -13,7 +13,7 @@
 }
 
 .filter-date {
-  height: 280px;
+  height: 235px;
 }
 
 .filter-date-from {
@@ -58,60 +58,102 @@
 /* checkboxes */
 
 .filter-checkboxes {
-
+  width: 265px;
+  margin: 25px 35px 20px 60px;
 }
 
-.checkbox-coupe {
+.checkbox-text {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 21px;
+  margin-right: auto;
+}
 
+.checkbox-coupe, .checkbox-reserved-seat, .checkbox-seated, .checkbox-lux, .checkbox-wifi, .checkbox-express {
+  display: flex;
+  margin-bottom: 30px;
+}
+
+.coupe-img, .reserved-seat-img, .seated-img, .lux-img, .wifi-img, .express-img {
+  width: 22px;
+  height: 22px;
+  margin-right: 35px;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .coupe-img {
-
-}
-
-.coupe-img {
-
-}
-
-.checkbox-reserved-seat {
-
+  background-image: url(../images/coupe.png);
 }
 
 .reserved-seat-img {
-
-}
-
-.checkbox-seated {
-
+  background-image: url(../images/reserved.png);
 }
 
 .seated-img {
-
-}
-
-.checkbox-lux {
-
+  background-image: url(../images/seated.png);
 }
 
 .lux-img {
-
-}
-
-.checkbox-wifi {
-
+  background-image: url(../images/lux.png);
 }
 
 .wifi-img {
-
-}
-
-.checkbox-express {
-
+  background-image: url(../images/wifi.png);
 }
 
 .express-img {
-
+  background-image: url(../images/express.png);
 }
+
+.input-checkbox-coupe {
+  position: relative;
+  cursor: pointer;
+  margin-right: 15px;
+}
+
+.input-checkbox-coupe > input {
+  position: absolute;
+  clip: rect(0 0 0 0);
+}
+
+.input-checkbox-coupe::after {
+  content: '';
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  top: -4px;
+  left: -10px;
+  /* left: -55px; */
+  background-color: #FFA800;
+  border-radius: 50%;
+}
+
+.input-checkbox-coupe:focus::after {
+  content: '';
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  top: -4px;
+  left: 0px;
+  background-color: #FFA800;
+  border-radius: 50%;
+}
+
+.input-checkbox-coupe::before {
+  content: '';
+  position: absolute;
+  width: 72px;
+  height: 20px;
+  top: 0px;
+  left: -55px;
+  background-color: #FCDC9D;
+  border-radius: 15px;
+}
+
+/* filter-price */
 
 .filter-price {
 

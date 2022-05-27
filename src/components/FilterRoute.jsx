@@ -14,42 +14,46 @@ export default function FilterRoute() {
           <h4 className='filter-date-title'>Дата вовращения</h4>
           <input type="text" placeholder="ДД.ММ.ГГ"/>
         </div>
-        <div className='filter-line'></div>
       </div>
+
+      <div className='filter-line'></div>
 
       <div className='filter-checkboxes'>
         <div className='checkbox-coupe'>
           <span className='coupe-img'></span>
-          <p>Купе</p>
+          <p className='checkbox-text'>Купе</p>
+          <div className='input-checkbox-coupe'>
           <input type="checkbox" />
+          </div>
         </div>
         <div className='checkbox-reserved-seat'>
           <span className='reserved-seat-img'></span>
-          <p>Плацкарт</p>
+          <p className='checkbox-text'>Плацкарт</p>
           <input type="checkbox" />
         </div>
         <div className='checkbox-seated'>
           <span className='seated-img'></span>
-          <p>Сидячий</p>
+          <p className='checkbox-text'>Сидячий</p>
           <input type="checkbox" />
         </div>
         <div className='checkbox-lux'>
           <span className='lux-img'></span>
-          <p>Люкс</p>
+          <p className='checkbox-text'>Люкс</p>
           <input type="checkbox" />
         </div>
         <div className='checkbox-wifi'>
           <span className='wifi-img'></span>
-          <p>Wi-Fi</p>
+          <p className='checkbox-text'>Wi-Fi</p>
           <input type="checkbox" />
         </div>
         <div className='checkbox-express'>
           <span className='express-img'></span>
-          <p>Экспресс</p>
+          <p className='checkbox-text'>Экспресс</p>
           <input type="checkbox" />
         </div>
-        <div className='filter-line'></div>
       </div>
+
+      <div className='filter-line'></div>
 
       <div className='filter-price'>
         <h4 className='filter-price-title'>Стоимость</h4>
@@ -65,8 +69,9 @@ export default function FilterRoute() {
             <p>7000</p>
           </div>
         </div>
-        <div className='filter-line'></div>
       </div>
+
+      <div className='filter-line'></div>
 
       <div className='filter-time-there'>
         <div className='filter-time-title'>
@@ -98,8 +103,9 @@ export default function FilterRoute() {
             <p>24:00</p>
           </div>
         </div>
-        <div className='filter-line'></div>
       </div>
+
+      <div className='filter-line'></div>
 
       <div className='filter-time-back'>
         <div className='filter-time-title'>
