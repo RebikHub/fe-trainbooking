@@ -7,8 +7,6 @@ import '../styles/route.css';
 
 export default function ChoiceRoute() {
   const { loading } = useSelector((state) => state.sliceGetRoute);
-  console.log(loading);
-
 
   if (loading) {
     return <SearchProgress/>

@@ -1,0 +1,262 @@
+.filter-route {
+  margin: 95px 85px 95px 260px;
+  color: #ffffff;
+  background-color: #3E3C41;
+  width: 360px;
+  height: 1524px;
+}
+
+.filter-line {
+  width: 100%;
+  height: 1px;
+  background-color: #ffffff;
+}
+
+.filter-date {
+  height: 280px;
+}
+
+.filter-date-from {
+  width: 295px;
+  margin: 45px auto 25px auto;
+}
+
+.filter-date-title {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 45px;
+}
+
+.filter-date-from > input, .filter-date-to > input {
+  width: 295px;
+  height: 44px;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 21px;
+  color: #292929;
+  padding-left: 8px;
+  border-radius: 3px;
+  border: none;
+  background-image: url(../images/filter-calendar.png);
+  background-repeat: no-repeat;
+  background-position: center right 17px;
+}
+
+.filter-date-from > input::placeholder, .filter-date-to > input::placeholder {
+  color: #C4C4C4;
+}
+
+.filter-date-to {
+  width: 295px;
+  margin: 0 auto 32px auto;
+}
+
+/* checkboxes */
+
+.filter-checkboxes {
+
+}
+
+.checkbox-coupe {
+
+}
+
+.coupe-img {
+
+}
+
+.coupe-img {
+
+}
+
+.checkbox-reserved-seat {
+
+}
+
+.reserved-seat-img {
+
+}
+
+.checkbox-seated {
+
+}
+
+.seated-img {
+
+}
+
+.checkbox-lux {
+
+}
+
+.lux-img {
+
+}
+
+.checkbox-wifi {
+
+}
+
+.wifi-img {
+
+}
+
+.checkbox-express {
+
+}
+
+.express-img {
+
+}
+
+.filter-price {
+
+}
+
+.filter-price-title {
+
+}
+
+.price-range {
+
+}
+
+.price-range-text {
+
+}
+
+.range-input-in {
+
+}
+
+.range-input-out {
+
+}
+
+.price-range-number {
+
+}
+
+.filter-time-there {
+
+}
+
+.filter-time-title {
+
+}
+
+.filter-time-there-img {
+
+}
+
+.filter-time-title {
+
+}
+
+.filter-time-close {
+
+}
+
+.time-range-there {
+
+}
+
+.time-range-text {
+
+}
+
+.range-input-in {
+
+}
+
+.range-input-out {
+
+}
+
+.time-range-number {
+
+}
+
+.time-range-there {
+
+}
+
+.time-range-text {
+
+}
+
+.range-input-in {
+
+}
+
+.range-input-out {
+
+}
+
+.time-range-number {
+
+}
+
+.filter-time-back {
+
+}
+
+.filter-time-title {
+
+}
+
+.filter-time-back-img {
+
+}
+
+.filter-time-title {
+
+}
+
+.filter-time-close {
+
+}
+
+.time-range-back {
+
+}
+
+.time-range-text {
+
+}
+
+.range-input-in {
+
+}
+
+.range-input-out {
+
+}
+
+.time-range-number {
+
+}
+
+.time-range-back {
+
+}
+
+.time-range-text {
+
+}
+
+.range-input-in {
+
+}
+
+.range-input-out {
+
+}
+
+.time-range-number {
+
+}

@@ -1,21 +1,19 @@
 .search-progress {
   display: flex;
+  flex-direction: column;
   width: 100%;
   height: 774px;
   background-color: #3E3C41;
 }
 
-.search-progress > img {
+.search-progress-img {
   margin: auto;
   width: 500px;
   height: 500px;
 }
 
 .search-progress-line {
-  position: absolute;
   width: 100%;
   height: 8px;
-  left: 0px;
-  top: 546px;
   background: #FFA800;
 }

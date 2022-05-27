@@ -6,7 +6,7 @@ export default function SearchProgress() {
   return (
     <div className='search-progress'>
       <div className='search-progress-line'></div>
-      <img src={gif} alt="" />
+      <img className='search-progress-img' src={gif} alt="" />
     </div>
   )
 }

@@ -9,6 +9,7 @@ import '../styles/header.css';
 
 export default function Header() {
   const {classHeader, classSearch, classTitle, classLine} = useSelector((state) => state.sliceHeaderTransform);
+  const { loading } = useSelector((state) => state.sliceGetRoute);
   let location = useLocation();
   const dispatch = useDispatch();
 
@@ -21,6 +22,7 @@ export default function Header() {
   });
 
   return (
+    <>
     <header className={classHeader}>
 
       <div className='header-logo'>
@@ -51,8 +53,9 @@ export default function Header() {
       </div>
 
       <SearchWidget classStyle={classSearch}/>
-      <div classStyle={classLine}></div>
-      {classLine === 'none' ? <ProgressLine/> : null}
     </header>
+      <div className={classLine}></div>
+      {classLine === 'none' && !loading ? <ProgressLine/> : null}
+    </>
   )
 }

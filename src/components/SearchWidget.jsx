@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { choiceCityFrom, choiceCityTo, choiceDateFrom, choiceDateTo, clearChoiceCity, searchCity } from '../store/sliceChoice';
 import { clearCities } from '../store/sliceGetCity';
 import { getRouteRequest } from '../store/sliceGetRoute';
+import { currentStepOne } from '../store/sliceProgressLine';
 import '../styles/search-widget.css';
 import Calendar from './Calendar';
 import CityList from './CityList';
@@ -94,20 +95,18 @@ export default function SearchWidget({classStyle}) {
     };
 
   };
-  console.log(fromCity, toCity);
+
   function submit() {
-    console.log(transform);
     if (!transform && location.pathname === '/' && fromCity !== null && toCity !== null) {
       navigate('/route');
       dispatch(getRouteRequest({fromDate, toDate, fromCity, toCity}));
+      dispatch(currentStepOne());
     } else if (transform && location.pathname === '/route' && fromCity !== null && toCity !== null) {
       dispatch(getRouteRequest({fromDate, toDate, fromCity, toCity}));
     }  else {
       setError(true)
     };
-    
-    console.log('submit');
-    console.log(fromDate, toDate, fromCity, toCity);
+        console.log('submit');
   };
 
   useEffect(() => {
