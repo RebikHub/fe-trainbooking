@@ -108,41 +108,30 @@
   background-image: url(../images/express.png);
 }
 
-.input-checkbox-coupe {
+.check-element {
   position: relative;
   cursor: pointer;
   margin-right: 15px;
 }
 
-.input-checkbox-coupe > input {
+.checkbox-input {
   position: absolute;
   clip: rect(0 0 0 0);
 }
 
-.input-checkbox-coupe::after {
+.check-true::after {
   content: '';
   position: absolute;
   width: 28px;
   height: 28px;
   top: -4px;
   left: -10px;
-  /* left: -55px; */
   background-color: #FFA800;
   border-radius: 50%;
+  transition: left 400ms ease-in-out;
 }
 
-.input-checkbox-coupe:focus::after {
-  content: '';
-  position: absolute;
-  width: 28px;
-  height: 28px;
-  top: -4px;
-  left: 0px;
-  background-color: #FFA800;
-  border-radius: 50%;
-}
-
-.input-checkbox-coupe::before {
+.check-true::before {
   content: '';
   position: absolute;
   width: 72px;
@@ -151,6 +140,31 @@
   left: -55px;
   background-color: #FCDC9D;
   border-radius: 15px;
+  transition: background-color 400ms ease;
+}
+
+.check-false::after {
+  content: '';
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  top: -4px;
+  left: -56px;
+  background-color: #C4C4C4;
+  border-radius: 50%;
+  transition: left 400ms ease-in-out;
+}
+
+.check-false::before {
+  content: '';
+  position: absolute;
+  width: 72px;
+  height: 20px;
+  top: 0px;
+  left: -55px;
+  background-color: #FFFFFF;;
+  border-radius: 15px;
+  transition: background-color 400ms ease;
 }
 
 /* filter-price */
@@ -160,28 +174,129 @@
 }
 
 .filter-price-title {
-
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 35px;
+  margin: 37px auto 11px 32px;
 }
 
 .price-range {
-
+  margin: 0 34px 32px 30px;
 }
 
 .price-range-text {
-
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 21px;
+  margin-bottom: 5px;
 }
 
 .range-input-in {
-
+  width: 295px;
+  height: 20px;
+  transform: rotate(0deg);
+  background: transparent;
+  appearance: none;
+  position: absolute;
+  border-radius: 8px;
+  pointer-events: none;
+  z-index: 1;
 }
 
 .range-input-out {
+  width: 295px;
+  height: 20px;
+  background: transparent;
+  appearance: none;
+  position: absolute;
+  border-radius: 8px;
+  pointer-events: none;
+  z-index: 1;
+}
 
+.range-input-in::-webkit-slider-thumb, .range-input-out::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 24px;
+  width: 24px;
+  border-radius: 50%;
+  background-color: #FFFFFF;
+  cursor: pointer;
+  pointer-events: all;
+}
+
+.range-input-in::-moz-range-thumb, .range-input-out::-moz-range-thumb {
+  height: 24px;
+  width: 24px;
+  border-radius: 50%;
+  background-color: #FFFFFF;
+  cursor: pointer;
+  pointer-events: all;
+}
+
+.range-input {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  width: 295px;
+  height: 20px;
+
+  box-sizing: border-box;
+  border: 1px solid #C4C4C4;
+  border-radius: 9px;
+  background-color: transparent;
+}
+.range-line {
+  position: relative;
+  width: 280px;
+  height: 20px;
+  z-index: 0;
+}
+
+.range-line-body {
+  background-color: #FFA800;
+  position: absolute;
+  top: -1px;
+  height: 20px;
+  z-index: 1;
 }
 
 .price-range-number {
-
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  text-align: right;
+  margin-top: 10px;
 }
+
+.price-start {
+  padding-right: 2px;
+}
+
+.price-end {
+  padding-left: 2px;
+}
+
+.price-min {
+  position: absolute;
+  left: 0;
+}
+
+.price-max {
+  position: absolute;
+  right: 0;
+}
+/* filter-time-there */
 
 .filter-time-there {
 
@@ -211,13 +326,7 @@
 
 }
 
-.range-input-in {
 
-}
-
-.range-input-out {
-
-}
 
 .time-range-number {
 
@@ -231,13 +340,7 @@
 
 }
 
-.range-input-in {
 
-}
-
-.range-input-out {
-
-}
 
 .time-range-number {
 
@@ -271,13 +374,7 @@
 
 }
 
-.range-input-in {
 
-}
-
-.range-input-out {
-
-}
 
 .time-range-number {
 
@@ -291,13 +388,7 @@
 
 }
 
-.range-input-in {
 
-}
-
-.range-input-out {
-
-}
 
 .time-range-number {
 

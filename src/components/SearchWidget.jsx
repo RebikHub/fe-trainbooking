@@ -96,6 +96,15 @@ export default function SearchWidget({classStyle}) {
 
   };
 
+  function swapCity() {
+    const fromCity = city.from;
+    const toCity = city.to;
+    setCity({
+      from: toCity,
+      to: fromCity
+    });
+  };
+
   function submit() {
     if (!transform && location.pathname === '/' && fromCity !== null && toCity !== null) {
       navigate('/route');
@@ -130,7 +139,7 @@ export default function SearchWidget({classStyle}) {
             <input className='dir-input-from' type="text" placeholder="Откуда"
               value={city.from}
               onChange={inputFromCity}/>
-            <button className='dir-btn' type="button"></button>
+            <button className='dir-btn' type="button" onClick={swapCity}></button>
             <input className='dir-input-to' type="text" placeholder="Куда"
               value={city.to}
               onChange={inputToCity}/>
