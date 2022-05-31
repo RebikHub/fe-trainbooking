@@ -10,10 +10,7 @@ const date = {
   numberMonth,
   choiceDate: (year, month, day) => new Intl.DateTimeFormat("ru").format(new Date(year, month, day)),
   nameMonth: (year, month) => new Intl.DateTimeFormat('ru-RU', { month: 'long'}).format(new Date(year, month))
-}
-
-// console.log(new Intl.DateTimeFormat("ru").format(new Date(year, month, numDate)));
-// console.log(new Intl.DateTimeFormat('ru-RU', { month: 'long'}).format(new Date(year, month)));
+};
 
 function dayOfMonth(year, month) {
   const date = new Date(year, month, 0);
@@ -25,7 +22,7 @@ function dayOfMonth(year, month) {
   };
 
   return arrDay;
-}
+};
 
 function monthInWeeks(numberMonth) {
   const numMonth = numberMonth + 1;
