@@ -1,8 +1,10 @@
 .filter-route {
-  margin: 95px 85px 95px 260px;
+  margin-bottom: 95px;
   color: #ffffff;
   background-color: #3E3C41;
   width: 360px;
+  padding-top: 0.1px;
+  padding-bottom: 0.1px;
 }
 
 .filter-line {
@@ -257,7 +259,7 @@
   z-index: 1;
 }
 
-.price-range-number {
+.price-range-number, .time-range-number {
   position: relative;
   display: flex;
   justify-content: space-between;
@@ -421,6 +423,24 @@
   top: -1px;
   height: 10px;
   z-index: 1;
+}
+
+.time-start {
+  padding-right: 2px;
+}
+
+.time-end {
+  padding-left: 2px;
+}
+
+.time-min {
+  position: absolute;
+  left: 0;
+}
+
+.time-max {
+  position: absolute;
+  right: 0;
 }
 
 

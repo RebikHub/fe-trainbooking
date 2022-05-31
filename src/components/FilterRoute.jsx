@@ -15,8 +15,8 @@ export default function FilterRoute() {
     end: 7000
   });
   const [none, setNone] = useState({
-    there: false,
-    back: false
+    there: true,
+    back: true
   });
 
   const [thereDeparture, setThereDeparture] = useState({
@@ -78,49 +78,49 @@ export default function FilterRoute() {
 
   function changeThereDepartureStart(ev) {
     if (Number(ev.target.value) <= thereDeparture.end) {
-      setPrice({...thereDeparture, start: Number(ev.target.value)});
+      setThereDeparture({...thereDeparture, start: Number(ev.target.value)});
     };
   };
 
   function changeThereDepartureEnd(ev) {
     if (Number(ev.target.value) >= thereDeparture.start) {
-      setPrice({...thereDeparture, end: Number(ev.target.value)});
+      setThereDeparture({...thereDeparture, end: Number(ev.target.value)});
     };
   };
 
   function changeThereArrivalStart(ev) {
     if (Number(ev.target.value) <= thereArrival.end) {
-      setPrice({...thereArrival, start: Number(ev.target.value)});
+      setThereArrival({...thereArrival, start: Number(ev.target.value)});
     };
   };
 
   function changeThereArrivalEnd(ev) {
     if (Number(ev.target.value) >= thereArrival.start) {
-      setPrice({...thereArrival, end: Number(ev.target.value)});
+      setThereArrival({...thereArrival, end: Number(ev.target.value)});
     };
   };
 
   function changeBackDepartureStart(ev) {
     if (Number(ev.target.value) <= backDeparture.end) {
-      setPrice({...backDeparture, start: Number(ev.target.value)});
+      setBackDeparture({...backDeparture, start: Number(ev.target.value)});
     };
   };
 
   function changeBackDepartureEnd(ev) {
     if (Number(ev.target.value) >= backDeparture.start) {
-      setPrice({...backDeparture, end: Number(ev.target.value)});
+      setBackDeparture({...backDeparture, end: Number(ev.target.value)});
     };
   };
 
   function changeBackArrivalStart(ev) {
     if (Number(ev.target.value) <= backArrival.end) {
-      setPrice({...backArrival, start: Number(ev.target.value)});
+      setBackArrival({...backArrival, start: Number(ev.target.value)});
     };
   };
 
   function changeBackArrivalEnd(ev) {
     if (Number(ev.target.value) >= backArrival.start) {
-      setPrice({...backArrival, end: Number(ev.target.value)});
+      setBackArrival({...backArrival, end: Number(ev.target.value)});
     };
   };
 
@@ -218,13 +218,20 @@ export default function FilterRoute() {
               value={price.end}
               onChange={changeEndPrice}/>
             <div className='range-line'>
-              <div className='range-line-body' style={{left: `${leftValue(maxPrice, minPrice, price.start)}%`, right: `${rightValue(maxPrice, minPrice, price.end)}%`}}></div>
+              <div className='range-line-body' style={{
+                left: `${leftValue(maxPrice, minPrice, price.start)}%`,
+                right: `${rightValue(maxPrice, minPrice, price.end)}%`
+              }}></div>
             </div>
           </div>
           <div className='price-range-number'>
             <p className='price-min'>{minPrice}</p>
-            <p className='price-start' style={{marginLeft: `${startValue(maxPrice, minPrice, price.start)}px`}}>{price.start}</p>
-            <p className='price-end' style={{marginRight: `${endValue(maxPrice, minPrice, price.end)}px`}}>{price.end}</p>
+            <p className='price-start' style={{
+              marginLeft: `${startValue(maxPrice, minPrice, price.start)}px`
+            }}>{price.start}</p>
+            <p className='price-end' style={{
+              marginRight: `${endValue(maxPrice, minPrice, price.end)}px`
+            }}>{price.end}</p>
             <p className='price-max'>{maxPrice}</p>
           </div>
         </div>
@@ -236,7 +243,9 @@ export default function FilterRoute() {
         <div className='filter-time-title'>
           <span className='filter-time-there-img'></span>
           <h4 className='filter-time-text'>Туда</h4>
-          <span className={(!none.there && 'filter-time-close-up') || (none.there && 'filter-time-close-down')} onClick={() => setNone({...none, there: !none.there})}></span>
+          <span className={
+            (!none.there && 'filter-time-close-up') || (none.there && 'filter-time-close-down')
+            } onClick={() => setNone({...none, there: !none.there})}></span>
         </div>
 
         <div className={none.there && 'none'}>
@@ -246,22 +255,31 @@ export default function FilterRoute() {
             </div>
             <div className='range-input-times'>
               <input className='range-input-time-in' type="range"
-                min={secondsToTime(minThereDeparture)}
-                max={secondsToTime(maxThereDeparture)}
+                min={minThereDeparture}
+                max={maxThereDeparture}
                 value={thereDeparture.start}
                 onChange={changeThereDepartureStart}/>
               <input className='range-input-time-out' type="range"
-                min={secondsToTime(minThereDeparture)}
-                max={secondsToTime(maxThereDeparture)}
+                min={minThereDeparture}
+                max={maxThereDeparture}
                 value={thereDeparture.end}
                 onChange={changeThereDepartureEnd}/>
               <div className='range-time-line'>
-                <div className='range-time-line-body' style={{left: `${leftValue(maxThereDeparture, minThereDeparture, thereDeparture.start)}%`, right: `${rightValue(maxThereDeparture, minThereDeparture, thereDeparture.end)}%`}}></div>
+                <div className='range-time-line-body' style={{
+                  left: `${leftValue(maxThereDeparture, minThereDeparture, thereDeparture.start)}%`,
+                  right: `${rightValue(maxThereDeparture, minThereDeparture, thereDeparture.end)}%`
+                }}></div>
               </div>
             </div>
             <div className='time-range-number'>
-              <p>0:00</p>
-              <p>24:00</p>
+              <p className='time-min'>{secondsToTime(minThereDeparture)}</p>
+              <p className='time-start' style={{
+                marginLeft: `${startValue(maxThereDeparture, minThereDeparture, thereDeparture.start)}px`
+              }}>{secondsToTime(thereDeparture.start)}</p>
+              <p className='time-end' style={{
+                marginRight: `${endValue(maxThereDeparture, minThereDeparture, thereDeparture.end)}px`
+              }}>{secondsToTime(thereDeparture.end)}</p>
+              <p className='time-max'>{secondsToTime(maxThereDeparture)}</p>
             </div>
           </div>
 
@@ -271,22 +289,31 @@ export default function FilterRoute() {
             </div>
             <div className='range-input-times'>
               <input className='range-input-time-in' type="range"
-                min={secondsToTime(minThereArrival)}
-                max={secondsToTime(maxThereArrival)}
+                min={minThereArrival}
+                max={maxThereArrival}
                 value={thereArrival.start}
                 onChange={changeThereArrivalStart}/>
               <input className='range-input-time-out' type="range"
-                min={secondsToTime(minThereArrival)}
-                max={secondsToTime(maxThereArrival)}
+                min={minThereArrival}
+                max={maxThereArrival}
                 value={thereArrival.end}
                 onChange={changeThereArrivalEnd}/>
               <div className='range-time-line'>
-                <div className='range-time-line-body' style={{left: `${leftValue(maxThereDeparture, minThereDeparture, thereDeparture.start)}%`, right: `${rightValue(maxThereDeparture, minThereDeparture, thereDeparture.end)}%`}}></div>
+                <div className='range-time-line-body' style={{
+                  left: `${leftValue(maxThereArrival, minThereArrival, thereArrival.start)}%`,
+                  right: `${rightValue(maxThereArrival, minThereArrival, thereArrival.end)}%`
+                  }}></div>
               </div>
             </div>
             <div className='time-range-number'>
-              <p>0:00</p>
-              <p>24:00</p>
+              <p className='time-min'>{secondsToTime(minThereArrival)}</p>
+              <p className='time-start' style={{
+                marginLeft: `${startValue(maxThereArrival, minThereArrival, thereArrival.start)}px`
+              }}>{secondsToTime(thereArrival.start)}</p>
+              <p className='time-end' style={{
+                marginRight: `${endValue(maxThereArrival, minThereArrival, thereArrival.end)}px`
+              }}>{secondsToTime(thereArrival.end)}</p>
+              <p className='time-max'>{secondsToTime(maxThereArrival)}</p>
             </div>
           </div>
         </div>
@@ -298,7 +325,9 @@ export default function FilterRoute() {
         <div className='filter-time-title'>
           <span className='filter-time-back-img'></span>
           <h4 className='filter-time-text'>Обратно</h4>
-          <span className={(!none.back && 'filter-time-close-up') || (none.back && 'filter-time-close-down')} onClick={() => setNone({...none, back: !none.back})}></span>
+          <span className={
+            (!none.back && 'filter-time-close-up') || (none.back && 'filter-time-close-down')
+          } onClick={() => setNone({...none, back: !none.back})}></span>
         </div>
 
         <div className={none.back && 'none'}>
@@ -308,22 +337,31 @@ export default function FilterRoute() {
             </div>
             <div className='range-input-times'>
               <input className='range-input-time-in' type="range"
-                min={secondsToTime(minBackDeparture)}
-                max={secondsToTime(maxBackDeparture)}
+                min={minBackDeparture}
+                max={maxBackDeparture}
                 value={backDeparture.start}
                 onChange={changeBackDepartureStart}/>
               <input className='range-input-time-out' type="range"
-                min={secondsToTime(minBackDeparture)}
-                max={secondsToTime(maxBackDeparture)}
+                min={minBackDeparture}
+                max={maxBackDeparture}
                 value={backDeparture.end}
                 onChange={changeBackDepartureEnd}/>
               <div className='range-time-line'>
-                <div className='range-time-line-body' style={{left: `${leftValue(maxThereDeparture, minThereDeparture, thereDeparture.start)}%`, right: `${rightValue(maxThereDeparture, minThereDeparture, thereDeparture.end)}%`}}></div>
+                <div className='range-time-line-body' style={{
+                  left: `${leftValue(maxBackDeparture, minBackDeparture, backDeparture.start)}%`,
+                  right: `${rightValue(maxBackDeparture, minBackDeparture, backDeparture.end)}%`
+                }}></div>
               </div>
             </div>
             <div className='time-range-number'>
-              <p>0:00</p>
-              <p>24:00</p>
+              <p className='time-min'>{secondsToTime(minBackDeparture)}</p>
+              <p className='time-start' style={{
+                marginLeft: `${startValue(maxBackDeparture, minBackDeparture, backDeparture.start)}px`
+              }}>{secondsToTime(backDeparture.start)}</p>
+              <p className='time-end' style={{
+                marginRight: `${endValue(maxBackDeparture, minBackDeparture, backDeparture.end)}px`
+              }}>{secondsToTime(backDeparture.end)}</p>
+              <p className='time-max'>{secondsToTime(maxBackDeparture)}</p>
             </div>
           </div>
 
@@ -333,27 +371,36 @@ export default function FilterRoute() {
             </div>
             <div className='range-input-times'>
               <input className='range-input-time-in' type="range"
-                min={secondsToTime(minBackArrival)}
-                max={secondsToTime(maxBackArrival)}
+                min={minBackArrival}
+                max={maxBackArrival}
                 value={backArrival.start}
                 onChange={changeBackArrivalStart}/>
               <input className='range-input-time-out' type="range"
-                min={secondsToTime(minBackArrival)}
-                max={secondsToTime(maxBackArrival)}
+                min={minBackArrival}
+                max={maxBackArrival}
                 value={backArrival.end}
                 onChange={changeBackArrivalEnd}/>
               <div className='range-time-line'>
-                <div className='range-time-line-body' style={{left: `${leftValue(maxThereDeparture, minThereDeparture, thereDeparture.start)}%`, right: `${rightValue(maxThereDeparture, minThereDeparture, thereDeparture.end)}%`}}></div>
+                <div className='range-time-line-body' style={{
+                  left: `${leftValue(maxBackArrival, minBackArrival, backArrival.start)}%`,
+                  right: `${rightValue(maxBackArrival, minBackArrival, backArrival.end)}%`
+                }}></div>
               </div>
             </div>
             <div className='time-range-number'>
-              <p>0:00</p>
-              <p>24:00</p>
+              <p className='time-min'>{secondsToTime(minBackArrival)}</p>
+              <p className='time-start' style={{
+                marginLeft: `${startValue(maxBackArrival, minBackArrival, backArrival.start)}px`
+              }}>{secondsToTime(backArrival.start)}</p>
+              <p className='time-end' style={{
+                marginRight: `${endValue(maxBackArrival, minBackArrival, backArrival.end)}px`
+              }}>{secondsToTime(backArrival.end)}</p>
+              <p className='time-max'>{secondsToTime(maxBackArrival)}</p>
             </div>
           </div>
         </div>
       </div>
 
     </div>
-  )
-}
+  );
+};
