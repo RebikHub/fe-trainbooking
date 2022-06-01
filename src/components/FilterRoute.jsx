@@ -1,7 +1,16 @@
 import React, { useState } from 'react';
+import Calendar from './Calendar';
 import '../styles/filter.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { choiceDateFrom, choiceDateTo } from '../store/sliceChoice';
 
 export default function FilterRoute() {
+  const { fromDate, toDate } = useSelector((state) => state.sliceChoice);
+  const dispatch = useDispatch();
+  const [hidden, setHidden] = useState({
+    from: 'none',
+    to: 'none'
+  });
   const [check, setCheck] = useState({
     coupe: false,
     reserved: false,
@@ -49,6 +58,42 @@ export default function FilterRoute() {
   const minBackDeparture = 0;
   const maxBackArrival = 86400;
   const minBackArrival = 0;
+
+  function inputDateFrom(ev) {
+    dispatch(choiceDateFrom(ev.target.value));
+  };
+
+  function inputDateTo(ev) {
+    dispatch(choiceDateTo(ev.target.value));
+  };
+
+  function getCalendarFrom() {
+    if (hidden.from === 'none') {
+      setHidden({...hidden, from: 'filter-calendar-from'});
+    } else {
+      setHidden({...hidden, from: 'none'});
+    };
+  };
+
+  function getCalendarTo() {
+    if (hidden.to === 'none') {
+      setHidden({...hidden, to: 'filter-calendar-to'});
+    } else {
+      setHidden({...hidden, to: 'none'});
+    };
+  };
+
+  function getDate(choiceDate) {
+    if (hidden.from === 'filter-calendar-from') {
+      dispatch(choiceDateFrom(choiceDate));
+      setHidden({...hidden, from: 'none'});
+    };
+
+    if (hidden.to === 'filter-calendar-to') {
+      dispatch(choiceDateTo(choiceDate));
+      setHidden({...hidden, to: 'none'});
+    };
+  };
 
   function secondsToTime(sec) {
     let min = Math.floor(sec / 60);
@@ -146,14 +191,22 @@ export default function FilterRoute() {
       <div className='filter-date'>
         <div className='filter-date-from'>
           <h4 className='filter-date-title'>Дата поездки</h4>
-          <input type="text" placeholder="ДД.ММ.ГГ"/>
+          <input type="text" placeholder="ДД.ММ.ГГ"
+            value={fromDate}
+            onClick={getCalendarFrom}
+            onChange={inputDateFrom}/>
+          <Calendar none={hidden.from} getDate={getDate}/>
         </div>
         <div className='filter-date-to'>
           <h4 className='filter-date-title'>Дата вовращения</h4>
-          <input type="text" placeholder="ДД.ММ.ГГ"/>
+          <input type="text" placeholder="ДД.ММ.ГГ"
+            value={toDate}
+            onClick={getCalendarTo}
+            onChange={inputDateTo}/>
+          <Calendar none={hidden.to} getDate={getDate}/>
         </div>
       </div>
-
+      {/* <Calendar none={hidden.date} getDate={getDate}/> */}
       <div className='filter-line'></div>
 
       <div className='filter-checkboxes'>

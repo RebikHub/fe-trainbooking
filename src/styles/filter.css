@@ -18,6 +18,7 @@
 }
 
 .filter-date-from {
+  position: relative;
   width: 295px;
   margin: 45px auto 25px auto;
 }
@@ -52,6 +53,7 @@
 }
 
 .filter-date-to {
+  position: relative;
   width: 295px;
   margin: 0 auto 32px auto;
 }

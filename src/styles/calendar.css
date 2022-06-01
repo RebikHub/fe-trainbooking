@@ -108,6 +108,20 @@
   background-color: #00000012;
 }
 
+.filter-calendar-from {
+  position: absolute;
+  z-index: 1;
+  width: 295px;
+  height: 295px;
+}
+
+.filter-calendar-to {
+  position: absolute;
+  z-index: 1;
+  width: 295px;
+  height: 295px;
+}
+
 .none {
   display: none;
 }

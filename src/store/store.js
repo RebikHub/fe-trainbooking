@@ -7,6 +7,7 @@ import sliceHeaderTransform from "./sliceHeaderTransform";
 import sliceGetRoute from "./sliceGetRoute";
 import sliceProgressLine from "./sliceProgressLine";
 import sliceFilter from "./sliceFilter";
+import sliceGetLastRoutes from "./sliceGetLastRoutes";
 
 const epic = combineEpics(
   getCitiesEpic,
@@ -23,7 +24,8 @@ export const store = configureStore({
     sliceHeaderTransform,
     sliceGetRoute,
     sliceProgressLine,
-    sliceFilter
+    sliceFilter,
+    sliceGetLastRoutes
   },
   middleware: [epicMiddleware]
 });

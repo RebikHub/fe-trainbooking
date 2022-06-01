@@ -114,6 +114,7 @@ export default function SearchWidget({classStyle}) {
       dispatch(requestGetLastRoutes());
     } else if (transform && location.pathname === '/route' && fromCity !== null && toCity !== null) {
       dispatch(getRouteRequest({fromDate, toDate, fromCity, toCity}));
+      dispatch(requestGetLastRoutes());
     }  else {
       setError(true)
     };
