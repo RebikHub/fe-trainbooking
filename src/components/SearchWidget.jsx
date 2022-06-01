@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { choiceCityFrom, choiceCityTo, choiceDateFrom, choiceDateTo, clearChoiceCity, searchCity } from '../store/sliceChoice';
 import { clearCities } from '../store/sliceGetCity';
+import { requestGetLastRoutes } from '../store/sliceGetLastRoutes';
 import { getRouteRequest } from '../store/sliceGetRoute';
 import { currentStepOne } from '../store/sliceProgressLine';
 import '../styles/search-widget.css';
@@ -110,6 +111,7 @@ export default function SearchWidget({classStyle}) {
       navigate('/route');
       dispatch(getRouteRequest({fromDate, toDate, fromCity, toCity}));
       dispatch(currentStepOne());
+      dispatch(requestGetLastRoutes());
     } else if (transform && location.pathname === '/route' && fromCity !== null && toCity !== null) {
       dispatch(getRouteRequest({fromDate, toDate, fromCity, toCity}));
     }  else {
