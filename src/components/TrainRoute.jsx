@@ -1,7 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../styles/train-route.css';
 
 export default function TrainRoute() {
+  const [seats , setSeats] = useState({
+    coupe: 'none',
+    reserved: 'none',
+    seated: 'none',
+    lux: 'none',
+  });
+  function choiceUpDownSeat(classSeats) {
+    console.log(classSeats);
+    if (classSeats === 'none') {
+      setSeats({...seats, [classSeats]: 'seat-up-down'});
+    } else {
+      setSeats({...seats, [classSeats]: 'none'});
+    };
+  };
+
   return (
     <div className='train-route'>
       <div className='train-name'>
@@ -43,7 +58,23 @@ export default function TrainRoute() {
         <div className='train-tickets-options'>
           <div className='train-ticket'>
             <p className='ticket-class'>Купе</p>
-            <span className='amount-seat'>90</span>
+            <span className='amount-seat'
+              onClick={() => choiceUpDownSeat(['seats.coupe'])}>90
+              <div className={seats.coupe}>
+                <div className='seat-up'>
+                  <p className='ticket-class'>верхние</p>
+                  <p className='amount-seat'>23</p>
+                  <p className='seat-ticket-start-number'>2800</p>
+                  <span className='sign-rub'></span>
+                </div>
+                <div className='seat-down'>
+                  <p className='ticket-class'>нижние</p>
+                  <p className='amount-seat'>34</p>
+                  <p className='seat-ticket-start-number'>2200</p>
+                  <span className='sign-rub'></span>
+                </div>
+              </div>
+            </span>
             <div className='ticket-start-price'>
               <p className='ticket-start-text'>от</p>
               <p className='ticket-start-number'>3500</p>
@@ -52,7 +83,23 @@ export default function TrainRoute() {
           </div>
           <div className='train-ticket'>
             <p className='ticket-class'>Люкс</p>
-            <span className='amount-seat'>32</span>
+            <span className='amount-seat'
+              onClick={() => choiceUpDownSeat([seats.lux])}>32
+              <div className={seats.lux}>
+                <div className='seat-up'>
+                  <p className='ticket-class'>верхние</p>
+                  <p className='amount-seat'>53</p>
+                  <p className='seat-ticket-start-number'>4800</p>
+                  <span className='sign-rub'></span>
+                </div>
+                <div className='seat-down'>
+                  <p className='ticket-class'>нижние</p>
+                  <p className='amount-seat'>68</p>
+                  <p className='seat-ticket-start-number'>3100</p>
+                  <span className='sign-rub'></span>
+                </div>
+              </div>
+            </span>
             <div className='ticket-start-price'>
               <p className='ticket-start-text'>от</p>
               <p className='ticket-start-number'>4500</p>
@@ -60,9 +107,11 @@ export default function TrainRoute() {
             </div>
           </div>
         </div>
+
         <div className='train-facilities'>
           <span className='train-facilities-wifi'></span>
         </div>
+
         <button type='button' className='train-choice-btn'>Выбрать места</button>
       </div>
     </div>
