@@ -52,9 +52,9 @@ export default function ListRoutes() {
     };
   };
   // if (!route.items && !route.items.length) {
-  // if (!route.items) {
-  //   return <div className='no-routes'>Ничего не найдено!</div>
-  // };
+  if (!route.items || !route.items.length) {
+    return <div className='no-routes'>Ничего не найдено!</div>
+  };
 
   return (
     <div className='list-routes'>
@@ -82,7 +82,7 @@ export default function ListRoutes() {
       </header>
 
       <main className='main-list-routes'>
-        <TrainRoute/>
+        {route.items.map((el) => <TrainRoute route={el} key={el.departure._id}/>)}
       </main>
 
       <footer className='footer-list-routes'>
