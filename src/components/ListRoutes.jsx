@@ -51,7 +51,7 @@ export default function ListRoutes() {
       ev.target.className += ' choice-page';
     };
   };
-  // if (!route.items && !route.items.length) {
+
   if (!route.items || !route.items.length) {
     return <div className='no-routes'>Ничего не найдено!</div>
   };

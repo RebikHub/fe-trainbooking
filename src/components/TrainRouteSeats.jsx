@@ -1,18 +1,45 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/train-route.css';
 
-export default function TrainRouteSeats({name, seats, price}) {
+export default function TrainRouteSeats({name, seats, price, seatPrice}) {
   const [hidden, setHidden] = useState('none');
+  const [seatInfo, setSeatInfo] = useState([]);
 
   function showSeats() {
     if (hidden === 'none') {
       setHidden('seat-up-down');
+      setTimeout(() => setHidden('none'), 3 * 1000);
     } else {
       setHidden('none');
     };
   };
 
-  const arr = []
+  useEffect(() => {
+    const arrayPrice = [];
+
+    if (seatPrice.hasOwnProperty('top_price')) {
+      arrayPrice.push({
+        name: 'верхние',
+        price: seatPrice.top_price,
+      });
+    };
+
+    if (seatPrice.hasOwnProperty('bottom_price')) {
+      arrayPrice.push({
+        name: 'нижние',
+        price: seatPrice.bottom_price,
+      });
+    };
+
+    if (seatPrice.hasOwnProperty('side_price')) {
+      arrayPrice.push({
+        name: 'боковые',
+        price: seatPrice.side_price,
+      });
+    };
+
+    setSeatInfo(arrayPrice);
+  }, []);
 
   return (
     <div className='train-ticket'>
@@ -20,27 +47,13 @@ export default function TrainRouteSeats({name, seats, price}) {
       <span className='amount-seat'
         onClick={showSeats}>{seats}
         <div className={hidden}>
-          {arr.map((el) =>
-            <>
-              <div className='seat-up'>
-                <p className='ticket-class'>верхние</p>
-                {/* <p className='amount-seat'>23</p> */}
-                <p className='seat-ticket-start-number'>{el.top_price}</p>
-                <span className='sign-rub'></span>
-              </div>
-              <div className='seat-up'>
-                <p className='ticket-class'>нижние</p>
-                {/* <p className='amount-seat'>34</p> */}
-                <p className='seat-ticket-start-number'>{el.bottom_price}</p>
-                <span className='sign-rub'></span>
-              </div>
-              <div className='seat-up'>
-                <p className='ticket-class'>боковые</p>
-                {/* <p className='amount-seat'>34</p> */}
-                <p className='seat-ticket-start-number'>{el.side_price}</p>
-                <span className='sign-rub'></span>
-              </div>
-            </>
+          {seatInfo.map((el) =>
+            <div className='seat-up'>
+              <p className='ticket-class'>{el.name}</p>
+              {/* <p className='amount-seat'>23</p> */}
+              <p className='seat-ticket-start-number'>{el.price}</p>
+              <span className='sign-rub'></span>
+            </div>
           )}
         </div>
       </span>

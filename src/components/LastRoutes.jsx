@@ -4,7 +4,7 @@ import '../styles/last-routes.css';
 
 export default function LastRoutes() {
   const {lastRoutes} = useSelector((state) => state.sliceGetLastRoutes);
-  console.log(lastRoutes);
+
   return (
     <div className='last-routes'>
       <h4 className='last-title'>последние билеты</h4>

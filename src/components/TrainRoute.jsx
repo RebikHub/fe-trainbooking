@@ -27,57 +27,43 @@ export default function TrainRoute({route}) {
       array.push({
         name: nameClass,
         seats: route.available_seats_info[seatClass],
-        price: prices[0]
+        price: prices[0],
+        seatPrice: route.departure.price_info[seatClass]
       })
     }
 
     if (route.departure.have_first_class) {
-      createArray(route, arrayInfo, 'first', 'Люкс')
+      createArray(route, arrayInfo, 'first', 'Люкс');
     };
 
     if (route.departure.have_second_class) {
-      // тут остановился...
-      createArray(route, arrayInfo, 'first', 'Люкс')
-      const prices = [];
-      for (const [key, value] of Object.entries(route.departure.price_info.second)) {
-        prices.push(Number(value));
-      };
-      prices.sort((a, b) => a - b);
-      arrayInfo.push({
-        name: 'Купе',
-        seats: route.available_seats_info.second,
-        price: prices[0]
-      })
+      createArray(route, arrayInfo, 'second', 'Купе');
     };
 
     if (route.departure.have_third_class) {
-      const prices = [];
-      for (const [key, value] of Object.entries(route.departure.price_info.third)) {
-        prices.push(Number(value));
-      };
-      prices.sort((a, b) => a - b);
-      arrayInfo.push({
-        name: 'Плацкарт',
-        seats: route.available_seats_info.third,
-        price: prices[0]
-      })
+      createArray(route, arrayInfo, 'third', 'Плацкарт');
     };
 
     if (route.departure.have_fourth_class) {
-      const prices = [];
-      for (const [key, value] of Object.entries(route.departure.price_info.fourth)) {
-        prices.push(Number(value));
-      };
-      prices.sort((a, b) => a - b);
-      arrayInfo.push({
-        name: 'Сидячий',
-        seats: route.available_seats_info.fourth,
-        price: prices[0]
-      })
+      createArray(route, arrayInfo, 'fourth', 'Сидячий');
     };
 
     setTrain(arrayInfo);
   }, []);
+
+  function duration(time) {
+    const mins = Math.floor(time/60);
+    const hours = Math.floor(mins/60);
+    const min = mins - (hours * 60);
+    return `${hours}:${min < 10 ? '0' + min : min}`;
+  };
+
+  function dateFromAndTo(time) {
+    const date = new Date(time * 1000);
+    const hours = date.getHours();
+    const mins = date.getMinutes();
+    return `${hours < 10 ? '0' + hours : hours}:${mins < 10 ? '0' + mins : mins}`
+  };
 
   return (
     <div className='train-route'>
@@ -94,7 +80,7 @@ export default function TrainRoute({route}) {
       <div className='train-direction'>
         <div className='train-direction-route'>
           <div className='train-direction-from'>
-            <div className='direction-time'>{route.departure.from.datetime}</div>
+            <div className='direction-time'>{dateFromAndTo(route.departure.from.datetime)}</div>
             <div className='direction-from'>
               <h5 className='direction-city'>{route.departure.from.city.name}</h5>
               <p className='direction-station'>{route.departure.from.city.railway_station_name}</p>
@@ -102,11 +88,11 @@ export default function TrainRoute({route}) {
             </div>
           </div>
           <div className='train-direction-time'>
-            <p className='travel-time'>8:39</p>
+            <p className='travel-time'>{duration(route.departure.duration)}</p>
             <span className='direction-arrow'></span>
           </div>
           <div className='train-direction-to'>
-            <div className='direction-time'>{route.departure.to.datetime}</div>
+            <div className='direction-time'>{dateFromAndTo(route.departure.to.datetime)}</div>
             <div className='direction-to'>
               <h5 className='direction-city'>{route.departure.to.city.name}</h5>
               <p className='direction-station'>{route.departure.to.city.railway_station_name}</p>
@@ -119,7 +105,12 @@ export default function TrainRoute({route}) {
       <div className='train-tickets'>
         <div className='train-tickets-options'>
         {train.map((el) =>
-          <TrainRouteSeats name={el.name} seats={el.seats} price={el.price}/>
+          <TrainRouteSeats
+            name={el.name}
+            seats={el.seats}
+            price={el.price}
+            seatPrice={el.seatPrice}
+            key={el.name}/>
         )}
 
         </div>
