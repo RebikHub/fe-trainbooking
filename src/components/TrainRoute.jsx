@@ -116,7 +116,10 @@ export default function TrainRoute({route}) {
         </div>
 
         <div className='train-facilities'>
+          <span className='train-facilities-all'></span>
           <span className='train-facilities-wifi'></span>
+          <span className='train-facilities-express'></span>
+          <span className='train-facilities-coffee'></span>
         </div>
 
         <button type='button' className='train-choice-btn'>Выбрать места</button>
