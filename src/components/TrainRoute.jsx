@@ -1,19 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import '../styles/train-route.css';
 import TrainRouteSeats from './TrainRouteSeats';
 
 export default function TrainRoute({route}) {
-
   const [train, setTrain] = useState([]);
-  const [hidden, setHidden] = useState('none');
+  const dispatch = useDispatch();
+  
 
-  function showSeats() {
-    if (hidden === 'none') {
-      setHidden('seat-up-down');
-    } else {
-      setHidden('none');
-    };
-  };
 
   useEffect(() => {
     const arrayInfo = [];

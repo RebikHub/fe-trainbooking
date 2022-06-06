@@ -1,12 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Calendar from './Calendar';
 import '../styles/filter.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { choiceDateFrom, choiceDateTo } from '../store/sliceChoice';
+import { filteringSeats, stopFiltering } from '../store/sliceFilter';
+import minMaxPrices from '../minMaxPrices';
 
 export default function FilterRoute() {
   const { fromDate, toDate } = useSelector((state) => state.sliceChoice);
+  const { currentRoutes } = useSelector((state) => state.sliceFilter);
   const dispatch = useDispatch();
+  console.log(currentRoutes);
   const [hidden, setHidden] = useState({
     from: 'none',
     to: 'none'
@@ -48,8 +52,8 @@ export default function FilterRoute() {
     end: 86400
   })
 
-  const maxPrice = 7000;
-  const minPrice = 0;
+  let maxPrice = 7000;
+  let minPrice = 0;
   const maxThereDeparture = 86400;
   const minThereDeparture = 0;
   const maxThereArrival = 86400;
@@ -58,6 +62,33 @@ export default function FilterRoute() {
   const minBackDeparture = 0;
   const maxBackArrival = 86400;
   const minBackArrival = 0;
+
+  useEffect(() => {
+    if (currentRoutes) {
+      const prices = minMaxPrices(currentRoutes);
+      maxPrice = prices.maxPrice;
+      minPrice = prices.minPrice;
+      setPrice({
+        start: prices.minPrice,
+        end: prices.maxPrice
+      })
+    }
+  }, [currentRoutes]);
+
+  useEffect(() => {
+    if (check.coupe === false &&
+      check.reserved === false &&
+      check.seated === false &&
+      check.lux === false &&
+      check.wifi === false &&
+      check.express === false) {
+        dispatch(stopFiltering());
+      };
+
+    if (currentRoutes) {
+      dispatch(filteringSeats(check));
+    };
+  }, [check]);
 
   function inputDateFrom(ev) {
     dispatch(choiceDateFrom(ev.target.value));
@@ -179,11 +210,11 @@ export default function FilterRoute() {
 
   function startValue(max, min, start) {
     return 260 * (((100 / (max - min)) * start) / 100);
-  }
+  };
 
   function endValue(max, min, end) {
     return 260 * (((100 / (max - min)) * ((max - min) - end)) / 100);
-  }
+  };
 
   return (
     <div className='filter-route'>

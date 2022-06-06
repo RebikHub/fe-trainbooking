@@ -3,28 +3,48 @@ import '../styles/list-routes.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { currentStepOne } from '../store/sliceProgressLine';
 import TrainRoute from './TrainRoute';
+import { addRoutes } from '../store/sliceFilter';
 
 export default function ListRoutes() {
   const { loading, route } = useSelector((state) => state.sliceGetRoute);
+  const { filterProcess, filteredRoutes, filterSeats } = useSelector((state) => state.sliceFilter);
   const dispatch = useDispatch();
+  const [list, setList] = useState([]);
   const [none, setNone] = useState('none');
   const [select, setSelect] = useState('времени');
-  console.log(route);
   const [pages, setPages] = useState([]);
+
+  console.log("filterProcess ", filterProcess);
+
+  useEffect(() => {
+    if (filterProcess) {
+      setList(filteredRoutes)
+    } else {
+      setList(route.items)
+    };
+
+  }, [filterProcess, filterSeats]);
+
+  useEffect(() => {
+    if (route) {
+      dispatch(addRoutes(route.items));
+    };
+  }, [route]);
 
   useEffect(() => {
     if (!loading) {
       dispatch(currentStepOne());
     };
-    
-    if (route.items) {
-      setPages([]);
-      for (let i = 0; i < (route.items.length / 5); i += 1) {
-        setPages([...pages, i]);
-      };
-    };
 
-  }, [route]);
+    if (list) {
+      setPages([]);
+      const arr = []
+      for (let i = 0; i < (list.length / 5); i += 1) {
+        arr.push(i);
+      };
+      setPages(arr);
+    };
+  }, [list]);
 
   function getSort() {
     if (none === 'none') {
@@ -52,7 +72,7 @@ export default function ListRoutes() {
     };
   };
 
-  if (!route.items || !route.items.length) {
+  if (!list || !list.length) {
     return <div className='no-routes'>Ничего не найдено!</div>
   };
 
@@ -61,7 +81,7 @@ export default function ListRoutes() {
       <header className='header-list-routes'>
         <div className='list-routes-found'>
           <p>найдено </p>
-          <span>{route.items ? route.items.length : ''}</span>
+          <span>{list ? list.length : ''}</span>
         </div>
         <div className='list-routes-sort'>
           <p>сортировать по: 
@@ -82,14 +102,14 @@ export default function ListRoutes() {
       </header>
 
       <main className='main-list-routes'>
-        {route.items.map((el) => <TrainRoute route={el} key={el.departure._id}/>)}
+        {list.map((el) => <TrainRoute route={el} key={el.departure._id}/>)}
       </main>
 
       <footer className='footer-list-routes'>
         <div className='list-routes-pages'>
           <div className='list-routes-pages-previous'></div>
           {pages.map((el, i) => 
-            <div className='list-routes-page' onClick={choicePage} key={i}>{i + 1}</div>
+            <div className='list-routes-page' onClick={choicePage} key={10 + i}>{i + 1}</div>
           )}
           <div className='list-routes-pages-next'></div>
         </div>

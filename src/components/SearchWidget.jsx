@@ -133,7 +133,7 @@ export default function SearchWidget({classStyle}) {
   return (
     <div className={classStyle}>
     
-      <Error classStyle={error ? 'error' : 'none'}/>
+      <Error classStyle={error ? transform ?'error-transform' : 'error' : 'none'}/>
 
       <div className='search-inputs'>
         <div className='search-direction'>

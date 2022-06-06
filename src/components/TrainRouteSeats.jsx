@@ -47,8 +47,8 @@ export default function TrainRouteSeats({name, seats, price, seatPrice}) {
       <span className='amount-seat'
         onClick={showSeats}>{seats}
         <div className={hidden}>
-          {seatInfo.map((el) =>
-            <div className='seat-up'>
+          {seatInfo.map((el,i) =>
+            <div className='seat-up' key={i}>
               <p className='ticket-class'>{el.name}</p>
               {/* <p className='amount-seat'>23</p> */}
               <p className='seat-ticket-start-number'>{el.price}</p>
