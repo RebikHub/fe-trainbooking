@@ -14,7 +14,10 @@ export const sliceFilter = createSlice({
       wifi: false,
       express: false
     },
-    filterPrices: {},
+    filterPrices: {
+      start: 0,
+      end: 7000
+    },
     filterTimeFrom: null,
     filterTimeTo: null,
     filterProcess: false
@@ -36,91 +39,36 @@ export const sliceFilter = createSlice({
     addFilterTimeTo: (state, actions) => {
       state.filterTimeTo = actions.payload;
     },
-    filteringSeats: (state, actions) => {
-      state.filterSeats = actions.payload;
-      state.filterProcess = false;
+    filtering: (state, actions) => {
       state.filteredRoutes = [];
-      if (state.filterSeats.lux === true) {
-        if (state.filterProcess) {
-          state.filteredRoutes = state.filteredRoutes.filter((el) =>
-          el.departure.have_first_class === true);
-        } else {
-          state.filteredRoutes = state.currentRoutes.filter((el) =>
-          el.departure.have_first_class === true);
-          state.filterProcess = true;
-        }
-      }
-      if (state.filterSeats.coupe === true) {
-        if (state.filterProcess) {
-          state.filteredRoutes = state.filteredRoutes.filter((el) =>
-          el.departure.have_second_class === true);
-        } else {
-          state.filteredRoutes = state.currentRoutes.filter((el) =>
-          el.departure.have_second_class === true);
-          state.filterProcess = true;
-        }
-      }
-      if (state.filterSeats.reserved === true) {
-        if (state.filterProcess) {
-          state.filteredRoutes = state.filteredRoutes.filter((el) =>
-          el.departure.have_third_class === true);
-        } else {
-          state.filteredRoutes = state.currentRoutes.filter((el) =>
-          el.departure.have_third_class === true);
-          state.filterProcess = true;
-        }
-      }
-      if (state.filterSeats.seated === true) {
-        if (state.filterProcess) {
-          state.filteredRoutes = state.filteredRoutes.filter((el) =>
-          el.departure.have_fourth_class === true);
-        } else {
-          state.filteredRoutes = state.currentRoutes.filter((el) =>
-          el.departure.have_fourth_class === true);
-          state.filterProcess = true;
-        }
-      }
-      if (state.filterSeats.wifi === true) {
-        if (state.filterProcess) {
-          state.filteredRoutes = state.filteredRoutes.filter((el) =>
-          el.departure.have_wifi === true);
-        } else {
-          state.filteredRoutes = state.currentRoutes.filter((el) =>
-          el.departure.have_wifi === true);
-          state.filterProcess = true;
-        }
-      }
-      if (state.filterSeats.express === true) {
-        if (state.filterProcess) {
-          state.filteredRoutes = state.filteredRoutes.filter((el) =>
-          el.departure.is_express === true);
-        } else {
-          state.filteredRoutes = state.currentRoutes.filter((el) =>
-          el.departure.is_express === true);
-          state.filterProcess = true;
-        }
-      }
-    },
-    filteringPrice: (state, actions) => {
-      state.filterPrices.start = actions.payload.start;
-      state.filterPrices.end = actions.payload.end;
-      // state.filterProcess = false;
-      // state.filteredRoutes = [];
-      if (state.filteredRoutes.length !== 0 && state.filterProcess === true) {
-        state.filterProcess = false;
+      state.filteredRoutes = state.currentRoutes;
+
+      if (state.filterSeats.lux) {
+        state.filteredRoutes = state.filteredRoutes.filter((el) => el.departure.have_first_class === true);
       };
 
-      if (state.currentRoutes.length !== 0) {
-        if (state.filterProcess) {
-          state.filteredRoutes = actions.payload.filterPrices(
-            actions.payload.start, actions.payload.end, state.filteredRoutes);
-        } else {
-          state.filteredRoutes = actions.payload.filterPrices(
-            actions.payload.start, actions.payload.end, state.currentRoutes);
-          state.filterProcess = true;
-        };
+      if (state.filterSeats.coupe) {
+        state.filteredRoutes = state.filteredRoutes.filter((el) => el.departure.have_second_class === true);
       };
 
+      if (state.filterSeats.reserved) {
+        state.filteredRoutes = state.filteredRoutes.filter((el) => el.departure.have_third_class === true);
+      };
+
+      if (state.filterSeats.seated) {
+        state.filteredRoutes = state.filteredRoutes.filter((el) => el.departure.have_fourth_class === true);
+      };
+
+      if (state.filterSeats.wifi) {
+        state.filteredRoutes = state.filteredRoutes.filter((el) => el.departure.have_wifi === true);
+      };
+
+      if (state.filterSeats.express) {
+        state.filteredRoutes = state.filteredRoutes.filter((el) => el.departure.is_express === true);
+      };
+
+      state.filteredRoutes = actions.payload.filteringPricesRange(
+        state.filterPrices.start, state.filterPrices.end, state.filteredRoutes);
     },
     changeFilterSeat: (state, actions) => {
       console.log(state, actions.payload);
@@ -138,8 +86,7 @@ export const {
   addFilterPrices,
   addFilterTimeFrom,
   addFilterTimeTo,
-  filteringSeats,
-  filteringPrice,
+  filtering,
   stopFiltering,
   changeFilterSeat
 } = sliceFilter.actions;

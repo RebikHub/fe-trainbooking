@@ -3,11 +3,12 @@ import '../styles/list-routes.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { currentStepOne } from '../store/sliceProgressLine';
 import TrainRoute from './TrainRoute';
-import { addRoutes } from '../store/sliceFilter';
+import { addRoutes, filtering } from '../store/sliceFilter';
+import { filteringPricesRange } from '../utils/minMaxPrices';
 
 export default function ListRoutes() {
   const { loading, route } = useSelector((state) => state.sliceGetRoute);
-  const { filterProcess, filteredRoutes, filterSeats, filterPrices } = useSelector((state) => state.sliceFilter);
+  const { filteredRoutes, filterSeats, filterPrices } = useSelector((state) => state.sliceFilter);
   const dispatch = useDispatch();
   const [list, setList] = useState([]);
   const [none, setNone] = useState('none');
@@ -15,18 +16,23 @@ export default function ListRoutes() {
   const [pages, setPages] = useState([]);
 
   useEffect(() => {
-    console.log('ue list ', filterProcess, filteredRoutes);
-    if (filterProcess) {
-      setList(filteredRoutes)
-    } else {
-      setList(route.items)
-    };
+    dispatch(filtering({
+      start: filterPrices.start,
+      end: filterPrices.end,
+      filteringPricesRange,
+    }));
+  }, [filterSeats, filterPrices]);
 
-  }, [filterProcess, filterSeats, filterPrices]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setList(filteredRoutes), 500);
+    return () => clearTimeout(timer);
+  }, [filteredRoutes]);
 
   useEffect(() => {
     if (route.items && route.items.length > 0) {
       dispatch(addRoutes(route.items));
+      setList(route.items);
     };
   }, [loading, route]);
 

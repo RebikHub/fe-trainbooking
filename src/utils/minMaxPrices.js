@@ -60,6 +60,6 @@ export function minMaxPrices(array) {
   };
 };
 
-export function filterPrices(min, max, array) {
+export function filteringPricesRange(min, max, array) {
   return array.filter((e) => minMaxPrices([e]).allPrices.some((el) => min <= el && max >= el));
 };

@@ -3,13 +3,13 @@ import Calendar from './Calendar';
 import '../styles/filter.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { choiceDateFrom, choiceDateTo } from '../store/sliceChoice';
-import { filteringPrice, filteringSeats, stopFiltering } from '../store/sliceFilter';
-import { filterPrices, minMaxPrices } from '../utils/minMaxPrices';
+import { addFilterPrices, addFilterSeats } from '../store/sliceFilter';
+import { minMaxPrices } from '../utils/minMaxPrices';
 import secondsToTime from '../utils/secondsToTime';
 
 export default function FilterRoute() {
   const { fromDate, toDate } = useSelector((state) => state.sliceChoice);
-  const { currentRoutes, filteredRoutes, filterProcess } = useSelector((state) => state.sliceFilter);
+  const { currentRoutes } = useSelector((state) => state.sliceFilter);
   const dispatch = useDispatch();
 
   const [hidden, setHidden] = useState({
@@ -28,7 +28,6 @@ export default function FilterRoute() {
     start: 0,
     end: 7000
   });
-  const [changePrice, setChangePrice] = useState(false);
   const [none, setNone] = useState({
     there: true,
     back: true
@@ -70,35 +69,45 @@ export default function FilterRoute() {
         start: prices.minPrice,
         end: prices.maxPrice
       });
-      setChangePrice(false);
-    }
+    };
   }, [currentRoutes]);
 
   useEffect(() => {
-    console.log('eu changePrice ', changePrice);
-    if (changePrice) {
-      dispatch(filteringPrice({
-          start: price.start,
-          end: price.end,
-          filterPrices,
-        }));
-    };
+    dispatch(addFilterPrices({
+        start: price.start,
+        end: price.end
+      }));
   }, [price]);
 
   useEffect(() => {
-    if (check.coupe === false &&
-      check.reserved === false &&
-      check.seated === false &&
-      check.lux === false &&
-      check.wifi === false &&
-      check.express === false) {
-        dispatch(stopFiltering());
-      };
-
-    if (currentRoutes) {
-      dispatch(filteringSeats(check));
-    };
+      dispatch(addFilterSeats(check));
   }, [check]);
+
+  // useEffect(() => {
+  //   console.log('eu changePrice ', changePrice);
+  //   if (changePrice) {
+  //     dispatch(filteringPrice({
+  //         start: price.start,
+  //         end: price.end,
+  //         filterPrices,
+  //       }));
+  //   };
+  // }, [price]);
+
+  // useEffect(() => {
+  //   if (check.coupe === false &&
+  //     check.reserved === false &&
+  //     check.seated === false &&
+  //     check.lux === false &&
+  //     check.wifi === false &&
+  //     check.express === false) {
+  //       dispatch(stopFiltering());
+  //     };
+
+  //   if (currentRoutes) {
+  //     dispatch(filteringSeats(check));
+  //   };
+  // }, [check]);
 
   function inputDateFrom(ev) {
     dispatch(choiceDateFrom(ev.target.value));
@@ -139,14 +148,12 @@ export default function FilterRoute() {
   function changeStartPrice(ev) {
     if (Number(ev.target.value) <= price.end) {
       setPrice({...price, start: Number(ev.target.value)});
-      setChangePrice(true);
     };
   };
 
   function changeEndPrice(ev) {
     if (Number(ev.target.value) >= price.start) {
       setPrice({...price, end: Number(ev.target.value)});
-      setChangePrice(true);
     };
   };
 
