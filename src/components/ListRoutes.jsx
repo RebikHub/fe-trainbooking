@@ -7,29 +7,28 @@ import { addRoutes } from '../store/sliceFilter';
 
 export default function ListRoutes() {
   const { loading, route } = useSelector((state) => state.sliceGetRoute);
-  const { filterProcess, filteredRoutes, filterSeats } = useSelector((state) => state.sliceFilter);
+  const { filterProcess, filteredRoutes, filterSeats, filterPrices } = useSelector((state) => state.sliceFilter);
   const dispatch = useDispatch();
   const [list, setList] = useState([]);
   const [none, setNone] = useState('none');
   const [select, setSelect] = useState('времени');
   const [pages, setPages] = useState([]);
 
-  console.log("filterProcess ", filterProcess);
-
   useEffect(() => {
+    console.log('ue list ', filterProcess, filteredRoutes);
     if (filterProcess) {
       setList(filteredRoutes)
     } else {
       setList(route.items)
     };
 
-  }, [filterProcess, filterSeats]);
+  }, [filterProcess, filterSeats, filterPrices]);
 
   useEffect(() => {
-    if (route) {
+    if (route.items && route.items.length > 0) {
       dispatch(addRoutes(route.items));
     };
-  }, [route]);
+  }, [loading, route]);
 
   useEffect(() => {
     if (!loading) {

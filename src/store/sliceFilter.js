@@ -14,7 +14,7 @@ export const sliceFilter = createSlice({
       wifi: false,
       express: false
     },
-    filterPrices: null,
+    filterPrices: {},
     filterTimeFrom: null,
     filterTimeTo: null,
     filterProcess: false
@@ -42,63 +42,82 @@ export const sliceFilter = createSlice({
       state.filteredRoutes = [];
       if (state.filterSeats.lux === true) {
         if (state.filterProcess) {
-          state.filteredRoutes = state.filteredRoutes.filter(
-            (el) => el.departure.have_first_class === true
-          );
+          state.filteredRoutes = state.filteredRoutes.filter((el) =>
+          el.departure.have_first_class === true);
         } else {
-          state.filteredRoutes = state.currentRoutes.filter((el) => el.departure.have_first_class === true);
+          state.filteredRoutes = state.currentRoutes.filter((el) =>
+          el.departure.have_first_class === true);
           state.filterProcess = true;
         }
       }
       if (state.filterSeats.coupe === true) {
         if (state.filterProcess) {
-          state.filteredRoutes = state.filteredRoutes.filter(
-            (el) => el.departure.have_second_class === true
-          );
+          state.filteredRoutes = state.filteredRoutes.filter((el) =>
+          el.departure.have_second_class === true);
         } else {
-          state.filteredRoutes = state.currentRoutes.filter((el) => el.departure.have_second_class === true);
+          state.filteredRoutes = state.currentRoutes.filter((el) =>
+          el.departure.have_second_class === true);
           state.filterProcess = true;
         }
       }
       if (state.filterSeats.reserved === true) {
         if (state.filterProcess) {
-          state.filteredRoutes = state.filteredRoutes.filter(
-            (el) => el.departure.have_third_class === true
-          );
+          state.filteredRoutes = state.filteredRoutes.filter((el) =>
+          el.departure.have_third_class === true);
         } else {
-          state.filteredRoutes = state.currentRoutes.filter((el) => el.departure.have_third_class === true);
+          state.filteredRoutes = state.currentRoutes.filter((el) =>
+          el.departure.have_third_class === true);
           state.filterProcess = true;
         }
       }
       if (state.filterSeats.seated === true) {
         if (state.filterProcess) {
-          state.filteredRoutes = state.filteredRoutes.filter(
-            (el) => el.departure.have_fourth_class === true
-          );
+          state.filteredRoutes = state.filteredRoutes.filter((el) =>
+          el.departure.have_fourth_class === true);
         } else {
-          state.filteredRoutes = state.currentRoutes.filter((el) => el.departure.have_fourth_class === true);
+          state.filteredRoutes = state.currentRoutes.filter((el) =>
+          el.departure.have_fourth_class === true);
           state.filterProcess = true;
         }
       }
       if (state.filterSeats.wifi === true) {
         if (state.filterProcess) {
-          state.filteredRoutes = state.filteredRoutes.filter((el) => el.departure.have_wifi === true);
+          state.filteredRoutes = state.filteredRoutes.filter((el) =>
+          el.departure.have_wifi === true);
         } else {
-          state.filteredRoutes = state.currentRoutes.filter((el) => el.departure.have_wifi === true);
+          state.filteredRoutes = state.currentRoutes.filter((el) =>
+          el.departure.have_wifi === true);
           state.filterProcess = true;
         }
       }
       if (state.filterSeats.express === true) {
         if (state.filterProcess) {
-          state.filteredRoutes = state.filteredRoutes.filter((el) => el.departure.is_express === true);
+          state.filteredRoutes = state.filteredRoutes.filter((el) =>
+          el.departure.is_express === true);
         } else {
-          state.filteredRoutes = state.currentRoutes.filter((el) => el.departure.is_express === true);
+          state.filteredRoutes = state.currentRoutes.filter((el) =>
+          el.departure.is_express === true);
           state.filterProcess = true;
         }
       }
     },
     filteringPrice: (state, actions) => {
-      state.filteredRoutes = actions.payload;
+      state.filterPrices.start = actions.payload.start;
+      state.filterPrices.end = actions.payload.end;
+      // state.filterProcess = false;
+      // state.filteredRoutes = [];
+      if (state.filteredRoutes.length === 0 && state.filterProcess === true) {
+        state.filterProcess = false;
+      };
+
+      if (state.filterProcess) {
+        state.filteredRoutes = actions.payload.filterPrices(
+          actions.payload.start, actions.payload.end, state.currentRoutes);
+      } else {
+        state.filteredRoutes = actions.payload.filterPrices(
+          actions.payload.start, actions.payload.end, state.filteredRoutes);
+        state.filterProcess = true;
+      };
     },
     changeFilterSeat: (state, actions) => {
       console.log(state, actions.payload);

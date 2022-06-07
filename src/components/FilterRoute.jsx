@@ -4,14 +4,14 @@ import '../styles/filter.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { choiceDateFrom, choiceDateTo } from '../store/sliceChoice';
 import { filteringPrice, filteringSeats, stopFiltering } from '../store/sliceFilter';
-import { filterPrices, minMaxPrices } from '../minMaxPrices';
-import secondsToTime from '../secondsToTime';
+import { filterPrices, minMaxPrices } from '../utils/minMaxPrices';
+import secondsToTime from '../utils/secondsToTime';
 
 export default function FilterRoute() {
   const { fromDate, toDate } = useSelector((state) => state.sliceChoice);
-  const { currentRoutes } = useSelector((state) => state.sliceFilter);
+  const { currentRoutes, filteredRoutes, filterProcess } = useSelector((state) => state.sliceFilter);
   const dispatch = useDispatch();
-  console.log(currentRoutes);
+
   const [hidden, setHidden] = useState({
     from: 'none',
     to: 'none'
@@ -63,7 +63,7 @@ export default function FilterRoute() {
   const minBackArrival = 0;
 
   useEffect(() => {
-    if (currentRoutes) {
+    if (currentRoutes && currentRoutes.length > 0) {
       const prices = minMaxPrices(currentRoutes);
       setPrice({
         start: prices.minPrice,
@@ -73,9 +73,13 @@ export default function FilterRoute() {
   }, [currentRoutes]);
 
   useEffect(() => {
-    if (currentRoutes) {
-      dispatch(filteringPrice(filterPrices(price.start, price.end, currentRoutes)));
-    }
+    if (currentRoutes && currentRoutes.length > 0) {
+      dispatch(filteringPrice({
+          start: price.start,
+          end: price.end,
+          filterPrices,
+        }));
+    };
   }, [price]);
 
   useEffect(() => {

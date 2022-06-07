@@ -1,5 +1,5 @@
 export function minMaxPrices(array) {
-  if (array) {
+  if (array && array.length > 0) {
   const pricesClasses = array.map((el) => el.departure.price_info);
   const allPrices = [];
   pricesClasses.map((el) => {

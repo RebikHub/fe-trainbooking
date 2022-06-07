@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/calendar.css';
-import { date, monthInWeeks } from '../date';
+import { date, monthInWeeks } from '../utils/date';
 import DaysInWeek from './DaysInWeek';
 import { useSelector } from 'react-redux';
 
