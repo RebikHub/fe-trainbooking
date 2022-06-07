@@ -106,18 +106,21 @@ export const sliceFilter = createSlice({
       state.filterPrices.end = actions.payload.end;
       // state.filterProcess = false;
       // state.filteredRoutes = [];
-      if (state.filteredRoutes.length === 0 && state.filterProcess === true) {
+      if (state.filteredRoutes.length !== 0 && state.filterProcess === true) {
         state.filterProcess = false;
       };
 
-      if (state.filterProcess) {
-        state.filteredRoutes = actions.payload.filterPrices(
-          actions.payload.start, actions.payload.end, state.currentRoutes);
-      } else {
-        state.filteredRoutes = actions.payload.filterPrices(
-          actions.payload.start, actions.payload.end, state.filteredRoutes);
-        state.filterProcess = true;
+      if (state.currentRoutes.length !== 0) {
+        if (state.filterProcess) {
+          state.filteredRoutes = actions.payload.filterPrices(
+            actions.payload.start, actions.payload.end, state.filteredRoutes);
+        } else {
+          state.filteredRoutes = actions.payload.filterPrices(
+            actions.payload.start, actions.payload.end, state.currentRoutes);
+          state.filterProcess = true;
+        };
       };
+
     },
     changeFilterSeat: (state, actions) => {
       console.log(state, actions.payload);

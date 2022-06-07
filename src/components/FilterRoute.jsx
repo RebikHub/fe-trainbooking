@@ -28,6 +28,7 @@ export default function FilterRoute() {
     start: 0,
     end: 7000
   });
+  const [changePrice, setChangePrice] = useState(false);
   const [none, setNone] = useState({
     there: true,
     back: true
@@ -68,12 +69,14 @@ export default function FilterRoute() {
       setPrice({
         start: prices.minPrice,
         end: prices.maxPrice
-      })
+      });
+      setChangePrice(false);
     }
   }, [currentRoutes]);
 
   useEffect(() => {
-    if (currentRoutes && currentRoutes.length > 0) {
+    console.log('eu changePrice ', changePrice);
+    if (changePrice) {
       dispatch(filteringPrice({
           start: price.start,
           end: price.end,
@@ -136,12 +139,14 @@ export default function FilterRoute() {
   function changeStartPrice(ev) {
     if (Number(ev.target.value) <= price.end) {
       setPrice({...price, start: Number(ev.target.value)});
+      setChangePrice(true);
     };
   };
 
   function changeEndPrice(ev) {
     if (Number(ev.target.value) >= price.start) {
       setPrice({...price, end: Number(ev.target.value)});
+      setChangePrice(true);
     };
   };
 
