@@ -98,7 +98,7 @@ export const sliceFilter = createSlice({
       }
     },
     filteringPrice: (state, actions) => {
-      console.log(state);
+      state.filteredRoutes = actions.payload;
     },
     changeFilterSeat: (state, actions) => {
       console.log(state, actions.payload);

@@ -3,8 +3,9 @@ import Calendar from './Calendar';
 import '../styles/filter.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { choiceDateFrom, choiceDateTo } from '../store/sliceChoice';
-import { filteringSeats, stopFiltering } from '../store/sliceFilter';
-import minMaxPrices from '../minMaxPrices';
+import { filteringPrice, filteringSeats, stopFiltering } from '../store/sliceFilter';
+import { filterPrices, minMaxPrices } from '../minMaxPrices';
+import secondsToTime from '../secondsToTime';
 
 export default function FilterRoute() {
   const { fromDate, toDate } = useSelector((state) => state.sliceChoice);
@@ -31,7 +32,6 @@ export default function FilterRoute() {
     there: true,
     back: true
   });
-
   const [thereDeparture, setThereDeparture] = useState({
     start: 0,
     end: 86400
@@ -52,8 +52,7 @@ export default function FilterRoute() {
     end: 86400
   })
 
-  let maxPrice = 7000;
-  let minPrice = 0;
+  let { maxPrice, minPrice } = minMaxPrices(currentRoutes);
   const maxThereDeparture = 86400;
   const minThereDeparture = 0;
   const maxThereArrival = 86400;
@@ -66,14 +65,18 @@ export default function FilterRoute() {
   useEffect(() => {
     if (currentRoutes) {
       const prices = minMaxPrices(currentRoutes);
-      maxPrice = prices.maxPrice;
-      minPrice = prices.minPrice;
       setPrice({
         start: prices.minPrice,
         end: prices.maxPrice
       })
     }
   }, [currentRoutes]);
+
+  useEffect(() => {
+    if (currentRoutes) {
+      dispatch(filteringPrice(filterPrices(price.start, price.end, currentRoutes)));
+    }
+  }, [price]);
 
   useEffect(() => {
     if (check.coupe === false &&
@@ -125,20 +128,6 @@ export default function FilterRoute() {
       setHidden({...hidden, to: 'none'});
     };
   };
-
-  function secondsToTime(sec) {
-    let min = Math.floor(sec / 60);
-    let hour = Math.floor(min/60);
-    min -= (hour * 60);
-    if (hour < 9) {
-      hour = '0' + hour;
-    };
-    if (min < 9) {
-      min = '0' + min;
-    };
-    
-    return `${hour}:${min}`
-  }
 
   function changeStartPrice(ev) {
     if (Number(ev.target.value) <= price.end) {
@@ -201,19 +190,19 @@ export default function FilterRoute() {
   };
 
   function leftValue(max, min, start) {
-    return (100 / (max - min)) * start;
+    return (100 / (max - min)) * (start - min);
   };
-
+  
   function rightValue(max, min, end) {
-    return (100 / (max - min)) * ((max - min) - end);
+    return (100 / (max - min)) * ((max - min) - (end - min));
   };
-
+  
   function startValue(max, min, start) {
-    return 260 * (((100 / (max - min)) * start) / 100);
+    return 260 * (((100 / (max - min)) * (start - min)) / 100);
   };
-
+  
   function endValue(max, min, end) {
-    return 260 * (((100 / (max - min)) * ((max - min) - end)) / 100);
+    return 260 * (((100 / (max - min)) * ((max - min) - (end - min))) / 100);
   };
 
   return (
@@ -237,49 +226,48 @@ export default function FilterRoute() {
           <Calendar none={hidden.to} getDate={getDate}/>
         </div>
       </div>
-      {/* <Calendar none={hidden.date} getDate={getDate}/> */}
       <div className='filter-line'></div>
 
       <div className='filter-checkboxes'>
         <div className='checkbox-coupe'>
           <span className='coupe-img'></span>
           <p className='checkbox-text'>Купе</p>
-          <div className={`check-element check-${check.coupe}`} onClick={() => setCheck({...check, coupe: !check.coupe})}>
+          <div className={`check-element check-${check.coupe ? 'true' : 'false'}`} onClick={() => setCheck({...check, coupe: !check.coupe})}>
             <input className='checkbox-input' type="checkbox" defaultChecked={check.coupe}/>
           </div>
         </div>
         <div className='checkbox-reserved-seat'>
           <span className='reserved-seat-img'></span>
           <p className='checkbox-text'>Плацкарт</p>
-          <div className={`check-element check-${check.reserved}`} onClick={() => setCheck({...check, reserved: !check.reserved})}>
+          <div className={`check-element check-${check.reserved ? 'true' : 'false'}`} onClick={() => setCheck({...check, reserved: !check.reserved})}>
             <input className='checkbox-input' type="checkbox" defaultChecked={check.reserved}/>
           </div>
         </div>
         <div className='checkbox-seated'>
           <span className='seated-img'></span>
           <p className='checkbox-text'>Сидячий</p>
-          <div className={`check-element check-${check.seated}`} onClick={() => setCheck({...check, seated: !check.seated})}>
+          <div className={`check-element check-${check.seated ? 'true' : 'false'}`} onClick={() => setCheck({...check, seated: !check.seated})}>
             <input className='checkbox-input' type="checkbox" defaultChecked={check.seated}/>
           </div>
         </div>
         <div className='checkbox-lux'>
           <span className='lux-img'></span>
           <p className='checkbox-text'>Люкс</p>
-          <div className={`check-element check-${check.lux}`} onClick={() => setCheck({...check, lux: !check.lux})}>
+          <div className={`check-element check-${check.lux ? 'true' : 'false'}`} onClick={() => setCheck({...check, lux: !check.lux})}>
             <input className='checkbox-input' type="checkbox" defaultChecked={check.lux}/>
           </div>
         </div>
         <div className='checkbox-wifi'>
           <span className='wifi-img'></span>
           <p className='checkbox-text'>Wi-Fi</p>
-          <div className={`check-element check-${check.wifi}`} onClick={() => setCheck({...check, wifi: !check.wifi})}>
+          <div className={`check-element check-${check.wifi ? 'true' : 'false'}`} onClick={() => setCheck({...check, wifi: !check.wifi})}>
             <input className='checkbox-input' type="checkbox" defaultChecked={check.wifi}/>
           </div>
         </div>
         <div className='checkbox-express'>
           <span className='express-img'></span>
           <p className='checkbox-text'>Экспресс</p>
-          <div className={`check-element check-${check.express}`} onClick={() => setCheck({...check, express: !check.express})}>
+          <div className={`check-element check-${check.express ? 'true' : 'false'}`} onClick={() => setCheck({...check, express: !check.express})}>
             <input className='checkbox-input' type="checkbox" defaultChecked={check.express}/>
           </div>
         </div>
