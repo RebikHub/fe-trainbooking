@@ -47,7 +47,7 @@ export const getLastRoutesEpic = (action$) => action$.pipe(
 
 export const getSeatsEpic = (action$) => action$.pipe(
   ofType(requestGetSeats),
-  map((o) => o.trim()),
+  map((o) => console.log(o)),
   switchMap((o) => {
     return ajax.getJSON(`${process.env.REACT_APP_API_URL}routes/${o.payload}/seats`).pipe(
     retry(3),

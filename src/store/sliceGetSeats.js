@@ -5,21 +5,21 @@ export const sliceGetSeats = createSlice({
   name: 'sliceGetSeats',
   initialState: {
     coaches: [],
-    loading: false,
+    loadingSeats: false,
     error: false
   },
   reducers: {
     requestGetSeats: (state, actions) => {
-      state.loading = true;
+      state.loadingSeats = true;
       state.error = false;
     },
     successGetSeats: (state, actions) => {
       state.coaches = actions.payload;
-      state.loading = false;
+      state.loadingSeats = false;
       state.error = false
     },
     errorGetSeats: (state, actions) => {
-      state.loading = false;
+      state.loadingSeats = false;
       state.error = actions.payload;
     },
   }

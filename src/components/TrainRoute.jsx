@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { requestGetSeats } from '../store/sliceGetSeats';
 import '../styles/train-route.css';
 import { dateFromAndTo, duration } from '../utils/trainDate';
 import TrainRouteSeats from './TrainRouteSeats';
@@ -45,6 +46,10 @@ export default function TrainRoute({route}) {
 
     setTrain(arrayInfo);
   }, []);
+
+  function getCoaches() {
+    dispatch(requestGetSeats(route.departure._id));
+  };
 
   return (
     <div className='train-route'>
@@ -102,7 +107,7 @@ export default function TrainRoute({route}) {
           <span className={`${route.departure.have_air_conditioning ? 'facilities-coffee-have' : 'train-facilities-coffee'}`}></span>
         </div>
 
-        <button type='button' className='train-choice-btn'>Выбрать места</button>
+        <button type='button' className='train-choice-btn' onClick={getCoaches}>Выбрать места</button>
       </div>
     </div>
   )
