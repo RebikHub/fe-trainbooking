@@ -3,7 +3,7 @@ import Calendar from './Calendar';
 import '../styles/filter.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { choiceDateFrom, choiceDateTo } from '../store/sliceChoice';
-import { addFilterPrices, addFilterSeats } from '../store/sliceFilter';
+import { addFilterPrices, addFilterSeats, addFilterTimeFrom, addFilterTimeTo } from '../store/sliceFilter';
 import { minMaxPrices } from '../utils/minMaxPrices';
 import secondsToTime from '../utils/secondsToTime';
 
@@ -83,31 +83,19 @@ export default function FilterRoute() {
       dispatch(addFilterSeats(check));
   }, [check]);
 
-  // useEffect(() => {
-  //   console.log('eu changePrice ', changePrice);
-  //   if (changePrice) {
-  //     dispatch(filteringPrice({
-  //         start: price.start,
-  //         end: price.end,
-  //         filterPrices,
-  //       }));
-  //   };
-  // }, [price]);
+  useEffect(() => {
+    dispatch(addFilterTimeFrom({
+      thereDeparture,
+      thereArrival
+    }));
+  }, [thereDeparture, thereArrival]);
 
-  // useEffect(() => {
-  //   if (check.coupe === false &&
-  //     check.reserved === false &&
-  //     check.seated === false &&
-  //     check.lux === false &&
-  //     check.wifi === false &&
-  //     check.express === false) {
-  //       dispatch(stopFiltering());
-  //     };
-
-  //   if (currentRoutes) {
-  //     dispatch(filteringSeats(check));
-  //   };
-  // }, [check]);
+  useEffect(() => {
+    dispatch(addFilterTimeTo({
+      backDeparture,
+      backArrival
+    }));
+  }, [backDeparture, backArrival]);
 
   function inputDateFrom(ev) {
     dispatch(choiceDateFrom(ev.target.value));
@@ -336,7 +324,7 @@ export default function FilterRoute() {
             } onClick={() => setNone({...none, there: !none.there})}></span>
         </div>
 
-        <div className={none.there && 'none'}>
+        <div className={none.there ? 'none' : `${none.there}`}>
           <div className='time-range-there'>
             <div className='time-range-text'>
               <p>Время отбытия</p>
@@ -418,7 +406,7 @@ export default function FilterRoute() {
           } onClick={() => setNone({...none, back: !none.back})}></span>
         </div>
 
-        <div className={none.back && 'none'}>
+        <div className={none.back ? 'none' : `${none.back}`}>
           <div className='time-range-back'>
             <div className='time-range-text'>
               <p>Время отбытия</p>

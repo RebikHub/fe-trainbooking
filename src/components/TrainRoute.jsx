@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import '../styles/train-route.css';
+import { dateFromAndTo, duration } from '../utils/trainDate';
 import TrainRouteSeats from './TrainRouteSeats';
 
 export default function TrainRoute({route}) {
@@ -44,20 +45,6 @@ export default function TrainRoute({route}) {
 
     setTrain(arrayInfo);
   }, []);
-
-  function duration(time) {
-    const mins = Math.floor(time/60);
-    const hours = Math.floor(mins/60);
-    const min = mins - (hours * 60);
-    return `${hours}:${min < 10 ? '0' + min : min}`;
-  };
-
-  function dateFromAndTo(time) {
-    const date = new Date(time * 1000);
-    const hours = date.getHours();
-    const mins = date.getMinutes();
-    return `${hours < 10 ? '0' + hours : hours}:${mins < 10 ? '0' + mins : mins}`
-  };
 
   return (
     <div className='train-route'>

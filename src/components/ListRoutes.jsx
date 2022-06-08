@@ -6,18 +6,25 @@ import TrainRoute from './TrainRoute';
 import { addRoutes, filtering } from '../store/sliceFilter';
 import { filteringPricesRange } from '../utils/minMaxPrices';
 import { sortingDuration, sortingPrices, sortingTime } from '../utils/sortingTrain';
+import { timeForSort } from '../utils/trainDate';
 
 export default function ListRoutes() {
   const { loading, route } = useSelector((state) => state.sliceGetRoute);
-  const { filteredRoutes, filterSeats, filterPrices } = useSelector((state) => state.sliceFilter);
+  const {
+    filteredRoutes,
+    filterSeats,
+    filterPrices,
+    filterTimeFrom,
+    filterTimeTo
+  } = useSelector((state) => state.sliceFilter);
   const dispatch = useDispatch();
   const [list, setList] = useState([]);
   const [none, setNone] = useState('none');
   const [select, setSelect] = useState('времени');
   const [pages, setPages] = useState([]);
-  const [showOnPages, setShowOnPages] = useState(2);
+  const [showOnPages, setShowOnPages] = useState(5);
   const [startSlice, setStartSlice] = useState(0);
-  const [endSlice, setEndSlice] = useState(2);
+  const [endSlice, setEndSlice] = useState(5);
   const [lengthPage, setLengthPage] = useState();
 
   useEffect(() => {
@@ -25,9 +32,9 @@ export default function ListRoutes() {
       start: filterPrices.start,
       end: filterPrices.end,
       filteringPricesRange,
+      timeForSort
     }));
-  }, [filterSeats, filterPrices]);
-
+  }, [filterSeats, filterPrices, filterTimeFrom, filterTimeTo]);
 
   useEffect(() => {
     const timer = setTimeout(() => setList(filteredRoutes), 500);
@@ -105,29 +112,23 @@ export default function ListRoutes() {
   function prevPage() {
     if (startSlice >= lengthPage) {
       setStartSlice(startSlice - lengthPage);
-    } else {
-      setStartSlice(0);
     };
 
     if (endSlice >= lengthPage * 2) {
       setEndSlice(endSlice - lengthPage);
-    } else {
-      setEndSlice(endSlice);
     };
+
   };
 
-  function nextPage(params) {
-    // if (startSlice >= lengthPage) {
+  function nextPage() {
+    if (startSlice < (lengthPage * (pages.length - 1))) {
       setStartSlice(startSlice + lengthPage);
-    // } else {
-    //   setStartSlice(0);
-    // };
+    };
 
-    // if (showOnPages >= lengthPage * 2) {
+    if (endSlice < lengthPage * pages.length) {
       setEndSlice(endSlice + lengthPage);
-    // } else {
-    //   setShowOnPages(showOnPages);
-    // };
+    };
+
   };
 
   if (!list || !list.length) {
@@ -153,9 +154,9 @@ export default function ListRoutes() {
         </div>
         <div className='list-routes-show'>
           <p>показывать по </p>
-          <span onClick={getShowOnPages}>2</span>
-          <span onClick={getShowOnPages}>3</span>
           <span onClick={getShowOnPages}>5</span>
+          <span onClick={getShowOnPages}>10</span>
+          <span onClick={getShowOnPages}>20</span>
         </div>
       </header>
 

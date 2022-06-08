@@ -18,8 +18,26 @@ export const sliceFilter = createSlice({
       start: 0,
       end: 7000
     },
-    filterTimeFrom: null,
-    filterTimeTo: null,
+    filterTimeFrom: {
+      thereDeparture: {
+        start: 0,
+        end: 86400
+      },
+      thereArrival: {
+        start: 0,
+        end: 86400
+      }
+    },
+    filterTimeTo: {
+      backDeparture: {
+        start: 0,
+        end: 86400
+      },
+      backArrival: {
+        start: 0,
+        end: 86400
+      }
+    },
     filterProcess: false
   },
   reducers: {
@@ -69,6 +87,17 @@ export const sliceFilter = createSlice({
 
       state.filteredRoutes = actions.payload.filteringPricesRange(
         state.filterPrices.start, state.filterPrices.end, state.filteredRoutes);
+
+      state.filteredRoutes = state.filteredRoutes.filter((el) =>
+        actions.payload.timeForSort(el.departure.from.datetime) >
+        state.filterTimeFrom.thereDeparture.start &&
+        actions.payload.timeForSort(el.departure.from.datetime) <
+        state.filterTimeFrom.thereDeparture.end &&
+        actions.payload.timeForSort(el.departure.to.datetime) >
+        state.filterTimeFrom.thereArrival.start &&
+        actions.payload.timeForSort(el.departure.to.datetime) <
+        state.filterTimeFrom.thereArrival.end
+      );
     },
     changeFilterSeat: (state, actions) => {
       console.log(state, actions.payload);
