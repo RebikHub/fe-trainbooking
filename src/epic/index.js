@@ -5,6 +5,7 @@ import { searchCity } from "../store/sliceChoice";
 import { errorGetCity, requestGetCity, successGetCity } from "../store/sliceGetCity";
 import { errorGetLastRoutes, requestGetLastRoutes, successGetLastRoutes } from "../store/sliceGetLastRoutes";
 import { getRouteError, getRouteRequest, getRouteSuccess } from "../store/sliceGetRoute";
+import { errorGetSeats, requestGetSeats, successGetSeats } from "../store/sliceGetSeats";
 
 export const getCitiesEpic = (action$) => action$.pipe(
   ofType(searchCity),
@@ -19,7 +20,7 @@ export const getCitiesEpic = (action$) => action$.pipe(
   )})
 );
 
-export const getRoutes = (action$) => action$.pipe(
+export const getRoutesEpic = (action$) => action$.pipe(
   ofType(getRouteRequest),
   debounceTime(2000),
   tap((o) => console.log('request ', o)),
@@ -32,7 +33,7 @@ export const getRoutes = (action$) => action$.pipe(
   )})
 );
 
-export const getLastRoutes = (action$) => action$.pipe(
+export const getLastRoutesEpic = (action$) => action$.pipe(
   ofType(requestGetLastRoutes),
   tap((o) => console.log('request last ', o)),
   switchMap((o) => {
@@ -41,5 +42,16 @@ export const getLastRoutes = (action$) => action$.pipe(
     tap((obj) => console.log('response last ', obj)),
     map((o) => successGetLastRoutes(o)),
     catchError((e) => of(errorGetLastRoutes(e)))
+  )})
+);
+
+export const getSeatsEpic = (action$) => action$.pipe(
+  ofType(requestGetSeats),
+  map((o) => o.trim()),
+  switchMap((o) => {
+    return ajax.getJSON(`${process.env.REACT_APP_API_URL}routes/${o.payload}/seats`).pipe(
+    retry(3),
+    map((o) => successGetSeats(o)),
+    catchError((e) => of(errorGetSeats(e)))
   )})
 );

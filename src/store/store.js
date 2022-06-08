@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { combineEpics, createEpicMiddleware } from "redux-observable";
-import { getCitiesEpic, getLastRoutes, getRoutes } from "../epic";
+import { getCitiesEpic, getLastRoutesEpic, getRoutesEpic, getSeatsEpic } from "../epic";
 import sliceChoice from "./sliceChoice";
 import sliceGetCity from "./sliceGetCity";
 import sliceHeaderTransform from "./sliceHeaderTransform";
@@ -8,11 +8,13 @@ import sliceGetRoute from "./sliceGetRoute";
 import sliceProgressLine from "./sliceProgressLine";
 import sliceFilter from "./sliceFilter";
 import sliceGetLastRoutes from "./sliceGetLastRoutes";
+import sliceGetSeats from "./sliceGetSeats";
 
 const epic = combineEpics(
   getCitiesEpic,
-  getRoutes,
-  getLastRoutes
+  getRoutesEpic,
+  getLastRoutesEpic,
+  getSeatsEpic
 );
 
 const epicMiddleware = createEpicMiddleware();
@@ -25,7 +27,8 @@ export const store = configureStore({
     sliceGetRoute,
     sliceProgressLine,
     sliceFilter,
-    sliceGetLastRoutes
+    sliceGetLastRoutes,
+    sliceGetSeats
   },
   middleware: [epicMiddleware]
 });
