@@ -5,6 +5,7 @@ import { currentStepOne } from '../store/sliceProgressLine';
 import TrainRoute from './TrainRoute';
 import { addRoutes, filtering } from '../store/sliceFilter';
 import { filteringPricesRange } from '../utils/minMaxPrices';
+import { sortingDuration, sortingPrices, sortingTime } from '../utils/sortingTrain';
 
 export default function ListRoutes() {
   const { loading, route } = useSelector((state) => state.sliceGetRoute);
@@ -14,6 +15,10 @@ export default function ListRoutes() {
   const [none, setNone] = useState('none');
   const [select, setSelect] = useState('времени');
   const [pages, setPages] = useState([]);
+  const [showOnPages, setShowOnPages] = useState(2);
+  const [startSlice, setStartSlice] = useState(0);
+  const [endSlice, setEndSlice] = useState(2);
+  const [lengthPage, setLengthPage] = useState();
 
   useEffect(() => {
     dispatch(filtering({
@@ -33,6 +38,7 @@ export default function ListRoutes() {
     if (route.items && route.items.length > 0) {
       dispatch(addRoutes(route.items));
       setList(route.items);
+      setLengthPage(Math.floor(list.length / showOnPages));
     };
   }, [loading, route]);
 
@@ -44,12 +50,12 @@ export default function ListRoutes() {
     if (list) {
       setPages([]);
       const arr = []
-      for (let i = 0; i < (list.length / 5); i += 1) {
+      for (let i = 0; i < (list.length / showOnPages); i += 1) {
         arr.push(i);
       };
       setPages(arr);
     };
-  }, [list]);
+  }, [list, showOnPages]);
 
   function getSort() {
     if (none === 'none') {
@@ -62,6 +68,23 @@ export default function ListRoutes() {
   function getSelect(ev) {
     setSelect(ev.target.outerText);
     setNone('none');
+    if (ev.target.outerText === 'времени') {
+      console.log(ev.target.outerText);
+      setList(sortingTime(list));
+    };
+    if (ev.target.outerText === 'стоимости') {
+      setList(sortingPrices(list));
+    };
+    if (ev.target.outerText === 'длительности') {
+      setList(sortingDuration(list));
+    };
+  };
+
+  function getShowOnPages(ev) {
+    setShowOnPages(Number(ev.target.outerText));
+    setStartSlice(0);
+    setLengthPage(Number(ev.target.outerText));
+    setEndSlice(Number(ev.target.outerText));
   };
 
   function choicePage(ev) {
@@ -75,6 +98,36 @@ export default function ListRoutes() {
     if (ev.target.className === 'list-routes-page') {
       ev.target.className += ' choice-page';
     };
+    setStartSlice(lengthPage * (Number(ev.target.outerText) - 1));
+    setEndSlice(lengthPage * Number(ev.target.outerText));
+  };
+
+  function prevPage() {
+    if (startSlice >= lengthPage) {
+      setStartSlice(startSlice - lengthPage);
+    } else {
+      setStartSlice(0);
+    };
+
+    if (endSlice >= lengthPage * 2) {
+      setEndSlice(endSlice - lengthPage);
+    } else {
+      setEndSlice(endSlice);
+    };
+  };
+
+  function nextPage(params) {
+    // if (startSlice >= lengthPage) {
+      setStartSlice(startSlice + lengthPage);
+    // } else {
+    //   setStartSlice(0);
+    // };
+
+    // if (showOnPages >= lengthPage * 2) {
+      setEndSlice(endSlice + lengthPage);
+    // } else {
+    //   setShowOnPages(showOnPages);
+    // };
   };
 
   if (!list || !list.length) {
@@ -100,23 +153,23 @@ export default function ListRoutes() {
         </div>
         <div className='list-routes-show'>
           <p>показывать по </p>
-          <span>5</span>
-          <span>10</span>
-          <span>20</span>
+          <span onClick={getShowOnPages}>2</span>
+          <span onClick={getShowOnPages}>3</span>
+          <span onClick={getShowOnPages}>5</span>
         </div>
       </header>
 
       <main className='main-list-routes'>
-        {list.map((el) => <TrainRoute route={el} key={el.departure._id}/>)}
+        {list.slice(startSlice, endSlice).map((el) => <TrainRoute route={el} key={el.departure._id}/>)}
       </main>
 
       <footer className='footer-list-routes'>
         <div className='list-routes-pages'>
-          <div className='list-routes-pages-previous'></div>
+          <div className='list-routes-pages-previous' onClick={prevPage}></div>
           {pages.map((el, i) => 
             <div className='list-routes-page' onClick={choicePage} key={10 + i}>{i + 1}</div>
           )}
-          <div className='list-routes-pages-next'></div>
+          <div className='list-routes-pages-next' onClick={nextPage}></div>
         </div>
       </footer>
     </div>

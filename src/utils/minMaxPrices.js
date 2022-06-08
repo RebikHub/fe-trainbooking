@@ -6,9 +6,11 @@ export function minMaxPrices(array) {
     if (el.first) {
       if (el.first.top_price) {
           allPrices.push(el.first.top_price);
-        } else if (el.first.bottom_price) {
+        };
+        if (el.first.bottom_price) {
           allPrices.push(el.first.bottom_price);
-        } else if (el.first.side_price) {
+        };
+        if (el.first.side_price) {
           allPrices.push(el.first.side_price);
         };
       };
@@ -16,9 +18,11 @@ export function minMaxPrices(array) {
       if (el.second) {
         if (el.second.top_price) {
           allPrices.push(el.second.top_price);
-        } else if (el.second.bottom_price) {
+        };
+        if (el.second.bottom_price) {
           allPrices.push(el.second.bottom_price);
-        } else if (el.second.side_price) {
+        };
+        if (el.second.side_price) {
           allPrices.push(el.second.side_price);
         };
       };
@@ -26,9 +30,11 @@ export function minMaxPrices(array) {
       if (el.third) {
         if (el.third.top_price) {
           allPrices.push(el.third.top_price);
-        } else if (el.third.bottom_price) {
+        };
+        if (el.third.bottom_price) {
           allPrices.push(el.third.bottom_price);
-        } else if (el.third.side_price) {
+        };
+        if (el.third.side_price) {
           allPrices.push(el.third.side_price);
         };
       };
@@ -36,9 +42,11 @@ export function minMaxPrices(array) {
       if (el.fourth) {
         if (el.fourth.top_price) {
           allPrices.push(el.fourth.top_price);
-        } else if (el.fourth.bottom_price) {
+        };
+        if (el.fourth.bottom_price) {
           allPrices.push(el.fourth.bottom_price);
-        } else if (el.fourth.side_price) {
+        };
+        if (el.fourth.side_price) {
           allPrices.push(el.fourth.side_price);
         };
       };

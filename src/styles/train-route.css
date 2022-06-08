@@ -238,9 +238,11 @@
 }
 
 .train-facilities {
+  display: flex;
+  justify-content: space-between;
   width: 92px;
   height: 20px;
-  background-image: url(../images/facilities.png);
+  /* background-image: url(../images/facilities.png); */
   margin-top: auto;
   margin-left: auto;
   margin-right: 28px;
@@ -250,15 +252,45 @@
 
 }
 
-.train-facilities-wifi {
+.train-facilities-wifi, .train-facilities-express, .train-facilities-coffee {
+  display: flex;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.3;
+}
 
+.train-facilities-wifi {
+  width: 24px;
+  height: 20px;
+  background-image: url(../images/wifi.png);
 }
 
 .train-facilities-express {
-
+  width: 20px;
+  height: 20px;
+  background-image: url(../images/express.png);
 }
+
 .train-facilities-coffee {
-  
+  width: 20px;
+  height: 20px;
+  background-image: url(../images/cup.png);
+}
+
+.facilities-wifi-have {
+  width: 20px;
+  height: 20px;
+  background-image: url(../images/have-wifi.png);
+}
+.facilities-express-have {
+  width: 22px;
+  height: 20px;
+  background-image: url(../images/have-express.png);
+}
+.facilities-coffee-have {
+  width: 20px;
+  height: 20px;
+  background-image: url(../images/have-cup.png);
 }
 
 .train-choice-btn {
