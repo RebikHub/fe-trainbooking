@@ -48,6 +48,7 @@ export default function TrainRoute({route}) {
   }, []);
 
   function getCoaches() {
+    console.log(route.departure._id);
     dispatch(requestGetSeats(route.departure._id));
   };
 

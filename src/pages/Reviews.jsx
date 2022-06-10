@@ -34,7 +34,6 @@ export default function Reviews() {
   });
 
   useEffect(() => {
-    console.log(view);
     const carouselInterval = setTimeout(() => {
       if (view >= 2100 && view <= 2400) {
         counter(num);
