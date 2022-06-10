@@ -1,0 +1,450 @@
+.coaches {
+
+}
+
+.coaches-title {
+  font-family: 'Roboto-medium';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 30px;
+  line-height: 35px;
+  text-transform: uppercase;
+  color: #292929;
+  margin-top: 100px;
+  margin-bottom: 50px;
+}
+
+.coach {
+  width: 960px;
+  background-color: #FFFFFF;
+  border: 1px solid #C4C4C4;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+}
+
+.choice-train {
+  display: flex;
+  margin: 36px auto 32px 19px;
+}
+
+.choice-train-img {
+  display: flex;
+  width: 76px;
+  height: 60px;
+  margin-right: 10px;
+  background-image: url(../images/Subtract-right.png);
+}
+
+.choice-train-btn {
+  font-family: 'Roboto-bold';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 28px;
+  text-align: center;
+  color: #292929;
+  width: 325px;
+  height: 60px;
+  border: 1px solid #292929;
+  border-radius: 5px;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.choice-train-btn:hover {
+  border: 1px solid #292929;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  border-radius: 5px;
+  color: #FFA800;
+  transition: all 300ms ease-in-out;
+}
+
+.choice-train-btn:focus {
+  background-color: #FFA800;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  color: #292929;
+  border: none;
+}
+
+.coach-train {
+  display: flex;
+  background: #F7F6F6;
+  min-height: 125px;
+}
+
+.coach-train-route {
+  display: flex;
+  width: 240px;
+}
+
+.coach-train-img {
+  display: flex;
+  width: 30px;
+  height: 30px;
+  background-image: url(../images/train-img.png);
+  margin: auto 27px auto 35px;
+}
+
+.coach-train-desc {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.train-desc-name {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 28px;
+  color: #3E3C41;
+  margin-bottom: 5px;
+}
+
+.train-desc-city {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  color: #292929;
+}
+
+.coach-direction-time {
+  display: flex;
+  width: 480px;
+  border-left: 1px solid #FFFFFF;
+  border-right: 1px solid #FFFFFF;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.coach-direction-city {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.coach-time {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 28px;
+  color: #000000;
+}
+
+.coach-direction-name {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 23px;
+  color: #292929;
+}
+
+.coach-direction-station {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  color: #928F94;
+}
+
+.coach-time {
+
+}
+
+.coach-direction-station {
+
+}
+
+.coach-duration {
+  display: flex;
+}
+
+.coach-duration-img {
+  display: flex;
+  width: 30px;
+  height: 30px;
+  background-image: url(../images/time-img.png);
+  margin: 47px 10px 46px 35px;
+}
+
+.coach-duration-text {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 21px;
+  color: #000000;
+  margin-top: 42px;
+}
+
+.amount-tickets {
+  margin-top: 40px;
+  height: 337px;
+  border-bottom: 1px dashed #C4C4C4;;
+}
+
+.amount-tickets-title {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 35px;
+  color: #292929;
+  margin: 0 auto 15px 20px;
+}
+
+.tickets-age {
+  display: flex;
+}
+
+.tickets-age-inputs {
+  width: 320px;
+  height: 192px;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tickets-age-input {
+  width: 240px;
+  height: 50px;
+  padding-left: 15px;
+  background: #FFFFFF;
+  border: 1px solid #928F94;
+  border-radius: 5px;
+}
+
+.tickets-age-input::placeholder {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 21px;
+  color: #292929;
+}
+
+
+.tickets-adults-desc {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  color: #928F94;
+  margin-top: 23px;
+  width: 240px;
+}
+
+.tickets-age-inputs:hover {
+  border: 1px solid rgba(255, 168, 0, 0.79);
+}
+
+.tickets-age-input:focus-visible {
+  outline: none;
+  /* background-color: #F7F6F6;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25); */
+}
+.tickets-age-inputs:focus {
+  background-color: #F7F6F6;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+}
+
+.tickets-child {
+
+}
+
+.tickets-age-input {
+
+}
+
+.tickets-adults-desc {
+
+}
+
+.tickets-child-without {
+
+}
+
+.tickets-age-input {
+
+}
+
+.tickets-adults-desc {
+
+}
+
+.coach-type {
+
+}
+
+.coach-type-title {
+
+}
+
+.coach-types {
+
+}
+
+.coach-type-fourth {
+
+}
+
+.type-fourth-img {
+
+}
+
+.type-fourth-text {
+
+}
+
+.coach-type-third {
+
+}
+
+.type-third-img {
+
+}
+
+.type-third-text {
+
+}
+
+.coach-type-second {
+
+}
+
+.type-second-img {
+
+}
+
+.type-second-text {
+
+}
+
+.coach-type-first {
+
+}
+
+.type-first-img {
+
+}
+
+.type-first-text {
+
+}
+
+.coaches-numbering {
+
+}
+
+.coaches-numbers {
+
+}
+
+.coach-description {
+
+}
+
+.coach-description-prices {
+
+}
+
+.coach-number {
+
+}
+
+.coach-number-title {
+
+}
+
+.coach-number-text {
+
+}
+
+.coach-seats-amount {
+
+}
+
+.seats-amount-title {
+
+}
+
+.seats-amount-num {
+
+}
+
+.seats-amount-text {
+
+}
+
+.seats-amount-num {
+
+}
+
+.seats-amount-text {
+
+}
+
+.seats-amount-num {
+
+}
+
+.coach-seats-price {
+
+}
+
+.seats-price-title {
+
+}
+
+.seats-price-text {
+
+}
+
+.sign-rub {
+
+}
+
+.coach-services {
+
+}
+
+.coach-services-text {
+
+}
+
+.coach-services-img {
+
+}
+
+.service-air {
+
+}
+
+.service-wifi {
+
+}
+
+.service-linens {
+
+}
+
+.service-coffee {
+
+}
+
+.coach-seats-selected {
+
+}
+
+.coach-seats-info {
+
+}
+
+.seats-info-img {
+
+}
