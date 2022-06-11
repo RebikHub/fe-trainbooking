@@ -479,6 +479,7 @@
 }
 
 .seats-price-text {
+  display: flex;
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 700;
@@ -487,40 +488,110 @@
   color: #000000;
 }
 
-.sign-rub {
-
+.seats-price-text > span {
+  margin-left: 10px;
 }
 
 .coach-services {
-
+  margin-top: 33px;
 }
 
 .coach-services-text {
-
+  margin-bottom: 20px;
 }
 
 .coach-services-img {
+  display: flex;
+}
 
+.service-air, .service-wifi, .service-linens, .service-coffee, .service-air-selected, .service-wifi-selected, .service-linens-selected, .service-coffee-selected {
+  display: flex;
+  position: relative;
+  width: 36px;
+  height: 35px;
+  margin-right: 13px;
+  border: 1px solid #292929;
+  border-radius: 5px;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+}
+
+.service-air-selected, .service-wifi-selected, .service-linens-selected, .service-coffee-selected {
+  background-color: #FDB935;
+  border: none;
+}
+
+.service-air:hover, .service-wifi:hover, .service-linens:hover, .service-coffee:hover {
+  background-color: #FFA800;
+  transition: background-color 300ms ease;
 }
 
 .service-air {
-
+  background-image: url(../images/air-black.png);
 }
 
 .service-wifi {
-
+  background-image: url(../images/wifi-black.png);
 }
 
 .service-linens {
-
+  background-image: url(../images/linens-black.png);
 }
 
 .service-coffee {
+  background-image: url(../images/cup-black.png);
+}
 
+.service-air-selected {
+  background-image: url(../images/air-white.png);
+}
+
+.service-wifi-selected {
+  background-image: url(../images/wifi-white.png);
+}
+
+.service-linens-selected {
+  background-image: url(../images/linens-white.png);
+}
+
+.service-coffee-selected {
+  background-image: url(../images/cup-white.png);
+}
+
+.service-included {
+  background-color: #FFA800;
+  opacity: 0.5;
+  border: none;
+}
+
+.service-description {
+  position: absolute;
+  width: 130px;
+  height: 32px;
+  left: -45px;
+  top: 40px;
+  background: #E5E5E5;
+  border-radius: 5px;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 }
 
 .coach-seats-selected {
+  width: 200px;
+  height: 72px;
+  background: #F3F3F3;
+  border-radius: 5px;
+  margin: 4px 42px 0 auto;
+  display: flex;
+}
 
+.coach-seats-selected > p {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  color: #292929;
 }
 
 .coach-seats-info {

@@ -119,10 +119,18 @@ export default function ListCoaches() {
               <div className='coach-services'>
                 <p className='coach-services-text'>Обслуживание ФПК</p>
                 <div className='coach-services-img'>
-                  <span className='service-air'></span>
-                  <span className='service-wifi'></span>
-                  <span className='service-linens'></span>
-                  <span className='service-coffee'></span>
+                  <span className='service-air-selected'>
+                    <div className='none service-description'></div>
+                  </span>
+                  <span className='service-wifi'>
+                    <div className='none'></div>
+                  </span>
+                  <span className='service-linens service-included'>
+                    <div className='none'></div>
+                  </span>
+                  <span className='service-coffee'>
+                    <div className='none'></div>
+                  </span>
                 </div>
               </div>
             </div>
