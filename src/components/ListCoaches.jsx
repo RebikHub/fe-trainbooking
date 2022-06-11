@@ -70,29 +70,34 @@ export default function ListCoaches() {
           </div>
         </div>
 
-        <div className='coach-type'>
+        <div className='coaches-types'>
           <h4 className='coach-type-title'>Тип вагона</h4>
           <div className='coach-types'>
-            <div className='coach-type-fourth'>
+            <div className='coach-type'>
               <span className='type-fourth-img'></span>
-              <p className='type-fourth-text'></p>
+              <p className='type-text'>Сидячий</p>
             </div>
-            <div className='coach-type-third'>
+            <div className='coach-type'>
               <span className='type-third-img'></span>
-              <p className='type-third-text'></p>
+              <p className='type-text'>Плацкарт</p>
             </div>
-            <div className='coach-type-second'>
+            <div className='coach-type'>
               <span className='type-second-img'></span>
-              <p className='type-second-text'></p>
+              <p className='type-text'>Купе</p>
             </div>
-            <div className='coach-type-first'>
+            <div className='coach-type'>
               <span className='type-first-img'></span>
-              <p className='type-first-text'></p>
+              <p className='type-text'>Люкс</p>
             </div>
           </div>
 
           <div className='coaches-numbering'>
-            <div className='coaches-numbers'>Вагоны 10 12</div>
+            <div className='coaches-numbers'>
+              <p className='coaches-numbers-text'>Вагоны</p>
+              <span className='coaches-number-text'>10</span>
+              <span className='coaches-number-current'>12</span>
+            </div>
+            <p className='coaches-numbers-text'>Нумерация вагонов начинается с головы поезда</p>
           </div>
 
           <div className='coach-description'>
@@ -107,7 +112,7 @@ export default function ListCoaches() {
                 <p className='seats-amount-text'>Нижние <span className='seats-amount-num'>11</span></p>
               </div>
               <div className='coach-seats-price'>
-                <p className='seats-price-title'></p>
+                <p className='seats-price-title'>Стоимость</p>
                 <p className='seats-price-text'>2020 <span className='sign-rub'></span></p>
                 <p className='seats-price-text'>3030 <span className='sign-rub'></span></p>
               </div>
