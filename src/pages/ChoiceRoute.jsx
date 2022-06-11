@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { Outlet } from 'react-router-dom';
 import FilterRoute from '../components/FilterRoute';
 import LastRoutes from '../components/LastRoutes';
 import ListCoaches from '../components/ListCoaches';
@@ -22,7 +23,8 @@ export default function ChoiceRoute() {
         <LastRoutes/>
       </div>
       <div className='right-side'>
-        {coaches.length > 0 ? <ListCoaches/> : <ListRoutes/>}
+        <Outlet/>
+        {/* {coaches.length > 0 ? <ListCoaches/> : <ListRoutes/>} */}
       </div>
     </div>
   );

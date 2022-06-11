@@ -64,7 +64,7 @@ export default function ListCoaches() {
             </div>
 
             <div className='tickets-age-inputs'>
-              <input className='tickets-age-input' type="text" placeholder='Детских без места - 0'/>
+              <input className='tickets-age-input' type="text" placeholder='Детских &#171;без места&#187; - 0'/>
               <p className='tickets-adults-desc'></p>
             </div>
           </div>

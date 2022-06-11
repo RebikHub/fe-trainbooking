@@ -243,15 +243,16 @@
   border: 1px solid rgba(255, 168, 0, 0.79);
 }
 
-.tickets-age-input:focus-visible {
+.tickets-age-input:focus-within {
   outline: none;
-  /* background-color: #F7F6F6;
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25); */
 }
-.tickets-age-inputs:focus {
+
+.tickets-age-inputs:focus-within {
   background-color: #F7F6F6;
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+  border: none;
 }
+
 
 .tickets-child {
 
