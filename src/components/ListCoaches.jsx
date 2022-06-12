@@ -1,6 +1,7 @@
 import React from 'react';
 import '../styles/coaches.css';
 import { useSelector } from 'react-redux';
+import Coach from './Coach';
 
 export default function ListCoaches() {
   const { coaches } = useSelector((state) => state.sliceGetSeats);
@@ -100,7 +101,11 @@ export default function ListCoaches() {
             <p className='coaches-numbers-text'>Нумерация вагонов начинается с головы поезда</p>
           </div>
 
-          <div className='coach-description'>
+          {coaches.map((el, i) => <Coach
+            classStyle={(coaches.length - 1) === i ? '' : 'coach-description'}
+            coach={el}
+            key={el.coach._id}/>)}
+          {/* <div className='coach-description'>
             <div className='coach-description-prices'>
               <div className='coach-number'>
                 <h3 className='coach-number-title'>12</h3>
@@ -142,10 +147,11 @@ export default function ListCoaches() {
             <div className='coach-seats-info'>
               <span className='seats-info-img'></span>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
-
+      
+      <button className='coach-button' type='button'>далее</button>
     </div>
   )
 }
