@@ -1,9 +1,23 @@
 import React from 'react';
 import '../styles/coaches.css';
-import { schemeThirdClass } from '../utils/schemeCoach';
+import { schemeFirstClass, schemeFourthClass, schemeThirdClass } from '../utils/schemeCoach';
 
 export default function Coach({classStyle, coach}) {
   console.log(coach);
+
+  function haveSeatsOrNot(numScheme, coach) {
+    let result = 'seat-not-have';
+    coach.seats.map((e) => {
+      if (e.index === numScheme) {
+        if (e.available) {
+          return result = 'seat-have';
+        };
+      };
+      return null;
+    });
+    return result;
+  };
+
   return (
     <div className={classStyle}>
       <div className='coach-description-prices'>
@@ -47,14 +61,10 @@ export default function Coach({classStyle, coach}) {
       <div className='coach-seats-info'>
         {coach.coach.class_type === 'first' ?
           <span className='seats-info-first'>
-            {schemeThirdClass.map((el, i) =>
+            {schemeFirstClass.map((el, i) =>
               <div className='scheme-seats-first' style={{left: `${41 + 89.63 * (i + 1)}px`}}>
-                <span className='seat-class seat-top-left'>{el.top[0]}</span>
-                <span className='seat-class seat-bot-left'>{el.bottom[0]}</span>
-                <span className='seat-class seat-side-left'>{el.side[0]}</span>
-                <span className='seat-class seat-top-right'>{el.top[1]}</span>
-                <span className='seat-class seat-bot-right'>{el.bottom[1]}</span>
-                <span className='seat-class seat-side-right'>{el.side[1]}</span>
+                <span className={`seat-class seat-left ${haveSeatsOrNot(el.left, coach)}`}>{el.left}</span>
+                <span className={`seat-class seat-right ${haveSeatsOrNot(el.right, coach)}`}>{el.right}</span>
               </div>
             )}
           </span> :
@@ -62,12 +72,10 @@ export default function Coach({classStyle, coach}) {
           <span className='seats-info-second'>
             {schemeThirdClass.map((el, i) =>
               <div className='scheme-seats-second' style={{left: `${41 + 89.63 * (i + 1)}px`}}>
-                <span className='seat-class seat-top-left'>{el.top[0]}</span>
-                <span className='seat-class seat-bot-left'>{el.bottom[0]}</span>
-                <span className='seat-class seat-side-left'>{el.side[0]}</span>
-                <span className='seat-class seat-top-right'>{el.top[1]}</span>
-                <span className='seat-class seat-bot-right'>{el.bottom[1]}</span>
-                <span className='seat-class seat-side-right'>{el.side[1]}</span>
+                <span className={`seat-class seat-top-left ${haveSeatsOrNot(el.top[0], coach)}`}>{el.top[0]}</span>
+                <span className={`seat-class seat-bot-left ${haveSeatsOrNot(el.bottom[0], coach)}`}>{el.bottom[0]}</span>
+                <span className={`seat-class seat-top-right ${haveSeatsOrNot(el.top[1], coach)}`}>{el.top[1]}</span>
+                <span className={`seat-class seat-bot-right ${haveSeatsOrNot(el.bottom[1], coach)}`}>{el.bottom[1]}</span>
               </div>
             )}
           </span> :
@@ -75,27 +83,31 @@ export default function Coach({classStyle, coach}) {
           <span className='seats-info-third'>
             {schemeThirdClass.map((el, i) =>
               <div className='scheme-seats-third' style={{left: `${41 + 89.63 * (i + 1)}px`}}>
-                <span className='seat-class seat-top-left'>{el.top[0]}</span>
-                <span className='seat-class seat-bot-left'>{el.bottom[0]}</span>
-                <span className='seat-class seat-side-left'>{el.side[0]}</span>
-                <span className='seat-class seat-top-right'>{el.top[1]}</span>
-                <span className='seat-class seat-bot-right'>{el.bottom[1]}</span>
-                <span className='seat-class seat-side-right'>{el.side[1]}</span>
+                <span className={`seat-class seat-top-left ${haveSeatsOrNot(el.top[0], coach)}`}>{el.top[0]}</span>
+                <span className={`seat-class seat-bot-left ${haveSeatsOrNot(el.bottom[0], coach)}`}>{el.bottom[0]}</span>
+                <span className={`seat-class seat-side-left ${haveSeatsOrNot(el.side[0], coach)}`}>{el.side[0]}</span>
+                <span className={`seat-class seat-top-right ${haveSeatsOrNot(el.top[1], coach)}`}>{el.top[1]}</span>
+                <span className={`seat-class seat-bot-right ${haveSeatsOrNot(el.bottom[1], coach)}`}>{el.bottom[1]}</span>
+                <span className={`seat-class seat-side-right ${haveSeatsOrNot(el.side[1], coach)}`}>{el.side[1]}</span>
               </div>
             )}
           </span> :
         coach.coach.class_type === 'fourth' ?
           <span className='seats-info-fourth'>
-            {schemeThirdClass.map((el, i) =>
-              <div className='scheme-seats-fourth' style={{left: `${41 + 89.63 * (i + 1)}px`}}>
-                <span className='seat-class seat-top-left'>{el.top[0]}</span>
-                <span className='seat-class seat-bot-left'>{el.bottom[0]}</span>
-                <span className='seat-class seat-side-left'>{el.side[0]}</span>
-                <span className='seat-class seat-top-right'>{el.top[1]}</span>
-                <span className='seat-class seat-bot-right'>{el.bottom[1]}</span>
-                <span className='seat-class seat-side-right'>{el.side[1]}</span>
+              <div className='scheme-seats-fourth'>
+                {schemeFourthClass.topWindow.map((e, i) => 
+                  <span className={`seat-class seat-win-top ${haveSeatsOrNot(e, coach)}`} style={{left: `${11.3 + 44.2 * (i)}px`}}>{e}</span>
+                )}
+                {schemeFourthClass.topAisle.map((e, i) => 
+                  <span className={`seat-class seat-aisle-top ${haveSeatsOrNot(e, coach)}`} style={{left: `${11.3 + 44.2 * (i)}px`}}>{e}</span>
+                )}
+                {schemeFourthClass.botAisle.map((e, i) => 
+                  <span className={`seat-class seat-aisle-bot ${haveSeatsOrNot(e, coach)}`} style={{left: `${55.3 + 44.2 * (i)}px`}}>{e}</span>
+                )}
+                {schemeFourthClass.botWindow.map((e, i) => 
+                  <span className={`seat-class seat-win-bot ${haveSeatsOrNot(e, coach)}`} style={{left: `${11.3 + 44.2 * (i)}px`}}>{e}</span>
+                )}
               </div>
-            )}
           </span> : null}
 
       </div>

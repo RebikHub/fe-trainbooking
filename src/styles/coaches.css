@@ -666,39 +666,30 @@
 
 .scheme-seats-first, .scheme-seats-second, .scheme-seats-third, .scheme-seats-fourth {
   position: absolute;
+  width: 89.63px;
+  height: 114px;
+  top: 27px;
+  left: 131px;
 }
 
 .scheme-seats-first {
-  border: 1px solid black;
-  width: 715px;
-  height: 112px;
-  top: 26px;
-  left: 131px;
+
 }
 
 .scheme-seats-second {
-  border: 1px solid black;
-  width: 715px;
-  height: 112px;
-  top: 26px;
-  left: 131px;
+
 }
 
 .scheme-seats-third {
-  box-sizing: border-box;
-  border: 1px solid black;
-  width: 89.63px;
-  height: 114px;
-  top: 26px;
-  left: 131px;
+
 }
 
 .scheme-seats-fourth {
-  border: 1px solid black;
-  width: 715px;
-  height: 112px;
-  top: 26px;
-  left: 131px;
+  /* position: absolute; */
+  width: 717.63px;
+  height: 26px;
+  /* top: 27px; */
+  /* left: 131px; */
 }
 
 .seat-class {
@@ -715,45 +706,98 @@
 }
 
 .seat-top-left {
-  background-color: #f55858;
   width: 27px;
   height: 32px;
   top: 1px;
-  left: 1px;
+  left: 2px;
 }
 .seat-bot-left {
-  background-color: #a4f558;
   width: 27px;
   height: 32px;
   top: 33px;
-  left: 1px;
+  left: 2px;
 }
 .seat-side-left {
-  background-color: rgb(31, 130, 223);
-  width: 44px;
+  width: 43px;
   height: 25px;
   top: 86px;
-  left: 1px;
+  left: 2px;
 }
 
 .seat-top-right {
-  background-color: #f5585869;
   width: 27px;
   height: 32px;
   top: 1px;
   left: 62px;
 }
 .seat-bot-right {
-  background-color: #a4f55873;
   width: 27px;
   height: 32px;
   top: 33px;
   left: 62px;
 }
 .seat-side-right {
-  background-color: rgba(31, 130, 223, 0.363);
-  width: 44px;
+  width: 43px;
   height: 25px;
   top: 86px;
   left: 45px;
+}
+
+.seat-have {
+  color: #000000;
+  background-color: #F2F2F2;
+  cursor: pointer;
+}
+
+.seat-have:hover {
+  box-sizing: border-box;
+  border: 2px solid #FFA800;
+  z-index: 1;
+}
+
+.seat-not-have {
+  color: #F2F2F2;
+  background-color: #CCCCCC;
+  cursor: not-allowed;
+}
+
+/* fourth class */
+
+.seat-win-top, .seat-aisle-top, .seat-aisle-bot, .seat-win-bot {
+  width: 30px;
+  height: 20px;
+  left: 11px;
+}
+
+.seat-win-top {
+  top: 5px;
+}
+
+.seat-aisle-top {
+  top: 27px;
+}
+
+.seat-aisle-bot {
+  top: 65px;
+  left: 57px;
+}
+
+.seat-win-bot {
+  top: 87px;
+}
+
+/* first class */
+
+.seat-left, .seat-right {
+  width: 30px;
+  height: 60px;
+  top: 1px;
+}
+
+.seat-left {
+  left: 2px;
+}
+
+.seat-right {
+  left: 60px;
 }
