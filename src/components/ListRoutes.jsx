@@ -25,7 +25,8 @@ export default function ListRoutes() {
   const [showOnPages, setShowOnPages] = useState(5);
   const [startSlice, setStartSlice] = useState(0);
   const [endSlice, setEndSlice] = useState(5);
-  const [lengthPage, setLengthPage] = useState();
+  const [lengthPage, setLengthPage] = useState(5);
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     dispatch(filtering({
@@ -45,7 +46,6 @@ export default function ListRoutes() {
     if (route.items && route.items.length > 0) {
       dispatch(addRoutes(route.items));
       setList(route.items);
-      setLengthPage(Math.floor(list.length / showOnPages));
     };
   }, [loading, route]);
 
@@ -63,6 +63,12 @@ export default function ListRoutes() {
       setPages(arr);
     };
   }, [list, showOnPages]);
+
+  useEffect(() => {
+    if (list.length > 0) {
+      swapClassStyle(currentPage);
+    };
+  }, [currentPage]);
 
   function getSort() {
     if (none === 'none') {
@@ -95,16 +101,7 @@ export default function ListRoutes() {
   };
 
   function choicePage(ev) {
-    const elements = document.querySelectorAll('.list-routes-page');
-    for (let i of elements) {
-      if (i.classList.contains('choice-page')) {
-        i.classList.remove('choice-page');
-      };
-    };
-    
-    if (ev.target.className === 'list-routes-page') {
-      ev.target.className += ' choice-page';
-    };
+    setCurrentPage(Number(ev.target.outerText));
     setStartSlice(lengthPage * (Number(ev.target.outerText) - 1));
     setEndSlice(lengthPage * Number(ev.target.outerText));
   };
@@ -118,6 +115,10 @@ export default function ListRoutes() {
       setEndSlice(endSlice - lengthPage);
     };
 
+    if ((currentPage - 1) > 0 && pages.length > 1) {
+      setCurrentPage((prev) => prev -= 1);
+    };
+
   };
 
   function nextPage() {
@@ -129,7 +130,21 @@ export default function ListRoutes() {
       setEndSlice(endSlice + lengthPage);
     };
 
+    if (currentPage < pages.length) {
+      setCurrentPage((prev) => prev += 1);
+    };
+
   };
+
+  function swapClassStyle(page) {
+    const elements = document.querySelectorAll('.list-routes-page');
+    for (let i of elements) {
+      if (i.classList.contains('choice-page')) {
+        i.classList.remove('choice-page');
+      };
+    };
+    elements[page - 1].classList.add('choice-page');
+  }
 
   if (!list || !list.length) {
     return <div className='no-routes'>Ничего не найдено!</div>
@@ -154,7 +169,7 @@ export default function ListRoutes() {
         </div>
         <div className='list-routes-show'>
           <p>показывать по </p>
-          <span onClick={getShowOnPages}>5</span>
+          <span onClick={getShowOnPages}>2</span>
           <span onClick={getShowOnPages}>10</span>
           <span onClick={getShowOnPages}>20</span>
         </div>
