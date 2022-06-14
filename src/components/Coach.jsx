@@ -45,18 +45,59 @@ export default function Coach({classStyle, coach}) {
       </div>
 
       <div className='coach-seats-info'>
-        <span className={`seats-info-${coach.coach.class_type}`}>
-          {schemeThirdClass.map((el, i) =>
-            <div className={`scheme-seats-${coach.coach.class_type}`} style={{left: `${41 + 89.63 * (i + 1)}px`}}>
-              <span className='seat-top-left'>{el.top[0]}</span>
-              <span className='seat-bot-left'>{el.bottom[0]}</span>
-              <span className='seat-side-left'>{el.side[0]}</span>
-              <span className='seat-top-right'>{el.top[1]}</span>
-              <span className='seat-bot-right'>{el.bottom[1]}</span>
-              <span className='seat-side-right'>{el.side[1]}</span>
-            </div>
-          )}
-        </span>
+        {coach.coach.class_type === 'first' ?
+          <span className='seats-info-first'>
+            {schemeThirdClass.map((el, i) =>
+              <div className='scheme-seats-first' style={{left: `${41 + 89.63 * (i + 1)}px`}}>
+                <span className='seat-class seat-top-left'>{el.top[0]}</span>
+                <span className='seat-class seat-bot-left'>{el.bottom[0]}</span>
+                <span className='seat-class seat-side-left'>{el.side[0]}</span>
+                <span className='seat-class seat-top-right'>{el.top[1]}</span>
+                <span className='seat-class seat-bot-right'>{el.bottom[1]}</span>
+                <span className='seat-class seat-side-right'>{el.side[1]}</span>
+              </div>
+            )}
+          </span> :
+        coach.coach.class_type === 'second' ?
+          <span className='seats-info-second'>
+            {schemeThirdClass.map((el, i) =>
+              <div className='scheme-seats-second' style={{left: `${41 + 89.63 * (i + 1)}px`}}>
+                <span className='seat-class seat-top-left'>{el.top[0]}</span>
+                <span className='seat-class seat-bot-left'>{el.bottom[0]}</span>
+                <span className='seat-class seat-side-left'>{el.side[0]}</span>
+                <span className='seat-class seat-top-right'>{el.top[1]}</span>
+                <span className='seat-class seat-bot-right'>{el.bottom[1]}</span>
+                <span className='seat-class seat-side-right'>{el.side[1]}</span>
+              </div>
+            )}
+          </span> :
+        coach.coach.class_type === 'third' ?
+          <span className='seats-info-third'>
+            {schemeThirdClass.map((el, i) =>
+              <div className='scheme-seats-third' style={{left: `${41 + 89.63 * (i + 1)}px`}}>
+                <span className='seat-class seat-top-left'>{el.top[0]}</span>
+                <span className='seat-class seat-bot-left'>{el.bottom[0]}</span>
+                <span className='seat-class seat-side-left'>{el.side[0]}</span>
+                <span className='seat-class seat-top-right'>{el.top[1]}</span>
+                <span className='seat-class seat-bot-right'>{el.bottom[1]}</span>
+                <span className='seat-class seat-side-right'>{el.side[1]}</span>
+              </div>
+            )}
+          </span> :
+        coach.coach.class_type === 'fourth' ?
+          <span className='seats-info-fourth'>
+            {schemeThirdClass.map((el, i) =>
+              <div className='scheme-seats-fourth' style={{left: `${41 + 89.63 * (i + 1)}px`}}>
+                <span className='seat-class seat-top-left'>{el.top[0]}</span>
+                <span className='seat-class seat-bot-left'>{el.bottom[0]}</span>
+                <span className='seat-class seat-side-left'>{el.side[0]}</span>
+                <span className='seat-class seat-top-right'>{el.top[1]}</span>
+                <span className='seat-class seat-bot-right'>{el.bottom[1]}</span>
+                <span className='seat-class seat-side-right'>{el.side[1]}</span>
+              </div>
+            )}
+          </span> : null}
+
       </div>
     </div>
   )

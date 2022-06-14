@@ -701,10 +701,20 @@
   left: 131px;
 }
 
-
+.seat-class {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  font-family: 'Roboto-bold';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+  color: #000000;
+}
 
 .seat-top-left {
-  position: absolute;
   background-color: #f55858;
   width: 27px;
   height: 32px;
@@ -712,7 +722,6 @@
   left: 1px;
 }
 .seat-bot-left {
-  position: absolute;
   background-color: #a4f558;
   width: 27px;
   height: 32px;
@@ -720,7 +729,6 @@
   left: 1px;
 }
 .seat-side-left {
-  position: absolute;
   background-color: rgb(31, 130, 223);
   width: 44px;
   height: 25px;
@@ -729,7 +737,6 @@
 }
 
 .seat-top-right {
-  position: absolute;
   background-color: #f5585869;
   width: 27px;
   height: 32px;
@@ -737,7 +744,6 @@
   left: 62px;
 }
 .seat-bot-right {
-  position: absolute;
   background-color: #a4f55873;
   width: 27px;
   height: 32px;
@@ -745,7 +751,6 @@
   left: 62px;
 }
 .seat-side-right {
-  position: absolute;
   background-color: rgba(31, 130, 223, 0.363);
   width: 44px;
   height: 25px;
