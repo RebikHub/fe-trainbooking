@@ -139,6 +139,7 @@
   font-size: 20px;
   line-height: 23px;
   color: #292929;
+  text-transform: capitalize;
 }
 
 .coach-direction-station {
@@ -304,7 +305,7 @@
   height: 140px;
 }
 
-.type-text {
+.type-text, .type-text-active {
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 400;
@@ -417,7 +418,7 @@
   font-family: 'Roboto-bold';
   font-style: normal;
   font-weight: 700;
-  font-size: 72px;
+  font-size: 36px;
   line-height: 84px;
   color: #292929;
   text-align: center;

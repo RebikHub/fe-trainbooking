@@ -1,12 +1,57 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../styles/coaches.css';
 import { useSelector } from 'react-redux';
+import { dateFromAndTo, duration } from '../utils/trainDate';
 import Coach from './Coach';
+import { useEffect } from 'react';
 
 export default function ListCoaches() {
   const { coaches } = useSelector((state) => state.sliceGetSeats);
+  const { route } = useSelector((state) => state.sliceChoice);
+  const [time, setTime] = useState({
+    hours: '',
+    mins: ''
+  });
+  const [type, setType] = useState({
+    first: false,
+    second: false,
+    third: false,
+    fourth: false
+  });
 
-  console.log(coaches);
+  useEffect(() => {
+    const time = duration(route.departure.duration);
+    const timeArr = time.split(':');
+    setTime({
+      hours: timeArr[0],
+      mins: timeArr[1]
+    });
+    let first, second, third, fourth;
+
+    for (let e of coaches) {
+      if (e.coach.class_type === 'first') {
+        first = true;
+      };
+      if (e.coach.class_type === 'second') {
+        second = true;
+      };
+      if (e.coach.class_type === 'third') {
+        third = true;
+      };
+      if (e.coach.class_type === 'fourth') {
+        fourth = true;
+      };
+    };
+    
+    setType({
+      first,
+      second,
+      third,
+      fourth
+    });
+
+  }, []);
+
   return (
     <div className='coaches'>
       <h3 className='coaches-title'>выбор мест</h3>
@@ -21,31 +66,31 @@ export default function ListCoaches() {
           <div className='coach-train-route'>
             <span className='coach-train-img'></span>
             <div className='coach-train-desc'>
-              <h5 className='train-desc-name'>116С</h5>
-              <p className='train-desc-city'>Москва &#8594;</p>
-              <p className='train-desc-city'>Санкт-Петербург</p>
+              <h5 className='train-desc-name'>{route.departure.train.name}</h5>
+              <p className='train-desc-city'>{route.departure.from.city.name} &#8594;</p>
+              <p className='train-desc-city'>{route.departure.to.city.name}</p>
             </div>
           </div>
 
           <div className='coach-direction-time'>
             <div className='coach-direction-city'>
-              <h5 className='coach-time'>00:10</h5>
-              <p className='coach-direction-name'>Москва</p>
-              <p className='coach-direction-station'>Курский вокзал</p>
+              <h5 className='coach-time'>{dateFromAndTo(route.departure.from.datetime)}</h5>
+              <p className='coach-direction-name'>{route.departure.from.city.name}</p>
+              <p className='coach-direction-station'>{route.departure.from.city.railway_station_name} вокзал</p>
             </div>
             <div className='direction-arrow'></div>
             <div className='coach-direction-city'>
-              <h5 className='coach-time'>09:52</h5>
-              <p className='coach-direction-name'>Санкт-Петербург</p>
-              <p className='coach-direction-station'>Ладожский вокзал</p>
+              <h5 className='coach-time'>{dateFromAndTo(route.departure.to.datetime)}</h5>
+              <p className='coach-direction-name'>{route.departure.to.city.name}</p>
+              <p className='coach-direction-station'>{route.departure.to.city.railway_station_name} вокзал</p>
             </div>
           </div>
 
           <div className='coach-duration'>
             <span className='coach-duration-img'></span>
             <div className='coach-duration-text'>
-              <p>9 часов</p>
-              <p>42 минуты</p>
+              <p>{time.hours} час.</p>
+              <p>{time.mins} мин.</p>
             </div>
           </div>
         </div>
@@ -75,28 +120,27 @@ export default function ListCoaches() {
           <h4 className='coach-type-title'>Тип вагона</h4>
           <div className='coach-types'>
             <div className='coach-type'>
-              <span className='type-fourth-img'></span>
-              <p className='type-text'>Сидячий</p>
+              <span className={!type.fourth ? 'type-fourth-img' : 'type-fourth-img-active'}></span>
+              <p className={!type.fourth ? 'type-text' : 'type-text-active'}>Сидячий</p>
             </div>
             <div className='coach-type'>
-              <span className='type-third-img'></span>
-              <p className='type-text'>Плацкарт</p>
+              <span className={!type.third ? 'type-third-img' : 'type-third-img-active'}></span>
+              <p className={!type.third ? 'type-text' : 'type-text-active'}>Плацкарт</p>
             </div>
             <div className='coach-type'>
-              <span className='type-second-img'></span>
-              <p className='type-text'>Купе</p>
+              <span className={!type.second ? 'type-second-img' : 'type-second-img-active'}></span>
+              <p className={!type.second ? 'type-text' : 'type-text-active'}>Купе</p>
             </div>
             <div className='coach-type'>
-              <span className='type-first-img'></span>
-              <p className='type-text'>Люкс</p>
+              <span className={!type.first ? 'type-first-img' : 'type-first-img-active'}></span>
+              <p className={!type.first ? 'type-text' : 'type-text-active'}>Люкс</p>
             </div>
           </div>
 
           <div className='coaches-numbering'>
             <div className='coaches-numbers'>
               <p className='coaches-numbers-text'>Вагоны</p>
-              <span className='coaches-number-text'>10</span>
-              <span className='coaches-number-current'>12</span>
+              {coaches.map((e,i) => <span className={(i + 1) % 2 !== 0 ? 'coaches-number-current' : 'coaches-number-text'} key={e.coach._id}>{e.coach.name}</span>)}
             </div>
             <p className='coaches-numbers-text'>Нумерация вагонов начинается с головы поезда</p>
           </div>
@@ -105,53 +149,10 @@ export default function ListCoaches() {
             classStyle={(coaches.length - 1) === i ? '' : 'coach-description'}
             coach={el}
             key={el.coach._id}/>)}
-          {/* <div className='coach-description'>
-            <div className='coach-description-prices'>
-              <div className='coach-number'>
-                <h3 className='coach-number-title'>12</h3>
-                <p className='coach-number-text'>вагон</p>
-              </div>
-              <div className='coach-seats-amount'>
-                <p className='seats-amount-title'>Места <span className='seats-amount-num'>21</span></p>
-                <p className='seats-amount-text'>Верхние <span className='seats-amount-num'>10</span></p>
-                <p className='seats-amount-text'>Нижние <span className='seats-amount-num'>11</span></p>
-              </div>
-              <div className='coach-seats-price'>
-                <p className='seats-price-title'>Стоимость</p>
-                <p className='seats-price-text'>2020 <span className='sign-rub'></span></p>
-                <p className='seats-price-text'>3030 <span className='sign-rub'></span></p>
-              </div>
-              <div className='coach-services'>
-                <p className='coach-services-text'>Обслуживание ФПК</p>
-                <div className='coach-services-img'>
-                  <span className='service-air-selected'>
-                    <div className='none service-description'></div>
-                  </span>
-                  <span className='service-wifi'>
-                    <div className='none'></div>
-                  </span>
-                  <span className='service-linens service-included'>
-                    <div className='none'></div>
-                  </span>
-                  <span className='service-coffee'>
-                    <div className='none'></div>
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            <div className='coach-seats-selected'>
-              <p>13 человек выбирают места в этом поезде</p>
-            </div>
-
-            <div className='coach-seats-info'>
-              <span className='seats-info-img'></span>
-            </div>
-          </div> */}
         </div>
       </div>
       
       <button className='coach-button' type='button'>далее</button>
     </div>
-  )
-}
+  );
+};

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { choiceRoute } from '../store/sliceChoice';
 import { requestGetSeats } from '../store/sliceGetSeats';
 import '../styles/train-route.css';
 import { dateFromAndTo, duration } from '../utils/trainDate';
@@ -49,7 +50,7 @@ export default function TrainRoute({route}) {
   }, []);
 
   function getCoaches() {
-    console.log(route.departure._id);
+    dispatch(choiceRoute(route));
     dispatch(requestGetSeats(route.departure._id));
     navigate('/route/coach');
 

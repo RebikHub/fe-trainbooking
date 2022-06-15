@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { choiceCityFrom, choiceCityTo, choiceDateFrom, choiceDateTo, clearChoiceCity, searchCity } from '../store/sliceChoice';
+import { clearAllFiltering } from '../store/sliceFilter';
 import { clearCities } from '../store/sliceGetCity';
 import { requestGetLastRoutes } from '../store/sliceGetLastRoutes';
-import { getRouteRequest } from '../store/sliceGetRoute';
+import { clearRouteList, getRouteRequest } from '../store/sliceGetRoute';
 import { currentStepOne } from '../store/sliceProgressLine';
 import '../styles/search-widget.css';
 import Calendar from './Calendar';
@@ -38,23 +39,47 @@ export default function SearchWidget({classStyle}) {
 
   function inputFromCity(ev) {
     setCity({...city, from: ev.target.value});
-    if (ev.target.value.trim() !== '') {
-      dispatch(searchCity(ev.target.value));
-      if (cities.length !== 0) {
-        setHidden({...hidden, city: 'city-from'});
-      };
-    } else {
-      setHidden({...hidden, city: 'none'});
+    if (hidden.city === 'none') {
+      setHidden({...hidden, city: 'city-from'});
     };
   };
 
   function inputToCity(ev) {
     setCity({...city, to: ev.target.value});
-    if (ev.target.value.trim() !== '') {
-      dispatch(searchCity(ev.target.value));
-      if (cities.length !== 0) {
-        setHidden({...hidden, city: 'city-to'});
-      };
+    if (hidden.city === 'none') {
+      setHidden({...hidden, city: 'city-to'});
+    };
+  };
+
+  useEffect(() => {
+      const timer = setTimeout(() => {
+        if (city.from.trim() !== '') {
+          dispatch(searchCity(city.from));
+        };
+      }, 1000);
+      return () => clearTimeout(timer);
+  }, [city.from]);
+
+  useEffect(() => {
+      const timer = setTimeout(() => {
+        if (city.to.trim() !== '') {
+          dispatch(searchCity(city.to));
+        };
+      }, 1000);
+      return () => clearTimeout(timer);
+  }, [city.to]);
+
+  function showListCitiesFrom() {
+    if (hidden.city === 'none' || hidden.city === 'city-to') {
+      setHidden({...hidden, city: 'city-from'});
+    } else {
+      setHidden({...hidden, city: 'none'});
+    };
+  };
+
+  function showListCitiesTo() {
+    if (hidden.city === 'none' || hidden.city === 'city-from') {
+      setHidden({...hidden, city: 'city-to'});
     } else {
       setHidden({...hidden, city: 'none'});
     };
@@ -83,30 +108,33 @@ export default function SearchWidget({classStyle}) {
   };
 
   function getCity(choiceCity) {
+
     if (hidden.city === 'city-from') {
       dispatch(choiceCityFrom(choiceCity));
-      setHidden({...hidden, city: 'none'});
       setCity({...city, from: choiceCity.name});
+      setHidden({...hidden, city: 'none'});
     };
 
     if (hidden.city === 'city-to') {
       dispatch(choiceCityTo(choiceCity));
-      setHidden({...hidden, city: 'none'});
       setCity({...city, to: choiceCity.name});
+      setHidden({...hidden, city: 'none'});
     };
 
   };
 
   function swapCity() {
-    const fromCity = city.from;
-    const toCity = city.to;
+    dispatch(choiceCityFrom(toCity));
+    dispatch(choiceCityTo(fromCity));
     setCity({
-      from: toCity,
-      to: fromCity
+      from: city.to,
+      to: city.from
     });
   };
 
   function submit() {
+    dispatch(clearRouteList());
+    dispatch(clearAllFiltering());
     if (!transform && location.pathname === '/' && fromCity !== null && toCity !== null) {
       navigate('/route');
       dispatch(getRouteRequest({fromDate, toDate, fromCity, toCity}));
@@ -141,11 +169,13 @@ export default function SearchWidget({classStyle}) {
           <div className='search-dir-inputs'>
             <input className='dir-input-from' type="text" placeholder="Откуда"
               value={city.from}
-              onChange={inputFromCity}/>
+              onChange={inputFromCity}
+              onClick={showListCitiesFrom}/>
             <button className='dir-btn' type="button" onClick={swapCity}></button>
             <input className='dir-input-to' type="text" placeholder="Куда"
               value={city.to}
-              onChange={inputToCity}/>
+              onChange={inputToCity}
+              onClick={showListCitiesTo}/>
               <CityList none={`${hidden.city}${transform ? '-transform' : ''}`} getCity={getCity}/>
           </div>
         </div>

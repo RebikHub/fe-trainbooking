@@ -99,12 +99,14 @@ export const sliceFilter = createSlice({
         state.filterTimeFrom.thereArrival.end
       );
     },
-    changeFilterSeat: (state, actions) => {
-      console.log(state, actions.payload);
-    },
     stopFiltering: (state, actions) => {
       state.filterProcess = false;
       state.filteredRoutes = [];
+    },
+    clearAllFiltering: (state, actions) => {
+      state.filterProcess = false;
+      state.filteredRoutes = [];
+      state.currentRoutes = [];
     }
   }
 });
@@ -117,7 +119,7 @@ export const {
   addFilterTimeTo,
   filtering,
   stopFiltering,
-  changeFilterSeat
+  clearAllFiltering
 } = sliceFilter.actions;
 
 export default sliceFilter.reducer;

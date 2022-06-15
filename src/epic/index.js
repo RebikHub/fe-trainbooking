@@ -23,11 +23,11 @@ export const getCitiesEpic = (action$) => action$.pipe(
 export const getRoutesEpic = (action$) => action$.pipe(
   ofType(getRouteRequest),
   debounceTime(2000),
-  tap((o) => console.log('request ', o)),
+  // tap((o) => console.log('request ', o)),
   switchMap((o) => {
     return ajax.getJSON(`${process.env.REACT_APP_API_URL}routes?from_city_id=${o.payload.fromCity._id}&to_city_id=${o.payload.toCity._id}`).pipe(
     retry(3),
-    tap((obj) => console.log('response ', obj)),
+    // tap((obj) => console.log('response ', obj)),
     map((o) => getRouteSuccess(o)),
     catchError((e) => of(getRouteError(e)))
   )})
@@ -35,11 +35,11 @@ export const getRoutesEpic = (action$) => action$.pipe(
 
 export const getLastRoutesEpic = (action$) => action$.pipe(
   ofType(requestGetLastRoutes),
-  tap((o) => console.log('request last ', o)),
+  // tap((o) => console.log('request last ', o)),
   switchMap((o) => {
     return ajax.getJSON(`${process.env.REACT_APP_API_URL}routes/last`).pipe(
     retry(3),
-    tap((obj) => console.log('response last ', obj)),
+    // tap((obj) => console.log('response last ', obj)),
     map((o) => successGetLastRoutes(o)),
     catchError((e) => of(errorGetLastRoutes(e)))
   )})

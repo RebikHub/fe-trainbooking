@@ -24,6 +24,11 @@ export const sliceGetRoute = createSlice({
     getRouteError: (state, actions) => {
       state.loading = false;
       state.error = actions.payload;
+    },
+    clearRouteList: (state, actions) => {
+      state.loading = false;
+      state.error = false;
+      state.route = [];
     }
   }
 });
@@ -31,7 +36,8 @@ export const sliceGetRoute = createSlice({
 export const {
   getRouteRequest,
   getRouteSuccess,
-  getRouteError
+  getRouteError,
+  clearRouteList
 } = sliceGetRoute.actions;
 
 export default sliceGetRoute.reducer;
