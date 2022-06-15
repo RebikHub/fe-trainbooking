@@ -169,7 +169,7 @@ export default function ListRoutes() {
         </div>
         <div className='list-routes-show'>
           <p>показывать по </p>
-          <span onClick={getShowOnPages}>2</span>
+          <span onClick={getShowOnPages}>5</span>
           <span onClick={getShowOnPages}>10</span>
           <span onClick={getShowOnPages}>20</span>
         </div>

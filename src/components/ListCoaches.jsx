@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../styles/coaches.css';
 import { useSelector } from 'react-redux';
 import { dateFromAndTo, duration } from '../utils/trainDate';
@@ -18,6 +19,7 @@ export default function ListCoaches() {
     third: false,
     fourth: false
   });
+  let navigate = useNavigate();
 
   useEffect(() => {
     const time = duration(route.departure.duration);
@@ -51,6 +53,10 @@ export default function ListCoaches() {
     });
 
   }, []);
+
+  if (!route || !coaches) {
+    return () => navigate('/route');
+  };
 
   return (
     <div className='coaches'>

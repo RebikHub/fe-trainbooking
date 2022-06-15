@@ -1,89 +1,61 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useEffect } from 'react';
 import '../styles/coaches.css';
+import { amountSeats, haveSeatsOrNot } from '../utils/amountSeats';
 import { schemeFirstClass, schemeFourthClass, schemeThirdClass } from '../utils/schemeCoach';
 
 export default function Coach({classStyle, coach}) {
-
+  const [visible, setVisible] = useState({
+    air: false,
+    wifi: false,
+    linens: false,
+    cup: false
+  });
   console.log(coach);
 
-  function amountSeats(amount, type) {
-    let top = 0;
-    let bottom = 0;
-    let side = 0;
-    let sum = 0;
-    let other = 0;
-
-    if (type === 'first') {
-      for (let i of amount) {
-        if (i.index % 2 === 0 && i.available) {
-          bottom += 1;
-        };
-        if (i.index % 2 !== 0 && i.available) {
-          top += 1;
-        };
-      };
-      sum = top + bottom;
-      other = 18 - sum;
-    };
-
-    if (type === 'second' || type === 'third') {
-      for (let i of amount) {
-        if (i.index > 32 && i.available) {
-          side += 1;
-        };
-        if (i.index % 2 === 0 && i.index < 33 && i.available) {
-          top += 1;
-        };
-        if (i.index % 2 !== 0 && i.index < 33 && i.available) {
-          bottom += 1;
-        };
-      };
-      sum = top + bottom + side;
-      if (type === 'second') {
-        other = 32 - sum;
-      };
-      
-      if (type === 'third') {
-        other = 48 - sum;
-      };
-    };
-
-
-    if (type === 'fourth') {
-      for (let i of amount) {
-        if (i.index % 2 === 0 && i.index < 33 && i.available) {
-          bottom += 1;
-        } else if (i.index % 2 !== 0 && i.index > 32 && i.available) {
-          bottom += 1;
-        } else if (i.available) {
-          top += 1;
-        };
-      };
-      sum = top + bottom;
-      other = 62 - sum;
-    };
-
-    return {
-      top,
-      bottom,
-      side,
-      sum,
-      other
-    };
+function mouseMoveToService(ev) {
+  if (ev.target.classList.contains('service-air-selected') || ev.target.classList.contains('service-air')) {
+    setVisible({...visible, air: true});
   };
 
-  function haveSeatsOrNot(numScheme, coach) {
-    let result = 'seat-not-have';
-    coach.seats.map((e) => {
-      if (e.index === numScheme) {
-        if (e.available) {
-          return result = 'seat-have';
-        };
-      };
-      return null;
-    });
-    return result;
+  if (ev.target.classList.contains('service-wifi') || ev.target.classList.contains('service-wifi-empty')) {
+    setVisible({...visible, wifi: true});
   };
+
+  if (ev.target.classList.contains('service-linens-empty') ||
+      ev.target.classList.contains('service-linens') ||
+      ev.target.classList.contains('service-included')) {
+    setVisible({...visible, linens: true});
+  };
+
+  if (ev.target.classList.contains('service-coffee')) {
+    setVisible({...visible, cup: true});
+  };
+};
+
+// useEffect(() => {
+//   if (visible.air) {
+//     setTimeout(() => setVisible({...visible, air: false}), 2 * 1000);
+//   };
+// }, [visible.air]);
+
+// useEffect(() => {
+//   if (visible.wifi) {
+//     setTimeout(() => setVisible({...visible, wifi: false}), 2 * 1000);
+//   };
+// }, [visible.wifi]);
+
+// useEffect(() => {
+//   if (visible.linens) {
+//     setTimeout(() => setVisible({...visible, linens: false}), 2 * 1000);
+//   };
+// }, [visible.linens]);
+
+// useEffect(() => {
+//   if (visible.cup) {
+//     setTimeout(() => setVisible({...visible, cup: false}), 2 * 1000);
+//   };
+// }, [visible.cup]);
 
   return (
     <div className={classStyle}>
@@ -119,18 +91,29 @@ export default function Coach({classStyle, coach}) {
         <div className='coach-services'>
           <p className='coach-services-text'>Обслуживание ФПК</p>
           <div className='coach-services-img'>
-            <span className='service-air-selected'>
-              <div className='none service-description'></div>
+
+            <span className={`service-move ${coach.coach.have_air_conditioning ? 'service-air-selected' : 'service-air'}`}
+              onMouseMove={mouseMoveToService}>
+              <div className={visible.air ? 'service-description' : 'none'}>
+                {coach.coach.have_air_conditioning ? 'кондиционер есть' : 'кондиционера нет'}
+              </div>
             </span>
-            <span className='service-wifi'>
-              <div className='none'></div>
+
+            <span className={coach.coach.have_wifi ? 'service-wifi' : 'service-wifi-empty'} onMouseMove={mouseMoveToService}>
+              <div className={visible.wifi ? 'service-description' : 'none'}>
+                WI-FI
+              </div>
             </span>
-            <span className='service-linens service-included'>
-              <div className='none'></div>
+
+            <span className={coach.coach.class_type === 'fourth' ? 'service-linens-empty' :
+              `service-linens ${coach.coach.is_linens_included ? 'service-included' : ''}`} onMouseMove={mouseMoveToService}>
+              <div className={visible.linens ? 'service-description' : 'none'}>белье</div>
             </span>
-            <span className='service-coffee'>
-              <div className='none'></div>
+
+            <span className='service-coffee' onMouseMove={mouseMoveToService}>
+              <div className={visible.cup ? 'service-description' : 'none'}>питание</div>
             </span>
+
           </div>
         </div>
       </div>
