@@ -13,49 +13,67 @@ export default function Coach({classStyle, coach}) {
   });
   console.log(coach);
 
-function mouseMoveToService(ev) {
-  if (ev.target.classList.contains('service-air-selected') || ev.target.classList.contains('service-air')) {
-    setVisible({...visible, air: true});
+  function mouseMoveToAir(ev) {
+    if (ev.target.classList.contains('service-air-selected') || ev.target.classList.contains('service-air')) {
+      setVisible({
+        air: true,
+        wifi: false,
+        linens: false,
+        cup: false
+      });
+    };
   };
 
-  if (ev.target.classList.contains('service-wifi') || ev.target.classList.contains('service-wifi-empty')) {
-    setVisible({...visible, wifi: true});
+  function mouseMoveToWifi(ev) {
+    if (ev.target.classList.contains('service-wifi') || ev.target.classList.contains('service-wifi-empty')) {
+      setVisible({
+        air: false,
+        wifi: true,
+        linens: false,
+        cup: false
+      });
+    };
   };
 
-  if (ev.target.classList.contains('service-linens-empty') ||
-      ev.target.classList.contains('service-linens') ||
-      ev.target.classList.contains('service-included')) {
-    setVisible({...visible, linens: true});
+  function mouseMoveToLinens(ev) {
+    if (ev.target.classList.contains('service-linens-empty') ||
+    ev.target.classList.contains('service-linens') ||
+    ev.target.classList.contains('service-included')) {
+      setVisible({
+        air: false,
+        wifi: false,
+        linens: true,
+        cup: false
+      });
+    };
   };
 
-  if (ev.target.classList.contains('service-coffee')) {
-    setVisible({...visible, cup: true});
+  function mouseMoveToCup(ev) {
+    if (ev.target.classList.contains('service-coffee')) {
+      setVisible({
+        air: false,
+        wifi: false,
+        linens: false,
+        cup: true
+      });
+    };
   };
-};
 
-// useEffect(() => {
-//   if (visible.air) {
-//     setTimeout(() => setVisible({...visible, air: false}), 2 * 1000);
-//   };
-// }, [visible.air]);
+  function buyWifi() {
+    console.log('buy wifi ', coach.coach.wifi_price);
+  };
 
-// useEffect(() => {
-//   if (visible.wifi) {
-//     setTimeout(() => setVisible({...visible, wifi: false}), 2 * 1000);
-//   };
-// }, [visible.wifi]);
+  function buyLinens() {
+    console.log('buy linens ', coach.coach.linens_price);
+  };
 
-// useEffect(() => {
-//   if (visible.linens) {
-//     setTimeout(() => setVisible({...visible, linens: false}), 2 * 1000);
-//   };
-// }, [visible.linens]);
-
-// useEffect(() => {
-//   if (visible.cup) {
-//     setTimeout(() => setVisible({...visible, cup: false}), 2 * 1000);
-//   };
-// }, [visible.cup]);
+  useEffect(() => {
+    for (let i in visible) {
+      if (visible[i] === true) {
+        setTimeout(() => setVisible({...visible, [i]: false}), 2 * 1000);
+      };
+    };
+  }, [visible]);
 
   return (
     <div className={classStyle}>
@@ -92,27 +110,36 @@ function mouseMoveToService(ev) {
           <p className='coach-services-text'>Обслуживание ФПК</p>
           <div className='coach-services-img'>
 
-            <span className={`service-move ${coach.coach.have_air_conditioning ? 'service-air-selected' : 'service-air'}`}
-              onMouseMove={mouseMoveToService}>
+            <div className='service-move'>
+              <span className={coach.coach.have_air_conditioning ? 'service-air-selected' : 'service-air'}
+                onMouseMove={mouseMoveToAir}></span>
               <div className={visible.air ? 'service-description' : 'none'}>
                 {coach.coach.have_air_conditioning ? 'кондиционер есть' : 'кондиционера нет'}
               </div>
-            </span>
+            </div>
 
-            <span className={coach.coach.have_wifi ? 'service-wifi' : 'service-wifi-empty'} onMouseMove={mouseMoveToService}>
+            <div className='service-move'>
+              <span className={coach.coach.have_wifi ? 'service-wifi' : 'service-wifi-empty'}
+                onMouseMove={mouseMoveToWifi} onClick={buyWifi}></span>
               <div className={visible.wifi ? 'service-description' : 'none'}>
-                WI-FI
+                {coach.coach.have_wifi ? `WI-FI есть ${coach.coach.wifi_price} р.` : 'WI-FI нет'}
               </div>
-            </span>
+            </div>
 
-            <span className={coach.coach.class_type === 'fourth' ? 'service-linens-empty' :
-              `service-linens ${coach.coach.is_linens_included ? 'service-included' : ''}`} onMouseMove={mouseMoveToService}>
-              <div className={visible.linens ? 'service-description' : 'none'}>белье</div>
-            </span>
+            <div className='service-move'>
+              <span className={coach.coach.class_type === 'fourth' ? 'service-linens-empty' :
+                `service-linens ${coach.coach.is_linens_included ? 'service-included' : ''}`}
+                  onMouseMove={mouseMoveToLinens} onClick={buyLinens}></span>
+              <div className={visible.linens ? 'service-description' : 'none'}>
+                {coach.coach.class_type === 'fourth' ? 'белья нет' :
+                  `белье ${coach.coach.is_linens_included ? 'включено' : `есть ${coach.coach.linens_price}`}`}
+              </div>
+            </div>
 
-            <span className='service-coffee' onMouseMove={mouseMoveToService}>
+            <div className='service-move'>
+              <span className='service-coffee' onMouseMove={mouseMoveToCup}></span>
               <div className={visible.cup ? 'service-description' : 'none'}>питание</div>
-            </span>
+            </div>
 
           </div>
         </div>

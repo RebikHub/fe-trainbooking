@@ -501,9 +501,12 @@
   display: flex;
 }
 
+.service-move {
+  position: relative;
+}
+
 .service-wifi-empty, .service-linens-empty, .service-air, .service-wifi, .service-linens, .service-coffee, .service-air-selected, .service-wifi-selected, .service-linens-selected, .service-coffee-selected {
   display: flex;
-  position: relative;
   width: 36px;
   height: 35px;
   margin-right: 13px;
@@ -580,19 +583,24 @@
 
 .service-description {
   position: absolute;
+  min-width: 84px;
+  min-height: 32px;
   left: -32px;
   top: 40px;
-  background: #E5E5E5;
+  background: #F5F4F6;
   border-radius: 5px;
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-  padding: 3px;
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
   line-height: 19px;
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   color: #292929;
+  padding: 7px;
+  text-align: center;
 }
 
 .coach-seats-selected {
