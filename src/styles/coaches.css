@@ -217,7 +217,16 @@
   background: #FFFFFF;
   border: 1px solid #928F94;
   border-radius: 5px;
+  caret-color: transparent;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 21px;
+  color: #292929;
 }
+
+
 
 .tickets-age-input::placeholder {
   font-family: 'Roboto';
@@ -831,4 +840,25 @@
 
 .seat-right {
   left: 60px;
+}
+
+.modal-tickets {
+  position: fixed;
+  top: 250px;
+  left: 800px;
+  width: 300px;
+  height: 150px;
+  border-radius: 10px;
+  background-color: #FFB59E;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Roboto-bold';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 28px;
+  text-align: center;
+  color: #292929;
 }

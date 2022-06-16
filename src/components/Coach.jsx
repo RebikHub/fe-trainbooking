@@ -4,7 +4,7 @@ import '../styles/coaches.css';
 import { amountSeats, haveSeatsOrNot } from '../utils/amountSeats';
 import { schemeFirstClass, schemeFourthClass, schemeThirdClass } from '../utils/schemeCoach';
 
-export default function Coach({classStyle, coach}) {
+export default function Coach({classStyle, coach, choiceSeats}) {
   const [visible, setVisible] = useState({
     air: false,
     wifi: false,
@@ -132,7 +132,7 @@ export default function Coach({classStyle, coach}) {
                   onMouseMove={mouseMoveToLinens} onClick={buyLinens}></span>
               <div className={visible.linens ? 'service-description' : 'none'}>
                 {coach.coach.class_type === 'fourth' ? 'белья нет' :
-                  `белье ${coach.coach.is_linens_included ? 'включено' : `есть ${coach.coach.linens_price}`}`}
+                  `белье ${coach.coach.is_linens_included ? 'включено' : `есть ${coach.coach.linens_price} р.`}`}
               </div>
             </div>
 
@@ -154,8 +154,10 @@ export default function Coach({classStyle, coach}) {
           <span className='seats-info-first'>
             {schemeFirstClass.map((el, i) =>
               <div className='scheme-seats-first' style={{left: `${41 + 89.63 * (i + 1)}px`}} key={i}>
-                <span className={`seat-class seat-left ${haveSeatsOrNot(el.left, coach)}`}>{el.left}</span>
-                <span className={`seat-class seat-right ${haveSeatsOrNot(el.right, coach)}`}>{el.right}</span>
+                <span className={`seat-class seat-left ${haveSeatsOrNot(el.left, coach)}`}
+                  onClick={() => choiceSeats(coach.coach.bottom_price, el.left, haveSeatsOrNot(el.left, coach))}>{el.left}</span>
+                <span className={`seat-class seat-right ${haveSeatsOrNot(el.right, coach)}`}
+                  onClick={() => choiceSeats(coach.coach.top_price, el.right, haveSeatsOrNot(el.right, coach))}>{el.right}</span>
               </div>
             )}
           </span> :
@@ -163,10 +165,14 @@ export default function Coach({classStyle, coach}) {
           <span className='seats-info-second'>
             {schemeThirdClass.map((el, i) =>
               <div className='scheme-seats-second' style={{left: `${41 + 89.63 * (i + 1)}px`}} ket={i}>
-                <span className={`seat-class seat-top-left ${haveSeatsOrNot(el.top[0], coach)}`}>{el.top[0]}</span>
-                <span className={`seat-class seat-bot-left ${haveSeatsOrNot(el.bottom[0], coach)}`}>{el.bottom[0]}</span>
-                <span className={`seat-class seat-top-right ${haveSeatsOrNot(el.top[1], coach)}`}>{el.top[1]}</span>
-                <span className={`seat-class seat-bot-right ${haveSeatsOrNot(el.bottom[1], coach)}`}>{el.bottom[1]}</span>
+                <span className={`seat-class seat-top-left ${haveSeatsOrNot(el.top[0], coach)}`}
+                  onClick={() => choiceSeats(coach.coach.top_price, el.top[0], haveSeatsOrNot(el.top[0], coach))}>{el.top[0]}</span>
+                <span className={`seat-class seat-bot-left ${haveSeatsOrNot(el.bottom[0], coach)}`}
+                  onClick={() => choiceSeats(coach.coach.bottom_price, el.bottom[0], haveSeatsOrNot(el.bottom[0], coach))}>{el.bottom[0]}</span>
+                <span className={`seat-class seat-top-right ${haveSeatsOrNot(el.top[1], coach)}`}
+                  onClick={() => choiceSeats(coach.coach.top_price, el.top[1], haveSeatsOrNot(el.top[1], coach))}>{el.top[1]}</span>
+                <span className={`seat-class seat-bot-right ${haveSeatsOrNot(el.bottom[1], coach)}`}
+                  onClick={() => choiceSeats(coach.coach.bottom_price, el.bottom[1], haveSeatsOrNot(el.bottom[1], coach))}>{el.bottom[1]}</span>
               </div>
             )}
           </span> :
@@ -174,12 +180,18 @@ export default function Coach({classStyle, coach}) {
           <span className='seats-info-third'>
             {schemeThirdClass.map((el, i) =>
               <div className='scheme-seats-third' style={{left: `${41 + 89.63 * (i + 1)}px`}} key={i}>
-                <span className={`seat-class seat-top-left ${haveSeatsOrNot(el.top[0], coach)}`}>{el.top[0]}</span>
-                <span className={`seat-class seat-bot-left ${haveSeatsOrNot(el.bottom[0], coach)}`}>{el.bottom[0]}</span>
-                <span className={`seat-class seat-side-left ${haveSeatsOrNot(el.side[0], coach)}`}>{el.side[0]}</span>
-                <span className={`seat-class seat-top-right ${haveSeatsOrNot(el.top[1], coach)}`}>{el.top[1]}</span>
-                <span className={`seat-class seat-bot-right ${haveSeatsOrNot(el.bottom[1], coach)}`}>{el.bottom[1]}</span>
-                <span className={`seat-class seat-side-right ${haveSeatsOrNot(el.side[1], coach)}`}>{el.side[1]}</span>
+                <span className={`seat-class seat-top-left ${haveSeatsOrNot(el.top[0], coach)}`}
+                  onClick={() => choiceSeats(coach.coach.top_price, el.top[0], haveSeatsOrNot(el.top[0], coach))}>{el.top[0]}</span>
+                <span className={`seat-class seat-bot-left ${haveSeatsOrNot(el.bottom[0], coach)}`}
+                  onClick={() => choiceSeats(coach.coach.bottom_price, el.bottom[0], haveSeatsOrNot(el.bottom[0], coach))}>{el.bottom[0]}</span>
+                <span className={`seat-class seat-side-left ${haveSeatsOrNot(el.side[0], coach)}`}
+                  onClick={() => choiceSeats(coach.coach.side_price, el.side[0], haveSeatsOrNot(el.side[0], coach))}>{el.side[0]}</span>
+                <span className={`seat-class seat-top-right ${haveSeatsOrNot(el.top[1], coach)}`}
+                  onClick={() => choiceSeats(coach.coach.top_price, el.top[1], haveSeatsOrNot(el.top[1], coach))}>{el.top[1]}</span>
+                <span className={`seat-class seat-bot-right ${haveSeatsOrNot(el.bottom[1], coach)}`}
+                  onClick={() => choiceSeats(coach.coach.bottom_price, el.bottom[1], haveSeatsOrNot(el.bottom[1], coach))}>{el.bottom[1]}</span>
+                <span className={`seat-class seat-side-right ${haveSeatsOrNot(el.side[1], coach)}`}
+                  onClick={() => choiceSeats(coach.coach.side_price, el.side[1], haveSeatsOrNot(el.side[1], coach))}>{el.side[1]}</span>
               </div>
             )}
           </span> :
@@ -187,21 +199,29 @@ export default function Coach({classStyle, coach}) {
           <span className='seats-info-fourth'>
               <div className='scheme-seats-fourth'>
                 {schemeFourthClass.topWindow.map((e, i) => 
-                  <span className={`seat-class seat-win-top ${haveSeatsOrNot(e, coach)}`} style={{left: `${11.3 + 44.2 * (i)}px`}} key={i}>{e}</span>
+                  <span className={`seat-class seat-win-top ${haveSeatsOrNot(e, coach)}`}
+                    style={{left: `${11.3 + 44.2 * (i)}px`}} key={i}
+                    onClick={() => choiceSeats(coach.coach.top_price, e, haveSeatsOrNot(e, coach))}>{e}</span>
                 )}
                 {schemeFourthClass.topAisle.map((e, i) => 
-                  <span className={`seat-class seat-aisle-top ${haveSeatsOrNot(e, coach)}`} style={{left: `${11.3 + 44.2 * (i)}px`}} key={i}>{e}</span>
+                  <span className={`seat-class seat-aisle-top ${haveSeatsOrNot(e, coach)}`}
+                    style={{left: `${11.3 + 44.2 * (i)}px`}} key={i}
+                    onClick={() => choiceSeats(coach.coach.bottom_price, e, haveSeatsOrNot(e, coach))}>{e}</span>
                 )}
                 {schemeFourthClass.botAisle.map((e, i) => 
-                  <span className={`seat-class seat-aisle-bot ${haveSeatsOrNot(e, coach)}`} style={{left: `${55.3 + 44.2 * (i)}px`}} key={i}>{e}</span>
+                  <span className={`seat-class seat-aisle-bot ${haveSeatsOrNot(e, coach)}`}
+                    style={{left: `${55.3 + 44.2 * (i)}px`}} key={i}
+                    onClick={() => choiceSeats(coach.coach.bottom_price, e, haveSeatsOrNot(e, coach))}>{e}</span>
                 )}
                 {schemeFourthClass.botWindow.map((e, i) => 
-                  <span className={`seat-class seat-win-bot ${haveSeatsOrNot(e, coach)}`} style={{left: `${11.3 + 44.2 * (i)}px`}} key={i}>{e}</span>
+                  <span className={`seat-class seat-win-bot ${haveSeatsOrNot(e, coach)}`}
+                    style={{left: `${11.3 + 44.2 * (i)}px`}} key={i}
+                    onClick={() => choiceSeats(coach.coach.top_price, e, haveSeatsOrNot(e, coach))}>{e}</span>
                 )}
               </div>
           </span> : null}
 
       </div>
     </div>
-  )
-}
+  );
+};

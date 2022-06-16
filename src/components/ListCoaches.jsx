@@ -19,6 +19,9 @@ export default function ListCoaches() {
     third: false,
     fourth: false
   });
+  const [valueAges, setValueAges] = useState(0);
+  const [valueChild, setValueChild] = useState(0);
+  const [modal, setModal] = useState(false);
   let navigate = useNavigate();
 
   useEffect(() => {
@@ -54,6 +57,33 @@ export default function ListCoaches() {
 
   }, []);
 
+  useEffect(() => {
+    if (modal) {
+      setTimeout(() => setModal(false), 2 * 1000);
+    };
+  }, [modal]);
+
+  function inputAges(ev) {
+    if (/^[1-5]$/.test(Number(ev.target.value))) {
+      setValueAges(ev.target.value);
+    };
+  };
+
+  function inputChild(ev) {
+    if (/^[1-5]$/.test(Number(ev.target.value))) {
+      setValueChild(ev.target.value);
+    };
+  };
+
+  function choiceSeats(price, seat) {
+    const sum = valueAges + valueChild;
+    if (sum > 0) {
+      console.log(price, seat);
+    } else {
+      setModal(true);
+    };
+  };
+
   if (!route || !coaches) {
     return () => navigate('/route');
   };
@@ -61,6 +91,8 @@ export default function ListCoaches() {
   return (
     <div className='coaches'>
       <h3 className='coaches-title'>выбор мест</h3>
+
+      <div className={modal ? 'modal-tickets' : 'none'}>Укажите количество билетов!</div>
 
       <div className='coach'>
         <div className='choice-train'>
@@ -105,18 +137,22 @@ export default function ListCoaches() {
           <h4 className='amount-tickets-title'>Количество билетов</h4>
           <div className='tickets-age'>
             <div className='tickets-age-inputs'>
-              <input className='tickets-age-input' type="text" placeholder='Взрослых - 2'/>
-              <p className='tickets-adults-desc'>Можно добавить еще 3 пассажиров</p>
+              <input className='tickets-age-input' type="text" placeholder={`Взрослых - ${valueAges}`}
+                value={''}
+                onChange={inputAges}/>
+              <p className='tickets-adults-desc'>Можно добавить еще {5 - valueAges} пассажиров</p>
             </div>
 
             <div className='tickets-age-inputs'>
-              <input className='tickets-age-input' type="text" placeholder='Детских - 1'/>
-              <p className='tickets-adults-desc'>Можно добавить еще 3 детей до 10 лет.Свое место в вагоне, как у взрослых, но дешевле 
+              <input className='tickets-age-input' type="text" placeholder={`Детских - ${valueChild}`}
+                value={''}
+                onChange={inputChild}/>
+              <p className='tickets-adults-desc'>Можно добавить еще {5 - valueChild} детей до 10 лет.Свое место в вагоне, как у взрослых, но дешевле 
                 в среднем на 50-65%</p>
             </div>
 
             <div className='tickets-age-inputs'>
-              <input className='tickets-age-input' type="text" placeholder='Детских &#171;без места&#187; - 0'/>
+              <input className='tickets-age-input' type="text" defaultValue={''} placeholder='Детских &#171;без места&#187; - 0'/>
               <p className='tickets-adults-desc'></p>
             </div>
           </div>
@@ -154,6 +190,7 @@ export default function ListCoaches() {
           {coaches.map((el, i) => <Coach
             classStyle={(coaches.length - 1) === i ? '' : 'coach-description'}
             coach={el}
+            choiceSeats={choiceSeats}
             key={el.coach._id}/>)}
         </div>
       </div>
