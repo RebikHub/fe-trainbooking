@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/coaches.css';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { dateFromAndTo, duration } from '../utils/trainDate';
 import Coach from './Coach';
 import { useEffect } from 'react';
+import { changeAmountTickets, changeChoiceTicketsAnswer, clearAllPrices } from '../store/slicePrice';
 
 export default function ListCoaches() {
   const { coaches } = useSelector((state) => state.sliceGetSeats);
@@ -21,7 +22,10 @@ export default function ListCoaches() {
   });
   const [valueAges, setValueAges] = useState(0);
   const [valueChild, setValueChild] = useState(0);
+  const [sum, setSum] = useState(0);
   const [modal, setModal] = useState(false);
+  const { totalPrice, amountTickets, priceServices, priceSeats, choiceTickets } = useSelector((state) => state.slicePrice);
+  const dispatch = useDispatch();
   let navigate = useNavigate();
 
   useEffect(() => {
@@ -63,6 +67,17 @@ export default function ListCoaches() {
     };
   }, [modal]);
 
+  useEffect(() => {
+    dispatch(changeAmountTickets(valueAges + valueChild));
+  }, [valueAges, valueChild]);
+
+  useEffect(() => {
+    if (choiceTickets) {
+      setModal(true);
+      dispatch(changeChoiceTicketsAnswer());
+    };
+  }, [priceSeats, choiceTickets]);
+
   function inputAges(ev) {
     if (/^[1-5]$/.test(Number(ev.target.value))) {
       setValueAges(ev.target.value);
@@ -75,13 +90,9 @@ export default function ListCoaches() {
     };
   };
 
-  function choiceSeats(price, seat) {
-    const sum = valueAges + valueChild;
-    if (sum > 0) {
-      console.log(price, seat);
-    } else {
-      setModal(true);
-    };
+  function backToRoutes() {
+    navigate('/route');
+    dispatch(clearAllPrices());
   };
 
   if (!route || !coaches) {
@@ -97,7 +108,7 @@ export default function ListCoaches() {
       <div className='coach'>
         <div className='choice-train'>
           <span className='choice-train-img'></span>
-          <button className='choice-train-btn'>Выбрать другой поезд</button>
+          <button className='choice-train-btn' type='button' onClick={backToRoutes}>Выбрать другой поезд</button>
         </div>
 
         <div className='coach-train'>
@@ -190,9 +201,9 @@ export default function ListCoaches() {
           {coaches.map((el, i) => <Coach
             classStyle={(coaches.length - 1) === i ? '' : 'coach-description'}
             coach={el}
-            choiceSeats={choiceSeats}
             key={el.coach._id}/>)}
         </div>
+        <div className={totalPrice === 0 ? 'none' :'total-price'}>{totalPrice} <span className='sign-rub'></span></div>
       </div>
       
       <button className='coach-button' type='button'>далее</button>

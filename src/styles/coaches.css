@@ -801,6 +801,12 @@
   cursor: not-allowed;
 }
 
+.seat-selected {
+  box-sizing: border-box;
+  border: 2px solid #FFA800;
+  z-index: 1;
+}
+
 /* fourth class */
 
 .seat-win-top, .seat-aisle-top, .seat-aisle-bot, .seat-win-bot {
@@ -861,4 +867,23 @@
   line-height: 28px;
   text-align: center;
   color: #292929;
+}
+
+.total-price {
+  display: flex;
+  margin: 0 38px 32px 835px;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 28px;
+  color: #FFA800;
+}
+
+.total-price > span {
+  margin-left: 5px;
+  width: 14px;
+  height: 17px;
+  background-size: cover;
+  align-self: center;
 }
