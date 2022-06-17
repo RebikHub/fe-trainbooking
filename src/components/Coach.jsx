@@ -17,7 +17,7 @@ export default function Coach({classStyle, coach}) {
   const [linensBuyed, setLinensBuyed] = useState(false);
   const { totalPrice, amountTickets, priceServices, priceSeats } = useSelector((state) => state.slicePrice);
   const dispatch = useDispatch();
-  console.log(coach);
+  // console.log(coach);
 
   function mouseMoveToAir(ev) {
     if (ev.target.classList.contains('service-air-selected') || ev.target.classList.contains('service-air')) {
@@ -84,6 +84,7 @@ export default function Coach({classStyle, coach}) {
   };
 
   function choiceSeats(ev, price, seat, have) {
+    console.log(amountTickets);
     if (ev.target.classList.contains('seat-selected')) {
       dispatch(changePriceSeats(-Number(price)));
       ev.target.classList.remove('seat-selected');
@@ -91,7 +92,7 @@ export default function Coach({classStyle, coach}) {
       if (have === 'seat-have' && amountTickets !== 0) {
         dispatch(changePriceSeats(Number(price)));
         ev.target.classList.add('seat-selected');
-        console.log(price, seat, have);
+        // console.log(price, seat, have);
       } else if (amountTickets === 0) {
         dispatch(changeChoiceTicketsAsk());
       };

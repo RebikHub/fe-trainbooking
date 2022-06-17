@@ -23,6 +23,7 @@ export const slicePrice = createSlice({
     changePriceSeats: (state, actions) => {
       state.priceSeats += actions.payload;
       state.totalPrice = state.priceServices + state.priceSeats;
+      state.amountTickets -= 1;
       if (state.amountTickets === 0) {
         state.choiceTickets = false;
       };

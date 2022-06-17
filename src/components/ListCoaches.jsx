@@ -6,6 +6,7 @@ import { dateFromAndTo, duration } from '../utils/trainDate';
 import Coach from './Coach';
 import { useEffect } from 'react';
 import { changeAmountTickets, changeChoiceTicketsAnswer, clearAllPrices } from '../store/slicePrice';
+import Notice from './Notice';
 
 export default function ListCoaches() {
   const { coaches } = useSelector((state) => state.sliceGetSeats);
@@ -63,12 +64,12 @@ export default function ListCoaches() {
 
   useEffect(() => {
     if (modal) {
-      setTimeout(() => setModal(false), 2 * 1000);
+      setTimeout(() => setModal(false), 5 * 1000);
     };
   }, [modal]);
 
   useEffect(() => {
-    dispatch(changeAmountTickets(valueAges + valueChild));
+    dispatch(changeAmountTickets(Number(valueAges) + Number(valueChild)));
   }, [valueAges, valueChild]);
 
   useEffect(() => {
@@ -79,13 +80,13 @@ export default function ListCoaches() {
   }, [priceSeats, choiceTickets]);
 
   function inputAges(ev) {
-    if (/^[1-5]$/.test(Number(ev.target.value))) {
+    if (/^[0-5]$/.test(Number(ev.target.value))) {
       setValueAges(ev.target.value);
     };
   };
 
   function inputChild(ev) {
-    if (/^[1-5]$/.test(Number(ev.target.value))) {
+    if (/^[0-5]$/.test(Number(ev.target.value))) {
       setValueChild(ev.target.value);
     };
   };
@@ -102,8 +103,8 @@ export default function ListCoaches() {
   return (
     <div className='coaches'>
       <h3 className='coaches-title'>выбор мест</h3>
-
-      <div className={modal ? 'modal-tickets' : 'none'}>Укажите количество билетов!</div>
+      
+      <Notice modal={modal} handleNotice={() => setModal(false)}/>
 
       <div className='coach'>
         <div className='choice-train'>
@@ -163,7 +164,9 @@ export default function ListCoaches() {
             </div>
 
             <div className='tickets-age-inputs'>
-              <input className='tickets-age-input' type="text" defaultValue={''} placeholder='Детских &#171;без места&#187; - 0'/>
+              <input className='tickets-age-input' type="text" placeholder='Детских &#171;без места&#187; - 0'
+                value={''}
+                onChange={() => ''}/>
               <p className='tickets-adults-desc'></p>
             </div>
           </div>
