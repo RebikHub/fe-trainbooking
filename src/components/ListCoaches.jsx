@@ -66,12 +66,12 @@ export default function ListCoaches() {
       setModal(true);
       dispatch(changeChoiceTicketsAnswer());
     };
-  }, [priceSeats, choiceTickets]);
+  }, [choiceTickets]);
 
   if (!route || !coaches) {
     return () => navigate('/route');
   };
-
+console.log('render list');
   return (
     <div className='coaches'>
       <h3 className='coaches-title'>выбор мест</h3>

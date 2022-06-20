@@ -54,7 +54,6 @@ export default function CoachesType({route, coaches, classStyle}) {
     };
     
     setType(objTypes);
-
   }, []);
 
   useEffect(() => {
@@ -77,7 +76,7 @@ export default function CoachesType({route, coaches, classStyle}) {
     navigate('/route');
     dispatch(clearAllPrices());
   };
-
+  console.log('render types');
   return (
       <div className='coach'>
 

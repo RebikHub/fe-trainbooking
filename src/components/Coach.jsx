@@ -15,7 +15,7 @@ export default function Coach({classStyle, coach}) {
   });
   const [wifiBought, setWifiBought] = useState(false);
   const [linensBought, setLinensBought] = useState(false);
-  const { amountTickets } = useSelector((state) => state.slicePrice);
+  const { totalPrice, amountTickets } = useSelector((state) => state.slicePrice);
   const dispatch = useDispatch();
 
   function mouseMoveToAir(ev) {
@@ -65,7 +65,6 @@ export default function Coach({classStyle, coach}) {
   };
 
   function buyWifi() {
-    console.log('buy wifi ', amountTickets !== 0 && coach.coach.have_wifi);
     if (amountTickets !== 0 && coach.coach.have_wifi) {
       dispatch(changePriceServices(Number(coach.coach.wifi_price)));
       setWifiBought(true);
@@ -84,7 +83,6 @@ export default function Coach({classStyle, coach}) {
   };
 
   function choiceSeats(ev, price, seat, have) {
-    console.log('click seat');
     if (ev.target.classList.contains('seat-selected')) {
       dispatch(changePriceSeats(-Number(price)));
       ev.target.classList.remove('seat-selected');
@@ -97,7 +95,6 @@ export default function Coach({classStyle, coach}) {
         dispatch(changeChoiceTicketsAsk());
       };
     };
-
   };
 
   useEffect(() => {
@@ -107,8 +104,6 @@ export default function Coach({classStyle, coach}) {
       };
     };
   }, [visible]);
-
-  console.log(wifiBought);
 
   return (
     <div className={classStyle}>
