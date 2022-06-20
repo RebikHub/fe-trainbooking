@@ -5,8 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { dateFromAndTo, duration } from '../utils/trainDate';
 import Coach from './Coach';
 import { useEffect } from 'react';
-import { changeAmountTickets, changeChoiceTicketsAnswer, clearAllPrices } from '../store/slicePrice';
-import Notice from './Notice';
+import { changeAmountTickets, clearAllPrices } from '../store/slicePrice';
 
 export default function CoachesType({route, coaches, classStyle}) {
   const [time, setTime] = useState({
@@ -21,8 +20,7 @@ export default function CoachesType({route, coaches, classStyle}) {
   });
   const [valueAges, setValueAges] = useState(0);
   const [valueChild, setValueChild] = useState(0);
-  const [modal, setModal] = useState(false);
-  const { totalPrice, amountTickets, priceServices, priceSeats, choiceTickets } = useSelector((state) => state.slicePrice);
+  const { totalPrice } = useSelector((state) => state.slicePrice);
   const dispatch = useDispatch();
   let navigate = useNavigate();
 
@@ -33,49 +31,35 @@ export default function CoachesType({route, coaches, classStyle}) {
       hours: timeArr[0],
       mins: timeArr[1]
     });
-    let first, second, third, fourth;
+    const objTypes = {
+      first: false,
+      second: false,
+      third: false,
+      fourth: false
+    };
 
     for (let e of coaches) {
       if (e.coach.class_type === 'first') {
-        first = true;
+        objTypes.first = true;
       };
       if (e.coach.class_type === 'second') {
-        second = true;
+        objTypes.second = true;
       };
       if (e.coach.class_type === 'third') {
-        third = true;
+        objTypes.third = true;
       };
       if (e.coach.class_type === 'fourth') {
-        fourth = true;
+        objTypes.fourth = true;
       };
     };
     
-    setType({
-      first,
-      second,
-      third,
-      fourth
-    });
+    setType(objTypes);
 
   }, []);
 
   useEffect(() => {
-    if (modal) {
-      setTimeout(() => setModal(false), 5 * 1000);
-    };
-  }, [modal]);
-
-  useEffect(() => {
     dispatch(changeAmountTickets(Number(valueAges) + Number(valueChild)));
   }, [valueAges, valueChild]);
-
-  useEffect(() => {
-    console.log(choiceTickets);
-    if (choiceTickets) {
-      setModal(true);
-      dispatch(changeChoiceTicketsAnswer());
-    };
-  }, [priceSeats, choiceTickets]);
 
   function inputAges(ev) {
     if (/^[0-5]$/.test(Number(ev.target.value))) {
@@ -96,8 +80,6 @@ export default function CoachesType({route, coaches, classStyle}) {
 
   return (
       <div className='coach'>
-
-        <Notice modal={modal} handleNotice={() => setModal(false)}/>
 
         <div className={`choice-train${classStyle}`}>
           <span className={`choice-train-img${classStyle}`}></span>

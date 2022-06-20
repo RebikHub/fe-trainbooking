@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeChoiceTicketsAsk, changePriceSeats, changePriceServices, changeTotalPrice } from '../store/slicePrice';
+import { changeChoiceTicketsAsk, changePriceSeats, changePriceServices } from '../store/slicePrice';
 import '../styles/coaches.css';
 import { amountSeats, haveSeatsOrNot } from '../utils/amountSeats';
 import { schemeFirstClass, schemeFourthClass, schemeThirdClass } from '../utils/schemeCoach';
@@ -13,9 +13,9 @@ export default function Coach({classStyle, coach}) {
     linens: false,
     cup: false
   });
-  const [wifiBuyed, setWifiBuyed] = useState(false);
-  const [linensBuyed, setLinensBuyed] = useState(false);
-  const { totalPrice, amountTickets, priceServices, priceSeats } = useSelector((state) => state.slicePrice);
+  const [wifiBought, setWifiBought] = useState(false);
+  const [linensBought, setLinensBought] = useState(false);
+  const { amountTickets } = useSelector((state) => state.slicePrice);
   const dispatch = useDispatch();
 
   function mouseMoveToAir(ev) {
@@ -65,9 +65,10 @@ export default function Coach({classStyle, coach}) {
   };
 
   function buyWifi() {
+    console.log('buy wifi ', amountTickets !== 0 && coach.coach.have_wifi);
     if (amountTickets !== 0 && coach.coach.have_wifi) {
       dispatch(changePriceServices(Number(coach.coach.wifi_price)));
-      setWifiBuyed(true);
+      setWifiBought(true);
     } else if (coach.coach.have_wifi) {
       dispatch(changeChoiceTicketsAsk());
     };
@@ -76,14 +77,14 @@ export default function Coach({classStyle, coach}) {
   function buyLinens() {
     if (amountTickets !== 0 && coach.coach.class_type !== 'fourth' && !coach.coach.is_linens_included) {
       dispatch(changePriceServices(Number(coach.coach.linens_price)));
-      setLinensBuyed(true);
+      setLinensBought(true);
     } else if (coach.coach.class_type !== 'fourth' && !coach.coach.is_linens_included) {
       dispatch(changeChoiceTicketsAsk());
     };
   };
 
   function choiceSeats(ev, price, seat, have) {
-    console.log(amountTickets);
+    console.log('click seat');
     if (ev.target.classList.contains('seat-selected')) {
       dispatch(changePriceSeats(-Number(price)));
       ev.target.classList.remove('seat-selected');
@@ -106,6 +107,8 @@ export default function Coach({classStyle, coach}) {
       };
     };
   }, [visible]);
+
+  console.log(wifiBought);
 
   return (
     <div className={classStyle}>
@@ -152,7 +155,7 @@ export default function Coach({classStyle, coach}) {
             </div>
 
             <div className='service-move'>
-              <span className={coach.coach.have_wifi ? wifiBuyed ? 'service-wifi-selected' : 'service-wifi' : 'service-wifi-empty'}
+              <span className={coach.coach.have_wifi ? wifiBought ? 'service-wifi-selected' : 'service-wifi' : 'service-wifi-empty'}
                 onMouseMove={mouseMoveToWifi} onClick={buyWifi}></span>
               <div className={visible.wifi ? 'service-description' : 'none'}>
                 {coach.coach.have_wifi ? `WI-FI есть ${coach.coach.wifi_price} р.` : 'WI-FI нет'}
@@ -161,7 +164,7 @@ export default function Coach({classStyle, coach}) {
 
             <div className='service-move'>
               <span className={coach.coach.class_type === 'fourth' ? 'service-linens-empty' :
-                `service-linens ${coach.coach.is_linens_included ? 'service-included' : linensBuyed ? 'service-linens-selected' : ''}`}
+                `service-linens ${coach.coach.is_linens_included ? 'service-included' : linensBought ? 'service-linens-selected' : ''}`}
                   onMouseMove={mouseMoveToLinens} onClick={buyLinens}></span>
               <div className={visible.linens ? 'service-description' : 'none'}>
                 {coach.coach.class_type === 'fourth' ? 'белья нет' :

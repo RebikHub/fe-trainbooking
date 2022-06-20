@@ -144,7 +144,7 @@ export default function ListRoutes() {
       };
     };
     elements[page - 1].classList.add('choice-page');
-  }
+  };
 
   if (!list || !list.length) {
     return <div className='no-routes'>Ничего не найдено!</div>
@@ -189,5 +189,5 @@ export default function ListRoutes() {
         </div>
       </footer>
     </div>
-  )
-}
+  );
+};

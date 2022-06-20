@@ -39,5 +39,5 @@ export default function LastRoutes() {
         )}
       </ul>
     </div>
-  )
-}
+  );
+};
