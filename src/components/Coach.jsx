@@ -17,7 +17,6 @@ export default function Coach({classStyle, coach}) {
   const [linensBuyed, setLinensBuyed] = useState(false);
   const { totalPrice, amountTickets, priceServices, priceSeats } = useSelector((state) => state.slicePrice);
   const dispatch = useDispatch();
-  // console.log(coach);
 
   function mouseMoveToAir(ev) {
     if (ev.target.classList.contains('service-air-selected') || ev.target.classList.contains('service-air')) {
