@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeChoiceTicketsAsk, changePriceSeats, changePriceServices } from '../store/slicePrice';
+import { changeChoiceTicketsAsk, changeNotice, changePriceSeats, changePriceServices, changeServiceLinens, changeServiceWifi } from '../store/slicePrice';
 import '../styles/coaches.css';
 import { amountSeats, haveSeatsOrNot } from '../utils/amountSeats';
 import { schemeFirstClass, schemeFourthClass, schemeThirdClass } from '../utils/schemeCoach';
@@ -15,8 +15,24 @@ export default function Coach({classStyle, coach}) {
   });
   const [wifiBought, setWifiBought] = useState(false);
   const [linensBought, setLinensBought] = useState(false);
-  const { totalPrice, amountTickets } = useSelector((state) => state.slicePrice);
+  const { firstClass, secondClass, thirdClass, fourthClass } = useSelector((state) => state.slicePrice);
+  const [current, setCurrent] = useState({});
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (coach.coach.class_type === 'first') {
+      setCurrent(firstClass);
+    };
+    if (coach.coach.class_type === 'second') {
+      setCurrent(secondClass);
+    };
+    if (coach.coach.class_type === 'third') {
+      setCurrent(thirdClass);
+    };
+    if (coach.coach.class_type === 'fourth') {
+      setCurrent(fourthClass);
+    };
+  }, [firstClass, secondClass, thirdClass, fourthClass]);
 
   function mouseMoveToAir(ev) {
     if (ev.target.classList.contains('service-air-selected') || ev.target.classList.contains('service-air')) {
@@ -65,38 +81,50 @@ export default function Coach({classStyle, coach}) {
   };
 
   function buyWifi() {
-    if (amountTickets !== 0 && coach.coach.have_wifi) {
-      dispatch(changePriceServices(Number(coach.coach.wifi_price)));
+    if (current.amountTickets !== 0 && coach.coach.have_wifi) {
+      dispatch(changeServiceWifi({
+        classType: coach.coach.class_type,
+        price: Number(coach.coach.wifi_price)
+      }));
       setWifiBought(true);
     } else if (coach.coach.have_wifi) {
-      dispatch(changeChoiceTicketsAsk());
+      dispatch(changeNotice(true));
     };
   };
 
   function buyLinens() {
-    if (amountTickets !== 0 && coach.coach.class_type !== 'fourth' && !coach.coach.is_linens_included) {
-      dispatch(changePriceServices(Number(coach.coach.linens_price)));
+    if (current.amountTickets !== 0 && coach.coach.class_type !== 'fourth' && !coach.coach.is_linens_included) {
+      dispatch(changeServiceLinens({
+        classType: coach.coach.class_type,
+        price: Number(coach.coach.linens_price)
+      }));
       setLinensBought(true);
     } else if (coach.coach.class_type !== 'fourth' && !coach.coach.is_linens_included) {
-      dispatch(changeChoiceTicketsAsk());
+      dispatch(changeNotice(true));
     };
   };
 
   function choiceSeats(ev, price, seat, have) {
     if (ev.target.classList.contains('seat-selected')) {
-      dispatch(changePriceSeats(-Number(price)));
+      dispatch(changePriceSeats({
+        classType: coach.coach.class_type,
+        price: -Number(price)
+      }));
       ev.target.classList.remove('seat-selected');
     } else {
-      if (have === 'seat-have' && amountTickets !== 0) {
-        dispatch(changePriceSeats(Number(price)));
+      if (have === 'seat-have' && current.amountTickets !== 0) {
+        dispatch(changePriceSeats({
+          classType: coach.coach.class_type,
+          price: Number(price)
+        }));
         ev.target.classList.add('seat-selected');
         // console.log(price, seat, have);
-      } else if (amountTickets === 0) {
-        dispatch(changeChoiceTicketsAsk());
+      } else if (current.amountTickets === 0) {
+        dispatch(changeNotice(true));
       };
     };
   };
-
+console.log(current);
   useEffect(() => {
     for (let i in visible) {
       if (visible[i] === true) {

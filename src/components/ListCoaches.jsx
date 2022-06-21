@@ -5,16 +5,15 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import CoachesType from './CoachesType';
 import Notice from './Notice';
-import { changeChoiceTicketsAnswer } from '../store/slicePrice';
+import { changeNotice } from '../store/slicePrice';
 
 export default function ListCoaches() {
   const { coaches } = useSelector((state) => state.sliceGetSeats);
   const { route } = useSelector((state) => state.sliceChoice);
   let navigate = useNavigate();
   const [types, setTypes] = useState([]);
-  const [modal, setModal] = useState(false);
   const dispatch = useDispatch();
-  const { totalPrice, amountTickets, priceServices, priceSeats, choiceTickets } = useSelector((state) => state.slicePrice);
+  const { notice, firstClass, secondClass, thirdClass, fourthClass } = useSelector((state) => state.slicePrice);
 
   useEffect(() => {
     const classes = [];
@@ -51,34 +50,42 @@ export default function ListCoaches() {
       if (fourth.length > 0) {
         classes.push(fourth);
       };
+      console.log('classes ', classes);
       setTypes(classes);
     };
   }, [coaches]);
 
     useEffect(() => {
-      if (modal) {
-        setTimeout(() => setModal(false), 5 * 1000);
+      if (notice) {
+        setTimeout(() => dispatch(changeNotice(false)), 5 * 1000);
       };
-    }, [modal]);
-
-  useEffect(() => {
-    if (choiceTickets) {
-      setModal(true);
-      dispatch(changeChoiceTicketsAnswer());
-    };
-  }, [choiceTickets]);
+    }, [notice]);
 
   if (!route || !coaches) {
     return () => navigate('/route');
   };
-console.log('render list');
+
   return (
     <div className='coaches'>
       <h3 className='coaches-title'>выбор мест</h3>
 
-      <Notice modal={modal} handleNotice={() => setModal(false)}/>
+      <Notice modal={notice} handleNotice={() => dispatch(changeNotice(false))}/>
 
-      {types.map((el, i) => <CoachesType coaches={el} route={route} classStyle={i % 2 === 0 ? '-left' : '-right'} key={i}/>)}
+      {types.map((el, i) => {
+        if (el[0].coach.class_type === 'first') {
+          return <CoachesType coaches={el} route={route} classStyle={i % 2 === 0 ? '-left' : '-right'} storeClass={firstClass} key={i}/>
+        };
+        if (el[0].coach.class_type === 'second') {
+          return <CoachesType coaches={el} route={route} classStyle={i % 2 === 0 ? '-left' : '-right'} storeClass={secondClass} key={i}/>
+        };
+        if (el[0].coach.class_type === 'third') {
+          return <CoachesType coaches={el} route={route} classStyle={i % 2 === 0 ? '-left' : '-right'} storeClass={thirdClass} key={i}/>
+        };
+        if (el[0].coach.class_type === 'fourth') {
+          return <CoachesType coaches={el} route={route} classStyle={i % 2 === 0 ? '-left' : '-right'} storeClass={fourthClass} key={i}/>
+        };
+        return null;
+      })}
       
       <button className='coach-button' type='button'>далее</button>
     </div>

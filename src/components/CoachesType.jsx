@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { dateFromAndTo, duration } from '../utils/trainDate';
 import Coach from './Coach';
 import { useEffect } from 'react';
-import { changeAmountTickets, clearAllPrices } from '../store/slicePrice';
+import { changeAgeTickets, changeChildTickets, clearAllPrices } from '../store/slicePrice';
 
 export default function CoachesType({route, coaches, classStyle}) {
   const [time, setTime] = useState({
@@ -20,7 +20,7 @@ export default function CoachesType({route, coaches, classStyle}) {
   });
   const [valueAges, setValueAges] = useState(0);
   const [valueChild, setValueChild] = useState(0);
-  const { totalPrice } = useSelector((state) => state.slicePrice);
+  const { firstClass, secondClass, thirdClass, fourthClass } = useSelector((state) => state.slicePrice);
   const dispatch = useDispatch();
   let navigate = useNavigate();
 
@@ -56,18 +56,22 @@ export default function CoachesType({route, coaches, classStyle}) {
     setType(objTypes);
   }, []);
 
-  useEffect(() => {
-    dispatch(changeAmountTickets(Number(valueAges) + Number(valueChild)));
-  }, [valueAges, valueChild]);
-
   function inputAges(ev) {
     if (/^[0-5]$/.test(Number(ev.target.value))) {
+      dispatch(changeAgeTickets({
+        classType: coaches[0].coach.class_type,
+        seatsAge: Number(ev.target.value)
+      }));
       setValueAges(ev.target.value);
     };
   };
 
   function inputChild(ev) {
     if (/^[0-5]$/.test(Number(ev.target.value))) {
+      dispatch(changeChildTickets({
+        classType: coaches[0].coach.class_type,
+        seatsChild: Number(ev.target.value)
+      }));
       setValueChild(ev.target.value);
     };
   };
@@ -76,7 +80,7 @@ export default function CoachesType({route, coaches, classStyle}) {
     navigate('/route');
     dispatch(clearAllPrices());
   };
-  console.log('render types');
+
   return (
       <div className='coach'>
 
@@ -179,7 +183,17 @@ export default function CoachesType({route, coaches, classStyle}) {
             coach={el}
             key={el.coach._id + Math.random()}/>)}
         </div>
-        <div className={totalPrice === 0 ? 'none' :'total-price'}>{totalPrice} <span className='sign-rub'></span></div>
+        <div className={
+          coaches[0].coach.class_type === 'first' ? firstClass.totalPrice === 0 ? 'none' :'total-price' :
+          coaches[0].coach.class_type === 'second' ? secondClass.totalPrice === 0 ? 'none' :'total-price' :
+          coaches[0].coach.class_type === 'third' ? thirdClass.totalPrice === 0 ? 'none' :'total-price' :
+          fourthClass.totalPrice === 0 ? 'none' :'total-price'
+        }>{
+          coaches[0].coach.class_type === 'first' ? firstClass.totalPrice :
+          coaches[0].coach.class_type === 'second' ? secondClass.totalPrice :
+          coaches[0].coach.class_type === 'third' ? thirdClass.totalPrice :
+          fourthClass.totalPrice
+        } <span className='sign-rub'></span></div>
       </div>
   );
 };
