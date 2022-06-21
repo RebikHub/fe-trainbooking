@@ -5,7 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import CoachesType from './CoachesType';
 import Notice from './Notice';
-import { changeNotice } from '../store/slicePrice';
+import { changeNotice, totalChoiceRoute } from '../store/slicePrice';
+import { currentStepTwo } from '../store/sliceProgressLine';
 
 export default function ListCoaches() {
   const { coaches } = useSelector((state) => state.sliceGetSeats);
@@ -50,16 +51,22 @@ export default function ListCoaches() {
       if (fourth.length > 0) {
         classes.push(fourth);
       };
-      console.log('classes ', classes);
+
       setTypes(classes);
     };
   }, [coaches]);
 
-    useEffect(() => {
-      if (notice) {
-        setTimeout(() => dispatch(changeNotice(false)), 5 * 1000);
-      };
-    }, [notice]);
+  useEffect(() => {
+    if (notice) {
+      setTimeout(() => dispatch(changeNotice(false)), 5 * 1000);
+    };
+  }, [notice]);
+
+  function toPassengers() {
+    navigate('/route/passengers');
+    dispatch(currentStepTwo());
+    dispatch(totalChoiceRoute());
+  };
 
   if (!route || !coaches) {
     return () => navigate('/route');
@@ -71,23 +78,9 @@ export default function ListCoaches() {
 
       <Notice modal={notice} handleNotice={() => dispatch(changeNotice(false))}/>
 
-      {types.map((el, i) => {
-        if (el[0].coach.class_type === 'first') {
-          return <CoachesType coaches={el} route={route} classStyle={i % 2 === 0 ? '-left' : '-right'} storeClass={firstClass} key={i}/>
-        };
-        if (el[0].coach.class_type === 'second') {
-          return <CoachesType coaches={el} route={route} classStyle={i % 2 === 0 ? '-left' : '-right'} storeClass={secondClass} key={i}/>
-        };
-        if (el[0].coach.class_type === 'third') {
-          return <CoachesType coaches={el} route={route} classStyle={i % 2 === 0 ? '-left' : '-right'} storeClass={thirdClass} key={i}/>
-        };
-        if (el[0].coach.class_type === 'fourth') {
-          return <CoachesType coaches={el} route={route} classStyle={i % 2 === 0 ? '-left' : '-right'} storeClass={fourthClass} key={i}/>
-        };
-        return null;
-      })}
+      {types.map((el, i) =>  <CoachesType coaches={el} route={route} classStyle={i % 2 === 0 ? '-left' : '-right'} key={i}/>)}
       
-      <button className='coach-button' type='button'>далее</button>
+      <button className='coach-button' type='button' onClick={toPassengers}>далее</button>
     </div>
   );
 };

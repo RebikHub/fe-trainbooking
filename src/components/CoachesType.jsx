@@ -181,7 +181,7 @@ export default function CoachesType({route, coaches, classStyle}) {
           {coaches.map((el, i) => <Coach
             classStyle={(coaches.length - 1) === i ? '' : 'coach-description'}
             coach={el}
-            key={el.coach._id + Math.random()}/>)}
+            key={el.coach._id}/>)}
         </div>
         <div className={
           coaches[0].coach.class_type === 'first' ? firstClass.totalPrice === 0 ? 'none' :'total-price' :

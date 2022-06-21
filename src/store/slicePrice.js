@@ -39,111 +39,104 @@ export const slicePrice = createSlice({
       serviceLinens: 0,
       totalPrice: 0 // seatsPrice + serviceWifi + serviceLinens
     },
-    notice: false
+    notice: false,
+    totalSeatsAge: 0,
+    totalSeatsChild: 0,
+    totalPriceAge: 0,
+    totalPriceChild: 0,
+    totalPriceAll: 0
   },
   reducers: {
     changeAgeTickets: (state, actions) => {
       if (actions.payload.classType === 'first') {
         state.firstClass.seatsAge = actions.payload.seatsAge;
-        state.firstClass.amountTickets = state.firstClass.seatsAge + state.firstClass.seatsChild;
+        state.firstClass.amountTickets += actions.payload.seatsAge;
       };
       if (actions.payload.classType === 'second') {
         state.secondClass.seatsAge = actions.payload.seatsAge;
-        state.secondClass.amountTickets = state.secondClass.seatsAge + state.secondClass.seatsChild;
+        state.secondClass.amountTickets += actions.payload.seatsAge;
       };
       if (actions.payload.classType === 'third') {
         state.thirdClass.seatsAge = actions.payload.seatsAge;
-        state.thirdClass.amountTickets = state.thirdClass.seatsAge + state.thirdClass.seatsChild;
+        state.thirdClass.amountTickets += actions.payload.seatsAge;
       };
       if (actions.payload.classType === 'fourth') {
         state.fourthClass.seatsAge = actions.payload.seatsAge;
-        state.fourthClass.amountTickets = state.fourthClass.seatsAge + state.fourthClass.seatsChild;
+        state.fourthClass.amountTickets += actions.payload.seatsAge;
       };
     },
     changeChildTickets: (state, actions) => {
       if (actions.payload.classType === 'first') {
         state.firstClass.seatsChild = actions.payload.seatsChild;
-        state.firstClass.amountTickets = state.firstClass.seatsAge + state.firstClass.seatsChild;
+        state.firstClass.amountTickets += actions.payload.seatsChild;
       };
       if (actions.payload.classType === 'second') {
         state.secondClass.seatsChild = actions.payload.seatsChild;
-        state.secondClass.amountTickets = state.secondClass.seatsAge + state.secondClass.seatsChild;
+        state.secondClass.amountTickets += actions.payload.seatsChild;
       };
       if (actions.payload.classType === 'third') {
         state.thirdClass.seatsChild = actions.payload.seatsChild;
-        state.thirdClass.amountTickets = state.thirdClass.seatsAge + state.thirdClass.seatsChild;
+        state.thirdClass.amountTickets += actions.payload.seatsChild;
       };
       if (actions.payload.classType === 'fourth') {
         state.fourthClass.seatsChild = actions.payload.seatsChild;
-        state.fourthClass.amountTickets = state.fourthClass.seatsAge + state.fourthClass.seatsChild;
+        state.fourthClass.amountTickets += actions.payload.seatsChild;
       };
     },
     changePriceSeats: (state, actions) => {
       if (actions.payload.classType === 'first') {
-        state.firstClass.seatsPrice = actions.payload.price;
-        state.firstClass.totalPrice = state.firstClass.seatsPrice + state.firstClass.serviceLinens + state.firstClass.serviceWifi;
+        state.firstClass.totalPrice += actions.payload.price;
       };
       if (actions.payload.classType === 'second') {
-        state.secondClass.seatsPrice = actions.payload.price;
-        state.secondClass.totalPrice = state.secondClass.seatsPrice + state.secondClass.serviceLinens + state.secondClass.serviceWifi;
+        state.secondClass.totalPrice += actions.payload.price;
       };
       if (actions.payload.classType === 'third') {
-        state.thirdClass.seatsPrice = actions.payload.price;
-        state.thirdClass.totalPrice = state.thirdClass.seatsPrice + state.thirdClass.serviceLinens + state.thirdClass.serviceWifi;
+        state.thirdClass.totalPrice += actions.payload.price;
       };
       if (actions.payload.classType === 'fourth') {
-        state.fourthClass.seatsPrice = actions.payload.price;
-        state.fourthClass.totalPrice = state.fourthClass.seatsPrice + state.fourthClass.serviceLinens + state.fourthClass.serviceWifi;
+        state.fourthClass.totalPrice += actions.payload.price;
       };
     },
     changeServiceWifi: (state, actions) => {
       if (actions.payload.classType === 'first') {
-        state.firstClass.serviceWifi = actions.payload.price;
-        state.firstClass.totalPrice = state.firstClass.seatsPrice + state.firstClass.serviceLinens + state.firstClass.serviceWifi;
+        state.firstClass.totalPrice += actions.payload.price;
       };
       if (actions.payload.classType === 'second') {
-        state.secondClass.serviceWifi = actions.payload.price;
-        state.secondClass.totalPrice = state.secondClass.seatsPrice + state.secondClass.serviceLinens + state.secondClass.serviceWifi;
+        state.secondClass.totalPrice += actions.payload.price;
       };
       if (actions.payload.classType === 'third') {
-        state.thirdClass.serviceWifi = actions.payload.price;
-        state.thirdClass.totalPrice = state.thirdClass.seatsPrice + state.thirdClass.serviceLinens + state.thirdClass.serviceWifi;
+        state.thirdClass.totalPrice += actions.payload.price;
       };
       if (actions.payload.classType === 'fourth') {
-        state.fourthClass.serviceWifi = actions.payload.price;
-        state.fourthClass.totalPrice = state.fourthClass.seatsPrice + state.fourthClass.serviceLinens + state.fourthClass.serviceWifi;
+        state.fourthClass.totalPrice += actions.payload.price;
       };
     },
     changeServiceLinens: (state, actions) => {
       if (actions.payload.classType === 'first') {
-        state.firstClass.serviceLinens = actions.payload.price;
-        state.firstClass.totalPrice = state.firstClass.seatsPrice + state.firstClass.serviceLinens + state.firstClass.serviceWifi;
+        state.firstClass.totalPrice += actions.payload.price;
       };
       if (actions.payload.classType === 'second') {
-        state.secondClass.serviceLinens = actions.payload.price;
-        state.secondClass.totalPrice = state.secondClass.seatsPrice + state.secondClass.serviceLinens + state.secondClass.serviceWifi;
+        state.secondClass.totalPrice += actions.payload.price;
       };
       if (actions.payload.classType === 'third') {
-        state.thirdClass.serviceLinens = actions.payload.price;
-        state.thirdClass.totalPrice = state.thirdClass.seatsPrice + state.thirdClass.serviceLinens + state.thirdClass.serviceWifi;
+        state.thirdClass.totalPrice += actions.payload.price;
       };
       if (actions.payload.classType === 'fourth') {
-        state.fourthClass.serviceLinens = actions.payload.price;
-        state.fourthClass.totalPrice = state.fourthClass.seatsPrice + state.fourthClass.serviceLinens + state.fourthClass.serviceWifi;
+        state.fourthClass.totalPrice += actions.payload.price;
       };
     },
     changeAmountTickets: (state, actions) => {
       if (actions.payload.classType === 'first') {
-        state.firstClass.amountTickets = state.firstClass.amountTickets + actions.payload.amount;
+        state.firstClass.amountTickets += actions.payload.amount;
       };
       if (actions.payload.classType === 'second') {
-        state.secondClass.amountTickets = state.firstClass.amountTickets + actions.payload.amount;
+        state.secondClass.amountTickets += actions.payload.amount;
       };
       if (actions.payload.classType === 'third') {
-        state.thirdClass.amountTickets = state.firstClass.amountTickets + actions.payload.amount;
+        state.thirdClass.amountTickets += actions.payload.amount;
       };
       if (actions.payload.classType === 'fourth') {
-        state.fourthClass.amountTickets = state.firstClass.amountTickets + actions.payload.amount;
+        state.fourthClass.amountTickets += actions.payload.amount;
       };
     },
     clearAllPrices: (state, actions) => {
@@ -181,6 +174,13 @@ export const slicePrice = createSlice({
     },
     changeNotice: (state, actions) => {
       state.notice = actions.payload;
+    },
+    totalChoiceRoute: (state, action) => {
+      state.totalSeatsAge = state.firstClass.seatsAge + state.secondClass.seatsAge + state.thirdClass.seatsAge + state.fourthClass.seatsAge;
+      state.totalSeatsChild = state.firstClass.seatsChild + state.secondClass.seatsChild + state.thirdClass.seatsChild + state.fourthClass.seatsChild;
+      state.totalPriceAge = 0;
+      state.totalPriceChild = 0;
+      state.totalPriceAll = state.firstClass.totalPrice + state.secondClass.totalPrice + state.thirdClass.totalPrice + state.fourthClass.totalPrice;
     }
   }
 });
@@ -193,7 +193,8 @@ export const {
   changeServiceLinens,
   changeAmountTickets,
   clearAllPrices,
-  changeNotice
+  changeNotice,
+  totalChoiceRoute
 } = slicePrice.actions;
 
 export default slicePrice.reducer;

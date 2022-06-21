@@ -24,11 +24,7 @@ export default function LastRoutes() {
             </div>
           </div>
           <div className='route-facilities-price'>
-            <div className='route-facilities'>
-              {/* <span className='facilities-wifi'></span>
-              <span className='facilities-express'></span>
-              <span className='facilities-coffee'></span> */}
-            </div>
+            <div className='route-facilities'></div>
             <div className='route-start-price'>
               <p className='price-start-text'>от</p>
               <p className='price-start-number'>{el.min_price}</p>

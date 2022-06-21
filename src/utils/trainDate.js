@@ -16,3 +16,10 @@ export function timeForSort(time) {
   const date = new Date(time * 1000);
   return (date.getMinutes() + date.getHours() * 60) * 60;
 };
+
+export function toDate(time) {
+  const day = new Date(time * 1000).getDate();
+  const month = new Date(time * 1000).getMonth() + 1;
+  const year = new Date().getFullYear();
+  return `${day < 10 ? "0" + day : day}.${month < 10 ? "0" + month : month}.${year}`;
+};

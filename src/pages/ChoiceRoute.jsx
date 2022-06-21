@@ -1,16 +1,17 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
 import FilterRoute from '../components/FilterRoute';
 import LastRoutes from '../components/LastRoutes';
-import ListCoaches from '../components/ListCoaches';
-import ListRoutes from '../components/ListRoutes';
 import SearchProgress from '../components/SearchProgress';
+import TripDetails from '../components/TripDetails';
 import '../styles/route.css';
 
 export default function ChoiceRoute() {
   const { loading } = useSelector((state) => state.sliceGetRoute);
-  const { loadingSeats, coaches } = useSelector((state) => state.sliceGetSeats);
+  const { loadingSeats } = useSelector((state) => state.sliceGetSeats);
+  let location = useLocation();
 
   if (loading || loadingSeats) {
     return <SearchProgress/>
@@ -19,8 +20,12 @@ export default function ChoiceRoute() {
   return (
     <div className='main-route'>
       <div className='left-side'>
-        <FilterRoute/>
-        <LastRoutes/>
+        {location.pathname === '/route/passengers' ? <TripDetails/> :
+          <>
+            <FilterRoute/>
+            <LastRoutes/>
+          </>
+        }
       </div>
       <div className='right-side'>
         <Outlet/>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeChoiceTicketsAsk, changeNotice, changePriceSeats, changePriceServices, changeServiceLinens, changeServiceWifi } from '../store/slicePrice';
+import { changeAmountTickets, changeNotice, changePriceSeats, changeServiceLinens, changeServiceWifi } from '../store/slicePrice';
 import '../styles/coaches.css';
 import { amountSeats, haveSeatsOrNot } from '../utils/amountSeats';
 import { schemeFirstClass, schemeFourthClass, schemeThirdClass } from '../utils/schemeCoach';
@@ -81,26 +81,42 @@ export default function Coach({classStyle, coach}) {
   };
 
   function buyWifi() {
-    if (current.amountTickets !== 0 && coach.coach.have_wifi) {
+    if (wifiBought) {
       dispatch(changeServiceWifi({
         classType: coach.coach.class_type,
-        price: Number(coach.coach.wifi_price)
+        price: -Number(coach.coach.wifi_price)
       }));
-      setWifiBought(true);
-    } else if (coach.coach.have_wifi) {
-      dispatch(changeNotice(true));
+      setWifiBought(false);
+    } else {
+      if ((current.seatsAge !== 0 || current.seatsChild !== 0) && coach.coach.have_wifi) {
+        dispatch(changeServiceWifi({
+          classType: coach.coach.class_type,
+          price: Number(coach.coach.wifi_price)
+        }));
+        setWifiBought(true);
+      } else if (coach.coach.have_wifi) {
+        dispatch(changeNotice(true));
+      };
     };
   };
 
   function buyLinens() {
-    if (current.amountTickets !== 0 && coach.coach.class_type !== 'fourth' && !coach.coach.is_linens_included) {
-      dispatch(changeServiceLinens({
+    if (linensBought) {
+      dispatch(changeServiceWifi({
         classType: coach.coach.class_type,
-        price: Number(coach.coach.linens_price)
+        price: -Number(coach.coach.linens_price)
       }));
-      setLinensBought(true);
-    } else if (coach.coach.class_type !== 'fourth' && !coach.coach.is_linens_included) {
-      dispatch(changeNotice(true));
+      setLinensBought(false);
+    } else {
+      if ((current.seatsAge !== 0 || current.seatsChild !== 0) && coach.coach.class_type !== 'fourth' && !coach.coach.is_linens_included) {
+        dispatch(changeServiceLinens({
+          classType: coach.coach.class_type,
+          price: Number(coach.coach.linens_price)
+        }));
+        setLinensBought(true);
+      } else if (coach.coach.class_type !== 'fourth' && !coach.coach.is_linens_included) {
+        dispatch(changeNotice(true));
+      };
     };
   };
 
@@ -110,6 +126,10 @@ export default function Coach({classStyle, coach}) {
         classType: coach.coach.class_type,
         price: -Number(price)
       }));
+      dispatch(changeAmountTickets({
+        classType: coach.coach.class_type,
+        amount: 1
+      }))
       ev.target.classList.remove('seat-selected');
     } else {
       if (have === 'seat-have' && current.amountTickets !== 0) {
@@ -117,6 +137,10 @@ export default function Coach({classStyle, coach}) {
           classType: coach.coach.class_type,
           price: Number(price)
         }));
+        dispatch(changeAmountTickets({
+          classType: coach.coach.class_type,
+          amount: -1
+        }))
         ev.target.classList.add('seat-selected');
         // console.log(price, seat, have);
       } else if (current.amountTickets === 0) {

@@ -8,5 +8,5 @@ export default function SearchProgress() {
       <div className='search-progress-line'></div>
       <img className='search-progress-img' src={gif} alt="" />
     </div>
-  )
-}
+  );
+};
