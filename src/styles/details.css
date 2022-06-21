@@ -224,8 +224,21 @@
   cursor: pointer;
 }
 
+.pass-head-open-plus:hover {
+  background-image: url(../images/show-hover.png);
+}
+
+.pass-head-open-plus {
+  display: flex;
+  width: 20px;
+  height: 20px;
+  background-image: url(../images/show-up.png);
+  cursor: pointer;
+}
+
 .pass-amount-price {
   display: flex;
+  margin-bottom: 15px;
 }
 
 .pass-amount {
