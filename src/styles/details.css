@@ -216,7 +216,7 @@
   margin-right: auto;
 }
 
-.pass-head-open {
+.pass-head-open-down, .pass-head-open-up {
   display: flex;
   width: 20px;
   height: 20px;
@@ -224,16 +224,12 @@
   cursor: pointer;
 }
 
-.pass-head-open-plus:hover {
-  background-image: url(../images/show-hover.png);
+.pass-head-open-down {
+  background-image: url(../images/show-down.png);
 }
 
-.pass-head-open-plus {
-  display: flex;
-  width: 20px;
-  height: 20px;
+.pass-head-open-up {
   background-image: url(../images/show-up.png);
-  cursor: pointer;
 }
 
 .pass-amount-price {

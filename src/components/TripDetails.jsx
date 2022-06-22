@@ -6,23 +6,23 @@ import { dateFromAndTo, duration, toDate } from '../utils/trainDate';
 export default function TripDetails() {
   const { route } = useSelector((state) => state.sliceChoice);
   const { totalSeatsAge, totalSeatsChild, totalPriceAge, totalPriceChild, totalPriceAll } = useSelector((state) => state.slicePrice);
-  const [hiddenThere, setHiddenThere] = useState('none');
-  const [hiddenPassengers, setHiddenPassengers] = useState('none');
+  const [hiddenThere, setHiddenThere] = useState('');
+  const [hiddenPassengers, setHiddenPassengers] = useState('');
   console.log(route);
 
   function showThere() {
-    if (hiddenThere === 'none') {
-      setHiddenThere('');
-    } else {
+    if (hiddenThere !== 'none') {
       setHiddenThere('none');
+    } else {
+      setHiddenThere('');
     };
   };
 
   function showPassengers() {
-    if (hiddenPassengers === 'none') {
-      setHiddenPassengers('');
-    } else {
+    if (hiddenPassengers !== 'none') {
       setHiddenPassengers('none');
+    } else {
+      setHiddenPassengers('');
     };
   }
 
@@ -38,7 +38,7 @@ export default function TripDetails() {
           <span className='there-head-img'></span>
           <h4 className='there-head-title'>Туда</h4>
           <div className='there-head-date'>{toDate(route.departure.from.datetime)}</div>
-          <span className='there-head-open' onClick={showThere}></span>
+          <span className={hiddenThere === '' ? 'pass-head-open-down' : 'pass-head-open-up'} onClick={showThere}></span>
         </div>
 
         <div className={hiddenThere}>
@@ -88,7 +88,7 @@ export default function TripDetails() {
         <div className='details-passengers-head'>
           <span className='pass-head-img'></span>
           <h4 className='pass-head-title'>Пассажиры</h4>
-          <span className='pass-head-open' onClick={showPassengers}></span>
+          <span className={hiddenPassengers === '' ? 'pass-head-open-down' : 'pass-head-open-up'} onClick={showPassengers}></span>
         </div>
 
         <div className={hiddenPassengers}>
@@ -98,7 +98,7 @@ export default function TripDetails() {
               <p className='pass-ages'>Взрослых</p>
             </div>
             <div className='pass-price'>
-              <p className='pass-price-text'>5840</p>
+              <p className='pass-price-text'>{totalPriceAge}</p>
               <span className='pass-price-sign'></span>
             </div>
           </div>
@@ -108,7 +108,7 @@ export default function TripDetails() {
               <p className='pass-ages'>Ребенок</p>
             </div>
             <div className='pass-price'>
-              <p className='pass-price-text'>1800</p>
+              <p className='pass-price-text'>{totalPriceChild}</p>
               <span className='pass-price-sign'></span>
             </div>
           </div>
