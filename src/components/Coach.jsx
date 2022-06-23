@@ -88,7 +88,7 @@ export default function Coach({classStyle, coach}) {
       }));
       setWifiBought(false);
     } else {
-      if ((current.seatsAge !== 0 || current.seatsChild !== 0) && coach.coach.have_wifi) {
+      if (((current.seatsAge !== 0 || current.seatsChild !== 0) || current.totalPrice !== 0 ) && coach.coach.have_wifi) {
         dispatch(changeServiceWifi({
           classType: coach.coach.class_type,
           price: Number(coach.coach.wifi_price)
@@ -108,7 +108,7 @@ export default function Coach({classStyle, coach}) {
       }));
       setLinensBought(false);
     } else {
-      if ((current.seatsAge !== 0 || current.seatsChild !== 0) && coach.coach.class_type !== 'fourth' && !coach.coach.is_linens_included) {
+      if (((current.seatsAge !== 0 || current.seatsChild !== 0) || current.totalPrice !== 0 ) && coach.coach.class_type !== 'fourth' && !coach.coach.is_linens_included) {
         dispatch(changeServiceLinens({
           classType: coach.coach.class_type,
           price: Number(coach.coach.linens_price)
@@ -148,7 +148,7 @@ export default function Coach({classStyle, coach}) {
       };
     };
   };
-console.log(current);
+
   useEffect(() => {
     for (let i in visible) {
       if (visible[i] === true) {

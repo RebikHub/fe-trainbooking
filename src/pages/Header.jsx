@@ -26,7 +26,9 @@ export default function Header() {
     <header className={classHeader}>
 
       <div className='header-logo'>
-        <h3 className='header-logo-text'>Лого</h3>
+        <HashLink to='/'>
+          <h3 className='header-logo-text'>Лого</h3>
+        </HashLink>
       </div>
 
       <div className='header-nav'>
