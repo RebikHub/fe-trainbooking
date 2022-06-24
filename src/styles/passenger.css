@@ -374,6 +374,19 @@
   color: #292929;
 }
 
+.docs-birth-input {
+  text-transform: uppercase;
+}
+
+.docs-series-input::placeholder, .docs-number-input::placeholder, .docs-birth-input::placeholder {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 21px;
+  color: #C4C4C4;
+}
+
 
 .pass-docs-birth {
 
@@ -409,7 +422,7 @@
 }
 
 .pass-button {
-  margin: 37px 31px 28px 626px;
+  margin: 37px 31px 28px auto;
   width: 303px;
   height: 52px;
   border: 1px solid #292929;
@@ -436,4 +449,44 @@
   border: 1px solid #292929;
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
   border-radius: 5px;
+}
+
+.pass-valid {
+  display: flex;
+  height: 120px;
+  background-color: #FFB59E;
+}
+
+.pass-footer-ok {
+  display: flex;
+  background-color: #B2F6A1;
+}
+
+.pass-valid-close, .pass-valid-ok {
+  display: flex;
+  margin: 44px 20px 44px 24px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.pass-valid-close {
+  background-image: url(../images/valid-close.png);
+}
+
+.pass-valid-ok {
+  background-image: url(../images/valid-ok.png);
+}
+
+.pass-valid-text {
+  align-self: center;
+  width: 480px;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 21px;
+  color: #292929;
 }

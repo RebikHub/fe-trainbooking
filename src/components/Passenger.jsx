@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import '../styles/passenger.css';
-import { validateDate } from '../utils/validators';
+import { validateBirthNumber, validateDate, validateName, validatePassportNumber, validatePassportSeries } from '../utils/validators';
 
 export default function Passenger() {
   const dispatch = useDispatch();
@@ -9,7 +9,9 @@ export default function Passenger() {
   const [none, setNone] = useState({
     main: false,
     age: 'none',
-    docs: 'none'
+    docs: 'none',
+    valid: false,
+    ok: false
   });
   const [select, setSelect] = useState({
     age: 'Взрослый',
@@ -18,17 +20,108 @@ export default function Passenger() {
   const [gender, setGender] = useState(false);
   const [limited, setLimited] = useState(false);
   const [dateValue, setDateValue] = useState('');
+  const [nameValue, setNameValue] = useState({
+    name: '',
+    secondName: '',
+    surname: ''
+  });
+  const [docsValue, setDocsValue] = useState({
+    passportSeries: '',
+    passportNumber: '',
+    birthNumber: ''
+  });
+  const [validText, setValidText] = useState('');
   const num = 1;
 
-  function inputDate(ev) {
-    setDateValue(Number(ev.target.value) ? ev.target.value : '');
-    const valid = validateDate(ev.target.value)
-    console.log(ev);
+  function inputPassportSeries(ev) {
+    setDocsValue({...docsValue, passportSeries: ev.target.value});
   };
 
-  function focusDate(ev) {
+  function blurPassportSeries() {
+    if (!validatePassportSeries(docsValue.passportSeries)) {
+      setNone({...none, valid: true});
+      setValidText('Серия паспорта указан некорректно Пример: 1234');
+    };
+    console.log(validatePassportSeries(docsValue.passportSeries));
+  };
+
+  function inputPassportNumber(ev) {
+    setDocsValue({...docsValue, passportNumber: ev.target.value});
+  };
+
+  function blurPassportNumber() {
+    if (!validatePassportNumber(docsValue.passportNumber)) {
+      setNone({...none, valid: true});
+      setValidText('Номер паспорта указан некорректно Пример: 123456');
+    };
+    console.log(validatePassportNumber(docsValue.passportNumber));
+  };
+
+  function inputBirthNumber(ev) {
+    setDocsValue({...docsValue, birthNumber: ev.target.value});
+  };
+
+  function blurBirthNumber() {
+    if (!validateBirthNumber(docsValue.birthNumber)) {
+      setNone({...none, valid: true});
+      setValidText('Номер свидетельства о рожденни указан некорректно Пример: VIII-ЫП-123456');
+    };
+    console.log(validateBirthNumber(docsValue.birthNumber));
+  };
+
+  function inputFirstName(ev) {
+    setNameValue({...nameValue, name: ev.target.value});
+  };
+
+  function blurFirstName() {
+    if (!validateName(nameValue.name)) {
+      setNone({...none, valid: true});
+      setValidText('Имя указано некорректно Пример: Иван');
+    };
+    console.log(validateName(nameValue.name));
+  };
+
+  function inputSecondName(ev) {
+    setNameValue({...nameValue, secondName: ev.target.value});
+  };
+
+  function blurSecondName() {
+    if (!validateName(nameValue.secondName)) {
+      setNone({...none, valid: true});
+      setValidText('Отчество указано некорректно Пример: Иванович');
+    };
+    console.log(validateName(nameValue.secondName));
+  };
+
+  function inputSurName(ev) {
+    setNameValue({...nameValue, surname: ev.target.value});
+  };
+
+  function blurSurName() {
+    if (!validateName(nameValue.surname)) {
+      setNone({...none, valid: true});
+      setValidText('Фамилия указана некорректно Пример: Иванов');
+    };
+    console.log(validateName(nameValue.surname));
+  };
+
+  function inputDate(ev) {
+    setDateValue(ev.target.value);
+  };
+
+  function blurDate() {
+    if (!validateDate(dateValue)) {
+      setNone({...none, valid: true});
+      setValidText('Дата рождения указана некорректно Пример: 20.02.2000');
+    };
     console.log(validateDate(dateValue));
-  }
+  };
+
+  function nextPassenger() {
+    if (!none.valid) {
+      setNone({...none, ok: true});
+    };
+  };
 
 
   function getSortAge() {
@@ -95,15 +188,24 @@ export default function Passenger() {
         <div className='pass-form-names'>
           <label className='pass-names-label' htmlFor="">
             <p>Фамилия</p>
-            <input className='pass-names-input' type="text" required/>
+            <input className='pass-names-input' type="text" required
+              value={nameValue.surname}
+              onChange={inputSurName}
+              onBlur={blurSurName} />
           </label>
           <label className='pass-names-label' htmlFor="">
             <p>Имя</p>
-            <input className='pass-names-input' type="text" required/>
+            <input className='pass-names-input' type="text" required
+              value={nameValue.name}
+              onChange={inputFirstName}
+              onBlur={blurFirstName} />
           </label>
           <label className='pass-names-label' htmlFor="">
             <p>Отчество</p>
-            <input className='pass-names-input' type="text" required/>
+            <input className='pass-names-input' type="text" required
+              value={nameValue.secondName}
+              onChange={inputSecondName}
+              onBlur={blurSecondName} />
           </label>
         </div>
 
@@ -118,10 +220,10 @@ export default function Passenger() {
           <div className='pass-birth-date'>
             <label className='pass-birth-label' htmlFor="">
               <p>Дата рождения</p>
-              <input className='pass-birth-input' type="text" placeholder='ДД/ММ/ГГ' required
+              <input className='pass-birth-input' type="text" placeholder='ДД.ММ.ГГ' required
                 value={dateValue}
                 onChange={inputDate}
-                onBlur={focusDate}
+                onBlur={blurDate}
               />
             </label>
           </div>
@@ -149,13 +251,19 @@ export default function Passenger() {
             <div className='pass-docs-series'>
               <label className='docs-series-label' htmlFor="">
                 <p>Серия</p>
-                <input className='docs-series-input' type="text" required placeholder='_ _ _ _'/>
+                <input className='docs-series-input' type="text" required placeholder='__  __  __  __'
+                  value={docsValue.passportSeries}
+                  onChange={inputPassportSeries}
+                  onBlur={blurPassportSeries}/>
               </label>
             </div>
             <div className='pass-docs-number'>
               <label className='docs-number-label' htmlFor="">
                 <p>Номер</p>
-                <input className='docs-number-input' type="text" required/>
+                <input className='docs-number-input' type="text" required placeholder='__  __  __  __  __  __'
+                  value={docsValue.passportNumber}
+                  onChange={inputPassportNumber}
+                  onBlur={blurPassportNumber}/>
               </label>
             </div>
           </> :
@@ -163,14 +271,23 @@ export default function Passenger() {
             <div className='pass-docs-birth'>
               <label className='docs-birth-label' htmlFor="">
                 <p>Номер</p>
-                <input className='docs-birth-input' type="text" required/>
+                <input className='docs-birth-input' type="text" required placeholder='_ _ _ _ _ _ _ _ _ _ _ _'
+                  value={docsValue.birthNumber}
+                  onChange={inputBirthNumber}
+                  onBlur={blurBirthNumber}/>
               </label>
             </div>
           </>}
         </div>
 
-        <div className='pass-footer'>
-          <button className='pass-button' type='button'>Следующий пассажир</button>
+        <div className={none.ok ? 'pass-footer-ok' : 'pass-footer'}>
+          <span className={none.ok ? 'pass-valid-ok' : 'none'}></span>
+          <button className={!none.valid ? 'pass-button' : 'none'} type='button'
+            onClick={nextPassenger}>Следующий пассажир</button>
+          <div className={none.valid ? 'pass-valid' : 'none'}>
+            <span className='pass-valid-close' onClick={() => setNone({...none, valid: false})}></span>
+            <p className='pass-valid-text'>{validText}</p>
+          </div>
         </div>
       </div>
 
