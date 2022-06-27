@@ -14,7 +14,7 @@ export default function ListCoaches() {
   let navigate = useNavigate();
   const [types, setTypes] = useState([]);
   const dispatch = useDispatch();
-  const { notice, firstClass, secondClass, thirdClass, fourthClass } = useSelector((state) => state.slicePrice);
+  const { notice, totalSeatsAge, totalSeatsChild, totalPriceAll } = useSelector((state) => state.slicePrice);
 
   useEffect(() => {
     const classes = [];
@@ -66,6 +66,9 @@ export default function ListCoaches() {
     navigate('/route/passengers');
     dispatch(currentStepTwo());
     dispatch(totalChoiceRoute());
+    if ((totalSeatsAge === 0 || totalSeatsChild === 0) && totalPriceAll === 0) {
+      dispatch(changeNotice(true));
+    };
   };
 
   if (!route || !coaches) {

@@ -7,6 +7,7 @@ import ChoiceRoute from "./pages/ChoiceRoute";
 import HeaderAndFooter from "./pages/HeaderAndFooter";
 import Main from "./pages/Main";
 import Passenger from "./components/Passenger";
+import ListPassengers from "./components/ListPassengers";
 
 function App() {
   
@@ -17,7 +18,7 @@ function App() {
         <Route path='/route' element={<ChoiceRoute/>}>
           <Route index element={<ListRoutes/>}/>
           <Route path='/route/coach' element={<ListCoaches/>}/>
-          <Route path='/route/passengers' element={<Passenger/>}/>
+          <Route path='/route/passengers' element={<ListPassengers/>}/>
         </Route>
         {/* <Route path='/route' element={<SearchProgress/>}/> */}
       </Route>

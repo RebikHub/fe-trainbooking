@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import '../styles/passenger.css';
 import { validateBirthNumber, validateDate, validateName, validatePassportNumber, validatePassportSeries } from '../utils/validators';
@@ -40,7 +41,7 @@ export default function Passenger() {
   function blurPassportSeries() {
     if (!validatePassportSeries(docsValue.passportSeries)) {
       setNone({...none, valid: true});
-      setValidText('Серия паспорта указан некорректно Пример: 1234');
+      setValidText(`Серия паспорта указана некорректно\n Пример: 1234`);
     };
     console.log(validatePassportSeries(docsValue.passportSeries));
   };
@@ -52,7 +53,7 @@ export default function Passenger() {
   function blurPassportNumber() {
     if (!validatePassportNumber(docsValue.passportNumber)) {
       setNone({...none, valid: true});
-      setValidText('Номер паспорта указан некорректно Пример: 123456');
+      setValidText('Номер паспорта указан некорректно\n Пример: 123456');
     };
     console.log(validatePassportNumber(docsValue.passportNumber));
   };
@@ -64,7 +65,7 @@ export default function Passenger() {
   function blurBirthNumber() {
     if (!validateBirthNumber(docsValue.birthNumber)) {
       setNone({...none, valid: true});
-      setValidText('Номер свидетельства о рожденни указан некорректно Пример: VIII-ЫП-123456');
+      setValidText('Номер свидетельства о рожденни указан некорректно\n Пример: VIII-ЫП-123456');
     };
     console.log(validateBirthNumber(docsValue.birthNumber));
   };
@@ -76,7 +77,7 @@ export default function Passenger() {
   function blurFirstName() {
     if (!validateName(nameValue.name)) {
       setNone({...none, valid: true});
-      setValidText('Имя указано некорректно Пример: Иван');
+      setValidText('Имя указано некорректно\n Пример: Иван');
     };
     console.log(validateName(nameValue.name));
   };
@@ -88,7 +89,7 @@ export default function Passenger() {
   function blurSecondName() {
     if (!validateName(nameValue.secondName)) {
       setNone({...none, valid: true});
-      setValidText('Отчество указано некорректно Пример: Иванович');
+      setValidText('Отчество указано некорректно\n Пример: Иванович');
     };
     console.log(validateName(nameValue.secondName));
   };
@@ -100,7 +101,7 @@ export default function Passenger() {
   function blurSurName() {
     if (!validateName(nameValue.surname)) {
       setNone({...none, valid: true});
-      setValidText('Фамилия указана некорректно Пример: Иванов');
+      setValidText('Фамилия указана некорректно\n Пример: Иванов');
     };
     console.log(validateName(nameValue.surname));
   };
@@ -112,10 +113,16 @@ export default function Passenger() {
   function blurDate() {
     if (!validateDate(dateValue)) {
       setNone({...none, valid: true});
-      setValidText('Дата рождения указана некорректно Пример: 20.02.2000');
+      setValidText('Дата рождения указана некорректно\n Пример: 20.02.2000');
     };
     console.log(validateDate(dateValue));
   };
+
+  useEffect(() => {
+    if (none.valid) {
+      setTimeout(() => setNone({...none, valid: false}), 5 * 1000);
+    };
+  }, [none.valid]);
 
   function nextPassenger() {
     if (!none.valid) {
@@ -282,6 +289,7 @@ export default function Passenger() {
 
         <div className={none.ok ? 'pass-footer-ok' : 'pass-footer'}>
           <span className={none.ok ? 'pass-valid-ok' : 'none'}></span>
+          <p className={none.ok ? 'pass-valid-text-ok' : 'none'}>Готово</p>
           <button className={!none.valid ? 'pass-button' : 'none'} type='button'
             onClick={nextPassenger}>Следующий пассажир</button>
           <div className={none.valid ? 'pass-valid' : 'none'}>
