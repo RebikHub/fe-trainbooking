@@ -228,6 +228,14 @@ export const slicePrice = createSlice({
       state.totalPriceAge = state.firstClass.seatsPriceAge + state.secondClass.seatsPriceAge + state.thirdClass.seatsPriceAge + state.fourthClass.seatsPriceAge;
       state.totalPriceChild = state.firstClass.seatsPriceChild + state.secondClass.seatsPriceChild + state.thirdClass.seatsPriceChild + state.fourthClass.seatsPriceChild;
       state.totalPriceAll = state.firstClass.totalPrice + state.secondClass.totalPrice + state.thirdClass.totalPrice + state.fourthClass.totalPrice;
+    },
+    clearTotalPrice: (state, actions) => {
+      state.notice = false;
+      state.totalSeatsAge = 0;
+      state.totalSeatsChild = 0;
+      state.totalPriceAge = 0;
+      state.totalPriceChild = 0;
+     state.totalPriceAll = 0;
     }
   }
 });
@@ -241,7 +249,8 @@ export const {
   changeAmountTickets,
   clearAllPrices,
   changeNotice,
-  totalChoiceRoute
+  totalChoiceRoute,
+  clearTotalPrice
 } = slicePrice.actions;
 
 export default slicePrice.reducer;

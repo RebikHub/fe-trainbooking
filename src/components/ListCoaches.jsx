@@ -63,11 +63,12 @@ export default function ListCoaches() {
   }, [notice]);
 
   function toPassengers() {
-    navigate('/route/passengers');
-    dispatch(currentStepTwo());
-    dispatch(totalChoiceRoute());
     if ((totalSeatsAge === 0 || totalSeatsChild === 0) && totalPriceAll === 0) {
       dispatch(changeNotice(true));
+    } else {
+      navigate('/route/passengers');
+      dispatch(currentStepTwo());
+      dispatch(totalChoiceRoute());
     };
   };
 

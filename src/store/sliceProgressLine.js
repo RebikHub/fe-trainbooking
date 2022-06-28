@@ -21,6 +21,11 @@ export const sliceProgressLine = createSlice({
     currentStepFour: (state, actions) => {
       state.stepFour = true;
     },
+    clearStepAll: (state, actions) => {
+      state.stepTwo = false;
+      state.stepThree = false;
+      state.stepFour = false;
+    }
   }
 });
 
@@ -28,7 +33,8 @@ export const {
   currentStepOne,
   currentStepTwo,
   currentStepThree,
-  currentStepFour
+  currentStepFour,
+  clearStepAll
 } = sliceProgressLine.actions;
 
 export default sliceProgressLine.reducer;

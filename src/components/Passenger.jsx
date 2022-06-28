@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import '../styles/passenger.css';
 import { validateBirthNumber, validateDate, validateName, validatePassportNumber, validatePassportSeries } from '../utils/validators';
 
-export default function Passenger() {
+export default function Passenger({addPassenger}) {
   const dispatch = useDispatch();
   const [list, setList] = useState([]);
   const [none, setNone] = useState({
@@ -33,6 +33,11 @@ export default function Passenger() {
   });
   const [validText, setValidText] = useState('');
   const num = 1;
+
+
+  // if (nameValue.name !== '' && nameValue.secondName !== '' && nameValue.surname !== '') {
+  //   if ()
+  // }
 
   function inputPassportSeries(ev) {
     setDocsValue({...docsValue, passportSeries: ev.target.value});
@@ -127,6 +132,7 @@ export default function Passenger() {
   function nextPassenger() {
     if (!none.valid) {
       setNone({...none, ok: true});
+      addPassenger();
     };
   };
 
