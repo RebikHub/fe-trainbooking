@@ -3,7 +3,8 @@
 }
 
 .no-routes {
-  margin: 90px 280px;
+  margin: 0 280px;
+  
   font-family: 'Roboto-bold';
   font-style: normal;
   font-weight: 500;

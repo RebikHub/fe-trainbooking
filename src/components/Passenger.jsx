@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import '../styles/passenger.css';
 import { validateBirthNumber, validateDate, validateName, validatePassportNumber, validatePassportSeries } from '../utils/validators';
 
-export default function Passenger({addPassenger}) {
-  const dispatch = useDispatch();
-  const [list, setList] = useState([]);
+export default function Passenger({addPassenger, num, agesPassengers, changeAmountAgesPass}) {
   const [none, setNone] = useState({
     main: false,
     age: 'none',
@@ -32,12 +29,6 @@ export default function Passenger({addPassenger}) {
     birthNumber: ''
   });
   const [validText, setValidText] = useState('');
-  const num = 1;
-
-
-  // if (nameValue.name !== '' && nameValue.secondName !== '' && nameValue.surname !== '') {
-  //   if ()
-  // }
 
   function inputPassportSeries(ev) {
     setDocsValue({...docsValue, passportSeries: ev.target.value});
@@ -130,9 +121,60 @@ export default function Passenger({addPassenger}) {
   }, [none.valid]);
 
   function nextPassenger() {
-    if (!none.valid) {
-      setNone({...none, ok: true});
-      addPassenger();
+    if (nameValue.name !== '' && nameValue.secondName !== '' && nameValue.surname !== '') {
+      if (select.docs === 'Паспорт РФ') {
+        if (docsValue.passportNumber !== '' && docsValue.passportSeries !== '') {
+          if (!none.valid) {
+            setNone({...none, ok: true});
+            addPassenger();
+          } else {
+            setNone({...none, valid: true});
+            setValidText('Заполните все поля!');
+          };
+        };
+      } else {
+        if (docsValue.birthNumber !== '') {
+          if (!none.valid) {
+            setNone({...none, ok: true});
+            addPassenger();
+          } else {
+            setNone({...none, valid: true});
+            setValidText('Заполните все поля!');
+          };
+        };
+      };
+    } else {
+      setNone({...none, valid: true});
+      setValidText('Заполните все поля!');
+    };
+
+    if (agesPassengers.age > 0 && agesPassengers.child > 0) {
+      if (select.age === 'Взрослый') {
+        changeAmountAgesPass({
+          age: agesPassengers.age - 1,
+          child: agesPassengers.child
+        });
+      };
+      if (select.age === 'Ребенок') {
+        changeAmountAgesPass({
+          age: agesPassengers.age,
+          child: agesPassengers.child - 1
+        });
+      };
+    };
+
+    if (agesPassengers.age === 0 && agesPassengers.child > 0) {
+      changeAmountAgesPass({
+        age: agesPassengers.age,
+        child: agesPassengers.child - 1
+      });
+    };
+
+    if (agesPassengers.age > 0 && agesPassengers.child === 0) {
+      changeAmountAgesPass({
+        age: agesPassengers.age - 1,
+        child: agesPassengers.child
+      });
     };
   };
 
@@ -148,12 +190,35 @@ export default function Passenger({addPassenger}) {
   function getSelectAge(ev) {
     setSelect({...select, age: ev.target.outerText});
     setNone({...none, age: 'none'});
-    if (ev.target.outerText === 'Взрослый') {
-      console.log('Взрослый');
-    };
-    if (ev.target.outerText === 'Ребенок') {
-      console.log('Ребенок');
-    };
+
+    // if (agesPassengers.age > 0 && agesPassengers.child > 0) {
+    //   if (ev.target.outerText === 'Взрослый') {
+    //     changeAmountAgesPass({
+    //       age: agesPassengers.age - 1,
+    //       child: agesPassengers.child
+    //     });
+    //   };
+    //   if (ev.target.outerText === 'Ребенок') {
+    //     changeAmountAgesPass({
+    //       age: agesPassengers.age,
+    //       child: agesPassengers.child - 1
+    //     });
+    //   };
+    // };
+
+    // if (agesPassengers.age === 0 && agesPassengers.child > 0) {
+    //   changeAmountAgesPass({
+    //     age: agesPassengers.age,
+    //     child: agesPassengers.child - 1
+    //   });
+    // };
+
+    // if (agesPassengers.age > 0 && agesPassengers.child === 0) {
+    //   changeAmountAgesPass({
+    //     age: agesPassengers.age - 1,
+    //     child: agesPassengers.child
+    //   });
+    // };
   };
 
   function getSortDocs() {
@@ -193,8 +258,8 @@ export default function Passenger({addPassenger}) {
             {select.age}
           </div>
           <div className={none.age}>
-            <div className='select-age' onClick={getSelectAge}>Взрослый</div>
-            <div className='select-child' onClick={getSelectAge}>Ребенок</div>
+            <div className={agesPassengers.age > 0 ? 'select-age' : 'none'} onClick={getSelectAge}>Взрослый</div>
+            <div className={agesPassengers.child > 0 ? 'select-child' : 'none'} onClick={getSelectAge}>Ребенок</div>
           </div>
         </div>
 
@@ -243,7 +308,7 @@ export default function Passenger({addPassenger}) {
         </div>
 
         <div className='pass-form-check'>
-          <div className={limited ? 'pass-check-input' : 'pass-check-input-ok'} onClick={() => setLimited(!limited)}></div>
+          <div className={!limited ? 'pass-check-input' : 'pass-check-input-ok'} onClick={() => setLimited(!limited)}></div>
           <p className='pass-check-text'>ограниченная подвижность</p>
         </div>
 
