@@ -163,7 +163,7 @@
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
-.select-age, .select-child {
+.select-age, .select-child, .select-age-disable, .select-child-disable {
   display: flex;
   align-items: center;
   font-family: 'Roboto';
@@ -174,7 +174,14 @@
   color: #292929;
   height: 50%;
   padding-left: 10px;
+}
+
+.select-age, .select-child {
   cursor: pointer;
+}
+
+.select-age-disable, .select-child-disable {
+  cursor: not-allowed;
 }
 
 .select-age {

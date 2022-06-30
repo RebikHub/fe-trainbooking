@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeAmountTickets, changeNotice, changePriceSeats, changeServiceLinens, changeServiceWifi } from '../store/slicePrice';
+import { changeAmountTickets, changeNotice, changePriceSeats, changeServiceLinens, changeServiceWifi, totalChoiceRoute } from '../store/slicePrice';
 import '../styles/coaches.css';
 import { amountSeats, haveSeatsOrNot } from '../utils/amountSeats';
 import { schemeFirstClass, schemeFourthClass, schemeThirdClass } from '../utils/schemeCoach';
@@ -147,6 +147,7 @@ export default function Coach({classStyle, coach}) {
         dispatch(changeNotice(true));
       };
     };
+    dispatch(totalChoiceRoute());
   };
 
   useEffect(() => {

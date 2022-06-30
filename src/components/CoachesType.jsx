@@ -5,7 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { dateFromAndTo, duration } from '../utils/trainDate';
 import Coach from './Coach';
 import { useEffect } from 'react';
-import { changeAgeTickets, changeChildTickets, clearAllPrices } from '../store/slicePrice';
+import { clearAllFiltering } from '../store/sliceFilter';
+import { changeAgeTickets, changeChildTickets, clearAllPrices, clearTotalPrice } from '../store/slicePrice';
 
 export default function CoachesType({route, coaches, classStyle}) {
   const [time, setTime] = useState({
@@ -79,6 +80,8 @@ export default function CoachesType({route, coaches, classStyle}) {
   function backToRoutes() {
     navigate('/route');
     dispatch(clearAllPrices());
+    dispatch(clearTotalPrice());
+    dispatch(clearAllFiltering());
   };
 
   return (

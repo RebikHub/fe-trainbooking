@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { addPassengerStore } from '../store/slicePassengers';
 import '../styles/passenger.css';
 import { validateBirthNumber, validateDate, validateName, validatePassportNumber, validatePassportSeries } from '../utils/validators';
 
-export default function Passenger({addPassenger, num, agesPassengers, changeAmountAgesPass}) {
+export default function Passenger({addPassenger, num, agesPassengers}) {
   const [none, setNone] = useState({
     main: false,
     age: 'none',
@@ -20,7 +22,7 @@ export default function Passenger({addPassenger, num, agesPassengers, changeAmou
   const [dateValue, setDateValue] = useState('');
   const [nameValue, setNameValue] = useState({
     name: '',
-    secondName: '',
+    patronymic: '',
     surname: ''
   });
   const [docsValue, setDocsValue] = useState({
@@ -29,6 +31,8 @@ export default function Passenger({addPassenger, num, agesPassengers, changeAmou
     birthNumber: ''
   });
   const [validText, setValidText] = useState('');
+  const [button, setButton] = useState(false);
+  const dispatch = useDispatch();
 
   function inputPassportSeries(ev) {
     setDocsValue({...docsValue, passportSeries: ev.target.value});
@@ -39,7 +43,6 @@ export default function Passenger({addPassenger, num, agesPassengers, changeAmou
       setNone({...none, valid: true});
       setValidText(`Серия паспорта указана некорректно\n Пример: 1234`);
     };
-    console.log(validatePassportSeries(docsValue.passportSeries));
   };
 
   function inputPassportNumber(ev) {
@@ -51,7 +54,6 @@ export default function Passenger({addPassenger, num, agesPassengers, changeAmou
       setNone({...none, valid: true});
       setValidText('Номер паспорта указан некорректно\n Пример: 123456');
     };
-    console.log(validatePassportNumber(docsValue.passportNumber));
   };
 
   function inputBirthNumber(ev) {
@@ -63,7 +65,6 @@ export default function Passenger({addPassenger, num, agesPassengers, changeAmou
       setNone({...none, valid: true});
       setValidText('Номер свидетельства о рожденни указан некорректно\n Пример: VIII-ЫП-123456');
     };
-    console.log(validateBirthNumber(docsValue.birthNumber));
   };
 
   function inputFirstName(ev) {
@@ -75,19 +76,17 @@ export default function Passenger({addPassenger, num, agesPassengers, changeAmou
       setNone({...none, valid: true});
       setValidText('Имя указано некорректно\n Пример: Иван');
     };
-    console.log(validateName(nameValue.name));
   };
 
   function inputSecondName(ev) {
-    setNameValue({...nameValue, secondName: ev.target.value});
+    setNameValue({...nameValue, patronymic: ev.target.value});
   };
 
   function blurSecondName() {
-    if (!validateName(nameValue.secondName)) {
+    if (!validateName(nameValue.patronymic)) {
       setNone({...none, valid: true});
       setValidText('Отчество указано некорректно\n Пример: Иванович');
     };
-    console.log(validateName(nameValue.secondName));
   };
 
   function inputSurName(ev) {
@@ -99,7 +98,6 @@ export default function Passenger({addPassenger, num, agesPassengers, changeAmou
       setNone({...none, valid: true});
       setValidText('Фамилия указана некорректно\n Пример: Иванов');
     };
-    console.log(validateName(nameValue.surname));
   };
 
   function inputDate(ev) {
@@ -111,7 +109,6 @@ export default function Passenger({addPassenger, num, agesPassengers, changeAmou
       setNone({...none, valid: true});
       setValidText('Дата рождения указана некорректно\n Пример: 20.02.2000');
     };
-    console.log(validateDate(dateValue));
   };
 
   useEffect(() => {
@@ -120,8 +117,57 @@ export default function Passenger({addPassenger, num, agesPassengers, changeAmou
     };
   }, [none.valid]);
 
+  function getSortAge() {
+    if (none.age === 'none') {
+      setNone({...none, age: 'list-age-select'});
+    } else {
+      setNone({...none, age: 'none'});
+    }
+  };
+
+  function getSelectAge(ev) {
+    if (agesPassengers.age > 0 && agesPassengers.child > 0) {
+      setSelect({...select, age: ev.target.outerText});
+    };
+
+    if (agesPassengers.age === 0 && agesPassengers.child > 0) {
+      setSelect({...select, age: 'Детский'});
+    };
+
+    if (agesPassengers.age > 0 && agesPassengers.child === 0) {
+      setSelect({...select, age: 'Взрослый'});
+    };
+
+    setNone({...none, age: 'none'});
+  };
+
+  function getSortDocs() {
+    if (none.docs === 'none') {
+      if (select.docs === 'Свидетельство о рождении') {
+        setNone({...none, docs: 'list-docs-select-long'});
+      } else {
+        setNone({...none, docs: 'list-docs-select'});
+      };
+    } else {
+      setNone({...none, docs: 'none'});
+    }
+  };
+
+  console.log(agesPassengers);
+
+  function getSelectDocs(ev) {
+    setSelect({...select, docs: ev.target.outerText});
+    setNone({...none, docs: 'none'});
+    if (ev.target.outerText === 'Паспорт РФ') {
+      console.log('Паспорт РФ');
+    };
+    if (ev.target.outerText === 'Свидетельство о рождении') {
+      console.log('Свидетельство о рождении');
+    };
+  };
+
   function nextPassenger() {
-    if (nameValue.name !== '' && nameValue.secondName !== '' && nameValue.surname !== '') {
+    if (nameValue.name !== '' && nameValue.patronymic !== '' && nameValue.surname !== '') {
       if (select.docs === 'Паспорт РФ') {
         if (docsValue.passportNumber !== '' && docsValue.passportSeries !== '') {
           if (!none.valid) {
@@ -148,100 +194,40 @@ export default function Passenger({addPassenger, num, agesPassengers, changeAmou
       setValidText('Заполните все поля!');
     };
 
-    if (agesPassengers.age > 0 && agesPassengers.child > 0) {
-      if (select.age === 'Взрослый') {
-        changeAmountAgesPass({
-          age: agesPassengers.age - 1,
-          child: agesPassengers.child
-        });
-      };
-      if (select.age === 'Ребенок') {
-        changeAmountAgesPass({
-          age: agesPassengers.age,
-          child: agesPassengers.child - 1
-        });
-      };
-    };
-
-    if (agesPassengers.age === 0 && agesPassengers.child > 0) {
-      changeAmountAgesPass({
-        age: agesPassengers.age,
-        child: agesPassengers.child - 1
-      });
-    };
-
-    if (agesPassengers.age > 0 && agesPassengers.child === 0) {
-      changeAmountAgesPass({
-        age: agesPassengers.age - 1,
-        child: agesPassengers.child
-      });
-    };
+    console.log({
+      passNumber:  num,
+      passAges: select.age,
+      passSurname: nameValue.surname,
+      passName: nameValue.name,
+      passPatronymic: nameValue.patronymic,
+      passGender: gender,
+      passBirth: dateValue,
+      limited: limited,
+      typeDoc: select.docs,
+      docNumber: docsValue.passportNumber,
+      docSeries: docsValue.passportSeries,
+      birthNumber: docsValue.birthNumber
+    });
+    dispatch(addPassengerStore({
+      passNumber: num,
+      passAges: select.age,
+      passSurname: nameValue.surname,
+      passName: nameValue.name,
+      passPatronymic: nameValue.patronymic,
+      passGender: gender,
+      passBirth: dateValue,
+      limited: limited,
+      typeDoc: select.docs,
+      docNumber: docsValue.passportNumber,
+      docSeries: docsValue.passportSeries,
+      birthNumber: docsValue.birthNumber
+    }));
+    setButton(true);
   };
 
-
-  function getSortAge() {
-    if (none.age === 'none') {
-      setNone({...none, age: 'list-age-select'});
-    } else {
-      setNone({...none, age: 'none'});
-    }
-  };
-
-  function getSelectAge(ev) {
-    setSelect({...select, age: ev.target.outerText});
-    setNone({...none, age: 'none'});
-
-    // if (agesPassengers.age > 0 && agesPassengers.child > 0) {
-    //   if (ev.target.outerText === 'Взрослый') {
-    //     changeAmountAgesPass({
-    //       age: agesPassengers.age - 1,
-    //       child: agesPassengers.child
-    //     });
-    //   };
-    //   if (ev.target.outerText === 'Ребенок') {
-    //     changeAmountAgesPass({
-    //       age: agesPassengers.age,
-    //       child: agesPassengers.child - 1
-    //     });
-    //   };
-    // };
-
-    // if (agesPassengers.age === 0 && agesPassengers.child > 0) {
-    //   changeAmountAgesPass({
-    //     age: agesPassengers.age,
-    //     child: agesPassengers.child - 1
-    //   });
-    // };
-
-    // if (agesPassengers.age > 0 && agesPassengers.child === 0) {
-    //   changeAmountAgesPass({
-    //     age: agesPassengers.age - 1,
-    //     child: agesPassengers.child
-    //   });
-    // };
-  };
-
-  function getSortDocs() {
-    if (none.docs === 'none') {
-      if (select.docs === 'Свидетельство о рождении') {
-        setNone({...none, docs: 'list-docs-select-long'});
-      } else {
-        setNone({...none, docs: 'list-docs-select'});
-      };
-    } else {
-      setNone({...none, docs: 'none'});
-    }
-  };
-
-  function getSelectDocs(ev) {
-    setSelect({...select, docs: ev.target.outerText});
-    setNone({...none, docs: 'none'});
-    if (ev.target.outerText === 'Паспорт РФ') {
-      console.log('Паспорт РФ');
-    };
-    if (ev.target.outerText === 'Свидетельство о рождении') {
-      console.log('Свидетельство о рождении');
-    };
+  function deletePassenger() {
+    dispatch(deletePassenger(num));
+    setButton(false);
   };
 
   return (
@@ -249,7 +235,7 @@ export default function Passenger({addPassenger, num, agesPassengers, changeAmou
       <header className={none.main ? 'pass-header' : 'pass-header-plus'}>
         <span className={none.main ? 'pass-header-up' : 'pass-header-down'} onClick={() => setNone({...none, main: !none.main})}></span>
         <h4 className='pass-header-title'>Пассажир {num}</h4>
-        <span className={none.main ? 'pass-header-close' : 'none'}></span>
+        <span className={none.main ? 'pass-header-close' : 'none'} onClick={deletePassenger}></span>
       </header>
 
       <div className={none.main ? 'pass-main' : 'none'}>
@@ -258,8 +244,8 @@ export default function Passenger({addPassenger, num, agesPassengers, changeAmou
             {select.age}
           </div>
           <div className={none.age}>
-            <div className={agesPassengers.age > 0 ? 'select-age' : 'none'} onClick={getSelectAge}>Взрослый</div>
-            <div className={agesPassengers.child > 0 ? 'select-child' : 'none'} onClick={getSelectAge}>Ребенок</div>
+            <div className={agesPassengers.age > 0 ? 'select-age' : 'select-age-disable'} onClick={getSelectAge}>Взрослый</div>
+            <div className={agesPassengers.child > 0 ? 'select-child' : 'select-child-disable'} onClick={getSelectAge}>Детский</div>
           </div>
         </div>
 
@@ -281,7 +267,7 @@ export default function Passenger({addPassenger, num, agesPassengers, changeAmou
           <label className='pass-names-label' htmlFor="">
             <p>Отчество</p>
             <input className='pass-names-input' type="text" required
-              value={nameValue.secondName}
+              value={nameValue.patronymic}
               onChange={inputSecondName}
               onBlur={blurSecondName} />
           </label>
@@ -361,7 +347,7 @@ export default function Passenger({addPassenger, num, agesPassengers, changeAmou
         <div className={none.ok ? 'pass-footer-ok' : 'pass-footer'}>
           <span className={none.ok ? 'pass-valid-ok' : 'none'}></span>
           <p className={none.ok ? 'pass-valid-text-ok' : 'none'}>Готово</p>
-          <button className={!none.valid ? 'pass-button' : 'none'} type='button'
+          <button className={!none.valid ? 'pass-button' : 'none'} type='button' disabled={button}
             onClick={nextPassenger}>Следующий пассажир</button>
           <div className={none.valid ? 'pass-valid' : 'none'}>
             <span className='pass-valid-close' onClick={() => setNone({...none, valid: false})}></span>

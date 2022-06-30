@@ -13,6 +13,10 @@ export default function ListCoaches() {
   const { route } = useSelector((state) => state.sliceChoice);
   let navigate = useNavigate();
   const [types, setTypes] = useState([]);
+  const [button, setButton] = useState({
+    disabled: true,
+    className: '-disable'
+  });
   const dispatch = useDispatch();
   const { notice, totalSeatsAge, totalSeatsChild, totalPriceAll } = useSelector((state) => state.slicePrice);
 
@@ -62,14 +66,19 @@ export default function ListCoaches() {
     };
   }, [notice]);
 
+  useEffect(() => {
+    if (totalPriceAll !== 0 && (totalSeatsAge !== 0 && totalSeatsChild !== 0)) {
+      setButton({
+        disabled: false,
+        className: ''
+      });
+    }
+  }, [totalPriceAll, totalSeatsAge, totalSeatsChild]);
+
   function toPassengers() {
-    if ((totalSeatsAge === 0 || totalSeatsChild === 0) && totalPriceAll === 0) {
-      dispatch(changeNotice(true));
-    } else {
-      navigate('/route/passengers');
-      dispatch(currentStepTwo());
-      dispatch(totalChoiceRoute());
-    };
+    navigate('/route/passengers');
+    dispatch(currentStepTwo());
+    dispatch(totalChoiceRoute());
   };
 
   if (!route || !coaches) {
@@ -84,7 +93,7 @@ export default function ListCoaches() {
 
       {types.map((el, i) =>  <CoachesType coaches={el} route={route} classStyle={i % 2 === 0 ? '-left' : '-right'} key={i}/>)}
       
-      <button className='coach-button' type='button' onClick={toPassengers}>далее</button>
+      <button className={`coach-button${button.className}`} type='button' disabled={button.disabled} onClick={toPassengers}>далее</button>
     </div>
   );
 };
