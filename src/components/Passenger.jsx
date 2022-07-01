@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { addPassengerStore } from '../store/slicePassengers';
+import { addPassengerStore, removePassengerStore } from '../store/slicePassengers';
 import '../styles/passenger.css';
 import { validateBirthNumber, validateDate, validateName, validatePassportNumber, validatePassportSeries } from '../utils/validators';
 
@@ -226,8 +226,22 @@ export default function Passenger({addPassenger, num, agesPassengers}) {
   };
 
   function deletePassenger() {
-    dispatch(deletePassenger(num));
+    dispatch(removePassengerStore(num));
     setButton(false);
+    setNone({...none, ok: false});
+    setGender(false);
+    setLimited(false);
+    setDateValue('');
+    setNameValue({
+      name: '',
+      patronymic: '',
+      surname: ''
+    });
+    setDocsValue({
+      passportSeries: '',
+      passportNumber: '',
+      birthNumber: ''
+    });
   };
 
   return (

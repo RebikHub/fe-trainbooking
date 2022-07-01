@@ -21,6 +21,7 @@ export default function CoachesType({route, coaches, classStyle}) {
   });
   const [valueAges, setValueAges] = useState(0);
   const [valueChild, setValueChild] = useState(0);
+  const [valueChildWithout, setValueChildWithout] = useState(0);
   const { firstClass, secondClass, thirdClass, fourthClass } = useSelector((state) => state.slicePrice);
   const dispatch = useDispatch();
   let navigate = useNavigate();
@@ -57,6 +58,12 @@ export default function CoachesType({route, coaches, classStyle}) {
     setType(objTypes);
   }, []);
 
+  useEffect(() => {
+    if (valueAges < valueChildWithout) {
+      setValueChildWithout(valueAges);
+    };
+  }, [valueAges]);
+
   function inputAges(ev) {
     if (/^[0-5]$/.test(Number(ev.target.value))) {
       dispatch(changeAgeTickets({
@@ -74,6 +81,12 @@ export default function CoachesType({route, coaches, classStyle}) {
         seatsChild: Number(ev.target.value)
       }));
       setValueChild(ev.target.value);
+    };
+  };
+
+  function inputChildWithout(ev) {
+    if (Number(ev.target.value) >= 0 && Number(ev.target.value) <= valueAges) {
+      setValueChildWithout(ev.target.value);
     };
   };
 
@@ -139,15 +152,14 @@ export default function CoachesType({route, coaches, classStyle}) {
               <input className='tickets-age-input' type="text" placeholder={`Детских - ${valueChild}`}
                 value={''}
                 onChange={inputChild}/>
-              <p className='tickets-adults-desc'>Можно добавить еще {5 - valueChild} детей до 10 лет.Свое место в вагоне, как у взрослых, но дешевле 
+              <p className='tickets-adults-desc'>Можно добавить еще {5 - valueChild} детей до 10 лет. Свое место в вагоне, как у взрослых, но дешевле 
                 в среднем на 50-65%</p>
             </div>
-
             <div className='tickets-age-inputs'>
-              <input className='tickets-age-input' type="text" placeholder='Детских &#171;без места&#187; - 0'
+              <input className='tickets-age-input' type="text" placeholder={`Детских \u00ABбез места\u00BB - ${valueChildWithout}`}
                 value={''}
-                onChange={() => ''}/>
-              <p className='tickets-adults-desc'></p>
+                onChange={inputChildWithout}/>
+              <p className='tickets-adults-desc'>Доступно только для взрослого места. Можно добавить еще {valueAges - valueChildWithout} детей.</p>
             </div>
           </div>
         </div>

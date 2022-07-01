@@ -36,8 +36,9 @@ export const slicePassengers = createSlice({
         state.passengers[index] = actions.payload;
       }
     },
-    deletePassengerStore: (state, actions) => {
-      state.passengers = state.passengers.filter((el) => el.passNumber !== actions.payload.passNumber);
+    removePassengerStore: (state, actions) => {
+      console.log(actions.payload);
+      state.passengers = state.passengers.filter((el) => el.passNumber !== actions.payload);
     },
   }
 });
@@ -45,7 +46,7 @@ export const slicePassengers = createSlice({
 export const {
   addPassengerStore,
   editPassengerStore,
-  deletePassengerStore
+  removePassengerStore
 } = slicePassengers.actions;
 
 export default slicePassengers.reducer;

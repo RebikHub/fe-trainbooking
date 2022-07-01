@@ -67,7 +67,7 @@ export default function ListCoaches() {
   }, [notice]);
 
   useEffect(() => {
-    if (totalPriceAll !== 0 && (totalSeatsAge !== 0 && totalSeatsChild !== 0)) {
+    if (totalPriceAll !== 0 && (totalSeatsAge !== 0 || totalSeatsChild !== 0)) {
       setButton({
         disabled: false,
         className: ''
