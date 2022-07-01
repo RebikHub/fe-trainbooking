@@ -20,7 +20,7 @@ export default function ChoiceRoute() {
   return (
     <div className='main-route'>
       <div className='left-side'>
-        {location.pathname === '/route/passengers' || '/router/payment' ? <TripDetails/> :
+        {location.pathname === '/route/passengers' || location.pathname === '/route/payment' ? <TripDetails/> :
           <>
             <FilterRoute/>
             <LastRoutes/>

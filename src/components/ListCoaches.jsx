@@ -5,8 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import CoachesType from './CoachesType';
 import Notice from './Notice';
-import { changeNotice, totalChoiceRoute } from '../store/slicePrice';
-import { clearStepAll, currentStepTwo } from '../store/sliceProgressLine';
+import { totalChoiceRoute } from '../store/slicePrice';
+import { clearStepAll } from '../store/sliceProgressLine';
 
 export default function ListCoaches() {
   const { coaches } = useSelector((state) => state.sliceGetSeats);
@@ -18,7 +18,7 @@ export default function ListCoaches() {
     className: '-disable'
   });
   const dispatch = useDispatch();
-  const { notice, totalSeatsAge, totalSeatsChild, totalPriceAll } = useSelector((state) => state.slicePrice);
+  const { totalSeatsAge, totalSeatsChild, totalPriceAll } = useSelector((state) => state.slicePrice);
 
   useEffect(() => {
     dispatch(clearStepAll());
@@ -65,12 +65,6 @@ export default function ListCoaches() {
   }, [coaches]);
 
   useEffect(() => {
-    if (notice) {
-      setTimeout(() => dispatch(changeNotice(false)), 5 * 1000);
-    };
-  }, [notice]);
-
-  useEffect(() => {
     if (totalPriceAll !== 0 && (totalSeatsAge !== 0 || totalSeatsChild !== 0)) {
       setButton({
         disabled: false,
@@ -92,7 +86,7 @@ export default function ListCoaches() {
     <div className='coaches'>
       <h3 className='coaches-title'>выбор мест</h3>
 
-      <Notice modal={notice} handleNotice={() => dispatch(changeNotice(false))}/>
+      <Notice text={'Укажите количество билетов и выберите места!'}/>
 
       {types.map((el, i) =>  <CoachesType coaches={el} route={route} classStyle={i % 2 === 0 ? '-left' : '-right'} key={i}/>)}
       
