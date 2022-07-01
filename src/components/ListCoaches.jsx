@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import CoachesType from './CoachesType';
 import Notice from './Notice';
 import { changeNotice, totalChoiceRoute } from '../store/slicePrice';
-import { currentStepTwo } from '../store/sliceProgressLine';
+import { clearStepAll, currentStepTwo } from '../store/sliceProgressLine';
 
 export default function ListCoaches() {
   const { coaches } = useSelector((state) => state.sliceGetSeats);
@@ -19,6 +19,10 @@ export default function ListCoaches() {
   });
   const dispatch = useDispatch();
   const { notice, totalSeatsAge, totalSeatsChild, totalPriceAll } = useSelector((state) => state.slicePrice);
+
+  useEffect(() => {
+    dispatch(clearStepAll());
+  }, []);
 
   useEffect(() => {
     const classes = [];
@@ -77,7 +81,6 @@ export default function ListCoaches() {
 
   function toPassengers() {
     navigate('/route/passengers');
-    dispatch(currentStepTwo());
     dispatch(totalChoiceRoute());
   };
 

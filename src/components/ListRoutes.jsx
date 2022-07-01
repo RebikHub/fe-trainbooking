@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/list-routes.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { currentStepOne } from '../store/sliceProgressLine';
+import { clearStepAll, currentStepOne } from '../store/sliceProgressLine';
 import TrainRoute from './TrainRoute';
 import { addRoutes, filtering } from '../store/sliceFilter';
 import { filteringPricesRange } from '../utils/minMaxPrices';
@@ -27,6 +27,10 @@ export default function ListRoutes() {
   const [endSlice, setEndSlice] = useState(5);
   const [lengthPage, setLengthPage] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    dispatch(clearStepAll());
+  }, []);
 
   useEffect(() => {
     dispatch(filtering({

@@ -6,7 +6,7 @@ import { clearAllFiltering } from '../store/sliceFilter';
 import { clearCities } from '../store/sliceGetCity';
 import { requestGetLastRoutes } from '../store/sliceGetLastRoutes';
 import { clearRouteList, getRouteRequest } from '../store/sliceGetRoute';
-import { currentStepOne } from '../store/sliceProgressLine';
+import { clearStepAll, currentStepOne } from '../store/sliceProgressLine';
 import '../styles/search-widget.css';
 import Calendar from './Calendar';
 import CityList from './CityList';
@@ -28,6 +28,16 @@ export default function SearchWidget({classStyle}) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   let location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname === '/') {
+      setCity({
+        from: '',
+        to: ''
+      });
+      dispatch(clearStepAll());
+    };
+  }, [location.pathname]);
 
   function inputDateFrom(ev) {
     dispatch(choiceDateFrom(ev.target.value));

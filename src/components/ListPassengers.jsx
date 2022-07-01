@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Passenger from './Passenger';
 import { useEffect } from 'react';
+import { currentStepTwo } from '../store/sliceProgressLine';
 
 export default function ListPassengers() {
   const { totalSeatsAge, totalSeatsChild } = useSelector((state) => state.slicePrice);
@@ -15,6 +16,11 @@ export default function ListPassengers() {
     child: totalSeatsChild
   });
   let navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(currentStepTwo());
+  }, []);
 
   useEffect(() => {
     console.log(passengers);
