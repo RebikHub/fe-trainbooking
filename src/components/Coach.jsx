@@ -20,7 +20,8 @@ export default function Coach({classStyle, coach}) {
     totalSeatsChild,
     totalPriceAge,
     totalPriceChild,
-    totalPriceAll } = useSelector((state) => state.slicePrice);
+    totalPriceAll,
+    totalAmountTickets} = useSelector((state) => state.slicePrice);
   const [current, setCurrent] = useState({});
   const dispatch = useDispatch();
 
@@ -33,6 +34,8 @@ export default function Coach({classStyle, coach}) {
   console.log('totalPriceAge ', totalPriceAge);
   console.log('totalPriceChild ', totalPriceChild);
   console.log('totalPriceAll ', totalPriceAll);
+  console.log('totalPriceAll ', totalPriceAll);
+  console.log('totalAmountTickets ', totalAmountTickets);
   
 
   useEffect(() => {

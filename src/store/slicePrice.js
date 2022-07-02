@@ -9,8 +9,6 @@ export const slicePrice = createSlice({
       amountTickets: 0, // seatsAge + seatsChild
       seatsPriceAge: 0,
       seatsPriceChild: 0,
-      serviceWifi: 0,
-      serviceLinens: 0,
       totalPrice: 0 // seatsPrice + serviceWifi + serviceLinens
     },
     secondClass: {
@@ -19,8 +17,6 @@ export const slicePrice = createSlice({
       amountTickets: 0, // seatsAge + seatsChild
       seatsPriceAge: 0,
       seatsPriceChild: 0,
-      serviceWifi: 0,
-      serviceLinens: 0,
       totalPrice: 0 // seatsPrice + serviceWifi + serviceLinens
     },
     thirdClass: {
@@ -29,8 +25,6 @@ export const slicePrice = createSlice({
       amountTickets: 0, // seatsAge + seatsChild
       seatsPriceAge: 0,
       seatsPriceChild: 0,
-      serviceWifi: 0,
-      serviceLinens: 0,
       totalPrice: 0 // seatsPrice + serviceWifi + serviceLinens
     },
     fourthClass: {
@@ -39,13 +33,12 @@ export const slicePrice = createSlice({
       amountTickets: 0, // seatsAge + seatsChild
       seatsPriceAge: 0,
       seatsPriceChild: 0,
-      serviceWifi: 0,
-      serviceLinens: 0,
       totalPrice: 0 // seatsPrice + serviceWifi + serviceLinens
     },
     notice: false,
     totalSeatsAge: 0,
     totalSeatsChild: 0,
+    totalAmountTickets: 0,
     totalPriceAge: 0,
     totalPriceChild: 0,
     totalPriceAll: 0
@@ -56,21 +49,25 @@ export const slicePrice = createSlice({
         state.firstClass.seatsAge = actions.payload.seatsAge;
         state.firstClass.amountTickets += actions.payload.seatsAge;
         state.totalSeatsAge += actions.payload.seatsAge;
+        state.totalAmountTickets += actions.payload.seatsAge;
       };
       if (actions.payload.classType === 'second') {
         state.secondClass.seatsAge = actions.payload.seatsAge;
         state.secondClass.amountTickets += actions.payload.seatsAge;
         state.totalSeatsAge += actions.payload.seatsAge;
+        state.totalAmountTickets += actions.payload.seatsAge;
       };
       if (actions.payload.classType === 'third') {
         state.thirdClass.seatsAge = actions.payload.seatsAge;
         state.thirdClass.amountTickets += actions.payload.seatsAge;
         state.totalSeatsAge += actions.payload.seatsAge;
+        state.totalAmountTickets += actions.payload.seatsAge;
       };
       if (actions.payload.classType === 'fourth') {
         state.fourthClass.seatsAge = actions.payload.seatsAge;
         state.fourthClass.amountTickets += actions.payload.seatsAge;
         state.totalSeatsAge += actions.payload.seatsAge;
+        state.totalAmountTickets += actions.payload.seatsAge;
       };
     },
     changeChildTickets: (state, actions) => {
@@ -78,21 +75,25 @@ export const slicePrice = createSlice({
         state.firstClass.seatsChild = actions.payload.seatsChild;
         state.firstClass.amountTickets += actions.payload.seatsChild;
         state.totalSeatsChild += actions.payload.seatsChild;
+        state.totalAmountTickets += actions.payload.seatsChild;
       };
       if (actions.payload.classType === 'second') {
         state.secondClass.seatsChild = actions.payload.seatsChild;
         state.secondClass.amountTickets += actions.payload.seatsChild;
         state.totalSeatsChild += actions.payload.seatsChild;
+        state.totalAmountTickets += actions.payload.seatsChild;
       };
       if (actions.payload.classType === 'third') {
         state.thirdClass.seatsChild = actions.payload.seatsChild;
         state.thirdClass.amountTickets += actions.payload.seatsChild;
         state.totalSeatsChild += actions.payload.seatsChild;
+        state.totalAmountTickets += actions.payload.seatsChild;
       };
       if (actions.payload.classType === 'fourth') {
         state.fourthClass.seatsChild = actions.payload.seatsChild;
         state.fourthClass.amountTickets += actions.payload.seatsChild;
         state.totalSeatsChild += actions.payload.seatsChild;
+        state.totalAmountTickets += actions.payload.seatsChild;
       };
     },
     changePriceSeats: (state, actions) => {
@@ -171,15 +172,19 @@ export const slicePrice = createSlice({
     changeAmountTickets: (state, actions) => {
       if (actions.payload.classType === 'first') {
         state.firstClass.amountTickets += actions.payload.amount;
+        state.totalAmountTickets += actions.payload.amount;
       };
       if (actions.payload.classType === 'second') {
         state.secondClass.amountTickets += actions.payload.amount;
+        state.totalAmountTickets += actions.payload.amount;
       };
       if (actions.payload.classType === 'third') {
         state.thirdClass.amountTickets += actions.payload.amount;
+        state.totalAmountTickets += actions.payload.amount;
       };
       if (actions.payload.classType === 'fourth') {
         state.fourthClass.amountTickets += actions.payload.amount;
+        state.totalAmountTickets += actions.payload.amount;
       };
     },
     clearAllPrices: (state, actions) => {
@@ -188,8 +193,6 @@ export const slicePrice = createSlice({
       state.firstClass.amountTickets = 0;
       state.firstClass.seatsPriceAge = 0;
       state.firstClass.seatsPriceChild = 0;
-      state.firstClass.serviceWifi = 0;
-      state.firstClass.serviceLinens = 0;
       state.firstClass.totalPrice = 0;
       
       state.secondClass.seatsAge = 0;
@@ -197,8 +200,6 @@ export const slicePrice = createSlice({
       state.secondClass.amountTickets = 0;
       state.secondClass.seatsPriceAge = 0;
       state.secondClass.seatsPriceChild = 0;
-      state.secondClass.serviceWifi = 0;
-      state.secondClass.serviceLinens = 0;
       state.secondClass.totalPrice = 0;
 
       state.thirdClass.seatsAge = 0;
@@ -206,8 +207,6 @@ export const slicePrice = createSlice({
       state.thirdClass.amountTickets = 0;
       state.thirdClass.seatsPriceAge = 0;
       state.thirdClass.seatsPriceChild = 0;
-      state.thirdClass.serviceWifi = 0;
-      state.thirdClass.serviceLinens = 0;
       state.thirdClass.totalPrice = 0;
 
       state.fourthClass.seatsAge = 0;
@@ -215,8 +214,6 @@ export const slicePrice = createSlice({
       state.fourthClass.amountTickets = 0;
       state.fourthClass.seatsPriceAge = 0;
       state.fourthClass.seatsPriceChild = 0;
-      state.fourthClass.serviceWifi = 0;
-      state.fourthClass.serviceLinens = 0;
       state.fourthClass.totalPrice = 0;
     },
     changeNotice: (state, actions) => {
@@ -233,6 +230,7 @@ export const slicePrice = createSlice({
       state.notice = false;
       state.totalSeatsAge = 0;
       state.totalSeatsChild = 0;
+      state.totalAmountTickets = 0;
       state.totalPriceAge = 0;
       state.totalPriceChild = 0;
      state.totalPriceAll = 0;

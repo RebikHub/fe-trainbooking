@@ -18,7 +18,7 @@ export default function ListCoaches() {
     className: '-disable'
   });
   const dispatch = useDispatch();
-  const { totalSeatsAge, totalSeatsChild, totalPriceAll } = useSelector((state) => state.slicePrice);
+  const { totalSeatsAge, totalSeatsChild, totalPriceAll, totalAmountTickets } = useSelector((state) => state.slicePrice);
 
 
   useEffect(() => {
@@ -66,13 +66,19 @@ export default function ListCoaches() {
   }, [coaches]);
 
   useEffect(() => {
-    if (totalPriceAll !== 0 && (totalSeatsAge !== 0 || totalSeatsChild !== 0)) {
+    console.log(totalAmountTickets === 0 && (totalSeatsAge !== 0 || totalSeatsChild !== 0));
+    if (totalAmountTickets === 0 && (totalSeatsAge !== 0 || totalSeatsChild !== 0)) {
       setButton({
         disabled: false,
         className: ''
+      })
+    } else {
+      setButton({
+        disabled: true,
+        className: '-disable'
       });
-    }
-  }, [totalPriceAll, totalSeatsAge, totalSeatsChild]);
+    };
+  }, [totalAmountTickets, totalSeatsAge, totalSeatsChild]);
 
   function toPassengers() {
     navigate('/route/passengers');
