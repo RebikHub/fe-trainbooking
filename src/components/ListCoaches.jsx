@@ -20,6 +20,7 @@ export default function ListCoaches() {
   const dispatch = useDispatch();
   const { totalSeatsAge, totalSeatsChild, totalPriceAll } = useSelector((state) => state.slicePrice);
 
+
   useEffect(() => {
     dispatch(clearStepAll());
   }, []);

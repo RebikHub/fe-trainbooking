@@ -15,9 +15,25 @@ export default function Coach({classStyle, coach}) {
   });
   const [wifiBought, setWifiBought] = useState(false);
   const [linensBought, setLinensBought] = useState(false);
-  const { firstClass, secondClass, thirdClass, fourthClass } = useSelector((state) => state.slicePrice);
+  const { firstClass, secondClass, thirdClass, fourthClass,
+    totalSeatsAge,
+    totalSeatsChild,
+    totalPriceAge,
+    totalPriceChild,
+    totalPriceAll } = useSelector((state) => state.slicePrice);
   const [current, setCurrent] = useState({});
   const dispatch = useDispatch();
+
+  console.log('firstClass ', firstClass);
+  console.log('secondClass ', secondClass);
+  console.log('thirdClass ', thirdClass);
+  console.log('fourthClass ', fourthClass);
+  console.log('totalSeatsAge ', totalSeatsAge);
+  console.log('totalSeatsChild ', totalSeatsChild);
+  console.log('totalPriceAge ', totalPriceAge);
+  console.log('totalPriceChild ', totalPriceChild);
+  console.log('totalPriceAll ', totalPriceAll);
+  
 
   useEffect(() => {
     if (coach.coach.class_type === 'first') {
@@ -147,7 +163,6 @@ export default function Coach({classStyle, coach}) {
         dispatch(changeNotice(true));
       };
     };
-    dispatch(totalChoiceRoute());
   };
 
   useEffect(() => {

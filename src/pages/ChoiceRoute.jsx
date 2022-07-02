@@ -1,6 +1,7 @@
 import React from 'react';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
 import FilterRoute from '../components/FilterRoute';
 import LastRoutes from '../components/LastRoutes';
@@ -11,7 +12,15 @@ import '../styles/route.css';
 export default function ChoiceRoute() {
   const { loading } = useSelector((state) => state.sliceGetRoute);
   const { loadingSeats } = useSelector((state) => state.sliceGetSeats);
+  const { route } = useSelector((state) => state.sliceChoice);
   let location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (route.length === 0 && location.pathname === '/route/coach') {
+      navigate('/route');
+    };
+  }, [route]);
 
   if (loading || loadingSeats) {
     return <SearchProgress/>
