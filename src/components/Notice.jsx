@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeNotice } from '../store/slicePrice';
-import '../styles/coaches.css';
+import '../styles/notice.css';
 
 export default function Notice({text}) {
   const dispatch = useDispatch();

@@ -1,59 +1,101 @@
 import React, { useState } from 'react'
 import '../styles/payment.css';
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { currentStepThree } from '../store/sliceProgressLine';
-import { validateName } from '../utils/validators';
+import { validateEmail, validateName, validatePhoneNumber } from '../utils/validators';
 import Notice from './Notice';
 import { changeNotice } from '../store/slicePrice';
+import { useNavigate } from 'react-router-dom';
 
 export default function Payment() {
   const dispatch = useDispatch();
-  const { notice } = useSelector((state) => state.slicePrice);
   const [method, setMethod] = useState(false);
   const [ok, setOk] = useState(false);
-  const [nameValue, setNameValue] = useState({
+  const [inputValue, setInputValue] = useState({
     name: '',
     patronymic: '',
-    surname: ''
+    surname: '',
+    phone: '',
+    email: ''
   });
   const [noticeText, setNoticeText] = useState('');
+  let navigate = useNavigate();
 
   useEffect(() => {
     dispatch(currentStepThree());
   }, []);
 
+  useEffect(() => {
+    if (
+      validateName(inputValue.name) &&
+      validateName(inputValue.patronymic) &&
+      validateName(inputValue.surname) &&
+      validatePhoneNumber(inputValue.phone) &&
+      validateEmail(inputValue.email)) {
+        setOk(true);
+      };
+  }, [inputValue]);
+
   function inputFirstName(ev) {
-    setNameValue({...nameValue, name: ev.target.value});
+    setInputValue({...inputValue, name: ev.target.value});
   };
 
   function blurFirstName() {
-    if (!validateName(nameValue.name)) {
-      setNoticeText('Имя указано некорректно\n Пример: Иван');
+    if (!validateName(inputValue.name)) {
+      setNoticeText('Имя указано некорректно.\n Пример: Иван');
       dispatch(changeNotice(true));
     };
   };
 
   function inputSecondName(ev) {
-    setNameValue({...nameValue, patronymic: ev.target.value});
+    setInputValue({...inputValue, patronymic: ev.target.value});
   };
 
   function blurSecondName() {
-    if (!validateName(nameValue.patronymic)) {
-      setNoticeText('Отчество указано некорректно\n Пример: Иванович');
+    if (!validateName(inputValue.patronymic)) {
+      setNoticeText('Отчество указано некорректно.\n Пример: Иванович');
       dispatch(changeNotice(true));
     };
   };
 
   function inputSurName(ev) {
-    setNameValue({...nameValue, surname: ev.target.value});
+    setInputValue({...inputValue, surname: ev.target.value});
   };
 
   function blurSurName() {
-    if (!validateName(nameValue.surname)) {
-      setNoticeText('Фамилия указана некорректно\n Пример: Иванов');
+    if (!validateName(inputValue.surname)) {
+      setNoticeText('Фамилия указана некорректно.\n Пример: Иванов');
       dispatch(changeNotice(true));
     };
+  };
+
+  function inputPhone(ev) {
+    setInputValue({...inputValue, phone: ev.target.value});
+  };
+
+  function blurPhone() {
+    if (!validatePhoneNumber(inputValue.phone)) {
+      setNoticeText('Номер телефона указан некорректно.\n Пример: 89009009090');
+      dispatch(changeNotice(true));
+    } else {
+      setInputValue({...inputValue, phone: validatePhoneNumber(inputValue.phone)});
+    };
+  };
+
+  function inputEmail(ev) {
+    setInputValue({...inputValue, email: ev.target.value});
+  };
+
+  function blurEmail() {
+    if (!validateEmail(inputValue.email)) {
+      setNoticeText('Email указана некорректно.\n Пример: mail@mail.com');
+      dispatch(changeNotice(true));
+    };
+  };
+
+  function nextStep() {
+    navigate('/route/order');
   };
 
   return (
@@ -70,21 +112,21 @@ export default function Payment() {
             <label className='data-names-label'>
               <p>Фамилия</p>
               <input className='data-names-input' type="text" required
-                value={nameValue.surname}
+                value={inputValue.surname}
                 onChange={inputSurName}
                 onBlur={blurSurName} />
             </label>
             <label className='data-names-label'>
               <p>Имя</p>
               <input className='data-names-input' type="text" required
-                value={nameValue.name}
+                value={inputValue.name}
                 onChange={inputFirstName}
                 onBlur={blurFirstName} />
             </label>
             <label className='data-names-label'>
               <p>Отчество</p>
               <input className='data-names-input' type="text" required
-                value={nameValue.patronymic}
+                value={inputValue.patronymic}
                 onChange={inputSecondName}
                 onBlur={blurSecondName} />
             </label>
@@ -93,14 +135,20 @@ export default function Payment() {
           <div className='data-inputs-phone'>
             <label className='data-phone-label'>
               <p>Контактный телефон</p>
-              <input className='data-phone-input' type="tel" required placeholder='+7 ___ ___ __ __'/>
+              <input className='data-phone-input' type="tel" required placeholder='+7 ___ ___ __ __'
+                value={inputValue.phone}
+                onChange={inputPhone}
+                onBlur={blurPhone} />
             </label>
           </div>
 
           <div className='data-inputs-mail'>
             <label className='data-mail-label'>
               <p>E-mail</p>
-              <input className='data-mail-input' type="email" required placeholder='inbox@gmail.ru'/>
+              <input className='data-mail-input' type="email" required placeholder='inbox@gmail.ru'
+                value={inputValue.email}
+                onChange={inputEmail}
+                onBlur={blurEmail} />
             </label>
           </div>
         </div>
@@ -130,7 +178,7 @@ export default function Payment() {
         </div>
 
       </div>
-      <button className={ok ? 'payment-button-ok' : 'payment-button'} type='button'>купить билеты</button>
+      <button className={ok ? 'payment-button-ok' : 'payment-button'} disabled={!ok} type='button' onClick={nextStep}>купить билеты</button>
     </form>
   );
 };

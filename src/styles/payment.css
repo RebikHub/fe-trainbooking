@@ -69,8 +69,9 @@
   margin-left: 35px;
 }
 
-.data-phone-label {
-
+.data-phone-label, .data-mail-label {
+  display: block;
+  width: 360px;
 }
 
 .data-phone-label > p, .data-mail-label > p {
