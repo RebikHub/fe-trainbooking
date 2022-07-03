@@ -51,3 +51,24 @@ export function validatePhoneNumber(number) {
 export function validateEmail(string) {
   return /@/.test(string) && /\.[a-z]{2,3}$/.test(string);
 };
+
+export function upperCaseBirthNumber(string) {
+  const upperString = string.toUpperCase();
+  const splitString = upperString.split('');
+  for (let i = 0; i < splitString.length; i += 1) {
+    if (/[А-Я]/.test(splitString[i])) {
+      splitString[i - 1] += ' ';
+      break;
+    };
+  };
+
+  for (let i = 0; i < splitString.length; i += 1) {
+    if (/\d/.test(splitString[i])) {
+      splitString[i - 1] += ' ';
+      break;
+    };
+  };
+
+  const joinString = splitString.join('');
+  return joinString;
+}

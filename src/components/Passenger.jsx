@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { addPassengerStore, removePassengerStore } from '../store/slicePassengers';
 import '../styles/passenger.css';
-import { validateBirthNumber, validateDate, validateName, validatePassportNumber, validatePassportSeries } from '../utils/validators';
+import { upperCaseBirthNumber, validateBirthNumber, validateDate, validateName, validatePassportNumber, validatePassportSeries } from '../utils/validators';
 
 export default function Passenger({addPassenger, num, agesPassengers}) {
   const [none, setNone] = useState({
@@ -220,7 +220,7 @@ export default function Passenger({addPassenger, num, agesPassengers}) {
       typeDoc: select.docs,
       docNumber: docsValue.passportNumber,
       docSeries: docsValue.passportSeries,
-      birthNumber: docsValue.birthNumber
+      birthNumber: upperCaseBirthNumber(docsValue.birthNumber)
     }));
     setButton(true);
   };

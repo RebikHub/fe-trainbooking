@@ -26,7 +26,7 @@ export default function Order() {
                 </div>
                 <div className='passenger-container-data'>
                   <p className='passenger-container-name'>{`${el.passSurname} ${el.passName} ${el.passPatronymic}`}</p>
-                  <p className='passenger-container-gender'>{`Пол ${el.passGender ? 'женский' : 'мужской'}`}</p>
+                  <p className='passenger-container-gender'>{`Пол ${el.passGender ? 'мужской' : 'женский'}`}</p>
                   <p className='passenger-container-birth'>{`Дата рождения ${el.passBirth}`}</p>
                   <p className='passenger-container-docs'>{`${el.typeDoc} ${el.typeDoc === 'Паспорт РФ' ? `${el.docSeries} ${el.docNumber}` : el.birthNumber}`}</p>
                 </div>

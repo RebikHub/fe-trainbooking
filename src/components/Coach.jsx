@@ -214,7 +214,7 @@ export default function Coach({classStyle, coach}) {
 
             <div className='service-move'>
               <span className={coach.coach.have_air_conditioning ? 'service-air-selected' : 'service-air'}
-                onMouseMove={mouseMoveToAir}></span>
+                onMouseEnter={mouseMoveToAir}></span>
               <div className={visible.air ? 'service-description' : 'none'}>
                 {coach.coach.have_air_conditioning ? 'кондиционер есть' : 'кондиционера нет'}
               </div>
@@ -222,7 +222,7 @@ export default function Coach({classStyle, coach}) {
 
             <div className='service-move'>
               <span className={coach.coach.have_wifi ? wifiBought ? 'service-wifi-selected' : 'service-wifi' : 'service-wifi-empty'}
-                onMouseMove={mouseMoveToWifi} onClick={buyWifi}></span>
+                onMouseEnter={mouseMoveToWifi} onClick={buyWifi}></span>
               <div className={visible.wifi ? 'service-description' : 'none'}>
                 {coach.coach.have_wifi ? `WI-FI есть ${coach.coach.wifi_price} р.` : 'WI-FI нет'}
               </div>
@@ -231,7 +231,7 @@ export default function Coach({classStyle, coach}) {
             <div className='service-move'>
               <span className={coach.coach.class_type === 'fourth' ? 'service-linens-empty' :
                 `service-linens ${coach.coach.is_linens_included ? 'service-included' : linensBought ? 'service-linens-selected' : ''}`}
-                  onMouseMove={mouseMoveToLinens} onClick={buyLinens}></span>
+                  onMouseEnter={mouseMoveToLinens} onClick={buyLinens}></span>
               <div className={visible.linens ? 'service-description' : 'none'}>
                 {coach.coach.class_type === 'fourth' ? 'белья нет' :
                   `белье ${coach.coach.is_linens_included ? 'включено' : `есть ${coach.coach.linens_price} р.`}`}
@@ -239,7 +239,7 @@ export default function Coach({classStyle, coach}) {
             </div>
 
             <div className='service-move'>
-              <span className='service-coffee' onMouseMove={mouseMoveToCup}></span>
+              <span className='service-coffee' onMouseEnter={mouseMoveToCup}></span>
               <div className={visible.cup ? 'service-description' : 'none'}>питание</div>
             </div>
 
