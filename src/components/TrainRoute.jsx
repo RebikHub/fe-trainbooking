@@ -7,7 +7,7 @@ import '../styles/train-route.css';
 import { dateFromAndTo, duration } from '../utils/trainDate';
 import TrainRouteSeats from './TrainRouteSeats';
 
-export default function TrainRoute({route}) {
+export default function TrainRoute({route, btnText = 'Выбрать места'}) {
   const [train, setTrain] = useState([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -112,7 +112,9 @@ export default function TrainRoute({route}) {
           <span className={`${route.departure.have_air_conditioning ? 'facilities-coffee-have' : 'train-facilities-coffee'}`}></span>
         </div>
 
-        <button type='button' className='train-choice-btn' onClick={getCoaches}>Выбрать места</button>
+        {btnText !== 'Изменить' ?
+          <button type='button' className='train-choice-btn' onClick={getCoaches}>{btnText}</button> :
+          <button type='button' className='order-route-btn' >{btnText}</button>}
       </div>
     </div>
   )

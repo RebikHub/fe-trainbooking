@@ -18,7 +18,7 @@ export default function ListCoaches() {
     className: '-disable'
   });
   const dispatch = useDispatch();
-  const { totalSeatsAge, totalSeatsChild, totalPriceAll, totalAmountTickets } = useSelector((state) => state.slicePrice);
+  const { totalSeatsAge, totalSeatsChild, totalAmountTickets } = useSelector((state) => state.slicePrice);
 
 
   useEffect(() => {
