@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { addPassengerStore, removePassengerStore } from '../store/slicePassengers';
+import { useDispatch, useSelector } from 'react-redux';
+import { addSeatPassenger, removeSeatPassenger } from '../store/sliceOrder';
 import '../styles/passenger.css';
 import { upperCaseBirthNumber, validateBirthNumber, validateDate, validateName, validatePassportNumber, validatePassportSeries } from '../utils/validators';
 
 export default function Passenger({addPassenger, num, agesPassengers}) {
+  const { totalSeatsNumber, seatsChildWithout } = useSelector((state) => state.slicePrice);
   const [none, setNone] = useState({
     main: false,
     age: 'none',
@@ -209,7 +210,8 @@ export default function Passenger({addPassenger, num, agesPassengers}) {
       birthNumber: docsValue.birthNumber
     });
     const seats = {
-      coach_id: "12341",
+      person_id: num,
+      coach_id: totalSeatsNumber[num - 1].id,
       person_info: {
         is_adult: select.age === 'Взрослый' ? true : false,
         first_name: nameValue.name,
@@ -218,31 +220,18 @@ export default function Passenger({addPassenger, num, agesPassengers}) {
         gender: gender,
         birthday: dateValue,
         document_type: select.docs,
-        document_data: `${select.typeDoc === 'Паспорт РФ' ? `${docsValue.passportSeries} ${docsValue.passportNumber}` : docsValue.birthNumber}`
+        document_data: `${select.typeDoc === 'Паспорт РФ' ? `${docsValue.passportSeries} ${docsValue.passportNumber}` : upperCaseBirthNumber(docsValue.birthNumber)}`
       },
-      seat_number: 10,
-      is_child: true,
-      include_children_seat: true
+      seat_number: totalSeatsNumber[num - 1].number,
+      is_child: seatsChildWithout > 0 ? true : false,
+      include_children_seat: seatsChildWithout > 0 ? true : false
     }
-    dispatch(addPassengerStore({
-      passNumber: num,
-      passAges: select.age,
-      passSurname: nameValue.surname,
-      passName: nameValue.name,
-      passPatronymic: nameValue.patronymic,
-      passGender: gender,
-      passBirth: dateValue,
-      limited: limited,
-      typeDoc: select.docs,
-      docNumber: docsValue.passportNumber,
-      docSeries: docsValue.passportSeries,
-      birthNumber: upperCaseBirthNumber(docsValue.birthNumber)
-    }));
+    dispatch(addSeatPassenger(seats));
     setButton(true);
   };
 
   function deletePassenger() {
-    dispatch(removePassengerStore(num));
+    dispatch(removeSeatPassenger(num));
     setButton(false);
     setNone({...none, ok: false});
     setGender(false);

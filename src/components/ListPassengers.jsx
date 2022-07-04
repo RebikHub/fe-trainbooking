@@ -9,6 +9,7 @@ import { currentStepTwo } from '../store/sliceProgressLine';
 export default function ListPassengers() {
   const { totalSeatsAge, totalSeatsChild } = useSelector((state) => state.slicePrice);
   const { passengers } = useSelector((state) => state.slicePassengers);
+  const { departure } = useSelector((state) => state.sliceOrder);
   const [amountPassengers, setAmountPassengers] = useState(totalSeatsAge + totalSeatsChild);
   const [addComponents, setAddComponents] = useState([]);
   const [agesPassengers, setAgesPassengers] = useState({
@@ -22,16 +23,17 @@ export default function ListPassengers() {
     dispatch(currentStepTwo());
   }, []);
 
+  console.log(agesPassengers);
   useEffect(() => {
-    console.log(passengers);
     let age = 0;
     let child = 0;
-    passengers.map((el) => {
-      if (el.passAges === 'Взрослый') {
+    console.log(departure.seats);
+    departure.seats.map((el) => {
+      if (el.person_info.is_adult) {
         age += 1;
       };
   
-      if (el.passAges === 'Детский') {
+      if (!el.person_info.is_adult) {
         child += 1;
       };
 
@@ -42,7 +44,7 @@ export default function ListPassengers() {
       age: totalSeatsAge - age,
       child: totalSeatsChild - child
     });
-  }, [passengers]);
+  }, [departure.seats]);
 
   function addPassenger() {
     if (amountPassengers >= 1) {

@@ -1,13 +1,14 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import '../styles/order.css';
+import { upperCaseBirthNumber } from '../utils/validators';
 import TrainRoute from './TrainRoute';
 
 export default function Order() {
   const { route } = useSelector((state) => state.sliceChoice);
   const { totalPriceAll } = useSelector((state) => state.slicePrice);
   const { passengers } = useSelector((state) => state.slicePassengers);
-  const { user } = useSelector((state) => state.sliceOrder);
+  const { user, departure } = useSelector((state) => state.sliceOrder);
 
   return (
     <div className='order'>
@@ -20,17 +21,26 @@ export default function Order() {
         <h4 className='order-passenger-title'>Пассажиры</h4>
         <div className='order-passenger-container'>
           <div className='passengers-container-list'>
-            {passengers.map((el, i) =>
-              <div className={`passengers-container-item${i === passengers.length - 1 ? '' : '-border'}`} key={i}>
+            {departure.seats.map((el, i) =>
+              <div className={`passengers-container-item${i === departure.seats.length - 1 ? '' : '-border'}`} key={i}>
                 <div className='passenger-container-avatar'>
                   <span className='passenger-container-img'></span>
-                  <p className='passenger-container-ages'>{el.passAges}</p>
+                  <p className='passenger-container-ages'>{el.person_info.is_adult ? 'Взрослый' : 'Ребенок'}</p>
                 </div>
+                {/* person_info: {
+        is_adult: select.age === 'Взрослый' ? true : false,
+        first_name: nameValue.name,
+        last_name: nameValue.surname,
+        patronymic: nameValue.patronymic,
+        gender: gender,
+        birthday: dateValue,
+        document_type: select.docs,
+        document_data:  */}
                 <div className='passenger-container-data'>
-                  <p className='passenger-container-name'>{`${el.passSurname} ${el.passName} ${el.passPatronymic}`}</p>
-                  <p className='passenger-container-gender'>{`Пол ${el.passGender ? 'мужской' : 'женский'}`}</p>
-                  <p className='passenger-container-birth'>{`Дата рождения ${el.passBirth}`}</p>
-                  <p className='passenger-container-docs'>{`${el.typeDoc} ${el.typeDoc === 'Паспорт РФ' ? `${el.docSeries} ${el.docNumber}` : el.birthNumber}`}</p>
+                  <p className='passenger-container-name'>{`${el.person_info.last_name} ${el.person_info.first_name} ${el.person_info.patronymic}`}</p>
+                  <p className='passenger-container-gender'>{`Пол ${el.person_info.gender ? 'мужской' : 'женский'}`}</p>
+                  <p className='passenger-container-birth'>{`Дата рождения ${el.person_info.birthday}`}</p>
+                  <p className='passenger-container-docs'>{`${el.person_info.document_type} ${el.person_info.document_data}`}</p>
                 </div>
               </div>
             )}

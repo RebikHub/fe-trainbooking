@@ -37,7 +37,6 @@ export const slicePassengers = createSlice({
       }
     },
     removePassengerStore: (state, actions) => {
-      console.log(actions.payload);
       state.passengers = state.passengers.filter((el) => el.passNumber !== actions.payload);
     },
   }

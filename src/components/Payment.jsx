@@ -103,7 +103,7 @@ export default function Payment() {
       patronymic: inputValue.patronymic,
       phone: inputValue.phone,
       email: inputValue.email,
-      payment_method: method ? 'cash' : 'online'
+      payment_method: method ? 'Онлайн' : 'Наличными'
     }));
   };
 

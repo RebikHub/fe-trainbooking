@@ -6,7 +6,7 @@ import { dateFromAndTo, duration } from '../utils/trainDate';
 import Coach from './Coach';
 import { useEffect } from 'react';
 import { clearAllFiltering } from '../store/sliceFilter';
-import { changeAgeTickets, changeChildTickets, clearAllPrices, clearTotalPrice } from '../store/slicePrice';
+import { changeAgeTickets, changeChildTickets, changeChildWithoutTickets, clearAllPrices, clearTotalPrice } from '../store/slicePrice';
 
 export default function CoachesType({route, coaches, classStyle}) {
   const [time, setTime] = useState({
@@ -86,6 +86,7 @@ export default function CoachesType({route, coaches, classStyle}) {
 
   function inputChildWithout(ev) {
     if (Number(ev.target.value) >= 0 && Number(ev.target.value) <= valueAges) {
+      dispatch(changeChildWithoutTickets(Number(ev.target.value)));
       setValueChildWithout(ev.target.value);
     };
   };

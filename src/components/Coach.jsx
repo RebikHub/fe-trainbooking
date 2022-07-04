@@ -32,10 +32,10 @@ export default function Coach({classStyle, coach}) {
   console.log('fourthClass ', fourthClass);
   console.log('totalSeatsAge ', totalSeatsAge);
   console.log('totalSeatsChild ', totalSeatsChild);
-  console.log('totalPriceAge ', totalPriceAge);
-  console.log('totalPriceChild ', totalPriceChild);
-  console.log('totalPriceAll ', totalPriceAll);
-  console.log('totalPriceAll ', totalPriceAll);
+  // console.log('totalPriceAge ', totalPriceAge);
+  // console.log('totalPriceChild ', totalPriceChild);
+  // console.log('totalPriceAll ', totalPriceAll);
+  // console.log('totalPriceAll ', totalPriceAll);
   console.log('totalAmountTickets ', totalAmountTickets);
   console.log('totalSeatsNumber ', totalSeatsNumber);
   

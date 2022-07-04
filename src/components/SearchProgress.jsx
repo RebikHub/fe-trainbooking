@@ -10,7 +10,7 @@ export default function SearchProgress() {
       if (line <= 99) {
         setLine((prev) => prev + 1);
       }
-    }, 15);
+    }, 20);
   }, [line]);
 
   return (

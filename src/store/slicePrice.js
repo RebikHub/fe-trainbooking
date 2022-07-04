@@ -40,6 +40,7 @@ export const slicePrice = createSlice({
       totalPrice: 0 // seatsPrice + serviceWifi + serviceLinens
     },
     notice: false,
+    seatsChildWithout: 0,
     totalSeatsAge: 0,
     totalSeatsChild: 0,
     totalSeatsNumber: [],
@@ -91,31 +92,36 @@ export const slicePrice = createSlice({
       state.totalSeatsChild = amountTickets;
       state.totalAmountTickets = state.totalSeatsAge + state.totalSeatsChild;
     },
+    changeChildWithoutTickets: (state, actions) => {
+      state.seatsChildWithout = actions.payload;
+    },
     changeNumberSeats: (state, actions) => {
+      const someElement = (e) => e.number === actions.payload.seat.number && e.idCoach === actions.payload.seat.idCoach;
+      const filterArray = (e) => e.number !== actions.payload.seat.number && e.idCoach === actions.payload.seat.idCoach;
       if (actions.payload.classType === 'first') {
-        if (actions.payload.seat.number > 0 && state.firstClass.seatsNumber.some((e) => e.number === actions.payload.seat.number && e.idCoach === actions.payload.seat.idCoach)) {
-          state.firstClass.seatsNumber = state.firstClass.seatsNumber.filter((e) => e.number !== actions.payload.seat.number && e.idCoach !== actions.payload.seat.idCoach);
+        if (actions.payload.seat.number > 0 && state.firstClass.seatsNumber.some(someElement)) {
+          state.firstClass.seatsNumber = state.firstClass.seatsNumber.filter(filterArray);
         } else if (actions.payload.seat.number > 0) {
           state.firstClass.seatsNumber = [...state.firstClass.seatsNumber, actions.payload.seat];
         };
       };
       if (actions.payload.classType === 'second') {
-        if (actions.payload.seat.number > 0 && state.secondClass.seatsNumber.some((e) => e.number === actions.payload.seat.number && e.idCoach === actions.payload.seat.idCoach)) {
-          state.secondClass.seatsNumber = state.secondClass.seatsNumber.filter((e) => e.number !== actions.payload.seat.number && e.idCoach !== actions.payload.seat.idCoach);
+        if (actions.payload.seat.number > 0 && state.secondClass.seatsNumber.some(someElement)) {
+          state.secondClass.seatsNumber = state.secondClass.seatsNumber.filter(filterArray);
         } else if (actions.payload.seat.number > 0) {
           state.secondClass.seatsNumber = [...state.secondClass.seatsNumber, actions.payload.seat];
         };
       };
       if (actions.payload.classType === 'third') {
-        if (actions.payload.seat.number > 0 && state.thirdClass.seatsNumber.some((e) => e.number === actions.payload.seat.number && e.idCoach === actions.payload.seat.idCoach)) {
-          state.thirdClass.seatsNumber = state.thirdClass.seatsNumber.filter((e) => e.number !== actions.payload.seat.number && e.idCoach !== actions.payload.seat.idCoach);
+        if (actions.payload.seat.number > 0 && state.thirdClass.seatsNumber.some(someElement)) {
+          state.thirdClass.seatsNumber = state.thirdClass.seatsNumber.filter(filterArray);
         } else if (actions.payload.seat.number > 0) {
           state.thirdClass.seatsNumber = [...state.thirdClass.seatsNumber, actions.payload.seat];
         };
       };
       if (actions.payload.classType === 'fourth') {
-        if (actions.payload.seat.number > 0 && state.fourthClass.seatsNumber.some((e) => e.number === actions.payload.seat.number && e.idCoach === actions.payload.seat.idCoach)) {
-          state.fourthClass.seatsNumber = state.fourthClass.seatsNumber.filter((e) => e.number !== actions.payload.seat.number && e.idCoach !== actions.payload.seat.idCoach);
+        if (actions.payload.seat.number > 0 && state.fourthClass.seatsNumber.some(someElement)) {
+          state.fourthClass.seatsNumber = state.fourthClass.seatsNumber.filter(filterArray);
         } else if (actions.payload.seat.number > 0) {
           state.fourthClass.seatsNumber = [...state.fourthClass.seatsNumber, actions.payload.seat];
         };
@@ -272,6 +278,7 @@ export const slicePrice = createSlice({
 export const {
   changeAgeTickets,
   changeChildTickets,
+  changeChildWithoutTickets,
   changeNumberSeats,
   changePriceSeats,
   changeServiceWifi,
