@@ -73,7 +73,7 @@
   border-right: 1px dashed #E5E5E5;
 }
 
-.passengers-container-item {
+.passengers-container-item, .passengers-container-item-border {
   display: flex;
   height: 218px;
 }

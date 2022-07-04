@@ -34,7 +34,6 @@ export function validatePhoneNumber(number) {
     const joinNum = splitNum.join("");
     return joinNum;
   };
-  console.log(number);
   
   if (numberWithoutSpace.length === 11 && /\d/g.test(numberWithoutSpace) && /^(8|7)/.test(numberWithoutSpace)) {
     const num = numberWithoutSpace.replace(/^(8|7)/, "+7");

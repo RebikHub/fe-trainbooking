@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeAmountTickets, changeNotice, changePriceSeats, changeServiceLinens, changeServiceWifi, totalChoiceRoute } from '../store/slicePrice';
+import { changeAmountTickets, changeNotice, changeNumberSeats, changePriceSeats, changeServiceLinens, changeServiceWifi, totalChoiceRoute } from '../store/slicePrice';
 import '../styles/coaches.css';
 import { amountSeats, haveSeatsOrNot } from '../utils/amountSeats';
 import { schemeFirstClass, schemeFourthClass, schemeThirdClass } from '../utils/schemeCoach';
@@ -21,7 +21,8 @@ export default function Coach({classStyle, coach}) {
     totalPriceAge,
     totalPriceChild,
     totalPriceAll,
-    totalAmountTickets} = useSelector((state) => state.slicePrice);
+    totalAmountTickets,
+    totalSeatsNumber} = useSelector((state) => state.slicePrice);
   const [current, setCurrent] = useState({});
   const dispatch = useDispatch();
 
@@ -36,6 +37,7 @@ export default function Coach({classStyle, coach}) {
   console.log('totalPriceAll ', totalPriceAll);
   console.log('totalPriceAll ', totalPriceAll);
   console.log('totalAmountTickets ', totalAmountTickets);
+  console.log('totalSeatsNumber ', totalSeatsNumber);
   
 
   useEffect(() => {
@@ -148,7 +150,11 @@ export default function Coach({classStyle, coach}) {
       dispatch(changeAmountTickets({
         classType: coach.coach.class_type,
         amount: 1
-      }))
+      }));
+      dispatch(changeNumberSeats({
+        classType: coach.coach.class_type,
+        seat: Number(seat)
+      }));
       ev.target.classList.remove('seat-selected');
     } else {
       if (have === 'seat-have' && current.amountTickets !== 0) {
@@ -159,7 +165,11 @@ export default function Coach({classStyle, coach}) {
         dispatch(changeAmountTickets({
           classType: coach.coach.class_type,
           amount: -1
-        }))
+        }));
+        dispatch(changeNumberSeats({
+          classType: coach.coach.class_type,
+          seat: Number(seat)
+        }));
         ev.target.classList.add('seat-selected');
         // console.log(price, seat, have);
       } else if (current.amountTickets === 0) {

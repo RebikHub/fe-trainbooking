@@ -6,6 +6,7 @@ export const slicePrice = createSlice({
     firstClass: {
       seatsAge: 0,
       seatsChild: 0,
+      seatsNumber: [],
       amountTickets: 0, // seatsAge + seatsChild
       seatsPriceAge: 0,
       seatsPriceChild: 0,
@@ -14,6 +15,7 @@ export const slicePrice = createSlice({
     secondClass: {
       seatsAge: 0,
       seatsChild: 0,
+      seatsNumber: [],
       amountTickets: 0, // seatsAge + seatsChild
       seatsPriceAge: 0,
       seatsPriceChild: 0,
@@ -22,6 +24,7 @@ export const slicePrice = createSlice({
     thirdClass: {
       seatsAge: 0,
       seatsChild: 0,
+      seatsNumber: [],
       amountTickets: 0, // seatsAge + seatsChild
       seatsPriceAge: 0,
       seatsPriceChild: 0,
@@ -30,6 +33,7 @@ export const slicePrice = createSlice({
     fourthClass: {
       seatsAge: 0,
       seatsChild: 0,
+      seatsNumber: [],
       amountTickets: 0, // seatsAge + seatsChild
       seatsPriceAge: 0,
       seatsPriceChild: 0,
@@ -38,6 +42,7 @@ export const slicePrice = createSlice({
     notice: false,
     totalSeatsAge: 0,
     totalSeatsChild: 0,
+    totalSeatsNumber: [],
     totalAmountTickets: 0,
     totalPriceAge: 0,
     totalPriceChild: 0,
@@ -47,53 +52,73 @@ export const slicePrice = createSlice({
     changeAgeTickets: (state, actions) => {
       if (actions.payload.classType === 'first') {
         state.firstClass.seatsAge = actions.payload.seatsAge;
-        state.firstClass.amountTickets += actions.payload.seatsAge;
-        state.totalSeatsAge += actions.payload.seatsAge;
-        state.totalAmountTickets += actions.payload.seatsAge;
+        state.firstClass.amountTickets = state.firstClass.seatsChild + actions.payload.seatsAge;
       };
       if (actions.payload.classType === 'second') {
         state.secondClass.seatsAge = actions.payload.seatsAge;
-        state.secondClass.amountTickets += actions.payload.seatsAge;
-        state.totalSeatsAge += actions.payload.seatsAge;
-        state.totalAmountTickets += actions.payload.seatsAge;
+        state.secondClass.amountTickets = state.secondClass.seatsChild + actions.payload.seatsAge;
       };
       if (actions.payload.classType === 'third') {
         state.thirdClass.seatsAge = actions.payload.seatsAge;
-        state.thirdClass.amountTickets += actions.payload.seatsAge;
-        state.totalSeatsAge += actions.payload.seatsAge;
-        state.totalAmountTickets += actions.payload.seatsAge;
+        state.thirdClass.amountTickets = state.thirdClass.seatsChild + actions.payload.seatsAge;
       };
       if (actions.payload.classType === 'fourth') {
         state.fourthClass.seatsAge = actions.payload.seatsAge;
-        state.fourthClass.amountTickets += actions.payload.seatsAge;
-        state.totalSeatsAge += actions.payload.seatsAge;
-        state.totalAmountTickets += actions.payload.seatsAge;
+        state.fourthClass.amountTickets = state.fourthClass.seatsChild + actions.payload.seatsAge;
       };
+      const amountTickets = state.firstClass.seatsAge + state.secondClass.seatsAge + state.thirdClass.seatsAge + state.fourthClass.seatsAge;
+      state.totalSeatsAge = amountTickets;
+      state.totalAmountTickets = state.totalSeatsAge + state.totalSeatsChild;
     },
     changeChildTickets: (state, actions) => {
       if (actions.payload.classType === 'first') {
         state.firstClass.seatsChild = actions.payload.seatsChild;
-        state.firstClass.amountTickets += actions.payload.seatsChild;
-        state.totalSeatsChild += actions.payload.seatsChild;
-        state.totalAmountTickets += actions.payload.seatsChild;
+        state.firstClass.amountTickets = state.firstClass.seatsAge + actions.payload.seatsChild;
       };
       if (actions.payload.classType === 'second') {
         state.secondClass.seatsChild = actions.payload.seatsChild;
-        state.secondClass.amountTickets += actions.payload.seatsChild;
-        state.totalSeatsChild += actions.payload.seatsChild;
-        state.totalAmountTickets += actions.payload.seatsChild;
+        state.secondClass.amountTickets = state.secondClass.seatsAge + actions.payload.seatsChild;
       };
       if (actions.payload.classType === 'third') {
         state.thirdClass.seatsChild = actions.payload.seatsChild;
-        state.thirdClass.amountTickets += actions.payload.seatsChild;
-        state.totalSeatsChild += actions.payload.seatsChild;
-        state.totalAmountTickets += actions.payload.seatsChild;
+        state.thirdClass.amountTickets = state.thirdClass.seatsAge + actions.payload.seatsChild;
       };
       if (actions.payload.classType === 'fourth') {
         state.fourthClass.seatsChild = actions.payload.seatsChild;
-        state.fourthClass.amountTickets += actions.payload.seatsChild;
-        state.totalSeatsChild += actions.payload.seatsChild;
-        state.totalAmountTickets += actions.payload.seatsChild;
+        state.fourthClass.amountTickets = state.fourthClass.seatsAge + actions.payload.seatsChild;
+      };
+      const amountTickets = state.firstClass.seatsChild + state.secondClass.seatsChild + state.thirdClass.seatsChild + state.fourthClass.seatsChild;
+      state.totalSeatsChild = amountTickets;
+      state.totalAmountTickets = state.totalSeatsAge + state.totalSeatsChild;
+    },
+    changeNumberSeats: (state, actions) => {
+      if (actions.payload.classType === 'first') {
+        if (actions.payload.seat > 0 && state.firstClass.seatsNumber.includes(actions.payload.seat)) {
+          state.firstClass.seatsNumber.splice(state.firstClass.seatsNumber.indexOf(actions.payload.seat));
+        } else if (actions.payload.seat > 0) {
+          state.firstClass.seatsNumber = [...state.firstClass.seatsNumber, actions.payload.seat];
+        };
+      };
+      if (actions.payload.classType === 'second') {
+        if (actions.payload.seat > 0 && state.secondClass.seatsNumber.includes(actions.payload.seat)) {
+          state.secondClass.seatsNumber.splice(state.secondClass.seatsNumber.indexOf(actions.payload.seat));
+        } else if (actions.payload.seat > 0) {
+          state.secondClass.seatsNumber = [...state.secondClass.seatsNumber, actions.payload.seat];
+        };
+      };
+      if (actions.payload.classType === 'third') {
+        if (actions.payload.seat > 0 && state.thirdClass.seatsNumber.includes(actions.payload.seat)) {
+          state.thirdClass.seatsNumber.splice(state.thirdClass.seatsNumber.indexOf(actions.payload.seat));
+        } else if (actions.payload.seat > 0) {
+          state.thirdClass.seatsNumber = [...state.thirdClass.seatsNumber, actions.payload.seat];
+        };
+      };
+      if (actions.payload.classType === 'fourth') {
+        if (actions.payload.seat > 0 && state.fourthClass.seatsNumber.includes(actions.payload.seat)) {
+          state.fourthClass.seatsNumber.splice(state.fourthClass.seatsNumber.indexOf(actions.payload.seat));
+        } else if (actions.payload.seat > 0) {
+          state.fourthClass.seatsNumber = [...state.fourthClass.seatsNumber, actions.payload.seat];
+        };
       };
     },
     changePriceSeats: (state, actions) => {
@@ -194,6 +219,7 @@ export const slicePrice = createSlice({
       state.firstClass.seatsPriceAge = 0;
       state.firstClass.seatsPriceChild = 0;
       state.firstClass.totalPrice = 0;
+      state.firstClass.seatsNumber = [];
       
       state.secondClass.seatsAge = 0;
       state.secondClass.seatsChild = 0;
@@ -201,6 +227,7 @@ export const slicePrice = createSlice({
       state.secondClass.seatsPriceAge = 0;
       state.secondClass.seatsPriceChild = 0;
       state.secondClass.totalPrice = 0;
+      state.secondClass.seatsNumber = [];
 
       state.thirdClass.seatsAge = 0;
       state.thirdClass.seatsChild = 0;
@@ -208,6 +235,7 @@ export const slicePrice = createSlice({
       state.thirdClass.seatsPriceAge = 0;
       state.thirdClass.seatsPriceChild = 0;
       state.thirdClass.totalPrice = 0;
+      state.thirdClass.seatsNumber = [];
 
       state.fourthClass.seatsAge = 0;
       state.fourthClass.seatsChild = 0;
@@ -215,6 +243,7 @@ export const slicePrice = createSlice({
       state.fourthClass.seatsPriceAge = 0;
       state.fourthClass.seatsPriceChild = 0;
       state.fourthClass.totalPrice = 0;
+      state.fourthClass.seatsNumber = [];
     },
     changeNotice: (state, actions) => {
       state.notice = actions.payload;
@@ -225,6 +254,7 @@ export const slicePrice = createSlice({
       state.totalPriceAge = state.firstClass.seatsPriceAge + state.secondClass.seatsPriceAge + state.thirdClass.seatsPriceAge + state.fourthClass.seatsPriceAge;
       state.totalPriceChild = state.firstClass.seatsPriceChild + state.secondClass.seatsPriceChild + state.thirdClass.seatsPriceChild + state.fourthClass.seatsPriceChild;
       state.totalPriceAll = state.firstClass.totalPrice + state.secondClass.totalPrice + state.thirdClass.totalPrice + state.fourthClass.totalPrice;
+      state.totalSeatsNumber = [...state.firstClass.seatsNumber, ...state.secondClass.seatsNumber, ...state.thirdClass.seatsNumber, ...state.fourthClass.seatsNumber]
     },
     clearTotalPrice: (state, actions) => {
       state.notice = false;
@@ -233,7 +263,8 @@ export const slicePrice = createSlice({
       state.totalAmountTickets = 0;
       state.totalPriceAge = 0;
       state.totalPriceChild = 0;
-     state.totalPriceAll = 0;
+      state.totalPriceAll = 0;
+      state.totalSeatsNumber = [];
     }
   }
 });
@@ -241,6 +272,7 @@ export const slicePrice = createSlice({
 export const {
   changeAgeTickets,
   changeChildTickets,
+  changeNumberSeats,
   changePriceSeats,
   changeServiceWifi,
   changeServiceLinens,
