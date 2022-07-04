@@ -7,6 +7,8 @@ export default function Order() {
   const { route } = useSelector((state) => state.sliceChoice);
   const { totalPriceAll } = useSelector((state) => state.slicePrice);
   const { passengers } = useSelector((state) => state.slicePassengers);
+  const { user } = useSelector((state) => state.sliceOrder);
+
   return (
     <div className='order'>
       <div className='order-route'>
@@ -49,7 +51,7 @@ export default function Order() {
       <div className='order-payment'>
         <h4 className='order-payment-title'>Способ оплаты</h4>
         <div className='order-payment-method'>
-          <p className='order-payment-text'>Наличными</p>
+          <p className='order-payment-text'>{user.payment_method}</p>
           <button className='order-payment-btn' type='button'>Изменить</button>
         </div>
       </div>
