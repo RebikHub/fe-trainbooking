@@ -7,6 +7,7 @@ import { validateEmail, validateName, validatePhoneNumber } from '../utils/valid
 import Notice from './Notice';
 import { changeNotice } from '../store/slicePrice';
 import { useNavigate } from 'react-router-dom';
+import { addUserPayment } from '../store/sliceOrder';
 
 export default function Payment() {
   const dispatch = useDispatch();
@@ -96,6 +97,14 @@ export default function Payment() {
 
   function nextStep() {
     navigate('/route/order');
+    dispatch(addUserPayment({
+      first_name: inputValue.name,
+      last_name: inputValue.surname,
+      patronymic: inputValue.patronymic,
+      phone: inputValue.phone,
+      email: inputValue.email,
+      payment_method: method ? 'cash' : 'online'
+    }));
   };
 
   return (

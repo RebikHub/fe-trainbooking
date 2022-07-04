@@ -11,6 +11,7 @@ import sliceGetLastRoutes from "./sliceGetLastRoutes";
 import sliceGetSeats from "./sliceGetSeats";
 import slicePrice from "./slicePrice";
 import slicePassengers from "./slicePassengers";
+import sliceOrder from "./sliceOrder";
 
 const epic = combineEpics(
   getCitiesEpic,
@@ -32,7 +33,8 @@ export const store = configureStore({
     sliceGetLastRoutes,
     sliceGetSeats,
     slicePrice,
-    slicePassengers
+    slicePassengers,
+    sliceOrder
   },
   middleware: [epicMiddleware]
 });

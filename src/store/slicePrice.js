@@ -93,30 +93,30 @@ export const slicePrice = createSlice({
     },
     changeNumberSeats: (state, actions) => {
       if (actions.payload.classType === 'first') {
-        if (actions.payload.seat > 0 && state.firstClass.seatsNumber.includes(actions.payload.seat)) {
-          state.firstClass.seatsNumber.splice(state.firstClass.seatsNumber.indexOf(actions.payload.seat));
-        } else if (actions.payload.seat > 0) {
+        if (actions.payload.seat.number > 0 && state.firstClass.seatsNumber.some((e) => e.number === actions.payload.seat.number && e.idCoach === actions.payload.seat.idCoach)) {
+          state.firstClass.seatsNumber = state.firstClass.seatsNumber.filter((e) => e.number !== actions.payload.seat.number && e.idCoach !== actions.payload.seat.idCoach);
+        } else if (actions.payload.seat.number > 0) {
           state.firstClass.seatsNumber = [...state.firstClass.seatsNumber, actions.payload.seat];
         };
       };
       if (actions.payload.classType === 'second') {
-        if (actions.payload.seat > 0 && state.secondClass.seatsNumber.includes(actions.payload.seat)) {
-          state.secondClass.seatsNumber.splice(state.secondClass.seatsNumber.indexOf(actions.payload.seat));
-        } else if (actions.payload.seat > 0) {
+        if (actions.payload.seat.number > 0 && state.secondClass.seatsNumber.some((e) => e.number === actions.payload.seat.number && e.idCoach === actions.payload.seat.idCoach)) {
+          state.secondClass.seatsNumber = state.secondClass.seatsNumber.filter((e) => e.number !== actions.payload.seat.number && e.idCoach !== actions.payload.seat.idCoach);
+        } else if (actions.payload.seat.number > 0) {
           state.secondClass.seatsNumber = [...state.secondClass.seatsNumber, actions.payload.seat];
         };
       };
       if (actions.payload.classType === 'third') {
-        if (actions.payload.seat > 0 && state.thirdClass.seatsNumber.includes(actions.payload.seat)) {
-          state.thirdClass.seatsNumber.splice(state.thirdClass.seatsNumber.indexOf(actions.payload.seat));
-        } else if (actions.payload.seat > 0) {
+        if (actions.payload.seat.number > 0 && state.thirdClass.seatsNumber.some((e) => e.number === actions.payload.seat.number && e.idCoach === actions.payload.seat.idCoach)) {
+          state.thirdClass.seatsNumber = state.thirdClass.seatsNumber.filter((e) => e.number !== actions.payload.seat.number && e.idCoach !== actions.payload.seat.idCoach);
+        } else if (actions.payload.seat.number > 0) {
           state.thirdClass.seatsNumber = [...state.thirdClass.seatsNumber, actions.payload.seat];
         };
       };
       if (actions.payload.classType === 'fourth') {
-        if (actions.payload.seat > 0 && state.fourthClass.seatsNumber.includes(actions.payload.seat)) {
-          state.fourthClass.seatsNumber.splice(state.fourthClass.seatsNumber.indexOf(actions.payload.seat));
-        } else if (actions.payload.seat > 0) {
+        if (actions.payload.seat.number > 0 && state.fourthClass.seatsNumber.some((e) => e.number === actions.payload.seat.number && e.idCoach === actions.payload.seat.idCoach)) {
+          state.fourthClass.seatsNumber = state.fourthClass.seatsNumber.filter((e) => e.number !== actions.payload.seat.number && e.idCoach !== actions.payload.seat.idCoach);
+        } else if (actions.payload.seat.number > 0) {
           state.fourthClass.seatsNumber = [...state.fourthClass.seatsNumber, actions.payload.seat];
         };
       };

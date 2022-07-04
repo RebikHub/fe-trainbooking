@@ -25,7 +25,7 @@ export default function Coach({classStyle, coach}) {
     totalSeatsNumber} = useSelector((state) => state.slicePrice);
   const [current, setCurrent] = useState({});
   const dispatch = useDispatch();
-
+    console.log('coach ', coach);
   console.log('firstClass ', firstClass);
   console.log('secondClass ', secondClass);
   console.log('thirdClass ', thirdClass);
@@ -153,7 +153,10 @@ export default function Coach({classStyle, coach}) {
       }));
       dispatch(changeNumberSeats({
         classType: coach.coach.class_type,
-        seat: Number(seat)
+        seat: {
+          number: Number(seat),
+          idCoach: coach.coach._id
+        }
       }));
       ev.target.classList.remove('seat-selected');
     } else {
@@ -168,7 +171,10 @@ export default function Coach({classStyle, coach}) {
         }));
         dispatch(changeNumberSeats({
           classType: coach.coach.class_type,
-          seat: Number(seat)
+          seat: {
+            number: Number(seat),
+            idCoach: coach.coach._id
+          }
         }));
         ev.target.classList.add('seat-selected');
         // console.log(price, seat, have);

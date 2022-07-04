@@ -208,6 +208,22 @@ export default function Passenger({addPassenger, num, agesPassengers}) {
       docSeries: docsValue.passportSeries,
       birthNumber: docsValue.birthNumber
     });
+    const seats = {
+      coach_id: "12341",
+      person_info: {
+        is_adult: select.age === 'Взрослый' ? true : false,
+        first_name: nameValue.name,
+        last_name: nameValue.surname,
+        patronymic: nameValue.patronymic,
+        gender: gender,
+        birthday: dateValue,
+        document_type: select.docs,
+        document_data: `${select.typeDoc === 'Паспорт РФ' ? `${docsValue.passportSeries} ${docsValue.passportNumber}` : docsValue.birthNumber}`
+      },
+      seat_number: 10,
+      is_child: true,
+      include_children_seat: true
+    }
     dispatch(addPassengerStore({
       passNumber: num,
       passAges: select.age,
