@@ -154,17 +154,9 @@ export default function Passenger({addPassenger, num, agesPassengers}) {
     }
   };
 
-  console.log(agesPassengers);
-
   function getSelectDocs(ev) {
     setSelect({...select, docs: ev.target.outerText});
     setNone({...none, docs: 'none'});
-    if (ev.target.outerText === 'Паспорт РФ') {
-      console.log('Паспорт РФ');
-    };
-    if (ev.target.outerText === 'Свидетельство о рождении') {
-      console.log('Свидетельство о рождении');
-    };
   };
 
   function nextPassenger() {
@@ -211,7 +203,7 @@ export default function Passenger({addPassenger, num, agesPassengers}) {
     });
     const seats = {
       person_id: num,
-      coach_id: totalSeatsNumber[num - 1].id,
+      coach_id: totalSeatsNumber[num - 1].idCoach,
       person_info: {
         is_adult: select.age === 'Взрослый' ? true : false,
         first_name: nameValue.name,

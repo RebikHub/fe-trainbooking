@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { choiceRoute } from '../store/sliceChoice';
 import { requestGetSeats } from '../store/sliceGetSeats';
-import { addRouteId } from '../store/sliceOrder';
+import { addRouteId, clearOrder } from '../store/sliceOrder';
 import '../styles/train-route.css';
 import { dateFromAndTo, duration } from '../utils/trainDate';
 import TrainRouteSeats from './TrainRouteSeats';
@@ -55,7 +55,11 @@ export default function TrainRoute({route, btnText = 'Выбрать места'
     dispatch(requestGetSeats(route.departure._id));
     dispatch(addRouteId(route.departure._id));
     navigate('/route/coach');
+  };
 
+  function backOrder() {
+    dispatch(clearOrder());
+    navigate('/route');
   };
 
   return (
@@ -116,7 +120,7 @@ export default function TrainRoute({route, btnText = 'Выбрать места'
 
         {btnText !== 'Изменить' ?
           <button type='button' className='train-choice-btn' onClick={getCoaches}>{btnText}</button> :
-          <button type='button' className='order-route-btn' >{btnText}</button>}
+          <button type='button' className='order-route-btn' onClick={backOrder}>{btnText}</button>}
       </div>
     </div>
   )

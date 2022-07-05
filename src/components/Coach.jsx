@@ -177,11 +177,11 @@ export default function Coach({classStyle, coach}) {
           }
         }));
         ev.target.classList.add('seat-selected');
-        // console.log(price, seat, have);
       } else if (current.amountTickets === 0) {
         dispatch(changeNotice(true));
       };
     };
+    console.log('coach-id ', coach.coach._id);
   };
 
   useEffect(() => {

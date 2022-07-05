@@ -1,14 +1,26 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { clearOrderPassengers, clearOrderPayment } from '../store/sliceOrder';
 import '../styles/order.css';
-import { upperCaseBirthNumber } from '../utils/validators';
 import TrainRoute from './TrainRoute';
 
 export default function Order() {
   const { route } = useSelector((state) => state.sliceChoice);
   const { totalPriceAll } = useSelector((state) => state.slicePrice);
-  const { passengers } = useSelector((state) => state.slicePassengers);
   const { user, departure } = useSelector((state) => state.sliceOrder);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  function changePassengers() {
+    navigate('/route/passengers');
+    dispatch(clearOrderPassengers());
+  };
+
+  function changePayment() {
+    navigate('/route/payment');
+    dispatch(clearOrderPayment());
+  };
 
   return (
     <div className='order'>
@@ -27,15 +39,6 @@ export default function Order() {
                   <span className='passenger-container-img'></span>
                   <p className='passenger-container-ages'>{el.person_info.is_adult ? 'Взрослый' : 'Ребенок'}</p>
                 </div>
-                {/* person_info: {
-        is_adult: select.age === 'Взрослый' ? true : false,
-        first_name: nameValue.name,
-        last_name: nameValue.surname,
-        patronymic: nameValue.patronymic,
-        gender: gender,
-        birthday: dateValue,
-        document_type: select.docs,
-        document_data:  */}
                 <div className='passenger-container-data'>
                   <p className='passenger-container-name'>{`${el.person_info.last_name} ${el.person_info.first_name} ${el.person_info.patronymic}`}</p>
                   <p className='passenger-container-gender'>{`Пол ${el.person_info.gender ? 'мужской' : 'женский'}`}</p>
@@ -53,7 +56,7 @@ export default function Order() {
                 <span className='details-total-sign'></span>
               </div>
             </div>
-            <button className='passenger-container-btn'>Изменить</button>
+            <button className='passenger-container-btn' onClick={changePassengers}>Изменить</button>
           </div>
         </div>
       </div>
@@ -62,7 +65,7 @@ export default function Order() {
         <h4 className='order-payment-title'>Способ оплаты</h4>
         <div className='order-payment-method'>
           <p className='order-payment-text'>{user.payment_method}</p>
-          <button className='order-payment-btn' type='button'>Изменить</button>
+          <button className='order-payment-btn' type='button' onClick={changePayment}>Изменить</button>
         </div>
       </div>
 

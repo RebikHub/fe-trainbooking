@@ -8,7 +8,6 @@ import { currentStepTwo } from '../store/sliceProgressLine';
 
 export default function ListPassengers() {
   const { totalSeatsAge, totalSeatsChild } = useSelector((state) => state.slicePrice);
-  const { passengers } = useSelector((state) => state.slicePassengers);
   const { departure } = useSelector((state) => state.sliceOrder);
   const [amountPassengers, setAmountPassengers] = useState(totalSeatsAge + totalSeatsChild);
   const [addComponents, setAddComponents] = useState([]);
@@ -23,11 +22,9 @@ export default function ListPassengers() {
     dispatch(currentStepTwo());
   }, []);
 
-  console.log(agesPassengers);
   useEffect(() => {
     let age = 0;
     let child = 0;
-    console.log(departure.seats);
     departure.seats.map((el) => {
       if (el.person_info.is_adult) {
         age += 1;
@@ -54,7 +51,6 @@ export default function ListPassengers() {
   };
 
   function nextStepToOrder() {
-    console.log(agesPassengers);
     if (agesPassengers.age === 0 && agesPassengers.child === 0) {
       navigate('/route/payment');
     };

@@ -16,6 +16,10 @@ export default function ChoiceRoute() {
   let location = useLocation();
   const navigate = useNavigate();
 
+  const { user, departure } = useSelector((state) => state.sliceOrder);
+
+  console.log(user, departure);
+
   useEffect(() => {
     if (route.length === 0 && location.pathname === '/route/coach') {
       navigate('/route');
