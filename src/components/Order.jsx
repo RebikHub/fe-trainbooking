@@ -1,7 +1,10 @@
 import React from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { clearOrderPassengers, clearOrderPayment } from '../store/sliceOrder';
+import { requestPostOrder } from '../store/slicePostOrder';
+import { currentStepFour } from '../store/sliceProgressLine';
 import '../styles/order.css';
 import TrainRoute from './TrainRoute';
 
@@ -9,8 +12,13 @@ export default function Order() {
   const { route } = useSelector((state) => state.sliceChoice);
   const { totalPriceAll } = useSelector((state) => state.slicePrice);
   const { user, departure } = useSelector((state) => state.sliceOrder);
+  const { status, loading, error } = useSelector((state) => state.slicePostOrder);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(currentStepFour());
+  }, []);
 
   function changePassengers() {
     navigate('/route/passengers');
@@ -20,6 +28,13 @@ export default function Order() {
   function changePayment() {
     navigate('/route/payment');
     dispatch(clearOrderPayment());
+  };
+
+  function confirmOrder() {
+    dispatch(requestPostOrder({
+      user,
+      departure
+    }));
   };
 
   return (
@@ -69,7 +84,7 @@ export default function Order() {
         </div>
       </div>
 
-      <button className='order-btn' type='button'>подтвердить</button>
+      <button className='order-btn' type='button' onClick={confirmOrder}>подтвердить</button>
     </div>
   );
 };

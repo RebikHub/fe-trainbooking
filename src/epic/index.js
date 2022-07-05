@@ -6,6 +6,7 @@ import { errorGetCity, requestGetCity, successGetCity } from "../store/sliceGetC
 import { errorGetLastRoutes, requestGetLastRoutes, successGetLastRoutes } from "../store/sliceGetLastRoutes";
 import { getRouteError, getRouteRequest, getRouteSuccess } from "../store/sliceGetRoute";
 import { errorGetSeats, requestGetSeats, successGetSeats } from "../store/sliceGetSeats";
+import { errorPostOrder, requestPostOrder, successPostOrder } from "../store/slicePostOrder";
 
 export const getCitiesEpic = (action$) => action$.pipe(
   ofType(searchCity),
@@ -23,11 +24,9 @@ export const getCitiesEpic = (action$) => action$.pipe(
 export const getRoutesEpic = (action$) => action$.pipe(
   ofType(getRouteRequest),
   debounceTime(2000),
-  // tap((o) => console.log('request ', o)),
   switchMap((o) => {
     return ajax.getJSON(`${process.env.REACT_APP_API_URL}routes?from_city_id=${o.payload.fromCity._id}&to_city_id=${o.payload.toCity._id}`).pipe(
     retry(3),
-    // tap((obj) => console.log('response ', obj)),
     map((o) => getRouteSuccess(o)),
     catchError((e) => of(getRouteError(e)))
   )})
@@ -35,11 +34,9 @@ export const getRoutesEpic = (action$) => action$.pipe(
 
 export const getLastRoutesEpic = (action$) => action$.pipe(
   ofType(requestGetLastRoutes),
-  // tap((o) => console.log('request last ', o)),
   switchMap((o) => {
     return ajax.getJSON(`${process.env.REACT_APP_API_URL}routes/last`).pipe(
     retry(3),
-    // tap((obj) => console.log('response last ', obj)),
     map((o) => successGetLastRoutes(o)),
     catchError((e) => of(errorGetLastRoutes(e)))
   )})
@@ -47,11 +44,24 @@ export const getLastRoutesEpic = (action$) => action$.pipe(
 
 export const getSeatsEpic = (action$) => action$.pipe(
   ofType(requestGetSeats),
-  // map((o) => console.log(o)),
   switchMap((o) => {
     return ajax.getJSON(`${process.env.REACT_APP_API_URL}routes/${o.payload}/seats`).pipe(
     retry(3),
     map((o) => successGetSeats(o)),
     catchError((e) => of(errorGetSeats(e)))
+  )})
+);
+
+export const postOrderEpic = (action$) => action$.pipe(
+  ofType(requestPostOrder),
+  switchMap((o) => {
+    return ajax({
+      url: `${process.env.REACT_APP_API_URL}order`,
+      method: 'POST',
+      body: JSON.stringify(o)
+    }).pipe(
+    retry(3),
+    map((o) => successPostOrder(o.response.status)),
+    catchError((e) => of(errorPostOrder(e)))
   )})
 );
