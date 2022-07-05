@@ -13,20 +13,17 @@ export default function ChoiceRoute() {
   const { loading } = useSelector((state) => state.sliceGetRoute);
   const { loadingSeats } = useSelector((state) => state.sliceGetSeats);
   const { route } = useSelector((state) => state.sliceChoice);
+  const postLoading = useSelector((state) => state.slicePostOrder.loading);
   let location = useLocation();
   const navigate = useNavigate();
-
-  const { user, departure } = useSelector((state) => state.sliceOrder);
-
-  console.log(user, departure);
-
+  console.log(postLoading);
   useEffect(() => {
     if (route.length === 0 && location.pathname === '/route/coach') {
       navigate('/route');
     };
   }, [route]);
 
-  if (loading || loadingSeats) {
+  if (loading || loadingSeats || postLoading) {
     return <SearchProgress/>
   };
 

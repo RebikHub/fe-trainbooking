@@ -7,13 +7,13 @@ import SearchWidget from '../components/SearchWidget';
 import { clearAll } from '../store/sliceChoice';
 import { clearAllFiltering } from '../store/sliceFilter';
 import { clearRouteList } from '../store/sliceGetRoute';
-import { transformHeader, transformHeaderToMain } from '../store/sliceHeaderTransform';
+import { transformHeader, transformHeaderSuccess, transformHeaderToMain } from '../store/sliceHeaderTransform';
 import { clearAllPrices, clearTotalPrice } from '../store/slicePrice';
 import { clearStepAll } from '../store/sliceProgressLine';
 import '../styles/header.css';
 
 export default function Header() {
-  const {classHeader, classSearch, classTitle, classLine} = useSelector((state) => state.sliceHeaderTransform);
+  const {classHeader, classSearch, classTitle, classLine, success} = useSelector((state) => state.sliceHeaderTransform);
   const { loading } = useSelector((state) => state.sliceGetRoute);
   let location = useLocation();
   const dispatch = useDispatch();
@@ -21,12 +21,14 @@ export default function Header() {
   useEffect(() => {
     if (location.pathname === '/') {
       dispatch(transformHeaderToMain());
+    } else if (location.pathname === '/success') {
+      dispatch(transformHeaderSuccess());
     } else if (location.pathname !== '/') {
       dispatch(transformHeader());
-    }
-  });
+    };
+  }, [location.pathname]);
 
-  function clearPrices() {
+  function clearStore() {
     dispatch(clearAllPrices());
     dispatch(clearTotalPrice());
     dispatch(clearAllFiltering());
@@ -41,7 +43,7 @@ export default function Header() {
 
       <div className='header-logo'>
         <HashLink to='/'>
-          <h3 className='header-logo-text' onClick={clearPrices}>Лого</h3>
+          <h3 className='header-logo-text' onClick={clearStore}>Лого</h3>
         </HashLink>
       </div>
 
@@ -68,10 +70,13 @@ export default function Header() {
         </h4>
       </div>
 
-      <SearchWidget classStyle={classSearch}/>
+      {success ? null : <SearchWidget classStyle={classSearch}/>}
     </header>
-      <div className={classLine}></div>
-      {classLine === 'none' && !loading ? <ProgressLine/> : null}
+      {success ? null :
+      <>
+        <div className={classLine}></div>
+        {classLine === 'none' && !loading ? <ProgressLine/> : null}
+      </>}
     </>
   )
 }

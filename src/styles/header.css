@@ -18,13 +18,35 @@
   opacity: 0.89;
 }
 
+/* success */
+
+.header-success {
+  position: relative;
+  width: 100%;
+  height: 834px;
+}
+
+.header-success::before {
+  content: '';
+  position:absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: url(../images/success.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+
 .header-logo {
   position: absolute;
   width: 100%;
   height: 64px;
   left: 0px;
   top: 0px;
-  background: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.6);
 }
 
 .header-logo > a {

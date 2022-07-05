@@ -9,6 +9,7 @@ import Main from "./pages/Main";
 import ListPassengers from "./components/ListPassengers";
 import Payment from "./components/Payment";
 import Order from "./components/Order";
+import SuccessfulOrder from "./components/SuccessfulOrder";
 
 function App() {
   
@@ -23,6 +24,7 @@ function App() {
           <Route path='/route/payment' element={<Payment/>}/>
           <Route path='/route/order' element={<Order/>}/>
         </Route>
+        <Route path='/success' element={<SuccessfulOrder/>}/>
         {/* <Route path='/route' element={<SearchProgress/>}/> */}
       </Route>
     </Routes>

@@ -35,6 +35,8 @@ export default function Payment() {
       validatePhoneNumber(inputValue.phone) &&
       validateEmail(inputValue.email)) {
         setOk(true);
+      } else {
+        setOk(false);
       };
   }, [inputValue]);
 
