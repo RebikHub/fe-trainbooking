@@ -26,7 +26,7 @@ export const sliceChoice = createSlice({
     searchCity: (state, actions) => {
       state.searchCity = actions.payload;
     },
-    clearAll: (state, actions) => {
+    clearAllCity: (state, actions) => {
       state.toDate = '';
       state.fromDate = '';
       state.toCity = null;
@@ -49,7 +49,7 @@ export const {
   choiceCityTo,
   searchCity,
   clearChoiceCity,
-  clearAll,
+  clearAllCity,
   choiceRoute
 } = sliceChoice.actions;
 

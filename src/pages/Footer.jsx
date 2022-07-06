@@ -1,10 +1,47 @@
 import React from 'react';
+import { useState } from 'react';
 import { HashLink } from 'react-router-hash-link';
+import { useDispatch, useSelector } from 'react-redux';
+import Notice from '../components/Notice';
 import '../styles/footer.css';
+import { validateEmail } from '../utils/validators';
+import { changeNotice } from '../store/slicePrice';
+import { clearStatusSubscribe, requestPostSubscribe } from '../store/slicePostSubscribe';
+import { useEffect } from 'react';
 
 export default function Footer() {
+  const [input, setInput] = useState('');
+  const { status, error } = useSelector((state) => state.slicePostSubscribe);
+  const [noticeText, setNoticeText] = useState('');
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (status) {
+      setNoticeText('Подписка успешно оформлена!');
+      dispatch(changeNotice(true));
+      setInput('');
+    };
+  }, [status]);
+
+  function inputSubscribe(ev) {
+    setInput(ev.target.value);
+  };
+
+  function submit() {
+    dispatch(clearStatusSubscribe());
+    if (!validateEmail(input)) {
+      setNoticeText('Email указана некорректно.\n Пример: mail@mail.com');
+      dispatch(changeNotice(true));
+    } else {
+      dispatch(requestPostSubscribe(input));
+    };
+  };
+
   return (
     <footer id='footer' className='footer'>
+
+      <Notice text={noticeText} status={status}/>
+
       <div className='footer-content'>
         <div className='footer-contacts'>
           <h4 className='contacts-title'>Свяжитесь с нами</h4>
@@ -28,8 +65,10 @@ export default function Footer() {
           <h4 className='subscribe-title'>Подписка</h4>
           <form className='subscribe-form'>
             <h5 className='sub-form-title'>Будьте в курсе событий</h5>
-            <input className='sub-form-input' type="text" name="sub" placeholder="e-mail" />
-            <button className='sub-form-btn' type="button">отправить</button>
+            <input className='sub-form-input' type="text" placeholder="e-mail" 
+              value={input}
+              onChange={inputSubscribe}/>
+            <button className='sub-form-btn' type="button" onClick={submit}>отправить</button>
           </form>
           <div className='subscribe-links'>
             <h5 className='sub-links-title'>Подписывайтесь на нас</h5>

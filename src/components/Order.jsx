@@ -20,6 +20,12 @@ export default function Order() {
     dispatch(currentStepFour());
   }, []);
 
+  useEffect(() => {
+    if (status) {
+      navigate('/success');
+    };
+  }, [status]);
+
   function changePassengers() {
     navigate('/route/passengers');
     dispatch(clearOrderPassengers());
@@ -35,7 +41,6 @@ export default function Order() {
       user,
       departure
     }));
-    navigate('/success');
   };
 
   return (

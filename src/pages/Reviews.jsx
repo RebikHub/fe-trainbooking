@@ -88,5 +88,5 @@ export default function Reviews() {
         )}
       </div>
     </div>
-  )
-}
+  );
+};

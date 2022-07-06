@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { choiceCityFrom, choiceCityTo, choiceDateFrom, choiceDateTo, clearChoiceCity, searchCity } from '../store/sliceChoice';
 import { clearAllFiltering } from '../store/sliceFilter';
-import { clearCities } from '../store/sliceGetCity';
 import { requestGetLastRoutes } from '../store/sliceGetLastRoutes';
 import { clearRouteList, getRouteRequest } from '../store/sliceGetRoute';
 import { clearStepAll, currentStepOne } from '../store/sliceProgressLine';

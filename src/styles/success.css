@@ -159,6 +159,7 @@
   font-size: 36px;
   line-height: 42px;
   color: #292929;
+  text-transform: capitalize;
 }
 
 .suc-name-text {
@@ -210,34 +211,20 @@
   align-self: center;
 }
 
-.grade-star-one, .grade-star-two, .grade-star-three, .grade-star-four, .grade-star-five {
+.star-one, .star-two, .star-three, .star-four, .star-five, .star-one-check, .star-two-check, .star-three-check, .star-four-check, .star-five-check {
   display: flex;
   width: 48px;
   height: 48px;
   margin-right: 20px;
-  background-image: url(../images/Star.png);
-  background-repeat: no-repeat;
   cursor: pointer;
 }
 
-.grade-star-one {
-  background-color: #FFFFFF;
+.star-one, .star-two, .star-three, .star-four, .star-five {
+  fill: #FFB31F;
 }
 
-.grade-star-two {
-
-}
-
-.grade-star-three {
-
-}
-
-.grade-star-four {
-
-}
-
-.grade-star-five {
-
+.star-one-check, .star-two-check, .star-three-check, .star-four-check, .star-five-check {
+  fill:#FFFFFF;
 }
 
 .success-btn {

@@ -7,6 +7,7 @@ import { errorGetLastRoutes, requestGetLastRoutes, successGetLastRoutes } from "
 import { getRouteError, getRouteRequest, getRouteSuccess } from "../store/sliceGetRoute";
 import { errorGetSeats, requestGetSeats, successGetSeats } from "../store/sliceGetSeats";
 import { errorPostOrder, requestPostOrder, successPostOrder } from "../store/slicePostOrder";
+import { errorPostSubscribe, requestPostSubscribe, successPostSubscribe } from "../store/slicePostSubscribe";
 
 export const getCitiesEpic = (action$) => action$.pipe(
   ofType(searchCity),
@@ -63,5 +64,19 @@ export const postOrderEpic = (action$) => action$.pipe(
     retry(3),
     map((o) => successPostOrder(o.response.status)),
     catchError((e) => of(errorPostOrder(e)))
+  )})
+);
+
+export const postSubscribe = (action$) => action$.pipe(
+  ofType(requestPostSubscribe),
+  switchMap((o) => {
+    return ajax({
+      url: `${process.env.REACT_APP_API_URL}subscribe`,
+      method: 'POST',
+      body: JSON.stringify(o)
+    }).pipe(
+    retry(3),
+    map((o) => successPostSubscribe(o.response.status)),
+    catchError((e) => of(errorPostSubscribe(e)))
   )})
 );

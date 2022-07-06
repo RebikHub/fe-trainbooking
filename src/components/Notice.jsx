@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { changeNotice } from '../store/slicePrice';
 import '../styles/notice.css';
 
-export default function Notice({text}) {
+export default function Notice({text, status}) {
   const dispatch = useDispatch();
   const { notice } = useSelector((state) => state.slicePrice);
 
@@ -15,7 +15,7 @@ export default function Notice({text}) {
 
   return (
     <div className={notice ? 'modal-tickets' : 'none'}>
-      <div className='modal-img'></div>
+      <div className={status ? 'modal-img-ok' : 'modal-img'}></div>
       <p className='modal-text'>{text}</p>
       <button className='modal-btn' onClick={() => dispatch(changeNotice(false))} type='button'>Понятно</button>
     </div>

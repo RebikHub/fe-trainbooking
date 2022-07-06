@@ -16,7 +16,7 @@ export default function ChoiceRoute() {
   const postLoading = useSelector((state) => state.slicePostOrder.loading);
   let location = useLocation();
   const navigate = useNavigate();
-  console.log(postLoading);
+
   useEffect(() => {
     if (route.length === 0 && location.pathname === '/route/coach') {
       navigate('/route');

@@ -8,7 +8,6 @@ export default function TripDetails() {
   const { totalSeatsAge, totalSeatsChild, totalPriceAge, totalPriceChild, totalPriceAll } = useSelector((state) => state.slicePrice);
   const [hiddenThere, setHiddenThere] = useState('');
   const [hiddenPassengers, setHiddenPassengers] = useState('');
-  console.log(route);
 
   function showThere() {
     if (hiddenThere !== 'none') {

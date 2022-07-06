@@ -12,11 +12,18 @@
   z-index: 2;
 }
 
-.modal-img {
+.modal-img, .modal-img-ok {
   position: relative;
-  background-color: #FCF8A0;
   height: 72px;
   border-bottom: 1px dashed #928F94;
+}
+
+.modal-img-ok {
+  background-color: #B2F6A1;
+}
+
+.modal-img {
+  background-color: #FCF8A0;
 }
 
 .modal-img::before {

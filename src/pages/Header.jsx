@@ -4,10 +4,11 @@ import { useLocation } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 import ProgressLine from '../components/ProgressLine';
 import SearchWidget from '../components/SearchWidget';
-import { clearAll } from '../store/sliceChoice';
+import { clearAllCity } from '../store/sliceChoice';
 import { clearAllFiltering } from '../store/sliceFilter';
 import { clearRouteList } from '../store/sliceGetRoute';
 import { transformHeader, transformHeaderSuccess, transformHeaderToMain } from '../store/sliceHeaderTransform';
+import { clearOrder } from '../store/sliceOrder';
 import { clearAllPrices, clearTotalPrice } from '../store/slicePrice';
 import { clearStepAll } from '../store/sliceProgressLine';
 import '../styles/header.css';
@@ -33,8 +34,9 @@ export default function Header() {
     dispatch(clearTotalPrice());
     dispatch(clearAllFiltering());
     dispatch(clearRouteList());
-    dispatch(clearAll());
+    dispatch(clearAllCity());
     dispatch(clearStepAll());
+    dispatch(clearOrder());
   };
 
   return (
