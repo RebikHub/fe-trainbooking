@@ -107,7 +107,7 @@ export default function FilterRoute() {
 
   function getCalendarFrom() {
     if (hidden.from === 'none') {
-      setHidden({...hidden, from: 'filter-calendar-from'});
+      setHidden({...hidden, from: 'filter-calendar-from', to: 'none'});
     } else {
       setHidden({...hidden, from: 'none'});
     };
@@ -115,7 +115,7 @@ export default function FilterRoute() {
 
   function getCalendarTo() {
     if (hidden.to === 'none') {
-      setHidden({...hidden, to: 'filter-calendar-to'});
+      setHidden({...hidden, to: 'filter-calendar-to', from: 'none'});
     } else {
       setHidden({...hidden, to: 'none'});
     };

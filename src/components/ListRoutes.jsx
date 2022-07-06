@@ -6,10 +6,11 @@ import TrainRoute from './TrainRoute';
 import { addRoutes, filtering } from '../store/sliceFilter';
 import { filteringPricesRange } from '../utils/minMaxPrices';
 import { sortingDuration, sortingPrices, sortingTime } from '../utils/sortingTrain';
-import { timeForSort } from '../utils/trainDate';
+import { dateForComparison, timeForSort, toDate } from '../utils/trainDate';
 
 export default function ListRoutes() {
   const { loading, route } = useSelector((state) => state.sliceGetRoute);
+  const { fromDate, toDate } = useSelector((state) => state.sliceChoice);
   const {
     filteredRoutes,
     filterSeats,
@@ -28,6 +29,11 @@ export default function ListRoutes() {
   const [lengthPage, setLengthPage] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
 
+  // useEffect(() => {
+  //   route.items.map((e) => console.log(e.departure.from.datetime > dateForComparison(fromDate)))
+  // }, [route]);
+
+
   useEffect(() => {
     dispatch(clearStepAll());
   }, []);
@@ -36,10 +42,12 @@ export default function ListRoutes() {
     dispatch(filtering({
       start: filterPrices.start,
       end: filterPrices.end,
+      date: fromDate,
       filteringPricesRange,
-      timeForSort
+      timeForSort,
+      dateForComparison
     }));
-  }, [filterSeats, filterPrices, filterTimeFrom, filterTimeTo]);
+  }, [filterSeats, filterPrices, filterTimeFrom, filterTimeTo, fromDate]);
 
   useEffect(() => {
     const timer = setTimeout(() => setList(filteredRoutes), 500);

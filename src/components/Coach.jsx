@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeAmountTickets, changeNotice, changeNumberSeats, changePriceSeats, changeServiceLinens, changeServiceWifi, totalChoiceRoute } from '../store/slicePrice';
+import { changeAmountTickets, changeNotice, changeNumberSeats, changePriceSeats, changeServiceLinens, changeServiceWifi } from '../store/slicePrice';
 import '../styles/coaches.css';
 import { amountSeats, haveSeatsOrNot } from '../utils/amountSeats';
 import { schemeFirstClass, schemeFourthClass, schemeThirdClass } from '../utils/schemeCoach';
@@ -15,30 +15,9 @@ export default function Coach({classStyle, coach}) {
   });
   const [wifiBought, setWifiBought] = useState(false);
   const [linensBought, setLinensBought] = useState(false);
-  const { firstClass, secondClass, thirdClass, fourthClass,
-    totalSeatsAge,
-    totalSeatsChild,
-    totalPriceAge,
-    totalPriceChild,
-    totalPriceAll,
-    totalAmountTickets,
-    totalSeatsNumber} = useSelector((state) => state.slicePrice);
+  const { firstClass, secondClass, thirdClass, fourthClass } = useSelector((state) => state.slicePrice);
   const [current, setCurrent] = useState({});
   const dispatch = useDispatch();
-    console.log('coach ', coach);
-  console.log('firstClass ', firstClass);
-  console.log('secondClass ', secondClass);
-  console.log('thirdClass ', thirdClass);
-  console.log('fourthClass ', fourthClass);
-  console.log('totalSeatsAge ', totalSeatsAge);
-  console.log('totalSeatsChild ', totalSeatsChild);
-  // console.log('totalPriceAge ', totalPriceAge);
-  // console.log('totalPriceChild ', totalPriceChild);
-  // console.log('totalPriceAll ', totalPriceAll);
-  // console.log('totalPriceAll ', totalPriceAll);
-  console.log('totalAmountTickets ', totalAmountTickets);
-  console.log('totalSeatsNumber ', totalSeatsNumber);
-  
 
   useEffect(() => {
     if (coach.coach.class_type === 'first') {

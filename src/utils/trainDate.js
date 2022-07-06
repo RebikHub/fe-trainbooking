@@ -23,3 +23,10 @@ export function toDate(time) {
   const year = new Date().getFullYear();
   return `${day < 10 ? "0" + day : day}.${month < 10 ? "0" + month : month}.${year}`;
 };
+
+export function dateForComparison(date) {
+  console.log(date);
+  const splitDate = date.split(".");
+  const resultDate = new Date(splitDate[2], Number(splitDate[1]) - 1, splitDate[0]).setDate(splitDate[0]);
+  return resultDate / 1000;
+};

@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { HashLink } from 'react-router-hash-link';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import Notice from '../components/Notice';
 import '../styles/footer.css';
 import { validateEmail } from '../utils/validators';
@@ -14,6 +15,7 @@ export default function Footer() {
   const { status, error } = useSelector((state) => state.slicePostSubscribe);
   const [noticeText, setNoticeText] = useState('');
   const dispatch = useDispatch();
+  const location = useLocation();
 
   useEffect(() => {
     if (status) {
@@ -40,7 +42,7 @@ export default function Footer() {
   return (
     <footer id='footer' className='footer'>
 
-      <Notice text={noticeText} status={status}/>
+      {status ? <Notice text={noticeText} status={status}/> : null}
 
       <div className='footer-content'>
         <div className='footer-contacts'>

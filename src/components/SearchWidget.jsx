@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { choiceCityFrom, choiceCityTo, choiceDateFrom, choiceDateTo, clearChoiceCity, searchCity } from '../store/sliceChoice';
 import { clearAllFiltering } from '../store/sliceFilter';
+import { clearCities } from '../store/sliceGetCity';
 import { requestGetLastRoutes } from '../store/sliceGetLastRoutes';
 import { clearRouteList, getRouteRequest } from '../store/sliceGetRoute';
 import { clearStepAll, currentStepOne } from '../store/sliceProgressLine';
@@ -14,7 +15,9 @@ import Error from './Error';
 export default function SearchWidget({classStyle}) {
   const [hidden, setHidden] = useState({
     date: 'none',
-    city: 'none'
+    city: 'none',
+    from: 'none',
+    to: 'none'
   });
   const [city, setCity] = useState({
     from: '',
@@ -23,7 +26,6 @@ export default function SearchWidget({classStyle}) {
   const [error, setError] = useState(false);
   const { fromDate, toDate, fromCity, toCity } = useSelector((state) => state.sliceChoice);
   const { transform } = useSelector((state) => state.sliceHeaderTransform);
-  const { cities } = useSelector((state) => state.sliceGetCity);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   let location = useLocation();
@@ -46,6 +48,22 @@ export default function SearchWidget({classStyle}) {
     dispatch(choiceDateTo(ev.target.value));
   };
 
+  function getCalendarFrom() {
+    if (hidden.from === 'none' && fromDate === '') {
+      setHidden({...hidden, from: 'calendar-from', to: 'none'});
+    } else {
+      setHidden({...hidden, from: 'none'});
+    };
+  };
+
+  function getCalendarTo() {
+    if (hidden.to === 'none' && toDate === '') {
+      setHidden({...hidden, to: 'calendar-to', from: 'none'});
+    } else {
+      setHidden({...hidden, to: 'none'});
+    };
+  };
+
   function inputFromCity(ev) {
     setCity({...city, from: ev.target.value});
     if (hidden.city === 'none') {
@@ -60,25 +78,8 @@ export default function SearchWidget({classStyle}) {
     };
   };
 
-  useEffect(() => {
-      const timer = setTimeout(() => {
-        if (city.from.trim() !== '') {
-          dispatch(searchCity(city.from));
-        };
-      }, 1000);
-      return () => clearTimeout(timer);
-  }, [city.from]);
-
-  useEffect(() => {
-      const timer = setTimeout(() => {
-        if (city.to.trim() !== '') {
-          dispatch(searchCity(city.to));
-        };
-      }, 1000);
-      return () => clearTimeout(timer);
-  }, [city.to]);
-
   function showListCitiesFrom() {
+    dispatch(clearCities());
     if (hidden.city === 'none' || hidden.city === 'city-to') {
       setHidden({...hidden, city: 'city-from'});
     } else {
@@ -87,6 +88,7 @@ export default function SearchWidget({classStyle}) {
   };
 
   function showListCitiesTo() {
+    dispatch(clearCities());
     if (hidden.city === 'none' || hidden.city === 'city-from') {
       setHidden({...hidden, city: 'city-to'});
     } else {
@@ -94,25 +96,15 @@ export default function SearchWidget({classStyle}) {
     };
   };
 
-  function getCalendar() {
-    if (hidden.date === 'none' && fromDate === '' && toDate === '') {
-      setHidden({...hidden, date: 'calendar-from'});
-    } else if (hidden.date === 'none' && fromDate !== '' && toDate === '') {
-      setHidden({...hidden, date: 'calendar-to'});
-    } else {
-      setHidden({...hidden, date: 'none'});
-    }
-  };
-
   function getDate(choiceDate) {
-    if (hidden.date === 'calendar-from') {
+    if (hidden.from === 'calendar-from') {
       dispatch(choiceDateFrom(choiceDate));
-      setHidden({...hidden, date: 'none'});
+      setHidden({...hidden, from: 'none'});
     };
 
-    if (hidden.date === 'calendar-to') {
+    if (hidden.to === 'calendar-to') {
       dispatch(choiceDateTo(choiceDate));
-      setHidden({...hidden, date: 'none'});
+      setHidden({...hidden, to: 'none'});
     };
   };
 
@@ -129,7 +121,7 @@ export default function SearchWidget({classStyle}) {
       setCity({...city, to: choiceCity.name});
       setHidden({...hidden, city: 'none'});
     };
-
+    dispatch(clearCities());
   };
 
   function swapCity() {
@@ -167,6 +159,24 @@ export default function SearchWidget({classStyle}) {
     };
   });
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (city.from.trim() !== '') {
+        dispatch(searchCity(city.from));
+      };
+    }, 1000);
+    return () => clearTimeout(timer);
+}, [city.from]);
+
+useEffect(() => {
+    const timer = setTimeout(() => {
+      if (city.to.trim() !== '') {
+        dispatch(searchCity(city.to));
+      };
+    }, 1000);
+    return () => clearTimeout(timer);
+}, [city.to]);
+
   return (
     <div className={classStyle}>
     
@@ -194,13 +204,14 @@ export default function SearchWidget({classStyle}) {
             <div className='search-date-inputs'>
               <input className='date-input-from' type="text" placeholder="ДД.ММ.ГГ"
                 value={fromDate}
-                onClick={getCalendar}
+                onClick={getCalendarFrom}
                 onChange={inputDateFrom}/>
+              <Calendar none={hidden.from} getDate={getDate}/>
               <input className='date-input-to' type="text" placeholder="ДД.ММ.ГГ"
                 value={toDate}
-                onClick={getCalendar}
+                onClick={getCalendarTo}
                 onChange={inputDateTo}/>
-              <Calendar none={hidden.date} getDate={getDate}/>
+              <Calendar none={hidden.to} getDate={getDate}/>
             </div>
         </div>
       </div>

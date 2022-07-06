@@ -61,6 +61,10 @@ export const sliceFilter = createSlice({
       state.filteredRoutes = [];
       state.filteredRoutes = state.currentRoutes;
 
+      if (actions.payload.date !== '') {
+        state.filteredRoutes = state.filteredRoutes.filter((el) => el.departure.from.datetime >= actions.payload.dateForComparison(actions.payload.date));
+      };
+
       if (state.filterSeats.lux) {
         state.filteredRoutes = state.filteredRoutes.filter((el) => el.departure.have_first_class === true);
       };
