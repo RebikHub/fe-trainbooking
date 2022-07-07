@@ -43,7 +43,7 @@ export default function Footer() {
   console.log(validateEmail(input) && status);
 
   return (
-    <footer className='footer'>
+    <footer id='footer' className='footer'>
 
       <Notice status={status}/>
 
