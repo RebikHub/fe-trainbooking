@@ -1,3 +1,8 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/p43qvlkgag5uy0tu/branch/master?svg=true)](https://ci.appveyor.com/project/RebikHub/fe-trainbooking/branch/master)
+
+[Link to project](https://rebikhub.github.io/fe-trainbooking/)
+
+
 # Дипломная работа к профессии frontend-разработчик (Система бронирования ЖД билетов)
 
 ### Краткое описание задачи дипломной работы:
