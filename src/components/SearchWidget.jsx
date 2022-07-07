@@ -195,7 +195,10 @@ useEffect(() => {
               value={city.to}
               onChange={inputToCity}
               onClick={showListCitiesTo}/>
-              <CityList none={`${hidden.city}${transform ? '-transform' : ''}`} getCity={getCity}/>
+              <CityList none={`${hidden.city}${transform ? '-transform' : ''}`}
+                showListFrom={showListCitiesFrom}
+                showListTo={showListCitiesTo}
+                getCity={getCity}/>
           </div>
         </div>
 
@@ -206,12 +209,18 @@ useEffect(() => {
                 value={fromDate}
                 onClick={getCalendarFrom}
                 onChange={inputDateFrom}/>
-              <Calendar none={hidden.from} getDate={getDate}/>
+              <Calendar none={hidden.from}
+                getDate={getDate}
+                getCalendarFrom={getCalendarFrom}
+                getCalendarTo={getCalendarTo}/>
               <input className='date-input-to' type="text" placeholder="ДД.ММ.ГГ"
                 value={toDate}
                 onClick={getCalendarTo}
                 onChange={inputDateTo}/>
-              <Calendar none={hidden.to} getDate={getDate}/>
+              <Calendar none={hidden.to}
+                getDate={getDate}
+                getCalendarFrom={getCalendarFrom}
+                getCalendarTo={getCalendarTo}/>
             </div>
         </div>
       </div>

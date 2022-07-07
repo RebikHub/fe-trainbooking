@@ -1,14 +1,32 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import '../styles/calendar.css';
 import { date, monthInWeeks } from '../utils/date';
 import DaysInWeek from './DaysInWeek';
 import { useSelector } from 'react-redux';
+import { useRef } from 'react';
 
-export default function Calendar({none, getDate}) {
+export default function Calendar({none, getDate, getCalendarFrom, getCalendarTo}) {
   const [numMonth, setNumMonth] = useState(date.numberMonth);
   const [nameMonth, setNameMonth] = useState(date.month);
   const [days, setDays] = useState(null);
   const { fromDate } = useSelector((state) => state.sliceChoice);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    function outsideClick(ev) {
+      if (ref.current && !ref.current.contains(ev.target)) {
+        if (none.includes('calendar-from')) {
+          getCalendarFrom();
+        };
+        if (none.includes('calendar-to')) {
+          getCalendarTo();
+        };
+      };
+    };
+    document.addEventListener("mousedown", outsideClick);
+    return () => document.removeEventListener("mousedown", outsideClick);
+  }, [ref]);
 
   useEffect(() => {
     const weeks = monthInWeeks(numMonth);
@@ -40,7 +58,7 @@ export default function Calendar({none, getDate}) {
   };
 
   return (
-    <div className={none}>
+    <div className={none} ref={ref}>
       <div className='cal-triangle'></div>
       <div className='cal-main'>
         <div className='cal-month'>
