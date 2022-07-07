@@ -65,7 +65,7 @@ export default function Passenger({addPassenger, num, agesPassengers}) {
   function blurBirthNumber() {
     if (!validateBirthNumber(docsValue.birthNumber)) {
       setNone({...none, valid: true});
-      setValidText('Номер свидетельства о рожденни указан некорректно\n Пример: VIII-ЫП-123456');
+      setValidText('Номер свидетельства о рожденни указан некорректно\n Пример: VIIIАП123456');
     };
   };
 
@@ -184,7 +184,7 @@ export default function Passenger({addPassenger, num, agesPassengers}) {
 
   function nextPassenger() {
     if (nameValue.name !== '' && nameValue.patronymic !== '' && nameValue.surname !== '') {
-      if ((docsValue.passportNumber !== '' && docsValue.passportSeries !== '') || docsValue.birthNumber !== '') {
+      if (dateValue !== '' && ((docsValue.passportNumber !== '' && docsValue.passportSeries !== '') || docsValue.birthNumber !== '')) {
         if (!none.valid) {
           setNone({...none, ok: true});
           addPassenger();
@@ -196,7 +196,7 @@ export default function Passenger({addPassenger, num, agesPassengers}) {
       } else {
         setNone({...none, valid: true});
         setValidText('Заполните все поля!');
-      };;
+      };
     } else {
       setNone({...none, valid: true});
       setValidText('Заполните все поля!');
