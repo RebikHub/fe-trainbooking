@@ -16,17 +16,17 @@ export default function Calendar({none, getDate, getCalendarFrom, getCalendarTo}
   useEffect(() => {
     function outsideClick(ev) {
       if (ref.current && !ref.current.contains(ev.target)) {
-        if (none.includes('calendar-from')) {
+        if (none.includes('from')) {
           getCalendarFrom();
         };
-        if (none.includes('calendar-to')) {
+        if (none.includes('to')) {
           getCalendarTo();
         };
       };
     };
     document.addEventListener("mousedown", outsideClick);
     return () => document.removeEventListener("mousedown", outsideClick);
-  }, [ref]);
+  }, [ref, none]);
 
   useEffect(() => {
     const weeks = monthInWeeks(numMonth);

@@ -15,7 +15,6 @@ import Error from './Error';
 
 export default function SearchWidget({classStyle}) {
   const [hidden, setHidden] = useState({
-    date: 'none',
     city: 'none',
     from: 'none',
     to: 'none'
@@ -218,9 +217,9 @@ useEffect(() => {
                 onClick={getCalendarTo}
                 onChange={inputDateTo}/>
               <Calendar none={hidden.to}
-                getDate={getDate}
-                getCalendarFrom={getCalendarFrom}
-                getCalendarTo={getCalendarTo}/>
+              getDate={getDate}
+              getCalendarFrom={getCalendarFrom}
+              getCalendarTo={getCalendarTo}/>
             </div>
         </div>
       </div>

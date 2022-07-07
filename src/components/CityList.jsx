@@ -10,7 +10,6 @@ export default function CityList({none, showListFrom, showListTo, getCity}) {
   useEffect(() => {
     function outsideClick(ev) {
       if (ref.current && !ref.current.contains(ev.target)) {
-        console.log(none);
         if (none.includes('city-from')) {
           showListFrom();
         };
@@ -21,7 +20,7 @@ export default function CityList({none, showListFrom, showListTo, getCity}) {
     };
     document.addEventListener("mousedown", outsideClick);
     return () => document.removeEventListener("mousedown", outsideClick);
-  }, [ref]);
+  }, [ref, none]);
 
   return (
     <div className={none} ref={ref}>

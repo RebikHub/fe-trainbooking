@@ -220,7 +220,10 @@ export default function FilterRoute() {
             value={fromDate}
             onClick={getCalendarFrom}
             onChange={inputDateFrom}/>
-          <Calendar none={hidden.from} getDate={getDate}/>
+          <Calendar none={hidden.from}
+            getDate={getDate}
+            getCalendarFrom={getCalendarFrom}
+            getCalendarTo={getCalendarTo}/>
         </div>
         <div className='filter-date-to'>
           <h4 className='filter-date-title'>Дата вовращения</h4>
@@ -228,7 +231,10 @@ export default function FilterRoute() {
             value={toDate}
             onClick={getCalendarTo}
             onChange={inputDateTo}/>
-          <Calendar none={hidden.to} getDate={getDate}/>
+          <Calendar none={hidden.to}
+            getDate={getDate}
+            getCalendarFrom={getCalendarFrom}
+            getCalendarTo={getCalendarTo}/>
         </div>
       </div>
       <div className='filter-line'></div>
