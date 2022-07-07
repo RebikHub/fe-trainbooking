@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeAmountTickets, changeNotice, changeNumberSeats, changePriceSeats, changeServiceLinens, changeServiceWifi } from '../store/slicePrice';
+import { changeAmountTickets, changeNumberSeats, changePriceSeats, changeServiceLinens, changeServiceWifi } from '../store/slicePrice';
+import { changeNotice } from '../store/sliceNotice';
 import '../styles/coaches.css';
 import { amountSeats, haveSeatsOrNot } from '../utils/amountSeats';
 import { schemeFirstClass, schemeFourthClass, schemeThirdClass } from '../utils/schemeCoach';
@@ -95,7 +96,10 @@ export default function Coach({classStyle, coach}) {
         }));
         setWifiBought(true);
       } else if (coach.coach.have_wifi) {
-        dispatch(changeNotice(true));
+        dispatch(changeNotice({
+          notice: true,
+          text: 'Укажите количество билетов и выберите места!'
+        }));
       };
     };
   };
@@ -115,7 +119,10 @@ export default function Coach({classStyle, coach}) {
         }));
         setLinensBought(true);
       } else if (coach.coach.class_type !== 'fourth' && !coach.coach.is_linens_included) {
-        dispatch(changeNotice(true));
+        dispatch(changeNotice({
+          notice: true,
+          text: 'Укажите количество билетов и выберите места!'
+        }));
       };
     };
   };
@@ -157,10 +164,12 @@ export default function Coach({classStyle, coach}) {
         }));
         ev.target.classList.add('seat-selected');
       } else if (current.amountTickets === 0) {
-        dispatch(changeNotice(true));
+        dispatch(changeNotice({
+          notice: true,
+          text: 'Укажите количество билетов и выберите места!'
+        }));
       };
     };
-    console.log('coach-id ', coach.coach._id);
   };
 
   useEffect(() => {

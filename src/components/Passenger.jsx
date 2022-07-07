@@ -159,48 +159,7 @@ export default function Passenger({addPassenger, num, agesPassengers}) {
     setNone({...none, docs: 'none'});
   };
 
-  function nextPassenger() {
-    if (nameValue.name !== '' && nameValue.patronymic !== '' && nameValue.surname !== '') {
-      if (select.docs === 'Паспорт РФ') {
-        if (docsValue.passportNumber !== '' && docsValue.passportSeries !== '') {
-          if (!none.valid) {
-            setNone({...none, ok: true});
-            addPassenger();
-          } else {
-            setNone({...none, valid: true});
-            setValidText('Заполните все поля!');
-          };
-        };
-      } else {
-        if (docsValue.birthNumber !== '') {
-          if (!none.valid) {
-            setNone({...none, ok: true});
-            addPassenger();
-          } else {
-            setNone({...none, valid: true});
-            setValidText('Заполните все поля!');
-          };
-        };
-      };
-    } else {
-      setNone({...none, valid: true});
-      setValidText('Заполните все поля!');
-    };
-
-    console.log({
-      passNumber:  num,
-      passAges: select.age,
-      passSurname: nameValue.surname,
-      passName: nameValue.name,
-      passPatronymic: nameValue.patronymic,
-      passGender: gender,
-      passBirth: dateValue,
-      limited: limited,
-      typeDoc: select.docs,
-      docNumber: docsValue.passportNumber,
-      docSeries: docsValue.passportSeries,
-      birthNumber: docsValue.birthNumber
-    });
+  function addPassengerToStore() {
     const seats = {
       person_id: num,
       coach_id: totalSeatsNumber[num - 1].idCoach,
@@ -220,6 +179,27 @@ export default function Passenger({addPassenger, num, agesPassengers}) {
     }
     dispatch(addSeatPassenger(seats));
     setButton(true);
+  };
+
+  function nextPassenger() {
+    if (nameValue.name !== '' && nameValue.patronymic !== '' && nameValue.surname !== '') {
+      if ((docsValue.passportNumber !== '' && docsValue.passportSeries !== '') || docsValue.birthNumber !== '') {
+        if (!none.valid) {
+          setNone({...none, ok: true});
+          addPassenger();
+          addPassengerToStore();
+        } else {
+          setNone({...none, valid: true});
+          setValidText('Заполните все поля!');
+        };
+      } else {
+        setNone({...none, valid: true});
+        setValidText('Заполните все поля!');
+      };;
+    } else {
+      setNone({...none, valid: true});
+      setValidText('Заполните все поля!');
+    };
   };
 
   function deletePassenger() {

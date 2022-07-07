@@ -4,8 +4,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { currentStepThree } from '../store/sliceProgressLine';
 import { validateEmail, validateName, validatePhoneNumber } from '../utils/validators';
-import Notice from './Notice';
-import { changeNotice } from '../store/slicePrice';
+import { changeNotice } from '../store/sliceNotice';
 import { useNavigate } from 'react-router-dom';
 import { addUserPayment } from '../store/sliceOrder';
 
@@ -20,7 +19,6 @@ export default function Payment() {
     phone: '',
     email: ''
   });
-  const [noticeText, setNoticeText] = useState('');
   let navigate = useNavigate();
 
   useEffect(() => {
@@ -46,8 +44,10 @@ export default function Payment() {
 
   function blurFirstName() {
     if (!validateName(inputValue.name)) {
-      setNoticeText('Имя указано некорректно.\n Пример: Иван');
-      dispatch(changeNotice(true));
+      dispatch(changeNotice({
+        notice: true,
+        text: 'Имя указано некорректно.\n Пример: Иван'
+      }));
     };
   };
 
@@ -57,8 +57,10 @@ export default function Payment() {
 
   function blurSecondName() {
     if (!validateName(inputValue.patronymic)) {
-      setNoticeText('Отчество указано некорректно.\n Пример: Иванович');
-      dispatch(changeNotice(true));
+      dispatch(changeNotice({
+        notice: true,
+        text: 'Отчество указано некорректно.\n Пример: Иванович'
+      }));
     };
   };
 
@@ -68,8 +70,10 @@ export default function Payment() {
 
   function blurSurName() {
     if (!validateName(inputValue.surname)) {
-      setNoticeText('Фамилия указана некорректно.\n Пример: Иванов');
-      dispatch(changeNotice(true));
+      dispatch(changeNotice({
+        notice: true,
+        text: 'Фамилия указана некорректно.\n Пример: Иванов'
+      }));
     };
   };
 
@@ -79,8 +83,10 @@ export default function Payment() {
 
   function blurPhone() {
     if (!validatePhoneNumber(inputValue.phone)) {
-      setNoticeText('Номер телефона указан некорректно.\n Пример: 89009009090');
-      dispatch(changeNotice(true));
+      dispatch(changeNotice({
+        notice: true,
+        text: 'Номер телефона указан некорректно.\n Пример: 89009009090'
+      }));
     } else {
       setInputValue({...inputValue, phone: validatePhoneNumber(inputValue.phone)});
     };
@@ -92,8 +98,10 @@ export default function Payment() {
 
   function blurEmail() {
     if (!validateEmail(inputValue.email)) {
-      setNoticeText('Email указана некорректно.\n Пример: mail@mail.com');
-      dispatch(changeNotice(true));
+      dispatch(changeNotice({
+        notice: true,
+        text: 'Email указана некорректно.\n Пример: mail@mail.com'
+      }));
     };
   };
 
@@ -111,7 +119,6 @@ export default function Payment() {
 
   return (
     <form>
-      <Notice text={noticeText}/>
 
       <div className='payment'>
         <div className='payment-data'>

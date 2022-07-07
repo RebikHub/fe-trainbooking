@@ -2,26 +2,26 @@ import React from 'react';
 import { useState } from 'react';
 import { HashLink } from 'react-router-hash-link';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
 import Notice from '../components/Notice';
 import '../styles/footer.css';
 import { validateEmail } from '../utils/validators';
-import { changeNotice } from '../store/slicePrice';
+import { changeNotice } from '../store/sliceNotice';
 import { clearStatusSubscribe, requestPostSubscribe } from '../store/slicePostSubscribe';
 import { useEffect } from 'react';
 
 export default function Footer() {
   const [input, setInput] = useState('');
-  const { status, error } = useSelector((state) => state.slicePostSubscribe);
-  const [noticeText, setNoticeText] = useState('');
+  const { status } = useSelector((state) => state.slicePostSubscribe);
   const dispatch = useDispatch();
-  const location = useLocation();
 
   useEffect(() => {
     if (status) {
-      setNoticeText('Подписка успешно оформлена!');
-      dispatch(changeNotice(true));
+      dispatch(changeNotice({
+        notice: true,
+        text: 'Подписка успешно оформлена!'
+      }));
       setInput('');
+      setTimeout(() => dispatch(clearStatusSubscribe()), 5 * 1000);
     };
   }, [status]);
 
@@ -30,19 +30,22 @@ export default function Footer() {
   };
 
   function submit() {
-    dispatch(clearStatusSubscribe());
     if (!validateEmail(input)) {
-      setNoticeText('Email указана некорректно.\n Пример: mail@mail.com');
-      dispatch(changeNotice(true));
+      dispatch(changeNotice({
+        notice: true,
+        text: 'Email указана некорректно.\n Пример: mail@mail.com'
+      }));
     } else {
       dispatch(requestPostSubscribe(input));
     };
   };
 
-  return (
-    <footer id='footer' className='footer'>
+  console.log(validateEmail(input) && status);
 
-      {status ? <Notice text={noticeText} status={status}/> : null}
+  return (
+    <footer className='footer'>
+
+      <Notice status={status}/>
 
       <div className='footer-content'>
         <div className='footer-contacts'>

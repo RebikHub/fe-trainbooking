@@ -13,6 +13,7 @@ import slicePrice from "./slicePrice";
 import sliceOrder from "./sliceOrder";
 import slicePostOrder from "./slicePostOrder";
 import slicePostSubscribe from "./slicePostSubscribe";
+import sliceNotice from "./sliceNotice";
 
 const epic = combineEpics(
   getCitiesEpic,
@@ -38,7 +39,8 @@ export const store = configureStore({
     slicePrice,
     sliceOrder,
     slicePostOrder,
-    slicePostSubscribe
+    slicePostSubscribe,
+    sliceNotice
   },
   middleware: [epicMiddleware]
 });

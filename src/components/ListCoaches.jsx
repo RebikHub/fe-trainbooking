@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import CoachesType from './CoachesType';
-import Notice from './Notice';
 import { totalChoiceRoute } from '../store/slicePrice';
 import { clearStepAll } from '../store/sliceProgressLine';
 
@@ -66,7 +65,6 @@ export default function ListCoaches() {
   }, [coaches]);
 
   useEffect(() => {
-    console.log(totalAmountTickets === 0 && (totalSeatsAge !== 0 || totalSeatsChild !== 0));
     if (totalAmountTickets === 0 && (totalSeatsAge !== 0 || totalSeatsChild !== 0)) {
       setButton({
         disabled: false,
@@ -92,8 +90,6 @@ export default function ListCoaches() {
   return (
     <div className='coaches'>
       <h3 className='coaches-title'>выбор мест</h3>
-
-      <Notice text={'Укажите количество билетов и выберите места!'}/>
 
       {types.map((el, i) =>  <CoachesType coaches={el} route={route} classStyle={i % 2 === 0 ? '-left' : '-right'} key={i}/>)}
       
