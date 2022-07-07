@@ -20,7 +20,10 @@ export default function Header() {
   let location = useLocation();
   const dispatch = useDispatch();
 
+
   useEffect(() => {
+    window.scrollTo(0, 0);
+    
     if (location.pathname === '/') {
       dispatch(transformHeaderToMain());
     } else if (location.pathname === '/success') {
