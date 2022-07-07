@@ -29,4 +29,4 @@ export const reviews = [
     content: 'СМС-сопровождение до посадки Сразу после оплаты ж/д билетов и за 3 часа до отправления мы пришлем вам СМС-напоминание о поездке.',
     image: 'https://s3-alpha-sig.figma.com/img/9a94/671a/adb42ec0d354460adb5d422bc34dc958?Expires=1655078400&Signature=gYGum3PhH0MuruddX9t0vGZHnQ~1t5rbSW8Dkyu85BEGV-iG4qmnn-rrtp7dC-63loWPLI9gamRQ32fa1nVO5HYvve78UyknQF-UqXwd~NXUaNmR2DG7QgdQ~3JgHPfB9otjS8eODvPItc3~j-SitzUJO1C-g91ptkSO2XkdkCcs~mnU0QQlT5ZNPo6kyXapuQBYZ2L0arG3Pqn~d9GQTkHDWyyJEuaLgv04wujmYo07yjgE~j~wRVXr5pgYNORjepzAwUXXBsuzjgvIM99lLxmV6m9OzaRBNL57qenP3Lb-Uj6Y-OhB1qG4SJazsvTkk4XAVDtvrl6xqUY87AthWQ__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA'
   },
-]
+];

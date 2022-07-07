@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import '../styles/list-routes.css';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,11 +7,11 @@ import TrainRoute from './TrainRoute';
 import { addRoutes, filtering } from '../store/sliceFilter';
 import { filteringPricesRange } from '../utils/minMaxPrices';
 import { sortingDuration, sortingPrices, sortingTime } from '../utils/sortingTrain';
-import { dateForComparison, timeForSort, toDate } from '../utils/trainDate';
+import { dateForComparison, timeForSort } from '../utils/trainDate';
 
 export default function ListRoutes() {
   const { loading, route } = useSelector((state) => state.sliceGetRoute);
-  const { fromDate, toDate } = useSelector((state) => state.sliceChoice);
+  const { fromDate } = useSelector((state) => state.sliceChoice);
   const {
     filteredRoutes,
     filterSeats,
@@ -28,11 +29,6 @@ export default function ListRoutes() {
   const [endSlice, setEndSlice] = useState(5);
   const [lengthPage, setLengthPage] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
-
-  // useEffect(() => {
-  //   route.items.map((e) => console.log(e.departure.from.datetime > dateForComparison(fromDate)))
-  // }, [route]);
-
 
   useEffect(() => {
     dispatch(clearStepAll());

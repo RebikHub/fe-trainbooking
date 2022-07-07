@@ -8,7 +8,7 @@ export const slicePostOrder = createSlice({
     error: false
   },
   reducers: {
-    requestPostOrder: (state, actions) => {
+    requestPostOrder: (state) => {
       state.loading = true;
       state.error = false;
     },
@@ -16,7 +16,7 @@ export const slicePostOrder = createSlice({
       state.loading = false;
       state.status = actions.payload;
     },
-    errorPostOrder: (state, actions) => {
+    errorPostOrder: (state) => {
       state.loading = false;
       state.error = true;
     }

@@ -20,7 +20,6 @@ export default function SuccessfulOrder() {
   });
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { status, loading, error } = useSelector((state) => state.slicePostOrder);
   const { totalPriceAll } = useSelector((state) => state.slicePrice);
   const { user } = useSelector((state) => state.sliceOrder);
 

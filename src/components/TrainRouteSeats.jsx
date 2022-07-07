@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import '../styles/train-route.css';
 
@@ -61,5 +62,5 @@ export default function TrainRouteSeats({name, seats, price, seatPrice}) {
         <span className='sign-rub'></span>
       </div>
     </div>
-  )
-}
+  );
+};

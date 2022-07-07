@@ -38,11 +38,11 @@ export function validatePhoneNumber(number) {
   if (numberWithoutSpace.length === 11 && /\d/g.test(numberWithoutSpace) && /^(8|7)/.test(numberWithoutSpace)) {
     const num = numberWithoutSpace.replace(/^(8|7)/, "+7");
     return joinNum(num.split(""));
-  }
+  };
 
   if (numberWithoutSpace.length === 12 && /^\+\d{11}/.test(numberWithoutSpace)) {
     return joinNum(numberWithoutSpace.split(""));
-  }
+  };
 
   return false;
 };
@@ -70,4 +70,4 @@ export function upperCaseBirthNumber(string) {
 
   const joinString = splitString.join('');
   return joinString;
-}
+};

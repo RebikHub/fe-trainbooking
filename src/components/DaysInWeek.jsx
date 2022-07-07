@@ -14,5 +14,5 @@ export default   function DaysInWeek({array, date, currentMonth, otherMonth, onC
         return null;
       })}
     </tr>
-  )
+  );
 };

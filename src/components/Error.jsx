@@ -6,5 +6,5 @@ export default function Error({classStyle}) {
     <div className={classStyle}>
       <p>Введите пункт отправления!</p>
     </div>
-  )
-}
+  );
+};

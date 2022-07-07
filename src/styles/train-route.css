@@ -49,10 +49,6 @@
   margin-left: 25px;
 }
 
-.train-name-city {
-
-}
-
 /* direction */
 
 .train-direction {
@@ -76,10 +72,6 @@
   font-size: 24px;
   line-height: 28px;
   color: #000000;
-}
-
-.direction-from {
-
 }
 
 .direction-city {
@@ -122,14 +114,6 @@
   width: 30px;
   height: 20px;
   background-image: url(../images/dir-right.png);
-}
-
-.train-direction-to {
-
-}
-
-.direction-to {
-
 }
 
 /* tickets-seats */
@@ -242,14 +226,9 @@
   justify-content: space-between;
   width: 92px;
   height: 20px;
-  /* background-image: url(../images/facilities.png); */
   margin-top: auto;
   margin-left: auto;
   margin-right: 28px;
-}
-
-.train-facilities-all {
-
 }
 
 .train-facilities-wifi, .train-facilities-express, .train-facilities-coffee {

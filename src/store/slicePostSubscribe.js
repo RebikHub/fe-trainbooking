@@ -8,7 +8,7 @@ export const slicePostSubscribe = createSlice({
     error: false
   },
   reducers: {
-    requestPostSubscribe: (state, actions) => {
+    requestPostSubscribe: (state) => {
       state.loading = true;
       state.error = false;
       state.status = false;
@@ -17,12 +17,12 @@ export const slicePostSubscribe = createSlice({
       state.loading = false;
       state.status = actions.payload;
     },
-    errorPostSubscribe: (state, actions) => {
+    errorPostSubscribe: (state) => {
       state.loading = false;
       state.error = true;
       state.status = false;
     },
-    clearStatusSubscribe: (state, actions) => {
+    clearStatusSubscribe: (state) => {
       state.status = false;
     }
   },

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -147,7 +148,6 @@ export default function SearchWidget({classStyle}) {
     }  else {
       setError(true)
     };
-        console.log('submit');
   };
 
   useEffect(() => {
@@ -157,7 +157,7 @@ export default function SearchWidget({classStyle}) {
     if (city.from === '' && city.to === '') {
       dispatch(clearChoiceCity());
     };
-  });
+  }, [error, city]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -219,5 +219,5 @@ useEffect(() => {
       <button className='search-btn' onClick={submit} type='button'>найти билеты</button>
 
     </div>
-  )
-}
+  );
+};

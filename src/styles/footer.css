@@ -86,10 +86,6 @@
   margin-top: 30px;
 }
 
-.subscribe-form > label {
-
-}
-
 .sub-form-title {
   font-family: 'Roboto';
   font-style: normal;
@@ -151,10 +147,6 @@
 .sub-form-btn:focus {
   background-color: #ffffff;
   color: #2D2B2F;
-}
-
-.subscribe-links {
-
 }
 
 .sub-links-title {

@@ -4,7 +4,6 @@
 
 .no-routes {
   margin: 0 280px;
-  
   font-family: 'Roboto-bold';
   font-style: normal;
   font-weight: 500;
@@ -17,7 +16,6 @@
   display: flex;
   margin: 0px 257px 47px 0;
   width: 100%;
-  /* height: 22px; */
 }
 
 .list-routes-found {
@@ -91,14 +89,6 @@
 .list-routes-show > span {
   cursor: pointer;
 }
-
-/* main */
-
-.main-list-routes {
-
-}
-
-/* footer */
 
 .footer-list-routes {
   margin-top: 140px;

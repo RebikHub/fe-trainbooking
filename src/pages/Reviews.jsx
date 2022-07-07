@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { reviews } from '../utils/reviews';
 import '../styles/reviews.css';
 
-
-
 export default function Reviews() {
   const length = -727;
   const dotsArray = [...reviews];

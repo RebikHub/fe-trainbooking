@@ -2,7 +2,6 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import ListCoaches from "./components/ListCoaches";
 import ListRoutes from "./components/ListRoutes";
-import SearchProgress from "./components/SearchProgress";
 import ChoiceRoute from "./pages/ChoiceRoute";
 import HeaderAndFooter from "./pages/HeaderAndFooter";
 import Main from "./pages/Main";
@@ -25,10 +24,9 @@ function App() {
           <Route path='/route/order' element={<Order/>}/>
         </Route>
         <Route path='/success' element={<SuccessfulOrder/>}/>
-        {/* <Route path='/route' element={<SearchProgress/>}/> */}
       </Route>
     </Routes>
   );
-}
+};
 
 export default App;

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
@@ -41,7 +42,6 @@ export default function ChoiceRoute() {
       </div>
       <div className='right-side'>
         <Outlet/>
-        {/* {coaches.length > 0 ? <ListCoaches/> : <ListRoutes/>} */}
       </div>
     </div>
   );

@@ -1,7 +1,3 @@
-.coaches {
-
-}
-
 .coaches-title {
   font-family: 'Roboto-medium';
   font-style: normal;
@@ -165,14 +161,6 @@
   color: #928F94;
 }
 
-.coach-time {
-
-}
-
-.coach-direction-station {
-
-}
-
 .coach-duration {
   display: flex;
 }
@@ -240,8 +228,6 @@
   color: #292929;
 }
 
-
-
 .tickets-age-input::placeholder {
   font-family: 'Roboto';
   font-style: normal;
@@ -250,7 +236,6 @@
   line-height: 21px;
   color: #292929;
 }
-
 
 .tickets-adults-desc {
   font-family: 'Roboto';
@@ -275,27 +260,6 @@
   background-color: #F7F6F6;
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
   border: none;
-}
-
-
-.tickets-child {
-
-}
-
-.tickets-adults-desc {
-
-}
-
-.tickets-child-without {
-
-}
-
-.tickets-adults-desc {
-
-}
-
-.coaches-types {
-
 }
 
 .coach-type-title {
@@ -644,10 +608,6 @@
   margin-bottom: 33px;
 }
 
-.coach-seats-info {
-
-}
-
 .seats-info-first, .seats-info-second, .seats-info-third, .seats-info-fourth {
   display: flex;
   position: relative;
@@ -671,7 +631,6 @@
 .seats-info-fourth {
   background-image: url(../images/coach-fourth.png);
 }
-
 
 .coach-button, .coach-button-disable {
   display: flex;
@@ -723,24 +682,9 @@
   left: 131px;
 }
 
-.scheme-seats-first {
-
-}
-
-.scheme-seats-second {
-
-}
-
-.scheme-seats-third {
-
-}
-
 .scheme-seats-fourth {
-  /* position: absolute; */
   width: 717.63px;
   height: 26px;
-  /* top: 27px; */
-  /* left: 131px; */
 }
 
 .seat-class {

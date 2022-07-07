@@ -9,5 +9,5 @@ export default   function secondsToTime(sec) {
     min = '0' + min;
   };
   
-  return `${hour}:${min}`
+  return `${hour}:${min}`;
 };

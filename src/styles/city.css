@@ -1,4 +1,4 @@
-/* city-list-dot */
+/* city-list-loader */
 
 .loader,
 .loader:before,
@@ -64,7 +64,7 @@
   }
 }
 
-
+/* city - component */
 
 .dots-list {
   display: flex;
@@ -92,8 +92,6 @@
 }
 
 .dot-one-ok {
-  /* width: 20px;
-  height: 20px; */
   transform: scale(2,2);
 }
 

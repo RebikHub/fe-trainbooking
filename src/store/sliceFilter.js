@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
 export const sliceFilter = createSlice({
   name: 'sliceFilter',
   initialState: {
@@ -103,11 +102,11 @@ export const sliceFilter = createSlice({
         state.filterTimeFrom.thereArrival.end
       );
     },
-    stopFiltering: (state, actions) => {
+    stopFiltering: (state) => {
       state.filterProcess = false;
       state.filteredRoutes = [];
     },
-    clearAllFiltering: (state, actions) => {
+    clearAllFiltering: (state) => {
       state.filterProcess = false;
       state.filteredRoutes = [];
       state.currentRoutes = [];

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,7 +13,7 @@ export default function Order() {
   const { route } = useSelector((state) => state.sliceChoice);
   const { totalPriceAll } = useSelector((state) => state.slicePrice);
   const { user, departure } = useSelector((state) => state.sliceOrder);
-  const { status, loading, error } = useSelector((state) => state.slicePostOrder);
+  const { status } = useSelector((state) => state.slicePostOrder);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

@@ -1,5 +1,5 @@
 import { ofType } from "redux-observable";
-import { catchError, debounceTime, map, of, retry, switchMap, tap } from "rxjs";
+import { catchError, debounceTime, map, of, retry, switchMap } from "rxjs";
 import { ajax } from "rxjs/ajax";
 import { searchCity } from "../store/sliceChoice";
 import { errorGetCity, requestGetCity, successGetCity } from "../store/sliceGetCity";

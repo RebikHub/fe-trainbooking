@@ -29,7 +29,7 @@ export const sliceOrder = createSlice({
     removeSeatPassenger: (state, actions) => {
       state.departure.seats = state.departure.seats.filter((el) => el.person_id !== actions.payload);
     },
-    clearOrder: (state, actions) => {
+    clearOrder: (state) => {
       state.user = {
         first_name: '',
         last_name: '',
@@ -43,7 +43,7 @@ export const sliceOrder = createSlice({
         seats: []
       };
     },
-    clearOrderPassengers: (state, actions) => {
+    clearOrderPassengers: (state) => {
       state.user = {
         first_name: '',
         last_name: '',
@@ -54,7 +54,7 @@ export const sliceOrder = createSlice({
       };
       state.departure.seats = [];
     },
-    clearOrderPayment: (state, actions) => {
+    clearOrderPayment: (state) => {
       state.user = {
         first_name: '',
         last_name: '',

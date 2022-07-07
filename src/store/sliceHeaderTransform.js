@@ -11,7 +11,7 @@ export const sliceHeaderTransform = createSlice({
     success: false
   },
   reducers: {
-    transformHeader: (state, actions) => {
+    transformHeader: (state) => {
       state.classHeader = 'header-transform';
       state.classSearch = 'search-transform';
       state.classTitle = 'none';
@@ -19,7 +19,7 @@ export const sliceHeaderTransform = createSlice({
       state.transform = true;
       state.success = false;
     },
-    transformHeaderToMain: (state, actions) => {
+    transformHeaderToMain: (state) => {
       state.classSearch = 'search-widget';
       state.classHeader = 'header';
       state.classTitle = 'header-title';
@@ -27,7 +27,7 @@ export const sliceHeaderTransform = createSlice({
       state.transform = false;
       state.success = false;
     },
-    transformHeaderSuccess: (state, actions) => {
+    transformHeaderSuccess: (state) => {
       state.success = true;
       state.classTitle = 'none';
       state.classSearch = 'none';

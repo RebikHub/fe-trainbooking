@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState } from 'react'
 import '../styles/payment.css';
 import { useEffect } from 'react';
@@ -19,7 +20,7 @@ export default function Payment() {
     phone: '',
     email: ''
   });
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(currentStepThree());

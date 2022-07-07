@@ -9,19 +9,19 @@ export const sliceProgressLine = createSlice({
     stepFour: false
   },
   reducers: {
-    currentStepOne: (state, actions) => {
+    currentStepOne: (state) => {
       state.stepOne = true;
     },
-    currentStepTwo: (state, actions) => {
+    currentStepTwo: (state) => {
       state.stepTwo = true;
     },
-    currentStepThree: (state, actions) => {
+    currentStepThree: (state) => {
       state.stepThree = true;
     },
-    currentStepFour: (state, actions) => {
+    currentStepFour: (state) => {
       state.stepFour = true;
     },
-    clearStepAll: (state, actions) => {
+    clearStepAll: (state) => {
       state.stepTwo = false;
       state.stepThree = false;
       state.stepFour = false;

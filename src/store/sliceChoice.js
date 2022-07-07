@@ -26,13 +26,13 @@ export const sliceChoice = createSlice({
     searchCity: (state, actions) => {
       state.searchCity = actions.payload;
     },
-    clearAllCity: (state, actions) => {
+    clearAllCity: (state) => {
       state.toDate = '';
       state.fromDate = '';
       state.toCity = null;
       state.fromCity = null;
     },
-    clearChoiceCity: (state, actions) => {
+    clearChoiceCity: (state) => {
       state.toCity = null;
       state.fromCity = null;
     },

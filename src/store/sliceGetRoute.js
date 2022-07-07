@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
 export const sliceGetRoute = createSlice({
   name: 'sliceGetRoute',
   initialState: {
@@ -9,7 +8,7 @@ export const sliceGetRoute = createSlice({
     route: []
   },
   reducers: {
-    getRouteRequest: (state, actions) => {
+    getRouteRequest: (state) => {
       state.loading = true;
       state.error = false;
     },
@@ -25,7 +24,7 @@ export const sliceGetRoute = createSlice({
       state.loading = false;
       state.error = actions.payload;
     },
-    clearRouteList: (state, actions) => {
+    clearRouteList: (state) => {
       state.loading = false;
       state.error = false;
       state.route = [];

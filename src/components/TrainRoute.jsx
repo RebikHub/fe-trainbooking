@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -12,7 +14,6 @@ export default function TrainRoute({route, btnText = 'Выбрать места'
   const [train, setTrain] = useState([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
 
   useEffect(() => {
     const arrayInfo = [];
@@ -123,5 +124,5 @@ export default function TrainRoute({route, btnText = 'Выбрать места'
           <button type='button' className='order-route-btn' onClick={backOrder}>{btnText}</button>}
       </div>
     </div>
-  )
-}
+  );
+};

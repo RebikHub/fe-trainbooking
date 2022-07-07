@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
 export const sliceGetSeats = createSlice({
   name: 'sliceGetSeats',
   initialState: {
@@ -9,7 +8,7 @@ export const sliceGetSeats = createSlice({
     error: false
   },
   reducers: {
-    requestGetSeats: (state, actions) => {
+    requestGetSeats: (state) => {
       state.loadingSeats = true;
       state.error = false;
     },

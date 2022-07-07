@@ -217,7 +217,7 @@ export const slicePrice = createSlice({
         state.totalAmountTickets += actions.payload.amount;
       };
     },
-    clearAllPrices: (state, actions) => {
+    clearAllPrices: (state) => {
       state.firstClass.seatsAge = 0;
       state.firstClass.seatsChild = 0;
       state.firstClass.amountTickets = 0;
@@ -250,15 +250,13 @@ export const slicePrice = createSlice({
       state.fourthClass.totalPrice = 0;
       state.fourthClass.seatsNumber = [];
     },
-    totalChoiceRoute: (state, action) => {
-      // state.totalSeatsAge = state.firstClass.seatsAge + state.secondClass.seatsAge + state.thirdClass.seatsAge + state.fourthClass.seatsAge;
-      // state.totalSeatsChild = state.firstClass.seatsChild + state.secondClass.seatsChild + state.thirdClass.seatsChild + state.fourthClass.seatsChild;
+    totalChoiceRoute: (state) => {
       state.totalPriceAge = state.firstClass.seatsPriceAge + state.secondClass.seatsPriceAge + state.thirdClass.seatsPriceAge + state.fourthClass.seatsPriceAge;
       state.totalPriceChild = state.firstClass.seatsPriceChild + state.secondClass.seatsPriceChild + state.thirdClass.seatsPriceChild + state.fourthClass.seatsPriceChild;
       state.totalPriceAll = state.firstClass.totalPrice + state.secondClass.totalPrice + state.thirdClass.totalPrice + state.fourthClass.totalPrice;
       state.totalSeatsNumber = [...state.firstClass.seatsNumber, ...state.secondClass.seatsNumber, ...state.thirdClass.seatsNumber, ...state.fourthClass.seatsNumber]
     },
-    clearTotalPrice: (state, actions) => {
+    clearTotalPrice: (state) => {
       state.totalSeatsAge = 0;
       state.totalSeatsChild = 0;
       state.totalAmountTickets = 0;

@@ -47,7 +47,7 @@ function monthInWeeks(numberMonth) {
     const day = {
       numDay: arrCurDays[i],
       curDay: 'this'
-    }
+    };
 
     if (weeks.first.length < 7) {
       wd.forEach((e, index) => {
@@ -85,8 +85,8 @@ function monthInWeeks(numberMonth) {
           weeks.sixth[index] = day;
         }
       });
-    }
-  }
+    };
+  };
 
   let prevDay = arrPrevDays;
   for (let i = 6; i >= 0; i -= 1) {
@@ -94,10 +94,10 @@ function monthInWeeks(numberMonth) {
       const day = {
         numDay: prevDay,
         curDay: 'prev'
-      }
+      };
       weeks.first[i] = day;
       prevDay -= 1;
-    }
+    };
   }
 
   let count = 0;
@@ -107,10 +107,10 @@ function monthInWeeks(numberMonth) {
       const day = {
         numDay: count,
         curDay: 'next'
-      }
+      };
       weeks.fifth[i] = day;
-    }
-  }
+    };
+  };
   
   for (let i = 0; i < 7; i++) {
     if (!weeks.sixth[i]) {
@@ -118,12 +118,12 @@ function monthInWeeks(numberMonth) {
       const day = {
         numDay: count,
         curDay: 'next'
-      }
+      };
       weeks.sixth[i] = day;
-    }
-  }
+    };
+  };
 
   return weeks;
-}
+};
 
 export {date, monthInWeeks};

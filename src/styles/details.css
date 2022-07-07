@@ -102,16 +102,11 @@
   margin-top: 20px;
 }
 
-
 .there-route {
   display: flex;
   justify-content: space-between;
   margin-top: 70px;
   position: relative;
-}
-
-.there-route-from {
-
 }
 
 .there-time {
@@ -180,14 +175,6 @@
   text-align: right;
 }
 
-.there-to {
-
-}
-
-.details-back {
-
-}
-
 .details-passengers {
   margin: 14px 27px 46px 28px;
 }
@@ -250,10 +237,6 @@
 
 .amount {
   margin-right: 5px;
-}
-
-.pass-ages {
-
 }
 
 .pass-price {

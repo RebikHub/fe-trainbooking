@@ -1,9 +1,5 @@
 /* List passengers */
 
-.list-passengers {
-
-}
-
 .add-passengers {
   display: flex;
   width: 960px;
@@ -127,10 +123,6 @@
   margin: 53px 40px 42px auto;
 }
 
-.pass-main {
-
-}
-
 .pass-choice-age {
   position: relative;
   margin: 38px auto auto 35px;
@@ -200,17 +192,9 @@
   border-bottom: 1px solid #C4C4C4;
 }
 
-.select-child {
-
-}
-
 .pass-form-names {
   display: flex;
   margin: 45px 35px auto 35px;
-}
-
-.pass-names-label {
-
 }
 
 .pass-names-label > p, .choice-gender-text, .pass-birth-label > p {
@@ -244,14 +228,6 @@
   margin: 50px auto auto 35px;
 }
 
-.pass-choice-gender {
-
-}
-
-.choice-gender-text {
-
-}
-
 .choice-gender {
   display: flex;
   width: 204px;
@@ -279,14 +255,6 @@
 
 .gender-choice-color {
   background-color: #FFA800;
-}
-
-.pass-birth-date {
-
-}
-
-.pass-birth-label {
-
 }
 
 .pass-birth-input {
@@ -376,7 +344,6 @@
   box-sizing: border-box;
   cursor: pointer;
   padding-right: 90px;
-
   min-width: 205px;
   height: 50px;
   border: 1px solid #928F94;
@@ -422,10 +389,6 @@
   border-bottom: 1px solid #C4C4C4;
 }
 
-.select-doc-birth {
-
-}
-
 .pass-docs-series, .pass-docs-number, .pass-docs-birth {
   margin: 35px 35px 33px 0;
 }
@@ -466,40 +429,6 @@
   font-size: 18px;
   line-height: 21px;
   color: #C4C4C4;
-}
-
-
-.pass-docs-birth {
-
-}
-
-.docs-birth-label {
-
-}
-
-.docs-birth-input {
-
-}
-
-.docs-series-label {
-
-}
-
-.docs-series-input {
-
-}
-
-
-.docs-number-label {
-
-}
-
-.docs-number-input {
-
-}
-
-.pass-footer {
-
 }
 
 .pass-button {

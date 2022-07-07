@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import '../styles/last-routes.css';
 
 export default function LastRoutes() {
-  const {lastRoutes} = useSelector((state) => state.sliceGetLastRoutes);
+  const { lastRoutes } = useSelector((state) => state.sliceGetLastRoutes);
 
   return (
     <div className='last-routes'>

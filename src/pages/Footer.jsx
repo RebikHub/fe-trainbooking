@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 import { useState } from 'react';
 import { HashLink } from 'react-router-hash-link';
@@ -39,8 +40,6 @@ export default function Footer() {
       dispatch(requestPostSubscribe(input));
     };
   };
-
-  console.log(validateEmail(input) && status);
 
   return (
     <footer id='footer' className='footer'>
@@ -118,5 +117,5 @@ export default function Footer() {
         </div>
       </div>
     </footer>
-  )
-}
+  );
+};

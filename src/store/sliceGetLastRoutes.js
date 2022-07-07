@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
 export const sliceGetLastRoutes = createSlice({
   name: 'sliceGetLastRoutes',
   initialState: {
@@ -10,7 +9,7 @@ export const sliceGetLastRoutes = createSlice({
     error: false
   },
   reducers: {
-    requestGetLastRoutes: (state, actions) => {
+    requestGetLastRoutes: (state) => {
       state.loading = true;
       state.success = false;
     },
