@@ -6,10 +6,10 @@ export function duration(time) {
 };
 
 export function dateFromAndTo(time) {
-  const date = new Date(time * 1000);
-  const hours = date.getHours();
-  const mins = date.getMinutes();
-  return `${hours < 10 ? '0' + hours : hours}:${mins < 10 ? '0' + mins : mins}`;
+  return new Date(time * 1000).toLocaleTimeString('ru', {
+    hour: '2-digit',
+    minute: '2-digit'
+  });
 };
 
 export function timeForSort(time) {
@@ -18,10 +18,7 @@ export function timeForSort(time) {
 };
 
 export function toDate(time) {
-  const day = new Date(time * 1000).getDate();
-  const month = new Date(time * 1000).getMonth() + 1;
-  const year = new Date().getFullYear();
-  return `${day < 10 ? "0" + day : day}.${month < 10 ? "0" + month : month}.${year}`;
+  return new Date(time * 1000).toLocaleDateString();
 };
 
 export function dateForComparison(date) {
