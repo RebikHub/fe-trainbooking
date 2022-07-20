@@ -1,26 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import { reviews } from '../utils/reviews';
 import '../styles/reviews.css';
+import { createRef } from 'react';
 
 export default function Reviews() {
   const length = -727;
   const dotsArray = [...reviews];
   dotsArray.splice(0, 2);
+  const element = createRef();
   const [num, setNum] = useState(0);
   const [translate, setTranslate] = useState(0);
   const [view, setView] = useState(window.scrollY);
 
   function counter(arg) {
-    for (let item of document.querySelectorAll('.carousel-dot')) {
+
+    for (let item of element.current.children) {
       item.classList.remove('active-dot');
     };
 
     if (num === dotsArray.length) {
-      document.querySelector('.dot').classList.add('active-dot');
+      element.current.children[0].classList.add('active-dot');
       setTranslate(0);
       setNum(0);
     } else {
-      document.querySelector(`.dot-${arg}`).classList.toggle('active-dot');
+      element.current.children[arg + 1].classList.toggle('active-dot');
       setTranslate(length * (arg + 1));
       setNum(arg + 1);
     };
@@ -43,7 +46,7 @@ export default function Reviews() {
   function changeReview(ev) {
     const div = ev.target;
     let count = 0;
-    for (let item of document.querySelectorAll('.carousel-dot')) {
+    for (let item of element.current.children) {
       item.classList.remove('active-dot');
       if (div.classList.contains(`dot-${count}`)) {
         setTranslate(length * (count + 1));
@@ -79,11 +82,11 @@ export default function Reviews() {
 
         </div>
       </div>
-      <div className='carousel-dots'>
-      <div className='carousel-dot dot active-dot' onClick={changeReview}></div>
-        {dotsArray.map((e,i) => 
-          <div className={`carousel-dot dot-${i}`} onClick={changeReview} key={`dot-${i}`}></div>
-        )}
+      <div className='carousel-dots' ref={element}>
+        <div className='carousel-dot dot active-dot' onClick={changeReview}></div>
+          {dotsArray.map((e,i) => 
+            <div className={`carousel-dot dot-${i}`} onClick={changeReview} key={`dot-${i}`}></div>
+          )}
       </div>
     </div>
   );
