@@ -3,7 +3,7 @@ import React from 'react';
 import { useState } from 'react';
 import { HashLink } from 'react-router-hash-link';
 import { useDispatch, useSelector } from 'react-redux';
-import Notice from '../components/Notice';
+import Notice from './Notice';
 import '../styles/footer.css';
 import { validateEmail } from '../utils/validators';
 import { changeNotice } from '../store/sliceNotice';

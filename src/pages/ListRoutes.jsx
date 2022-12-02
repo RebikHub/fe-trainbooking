@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import '../styles/list-routes.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearStepAll, currentStepOne } from '../store/sliceProgressLine';
-import TrainRoute from './TrainRoute';
+import TrainRoute from '../components/TrainRoute';
 import { addRoutes, filtering } from '../store/sliceFilter';
 import { filteringPricesRange } from '../utils/minMaxPrices';
 import { sortingDuration, sortingPrices, sortingTime } from '../utils/sortingTrain';

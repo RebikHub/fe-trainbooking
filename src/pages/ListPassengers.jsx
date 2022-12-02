@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import '../styles/passenger.css';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import Passenger from './Passenger';
+import Passenger from '../components/Passenger';
 import { useEffect } from 'react';
 import { currentStepTwo } from '../store/sliceProgressLine';
 

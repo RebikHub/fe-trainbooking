@@ -1,8 +1,8 @@
 import React from 'react';
 import '../styles/main.css';
-import About from './About';
-import How from './How';
-import Reviews from './Reviews';
+import About from '../components/About';
+import How from '../components/How';
+import Reviews from '../components/Reviews';
 
 export default function Main() {
   return (

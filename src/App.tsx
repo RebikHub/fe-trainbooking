@@ -1,16 +1,16 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import ListCoaches from "./components/ListCoaches";
-import ListRoutes from "./components/ListRoutes";
+import ListCoaches from "./pages/ListCoaches";
+import ListRoutes from "./pages/ListRoutes";
 import ChoiceRoute from "./pages/ChoiceRoute";
 import HeaderAndFooter from "./pages/HeaderAndFooter";
 import Main from "./pages/Main";
-import ListPassengers from "./components/ListPassengers";
-import Payment from "./components/Payment";
-import Order from "./components/Order";
-import SuccessfulOrder from "./components/SuccessfulOrder";
+import ListPassengers from "./pages/ListPassengers";
+import Payment from "./pages/Payment";
+import SuccessfulOrder from "./pages/SuccessfulOrder";
+import Order from "./pages/Order";
 
-function App() {
+export default function App() {
   
   return (
     <Routes>
@@ -28,5 +28,3 @@ function App() {
     </Routes>
   );
 };
-
-export default App;
