@@ -1,13 +1,12 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import TrainRoute from '../components/TrainRoute';
 import { clearOrderPassengers, clearOrderPayment } from '../store/sliceOrder';
 import { requestPostOrder } from '../store/slicePostOrder';
 import { currentStepFour } from '../store/sliceProgressLine';
 import '../styles/order.css';
-import TrainRoute from './TrainRoute';
 
 export default function Order() {
   const { route } = useSelector((state) => state.sliceChoice);
@@ -19,13 +18,13 @@ export default function Order() {
 
   useEffect(() => {
     dispatch(currentStepFour());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (status) {
       navigate('/success');
     };
-  }, [status]);
+  }, [navigate, status]);
 
   function changePassengers() {
     navigate('/route/passengers');

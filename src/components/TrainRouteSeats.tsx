@@ -1,38 +1,52 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { IPriceClass } from '../interfaces/interfaces';
 import '../styles/train-route.css';
 
-export default function TrainRouteSeats({name, seats, price, seatPrice}) {
-  const [hidden, setHidden] = useState('none');
-  const [seatInfo, setSeatInfo] = useState([]);
+type Props = {
+  name: string,
+  seats: number,
+  price: number,
+  seatPrice: IPriceClass
+};
 
+type SeatInfo = {
+  name: string,
+  price?: number,
+};
+
+export default function TrainRouteSeats({name, seats, price, seatPrice}: Props) {
+  const [hidden, setHidden] = useState<string>('none');
+  const [seatInfo, setSeatInfo] = useState<SeatInfo[]>([]);
+  const timer = useRef<NodeJS.Timeout>();
+  
   function showSeats() {
     if (hidden === 'none') {
       setHidden('seat-up-down');
-      setTimeout(() => setHidden('none'), 3 * 1000);
+      timer.current = setTimeout(() => setHidden('none'), 3 * 1000);
     } else {
       setHidden('none');
     };
   };
 
+  useEffect(() => clearTimeout(timer.current));
+
   useEffect(() => {
     const arrayPrice = [];
-
-    if (seatPrice.hasOwnProperty('top_price')) {
+    if (Object.prototype.hasOwnProperty.call(seatPrice, 'top_price')) {
       arrayPrice.push({
         name: 'верхние',
         price: seatPrice.top_price,
       });
     };
 
-    if (seatPrice.hasOwnProperty('bottom_price')) {
+    if (Object.prototype.hasOwnProperty.call(seatPrice, 'bottom_price')) {
       arrayPrice.push({
         name: 'нижние',
         price: seatPrice.bottom_price,
       });
     };
 
-    if (seatPrice.hasOwnProperty('side_price')) {
+    if (Object.prototype.hasOwnProperty.call(seatPrice, 'side_price')) {
       arrayPrice.push({
         name: 'боковые',
         price: seatPrice.side_price,
@@ -40,7 +54,7 @@ export default function TrainRouteSeats({name, seats, price, seatPrice}) {
     };
 
     setSeatInfo(arrayPrice);
-  }, []);
+  }, [seatPrice]);
 
   return (
     <div className='train-ticket'>

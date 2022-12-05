@@ -1,27 +1,31 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState } from 'react';
 import '../styles/passenger.css';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import Passenger from '../components/Passenger';
 import { useEffect } from 'react';
 import { currentStepTwo } from '../store/sliceProgressLine';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+
+type StateAgePassenger = {
+  age: number,
+  child: number
+};
 
 export default function ListPassengers() {
-  const { totalSeatsAge, totalSeatsChild } = useSelector((state) => state.slicePrice);
-  const { departure } = useSelector((state) => state.sliceOrder);
-  const [amountPassengers, setAmountPassengers] = useState(totalSeatsAge + totalSeatsChild);
-  const [addComponents, setAddComponents] = useState([]);
-  const [agesPassengers, setAgesPassengers] = useState({
+  const { totalSeatsAge, totalSeatsChild } = useAppSelector((state) => state.slicePrice);
+  const { departure } = useAppSelector((state) => state.sliceOrder);
+  const [amountPassengers, setAmountPassengers] = useState<number>(totalSeatsAge + totalSeatsChild);
+  const [addComponents, setAddComponents] = useState<number[]>([]);
+  const [agesPassengers, setAgesPassengers] = useState<StateAgePassenger>({
     age: totalSeatsAge,
     child: totalSeatsChild
   });
-  let navigate = useNavigate();
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(currentStepTwo());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     let age = 0;

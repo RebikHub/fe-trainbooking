@@ -1,21 +1,29 @@
+import { IUser, IOrderDeparture } from './../interfaces/interfaces';
 import { createSlice } from "@reduxjs/toolkit";
+
+type State = {
+  user: IUser,
+  departure: IOrderDeparture
+};
+
+const initialState: State = {
+  user: {
+    first_name: '',
+    last_name: '',
+    patronymic: '',
+    phone: '',
+    email: '',
+    payment_method: ''
+  },
+  departure: {
+    route_direction_id: '',
+    seats: []
+  }
+};
 
 export const sliceOrder = createSlice({
   name: 'sliceOrder',
-  initialState: {
-    user: {
-      first_name: '',
-      last_name: '',
-      patronymic: '',
-      phone: null,
-      email: null,
-      payment_method: null
-    },
-    departure: {
-      route_direction_id: null,
-      seats: []
-    }
-  },
+  initialState,
   reducers: {
     addUserPayment: (state, actions) => {
       state.user = actions.payload;
@@ -34,12 +42,12 @@ export const sliceOrder = createSlice({
         first_name: '',
         last_name: '',
         patronymic: '',
-        phone: null,
-        email: null,
-        payment_method: null
+        phone: '',
+        email: '',
+        payment_method: ''
       };
       state.departure = {
-        route_direction_id: null,
+        route_direction_id: '',
         seats: []
       };
     },
@@ -48,9 +56,9 @@ export const sliceOrder = createSlice({
         first_name: '',
         last_name: '',
         patronymic: '',
-        phone: null,
-        email: null,
-        payment_method: null
+        phone: '',
+        email: '',
+        payment_method: ''
       };
       state.departure.seats = [];
     },
@@ -59,9 +67,9 @@ export const sliceOrder = createSlice({
         first_name: '',
         last_name: '',
         patronymic: '',
-        phone: null,
-        email: null,
-        payment_method: null
+        phone: '',
+        email: '',
+        payment_method: ''
       };
     }
   }

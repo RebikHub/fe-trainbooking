@@ -46,3 +46,6 @@ export const store = configureStore({
 });
 
 epicMiddleware.run(epic);
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

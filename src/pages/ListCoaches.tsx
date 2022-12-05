@@ -1,24 +1,30 @@
 import React, { useState } from 'react';
 import '../styles/coaches.css';
-import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import CoachesType from '../components/CoachesType';
 import { totalChoiceRoute } from '../store/slicePrice';
 import { clearStepAll } from '../store/sliceProgressLine';
 import coachClassTypes from '../utils/coachClassTypes';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { ISeats } from '../interfaces/interfaces';
+
+type StateButton = {
+  disabled: boolean,
+  className: string
+}
 
 export default function ListCoaches() {
-  const { coaches } = useSelector((state) => state.sliceGetSeats);
-  const { route } = useSelector((state) => state.sliceChoice);
-  let navigate = useNavigate();
-  const [types, setTypes] = useState([]);
-  const [button, setButton] = useState({
+  const { coaches } = useAppSelector((state) => state.sliceGetSeats);
+  const { route } = useAppSelector((state) => state.sliceChoice);
+  const navigate = useNavigate();
+  const [types, setTypes] = useState<ISeats[][]>([]);
+  const [button, setButton] = useState<StateButton>({
     disabled: true,
     className: '-disable'
   });
-  const dispatch = useDispatch();
-  const { totalSeatsAge, totalSeatsChild, totalAmountTickets } = useSelector((state) => state.slicePrice);
+  const dispatch = useAppDispatch();
+  const { totalSeatsAge, totalSeatsChild, totalAmountTickets } = useAppSelector((state) => state.slicePrice);
 
   useEffect(() => {
     if (!route || !coaches) {
@@ -31,8 +37,10 @@ export default function ListCoaches() {
   }, [dispatch]);
 
   useEffect(() => {
-    const classes = coachClassTypes(coaches);
-    setTypes(classes);
+    console.log(coaches);
+    if (coaches) {
+      setTypes(coachClassTypes(coaches));
+    }
   }, [coaches]);
 
   useEffect(() => {

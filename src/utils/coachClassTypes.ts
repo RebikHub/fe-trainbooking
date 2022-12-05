@@ -1,11 +1,12 @@
-export default function coachClassTypes(array) {
+import { ISeats } from "../interfaces/interfaces";
+
+export default function coachClassTypes(array: ISeats[]): ISeats[][] {
   const classes = [];
   const first = [];
   const second = [];
   const third = [];
   const fourth = [];
 
-  if (array) {
     for (let i = 0; i < array.length; i += 1) {
       if (array[i].coach.class_type === 'first') {
         first.push(array[i]);
@@ -34,7 +35,8 @@ export default function coachClassTypes(array) {
       classes.push(fourth);
     };
 
-  };
+  console.log(classes);
   
+
   return classes;
 }
