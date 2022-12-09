@@ -34,7 +34,7 @@ export default function ListRoutes() {
     dispatch(clearStepAll());
   }, []);
 
-  useEffect(() => {
+  useEffect(() => { 
     dispatch(filtering({
       start: filterPrices.start,
       end: filterPrices.end,

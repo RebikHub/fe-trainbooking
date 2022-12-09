@@ -1,29 +1,41 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { IDeparture } from './../interfaces/interfaces';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
+type State = {
+  fromDate: string,
+  toDate: string,
+  fromCity: null | string,
+  toCity: null | string,
+  searchCity: string,
+  route: null | IDeparture
+};
+
+const initialState: State = {
+  fromDate: '',
+  toDate: '',
+  fromCity: null,
+  toCity: null,
+  searchCity: '',
+  route: null
+};
 
 export const sliceChoice = createSlice({
   name: 'sliceChoice',
-  initialState: {
-    fromDate: '',
-    toDate: '',
-    fromCity: null,
-    toCity: null,
-    searchCity: '',
-    route: []
-  },
+  initialState,
   reducers: {
-    choiceDateFrom: (state, actions) => {
+    choiceDateFrom: (state, actions: PayloadAction<string>) => {
       state.fromDate = actions.payload;
     },
-    choiceDateTo: (state, actions) => {
+    choiceDateTo: (state, actions: PayloadAction<string>) => {
       state.toDate = actions.payload;
     },
-    choiceCityFrom: (state, actions) => {
+    choiceCityFrom: (state, actions: PayloadAction<string>) => {
       state.fromCity = actions.payload;
     },
-    choiceCityTo: (state, actions) => {
+    choiceCityTo: (state, actions: PayloadAction<string>) => {
       state.toCity = actions.payload;
     },
-    searchCity: (state, actions) => {
+    searchCity: (state, actions: PayloadAction<string>) => {
       state.searchCity = actions.payload;
     },
     clearAllCity: (state) => {
@@ -36,7 +48,7 @@ export const sliceChoice = createSlice({
       state.toCity = null;
       state.fromCity = null;
     },
-    choiceRoute: (state, actions) => {
+    choiceRoute: (state, actions: PayloadAction<IDeparture>) => {
       state.route = actions.payload;
     }
   }

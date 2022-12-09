@@ -1,19 +1,27 @@
-export function minMaxPrices(array) {
+import { ILast, IPersonInfo } from './../interfaces/interfaces';
+
+type Prices = {
+  minPrice: number,
+  maxPrice: number,
+  allPrices: IPersonInfo[]
+};
+
+export function minMaxPrices(array: ILast[]): Prices {
   if (array && array.length > 0) {
-  const pricesClasses = array.map((el) => el.departure.price_info);
-  const allPrices = [];
-  pricesClasses.map((el) => {
-    if (el.first) {
-      if (el.first.top_price) {
-          allPrices.push(el.first.top_price);
+    const pricesClasses = array.map((el) => el.departure.price_info);
+    const allPrices: IPersonInfo[] = [];
+    pricesClasses.map((el) => {
+      if (el.first) {
+        if (el.first.top_price) {
+            allPrices.push(el.first.top_price);
+          };
+          if (el.first.bottom_price) {
+            allPrices.push(el.first.bottom_price);
+          };
+          if (el.first.side_price) {
+            allPrices.push(el.first.side_price);
+          };
         };
-        if (el.first.bottom_price) {
-          allPrices.push(el.first.bottom_price);
-        };
-        if (el.first.side_price) {
-          allPrices.push(el.first.side_price);
-        };
-      };
   
       if (el.second) {
         if (el.second.top_price) {
@@ -50,17 +58,20 @@ export function minMaxPrices(array) {
           allPrices.push(el.fourth.side_price);
         };
       };
-    return el;
+
+      return el;
     });
   
     const minPrice = allPrices.sort((a, b) => a - b)[0];
     const maxPrice = allPrices.sort((a, b) => b - a)[0];
+
     return {
       minPrice,
       maxPrice,
       allPrices
     };
   };
+
   return {
     minPrice: 0,
     maxPrice: 7000,
@@ -68,6 +79,6 @@ export function minMaxPrices(array) {
   };
 };
 
-export function filteringPricesRange(min, max, array) {
+export function filteringPricesRange(min: number, max: number, array: ILast[]): ILast[] {
   return array.filter((e) => minMaxPrices([e]).allPrices.some((el) => min <= el && max >= el));
 };

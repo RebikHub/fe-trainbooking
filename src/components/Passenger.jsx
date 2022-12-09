@@ -162,7 +162,6 @@ export default function Passenger({addPassenger, num, agesPassengers}) {
 
   function addPassengerToStore() {
     const seats = {
-      person_id: num,
       coach_id: totalSeatsNumber[num - 1].idCoach,
       person_info: {
         is_adult: select.age === 'Взрослый' ? true : false,
@@ -178,7 +177,7 @@ export default function Passenger({addPassenger, num, agesPassengers}) {
       is_child: seatsChildWithout > 0 ? true : false,
       include_children_seat: seatsChildWithout > 0 ? true : false
     }
-    dispatch(addSeatPassenger(seats));
+    dispatch(addSeatPassenger(seats)); 
     setButton(true);
   };
 

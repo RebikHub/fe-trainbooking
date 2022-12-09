@@ -1,67 +1,89 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { Filter, FilterSeats, StartEnd } from './../interfaces/types';
+import { ILast } from './../interfaces/interfaces';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
+type State = {
+  currentRoutes: ILast[],
+  filteredRoutes: ILast[],
+  filterSeats: FilterSeats,
+  filterPrices: StartEnd,
+  filterTimeFrom: {
+    thereDeparture: StartEnd,
+    thereArrival: StartEnd
+  },
+  filterTimeTo: {
+    backDeparture: StartEnd,
+    backArrival: StartEnd
+  },
+  filterProcess: boolean
+};
+
+const initialState: State = {
+  currentRoutes: [],
+  filteredRoutes: [],
+  filterSeats: {
+    coupe: false,
+    reserved: false,
+    seated: false,
+    lux: false,
+    wifi: false,
+    express: false
+  },
+  filterPrices: {
+    start: 0,
+    end: 7000
+  },
+  filterTimeFrom: {
+    thereDeparture: {
+      start: 0,
+      end: 86400
+    },
+    thereArrival: {
+      start: 0,
+      end: 86400
+    }
+  },
+  filterTimeTo: {
+    backDeparture: {
+      start: 0,
+      end: 86400
+    },
+    backArrival: {
+      start: 0,
+      end: 86400
+    }
+  },
+  filterProcess: false
+};
 
 export const sliceFilter = createSlice({
   name: 'sliceFilter',
-  initialState: {
-    currentRoutes: [],
-    filteredRoutes: [],
-    filterSeats: {
-      coupe: false,
-      reserved: false,
-      seated: false,
-      lux: false,
-      wifi: false,
-      express: false
-    },
-    filterPrices: {
-      start: 0,
-      end: 7000
-    },
-    filterTimeFrom: {
-      thereDeparture: {
-        start: 0,
-        end: 86400
-      },
-      thereArrival: {
-        start: 0,
-        end: 86400
-      }
-    },
-    filterTimeTo: {
-      backDeparture: {
-        start: 0,
-        end: 86400
-      },
-      backArrival: {
-        start: 0,
-        end: 86400
-      }
-    },
-    filterProcess: false
-  },
+  initialState,
   reducers: {
-    addRoutes: (state, actions) => {
+    addRoutes: (state, actions: PayloadAction<ILast[]>) => {
       state.currentRoutes = actions.payload;
       state.filterProcess = false;
     },
-    addFilterSeats: (state, actions) => {
+    addFilterSeats: (state, actions: PayloadAction<FilterSeats>) => {
       state.filterSeats = actions.payload;
     },
-    addFilterPrices: (state, actions) => {
+    addFilterPrices: (state, actions: PayloadAction<StartEnd>) => {
       state.filterPrices = actions.payload;
     },
-    addFilterTimeFrom: (state, actions) => {
+    addFilterTimeFrom: (state, actions: PayloadAction<{thereDeparture: StartEnd, thereArrival: StartEnd}>) => {
       state.filterTimeFrom = actions.payload;
     },
-    addFilterTimeTo: (state, actions) => {
+    addFilterTimeTo: (state, actions: PayloadAction<{backDeparture: StartEnd, backArrival: StartEnd}>) => {
       state.filterTimeTo = actions.payload;
     },
-    filtering: (state, actions) => {
+    filtering: (state, actions: PayloadAction<Filter>) => {
       state.filteredRoutes = [];
       state.filteredRoutes = state.currentRoutes;
 
       if (actions.payload.date !== '') {
-        state.filteredRoutes = state.filteredRoutes.filter((el) => el.departure.from.datetime >= actions.payload.dateForComparison(actions.payload.date));
+        state.filteredRoutes = state.filteredRoutes.filter((el) =>
+         el.departure.from.datetime >= actions.payload.dateForComparison(actions.payload.date)
+        );
       };
 
       if (state.filterSeats.lux) {
