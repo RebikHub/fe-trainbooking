@@ -1,4 +1,7 @@
-export function amountSeats(amount, type) {
+import { AmountSeats } from './../interfaces/types';
+import { ISeat, ISeats } from './../interfaces/interfaces';
+
+export function amountSeats(amount: ISeat[], type: string): AmountSeats {
   let top = 0;
   let bottom = 0;
   let side = 0;
@@ -6,7 +9,7 @@ export function amountSeats(amount, type) {
   let other = 0;
 
   if (type === 'first') {
-    for (let i of amount) {
+    for (const i of amount) {
       if (i.index % 2 === 0 && i.available) {
         bottom += 1;
       };
@@ -19,7 +22,7 @@ export function amountSeats(amount, type) {
   };
 
   if (type === 'second' || type === 'third') {
-    for (let i of amount) {
+    for (const i of amount) {
       if (i.index > 32 && i.available) {
         side += 1;
       };
@@ -42,7 +45,7 @@ export function amountSeats(amount, type) {
 
 
   if (type === 'fourth') {
-    for (let i of amount) {
+    for (const i of amount) {
       if (i.index % 2 === 0 && i.index < 33 && i.available) {
         bottom += 1;
       } else if (i.index % 2 !== 0 && i.index > 32 && i.available) {
@@ -64,7 +67,7 @@ export function amountSeats(amount, type) {
   };
 };
 
-export function haveSeatsOrNot(numScheme, coach) {
+export function haveSeatsOrNot(numScheme: number, coach: ISeats): string {
   let result = 'seat-not-have';
   coach.seats.map((e) => {
     if (e.index === numScheme) {

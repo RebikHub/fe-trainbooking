@@ -1,8 +1,8 @@
-export function validateName(string) {
+export function validateName(string: string): boolean {
   return !/[\d\s]/.test(string);
 };
 
-export function validateDate(string) {
+export function validateDate(string: string): boolean {
   if (/^\d{2}\.\d{2}\.\d{4}$/.test(string)) {
     const arrDate = string.split('.');
     const dateNow = new Date().getTime();
@@ -12,27 +12,26 @@ export function validateDate(string) {
   return false;
 };
 
-export function validatePassportSeries(string) {
+export function validatePassportSeries(string: string): boolean {
   return /^\d{4}$/.test(string);
 };
 
-export function validatePassportNumber(string) {
+export function validatePassportNumber(string: string): boolean {
   return /^\d{6}$/.test(string);
 };
 
-export function validateBirthNumber(string) {
+export function validateBirthNumber(string: string): boolean {
   return /^[v,i,x,m]{1,4}[а-я]{1,2}\d{6}$/.test(string);
 };
 
-export function validatePhoneNumber(number) {
+export function validatePhoneNumber(number: string): string | boolean {
   const numberWithoutSpace = number.replace(/\s/g, "");
-  const joinNum = (splitNum) => {
+  const joinNum = (splitNum: string[]): string => {
     splitNum[1] = splitNum[1] + " ";
     splitNum[4] = splitNum[4] + " ";
     splitNum[7] = splitNum[7] + " ";
     splitNum[9] = splitNum[9] + " ";
-    const joinNum = splitNum.join("");
-    return joinNum;
+    return splitNum.join("");
   };
   
   if (numberWithoutSpace.length === 11 && /\d/g.test(numberWithoutSpace) && /^(8|7)/.test(numberWithoutSpace)) {
@@ -47,11 +46,11 @@ export function validatePhoneNumber(number) {
   return false;
 };
 
-export function validateEmail(string) {
+export function validateEmail(string: string): boolean {
   return /@/.test(string) && /\.[a-z]{2,3}$/.test(string);
 };
 
-export function upperCaseBirthNumber(string) {
+export function upperCaseBirthNumber(string: string): string {
   const upperString = string.toUpperCase();
   const splitString = upperString.split('');
   for (let i = 0; i < splitString.length; i += 1) {
@@ -68,6 +67,5 @@ export function upperCaseBirthNumber(string) {
     };
   };
 
-  const joinString = splitString.join('');
-  return joinString;
+  return splitString.join('');
 };

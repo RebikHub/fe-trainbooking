@@ -33,3 +33,34 @@ export type NumberIdCoach = {
   number: number,
   idCoach: string
 };
+
+export type AmountSeats = {
+  top: number,
+  bottom: number,
+  side: number,
+  sum: number,
+  other: number
+};
+
+export type CurrentDate = {
+  numDate: number,
+  year: number,
+  month: string,
+  numberMonth: number,
+  choiceDate: (year: number, month: number, day: number) => string,
+  nameMonth: (year: number, month: number) => string
+};
+
+export type Day = {
+  numDay: number,
+  curDay: string
+};
+
+export type Weeks = {
+  first: Day[],
+  second: Day[],
+  third: Day[],
+  fourth: Day[],
+  fifth: Day[],
+  sixth: Day[]
+};

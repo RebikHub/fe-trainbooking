@@ -1,10 +1,10 @@
 import { Filter, FilterSeats, StartEnd } from './../interfaces/types';
-import { ILast } from './../interfaces/interfaces';
+import { IItem } from './../interfaces/interfaces';
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type State = {
-  currentRoutes: ILast[],
-  filteredRoutes: ILast[],
+  currentRoutes: IItem[],
+  filteredRoutes: IItem[],
   filterSeats: FilterSeats,
   filterPrices: StartEnd,
   filterTimeFrom: {
@@ -60,7 +60,7 @@ export const sliceFilter = createSlice({
   name: 'sliceFilter',
   initialState,
   reducers: {
-    addRoutes: (state, actions: PayloadAction<ILast[]>) => {
+    addRoutes: (state, actions: PayloadAction<IItem[]>) => {
       state.currentRoutes = actions.payload;
       state.filterProcess = false;
     },

@@ -150,7 +150,6 @@ export interface IPostStatus {
   error: boolean | string
 }
 
-
 interface IClassType {
   classType: string,
 }
