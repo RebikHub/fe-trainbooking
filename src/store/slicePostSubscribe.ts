@@ -1,20 +1,24 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { IPostStatus } from "../interfaces/interfaces";
+
+const initialState: IPostStatus = {
+  status: false,
+  loading: false,
+  error: false
+};
 
 export const slicePostSubscribe = createSlice({
   name: 'slicePostSubscribe',
-  initialState: {
-    status: false,
-    loading: false,
-    error: false
-  },
+  initialState,
   reducers: {
     requestPostSubscribe: (state) => {
       state.loading = true;
       state.error = false;
       state.status = false;
     },
-    successPostSubscribe: (state, actions) => {
+    successPostSubscribe: (state, actions: PayloadAction<boolean>) => {
       state.loading = false;
+      state.error = false;
       state.status = actions.payload;
     },
     errorPostSubscribe: (state) => {

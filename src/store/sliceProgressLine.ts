@@ -1,13 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+type State = {
+  stepOne: boolean,
+  stepTwo: boolean,
+  stepThree: boolean,
+  stepFour: boolean
+};
+
+const initialState: State = {
+  stepOne: false,
+  stepTwo: false,
+  stepThree: false,
+  stepFour: false
+};
+
 export const sliceProgressLine = createSlice({
   name: 'sliceProgressLine',
-  initialState: {
-    stepOne: false,
-    stepTwo: false,
-    stepThree: false,
-    stepFour: false
-  },
+  initialState,
   reducers: {
     currentStepOne: (state) => {
       state.stepOne = true;

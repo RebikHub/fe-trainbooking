@@ -1,15 +1,10 @@
-import { ILast, IPersonInfo } from './../interfaces/interfaces';
+import { MinMaxPrices } from '../interfaces/types';
+import { ILast } from './../interfaces/interfaces';
 
-type Prices = {
-  minPrice: number,
-  maxPrice: number,
-  allPrices: IPersonInfo[]
-};
-
-export function minMaxPrices(array: ILast[]): Prices {
+export function minMaxPrices(array: ILast[]): MinMaxPrices {
   if (array && array.length > 0) {
     const pricesClasses = array.map((el) => el.departure.price_info);
-    const allPrices: IPersonInfo[] = [];
+    const allPrices: number[] = [];
     pricesClasses.map((el) => {
       if (el.first) {
         if (el.first.top_price) {

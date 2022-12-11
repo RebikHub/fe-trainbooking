@@ -1,35 +1,30 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { IGetStatus, IIdName } from "../interfaces/interfaces";
+
+const initialState: IGetStatus<IIdName[]> = {
+  items: [],
+  loading: false,
+  error: false
+};
 
 export const sliceGetCity = createSlice({
   name: 'sliceGetCity',
-  initialState: {
-    cities: [],
-    loading: false,
-    success: false,
-    error: false
-  },
+  initialState,
   reducers: {
     requestGetCity: (state) => {
       state.loading = true;
-      state.success = false;
     },
-    errorGetCity: (state, actions) => {
+    errorGetCity: (state, actions: PayloadAction<string>) => {
       state.loading = false;
       state.error = actions.payload;
     },
-    successGetCity: (state, actions) => {
+    successGetCity: (state, actions: PayloadAction<IIdName[]>) => {
       state.loading = false;
-      state.success = true;
-      if (actions.payload.error) {
-        state.error = actions.payload;
-      } else {
-        state.cities = actions.payload;
-      };
+      state.items = actions.payload;
     },
     clearCities: (state) => {
       state.loading = false;
-      state.success = false;
-      state.cities = []
+      state.items = []
     },
   }
 });

@@ -1,33 +1,32 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { IGetStatus, IRoute } from "../interfaces/interfaces";
+
+const initialState: IGetStatus<IRoute | null> = {
+  items: null,
+  loading: false,
+  error: false
+};
 
 export const sliceGetRoute = createSlice({
   name: 'sliceGetRoute',
-  initialState: {
-    loading: false,
-    error: false,
-    route: []
-  },
+  initialState,
   reducers: {
     getRouteRequest: (state) => {
       state.loading = true;
       state.error = false;
     },
-    getRouteSuccess: (state, actions) => {
+    getRouteSuccess: (state, actions: PayloadAction<IRoute>) => {
       state.loading = false;
-      if (actions.payload.error) {
-        state.error = actions.payload;
-      } else {
-        state.route = actions.payload;
-      };
+      state.items = actions.payload;
     },
-    getRouteError: (state, actions) => {
+    getRouteError: (state, actions: PayloadAction<string>) => {
       state.loading = false;
       state.error = actions.payload;
     },
     clearRouteList: (state) => {
       state.loading = false;
       state.error = false;
-      state.route = [];
+      state.items = null;
     }
   }
 });

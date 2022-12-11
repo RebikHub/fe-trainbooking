@@ -1,13 +1,20 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
+type State = {
+  notice: boolean,
+  text: string
+};
+
+const initialState: State = {
+  notice: false,
+  text: ''
+};
 
 export const sliceNotice = createSlice({
   name: 'sliceNotice',
-  initialState: {
-    notice: false,
-    text: ''
-  },
+  initialState,
   reducers: {
-    changeNotice: (state, actions) => {
+    changeNotice: (state, actions: PayloadAction<State>) => {
       state.notice = actions.payload.notice;
       state.text = actions.payload.text;
     }

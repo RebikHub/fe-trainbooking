@@ -1,55 +1,84 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { SIAgeTickets, SICoachSeat, SIChildTickets, SIPriceSeat, SIAmountTicket } from './../interfaces/interfaces';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { NumberIdCoach } from "../interfaces/types";
+
+type SeatsClass = {
+  seatsAge: number,
+  seatsChild: number,
+  seatsNumber: NumberIdCoach[],
+  amountTickets: number,
+  seatsPriceAge: number,
+  seatsPriceChild: number,
+  totalPrice: number
+};
+
+type State = {
+  firstClass: SeatsClass,
+  secondClass: SeatsClass,
+  thirdClass: SeatsClass,
+  fourthClass: SeatsClass,
+  seatsChildWithout: number,
+  totalSeatsAge: number,
+  totalSeatsChild: number,
+  totalSeatsNumber: NumberIdCoach[],
+  totalAmountTickets: number,
+  totalPriceAge: number,
+  totalPriceChild: number,
+  totalPriceAll: number
+};
+
+const initialState: State = {
+  firstClass: {
+    seatsAge: 0,
+    seatsChild: 0,
+    seatsNumber: [],
+    amountTickets: 0, // seatsAge + seatsChild
+    seatsPriceAge: 0,
+    seatsPriceChild: 0,
+    totalPrice: 0 // seatsPrice + serviceWifi + serviceLinens
+  },
+  secondClass: {
+    seatsAge: 0,
+    seatsChild: 0,
+    seatsNumber: [],
+    amountTickets: 0, // seatsAge + seatsChild
+    seatsPriceAge: 0,
+    seatsPriceChild: 0,
+    totalPrice: 0 // seatsPrice + serviceWifi + serviceLinens
+  },
+  thirdClass: {
+    seatsAge: 0,
+    seatsChild: 0,
+    seatsNumber: [],
+    amountTickets: 0, // seatsAge + seatsChild
+    seatsPriceAge: 0,
+    seatsPriceChild: 0,
+    totalPrice: 0 // seatsPrice + serviceWifi + serviceLinens
+  },
+  fourthClass: {
+    seatsAge: 0,
+    seatsChild: 0,
+    seatsNumber: [],
+    amountTickets: 0, // seatsAge + seatsChild
+    seatsPriceAge: 0,
+    seatsPriceChild: 0,
+    totalPrice: 0 // seatsPrice + serviceWifi + serviceLinens
+  },
+  seatsChildWithout: 0,
+  totalSeatsAge: 0,
+  totalSeatsChild: 0,
+  totalSeatsNumber: [],
+  totalAmountTickets: 0,
+  totalPriceAge: 0,
+  totalPriceChild: 0,
+  totalPriceAll: 0
+};
 
 export const slicePrice = createSlice({
   name: 'slicePrice',
-  initialState: {
-    firstClass: {
-      seatsAge: 0,
-      seatsChild: 0,
-      seatsNumber: [],
-      amountTickets: 0, // seatsAge + seatsChild
-      seatsPriceAge: 0,
-      seatsPriceChild: 0,
-      totalPrice: 0 // seatsPrice + serviceWifi + serviceLinens
-    },
-    secondClass: {
-      seatsAge: 0,
-      seatsChild: 0,
-      seatsNumber: [],
-      amountTickets: 0, // seatsAge + seatsChild
-      seatsPriceAge: 0,
-      seatsPriceChild: 0,
-      totalPrice: 0 // seatsPrice + serviceWifi + serviceLinens
-    },
-    thirdClass: {
-      seatsAge: 0,
-      seatsChild: 0,
-      seatsNumber: [],
-      amountTickets: 0, // seatsAge + seatsChild
-      seatsPriceAge: 0,
-      seatsPriceChild: 0,
-      totalPrice: 0 // seatsPrice + serviceWifi + serviceLinens
-    },
-    fourthClass: {
-      seatsAge: 0,
-      seatsChild: 0,
-      seatsNumber: [],
-      amountTickets: 0, // seatsAge + seatsChild
-      seatsPriceAge: 0,
-      seatsPriceChild: 0,
-      totalPrice: 0 // seatsPrice + serviceWifi + serviceLinens
-    },
-    seatsChildWithout: 0,
-    totalSeatsAge: 0,
-    totalSeatsChild: 0,
-    totalSeatsNumber: [],
-    totalAmountTickets: 0,
-    totalPriceAge: 0,
-    totalPriceChild: 0,
-    totalPriceAll: 0
-  },
+  initialState,
   reducers: {
-    changeAgeTickets: (state, actions) => {
+    changeAgeTickets: (state, actions: PayloadAction<SIAgeTickets>) => {
       if (actions.payload.classType === 'first') {
         state.firstClass.seatsAge = actions.payload.seatsAge;
         state.firstClass.amountTickets = state.firstClass.seatsChild + actions.payload.seatsAge;
@@ -70,7 +99,7 @@ export const slicePrice = createSlice({
       state.totalSeatsAge = amountTickets;
       state.totalAmountTickets = state.totalSeatsAge + state.totalSeatsChild;
     },
-    changeChildTickets: (state, actions) => {
+    changeChildTickets: (state, actions: PayloadAction<SIChildTickets>) => {
       if (actions.payload.classType === 'first') {
         state.firstClass.seatsChild = actions.payload.seatsChild;
         state.firstClass.amountTickets = state.firstClass.seatsAge + actions.payload.seatsChild;
@@ -91,12 +120,12 @@ export const slicePrice = createSlice({
       state.totalSeatsChild = amountTickets;
       state.totalAmountTickets = state.totalSeatsAge + state.totalSeatsChild;
     },
-    changeChildWithoutTickets: (state, actions) => {
+    changeChildWithoutTickets: (state, actions: PayloadAction<number>) => {
       state.seatsChildWithout = actions.payload;
     },
-    changeNumberSeats: (state, actions) => {
-      const someElement = (e) => e.number === actions.payload.seat.number && e.idCoach === actions.payload.seat.idCoach;
-      const filterArray = (e) => e.number !== actions.payload.seat.number && e.idCoach === actions.payload.seat.idCoach;
+    changeNumberSeats: (state, actions: PayloadAction<SICoachSeat>) => {
+      const someElement = (e: NumberIdCoach) => e.number === actions.payload.seat.number && e.idCoach === actions.payload.seat.idCoach;
+      const filterArray = (e: NumberIdCoach) => e.number !== actions.payload.seat.number && e.idCoach === actions.payload.seat.idCoach;
       if (actions.payload.classType === 'first') {
         if (actions.payload.seat.number > 0 && state.firstClass.seatsNumber.some(someElement)) {
           state.firstClass.seatsNumber = state.firstClass.seatsNumber.filter(filterArray);
@@ -126,7 +155,7 @@ export const slicePrice = createSlice({
         };
       };
     },
-    changePriceSeats: (state, actions) => {
+    changePriceSeats: (state, actions: PayloadAction<SIPriceSeat>) => {
       if (actions.payload.classType === 'first') {
         if (state.firstClass.seatsAge > 0) {
           state.firstClass.seatsAge -= 1;
@@ -171,7 +200,7 @@ export const slicePrice = createSlice({
         state.fourthClass.totalPrice += actions.payload.price;
       };
     },
-    changeServiceWifi: (state, actions) => {
+    changeServiceWifi: (state, actions: PayloadAction<SIPriceSeat>) => {
       if (actions.payload.classType === 'first') {
         state.firstClass.totalPrice += actions.payload.price;
       };
@@ -185,7 +214,7 @@ export const slicePrice = createSlice({
         state.fourthClass.totalPrice += actions.payload.price;
       };
     },
-    changeServiceLinens: (state, actions) => {
+    changeServiceLinens: (state, actions: PayloadAction<SIPriceSeat>) => {
       if (actions.payload.classType === 'first') {
         state.firstClass.totalPrice += actions.payload.price;
       };
@@ -199,7 +228,7 @@ export const slicePrice = createSlice({
         state.fourthClass.totalPrice += actions.payload.price;
       };
     },
-    changeAmountTickets: (state, actions) => {
+    changeAmountTickets: (state, actions: PayloadAction<SIAmountTicket>) => {
       if (actions.payload.classType === 'first') {
         state.firstClass.amountTickets += actions.payload.amount;
         state.totalAmountTickets += actions.payload.amount;

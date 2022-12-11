@@ -1,4 +1,11 @@
-export interface ILast {
+import { NumberIdCoach } from "./types";
+
+export interface IRoute {
+  total_count: number;
+  items: IItem[];
+}
+
+export interface IItem {
   have_first_class: boolean;
   have_second_class: boolean;
   have_third_class: boolean;
@@ -31,7 +38,7 @@ export interface IDeparture {
   duration: number;
   available_seats: number;
   available_seats_info: IAvailableSeatsInfo;
-  train: ITrain;
+  train: IIdName;
   from: IFrom;
   to: IFrom;
   price_info: IPriceInfo;
@@ -39,16 +46,17 @@ export interface IDeparture {
 
 export interface IFrom {
   railway_station_name: string;
-  city: ITrain;
+  city: IIdName;
   datetime: number;
 }
 
-export interface ITrain {
+export interface IIdName {
   _id: string;
   name: string;
 }
 
 export interface IPriceInfo {
+  first?: IPriceClass;
   second?: IPriceClass;
   third?: IPriceClass;
   fourth?: IPriceClass;
@@ -58,11 +66,6 @@ export interface IPriceClass {
   top_price: number;
   bottom_price: number;
   side_price?: number;
-}
-
-export interface ICity {
-  _id: string;
-  name: string;
 }
 
 export interface IOrder {
@@ -103,25 +106,6 @@ export interface IUser {
   payment_method: string;
 }
 
-export interface IRoute {
-  total_count: number;
-  items: IItem[];
-}
-
-export interface IItem {
-  have_first_class: boolean;
-  have_second_class: boolean;
-  have_third_class: boolean;
-  have_fourth_class: boolean;
-  have_wifi: boolean;
-  have_air_conditioning: boolean;
-  is_express: boolean;
-  min_price: number;
-  available_seats: number;
-  available_seats_info: IAvailableSeatsInfo;
-  departure: IDeparture;
-}
-
 export interface ISeats {
   coach: ICoach;
   seats: ISeat[];
@@ -152,4 +136,41 @@ export interface ICoach {
 export interface ISeat {
   index: number;
   available: boolean;
+}
+
+export interface IGetStatus<T> {
+  items: T;
+  loading: boolean;
+  error: boolean | string;
+}
+
+export interface IPostStatus {
+  status: boolean,
+  loading: boolean,
+  error: boolean | string
+}
+
+
+interface IClassType {
+  classType: string,
+}
+
+export interface SICoachSeat extends IClassType  {
+  seat: NumberIdCoach
+}
+
+export interface SIPriceSeat extends IClassType {
+  price: number
+}
+
+export interface SIAmountTicket extends IClassType {
+  amount: number
+}
+
+export interface SIAgeTickets extends IClassType {
+  seatsAge: number
+}
+
+export interface SIChildTickets extends IClassType {
+  seatsChild: number
 }

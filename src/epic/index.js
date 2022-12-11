@@ -17,7 +17,13 @@ export const getCitiesEpic = (action$) => action$.pipe(
   switchMap((o) => {
     return ajax.getJSON(`${process.env.REACT_APP_API_URL}routes/cities?name=${o.payload}`).pipe(
     retry(3),
-    map((o) => successGetCity(o)),
+    map((o) => {
+      if (o.error) {
+        errorGetCity(o.error)
+      } else {
+        successGetCity(o)
+      }
+    }),
     catchError((e) => of(errorGetCity(e)))
   )})
 );
@@ -28,7 +34,13 @@ export const getRoutesEpic = (action$) => action$.pipe(
   switchMap((o) => {
     return ajax.getJSON(`${process.env.REACT_APP_API_URL}routes?from_city_id=${o.payload.fromCity._id}&to_city_id=${o.payload.toCity._id}`).pipe(
     retry(3),
-    map((o) => getRouteSuccess(o)),
+    map((o) => {
+      if (o.error) {
+        getRouteError(o.error)
+      } else {
+        getRouteSuccess(o)
+      }
+    }),
     catchError((e) => of(getRouteError(e)))
   )})
 );
@@ -80,3 +92,10 @@ export const postSubscribe = (action$) => action$.pipe(
     catchError((e) => of(errorPostSubscribe(e)))
   )})
 );
+
+
+// 63329d7b591d1e00467e8a30
+
+// 63329d7b591d1e00467e8a31
+
+// departure._id  6332a1be591d1e004681f858

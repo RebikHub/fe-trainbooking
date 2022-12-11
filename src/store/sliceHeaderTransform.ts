@@ -1,15 +1,26 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+type State = {
+  classSearch: string,
+  classHeader: string,
+  classTitle: string,
+  classLine: string,
+  transform: boolean,
+  success: boolean
+};
+
+const initialState: State = {
+  classSearch: 'search-widget',
+  classHeader: 'header',
+  classTitle: 'header-title',
+  classLine: 'header-endline',
+  transform: false,
+  success: false
+};
+
 export const sliceHeaderTransform = createSlice({
   name: 'sliceHeaderTransform',
-  initialState: {
-    classSearch: 'search-widget',
-    classHeader: 'header',
-    classTitle: 'header-title',
-    classLine: 'header-endline',
-    transform: false,
-    success: false
-  },
+  initialState,
   reducers: {
     transformHeader: (state) => {
       state.classHeader = 'header-transform';

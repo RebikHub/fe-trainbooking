@@ -1,26 +1,26 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { IGetStatus, IItem } from './../interfaces/interfaces';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
+const initialState: IGetStatus<IItem[]> = {
+  items: [],
+  loading: false,
+  error: false
+};
 
 export const sliceGetLastRoutes = createSlice({
   name: 'sliceGetLastRoutes',
-  initialState: {
-    lastRoutes: [],
-    loading: false,
-    success: false,
-    error: false
-  },
+  initialState,
   reducers: {
     requestGetLastRoutes: (state) => {
       state.loading = true;
-      state.success = false;
     },
-    errorGetLastRoutes: (state, actions) => {
+    errorGetLastRoutes: (state, actions: PayloadAction<string>) => {
       state.loading = false;
       state.error = actions.payload;
     },
-    successGetLastRoutes: (state, actions) => {
+    successGetLastRoutes: (state, actions: PayloadAction<IItem[]>) => {
       state.loading = false;
-      state.success = true;
-      state.lastRoutes = actions.payload;
+      state.items = actions.payload;
     },
   }
 });
