@@ -13,7 +13,7 @@ type StateAgePassenger = {
 
 export default function ListPassengers() {
   const { totalSeatsAge, totalSeatsChild } = useAppSelector((state) => state.slicePrice);
-  const { departure } = useAppSelector((state) => state.sliceOrder);
+  const seats = useAppSelector((state) => state.sliceOrder.departure.seats);
   const [amountPassengers, setAmountPassengers] = useState<number>(totalSeatsAge + totalSeatsChild);
   const [addComponents, setAddComponents] = useState<number[]>([]);
   const [agesPassengers, setAgesPassengers] = useState<StateAgePassenger>({
@@ -30,7 +30,7 @@ export default function ListPassengers() {
   useEffect(() => {
     let age = 0;
     let child = 0;
-    departure.seats.map((el) => {
+    seats.map((el) => {
       if (el.person_info.is_adult) {
         age += 1;
       };
@@ -46,7 +46,7 @@ export default function ListPassengers() {
       age: totalSeatsAge - age,
       child: totalSeatsChild - child
     });
-  }, [departure.seats]);
+  }, [seats]);
 
   function addPassenger() {
     if (amountPassengers >= 1) {

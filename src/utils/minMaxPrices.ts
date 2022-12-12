@@ -1,7 +1,7 @@
 import { MinMaxPrices } from '../interfaces/types';
-import { ILast } from './../interfaces/interfaces';
+import { IItem } from './../interfaces/interfaces';
 
-export function minMaxPrices(array: ILast[]): MinMaxPrices {
+export function minMaxPrices(array: IItem[]): MinMaxPrices {
   if (array && array.length > 0) {
     const pricesClasses = array.map((el) => el.departure.price_info);
     const allPrices: number[] = [];
@@ -74,6 +74,6 @@ export function minMaxPrices(array: ILast[]): MinMaxPrices {
   };
 };
 
-export function filteringPricesRange(min: number, max: number, array: ILast[]): ILast[] {
+export function filteringPricesRange(min: number, max: number, array: IItem[]): IItem[] {
   return array.filter((e) => minMaxPrices([e]).allPrices.some((el) => min <= el && max >= el));
 };

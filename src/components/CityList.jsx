@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import '../styles/city.css';
 
 export default function CityList({none, showListFrom, showListTo, getCity}) {
-  const { cities } = useSelector((state) => state.sliceGetCity);
+  const cities = useSelector((state) => state.sliceGetCity.items);
   const ref = useRef(null);
 
   useEffect(() => {

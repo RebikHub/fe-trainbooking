@@ -15,7 +15,7 @@ type StateButton = {
 }
 
 export default function ListCoaches() {
-  const { coaches } = useAppSelector((state) => state.sliceGetSeats);
+  const coaches = useAppSelector((state) => state.sliceGetSeats.items);
   const { route } = useAppSelector((state) => state.sliceChoice);
   const navigate = useNavigate();
   const [types, setTypes] = useState<ISeats[][]>([]);

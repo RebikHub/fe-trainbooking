@@ -1,5 +1,5 @@
 import { ofType } from "redux-observable";
-import { catchError, debounceTime, map, of, retry, switchMap } from "rxjs";
+import { catchError, debounceTime, map, of, retry, switchMap, tap } from "rxjs";
 import { ajax } from "rxjs/ajax";
 import { searchCity } from "../store/sliceChoice";
 import { errorGetCity, requestGetCity, successGetCity } from "../store/sliceGetCity";
@@ -16,6 +16,7 @@ export const getCitiesEpic = (action$) => action$.pipe(
   map(o => requestGetCity(o)),
   switchMap((o) => {
     return ajax.getJSON(`${process.env.REACT_APP_API_URL}routes/cities?name=${o.payload}`).pipe(
+    tap((o) => console.log(o)),
     retry(3),
     map((o) => {
       if (o.error) {
@@ -47,7 +48,7 @@ export const getRoutesEpic = (action$) => action$.pipe(
 
 export const getLastRoutesEpic = (action$) => action$.pipe(
   ofType(requestGetLastRoutes),
-  switchMap((o) => {
+  switchMap(() => {
     return ajax.getJSON(`${process.env.REACT_APP_API_URL}routes/last`).pipe(
     retry(3),
     map((o) => successGetLastRoutes(o)),

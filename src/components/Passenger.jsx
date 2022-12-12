@@ -339,7 +339,7 @@ export default function Passenger({addPassenger, num, agesPassengers}) {
           <span className={none.ok ? 'pass-valid-ok' : 'none'}></span>
           <p className={none.ok ? 'pass-valid-text-ok' : 'none'}>Готово</p>
           <button className={!none.valid ? 'pass-button' : 'none'} type='button' disabled={button}
-            onClick={nextPassenger}>Следующий пассажир</button>
+            onClick={nextPassenger}>{!button && num === 1 ? 'Продолжить' : 'Следующий пассажир'}</button>
           <div className={none.valid ? 'pass-valid' : 'none'}>
             <span className='pass-valid-close' onClick={() => setNone({...none, valid: false})}></span>
             <p className='pass-valid-text'>{validText}</p>

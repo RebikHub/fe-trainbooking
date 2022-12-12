@@ -10,20 +10,20 @@ import { useAppSelector } from '../store/hooks';
 import '../styles/route.css';
 
 export default function ChoiceRoute() {
-  const { loading } = useAppSelector((state) => state.sliceGetRoute);
-  const { loadingSeats } = useAppSelector((state) => state.sliceGetSeats);
+  const routeLoading = useAppSelector((state) => state.sliceGetRoute.loading);
+  const seatsLoading = useAppSelector((state) => state.sliceGetSeats.loading);
   const { route } = useAppSelector((state) => state.sliceChoice);
   const postLoading = useAppSelector((state) => state.slicePostOrder.loading);
   const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (route.length === 0 && location.pathname === '/route/coach') {
+    if (route && location.pathname === '/route/coach') {
       navigate('/route');
     };
   }, [location.pathname, navigate, route]);
 
-  if (loading || loadingSeats || postLoading) {
+  if (routeLoading || seatsLoading || postLoading) {
     return <SearchProgress/>
   };
 

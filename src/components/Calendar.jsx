@@ -1,12 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import '../styles/calendar.css';
-import { date, monthInWeeks } from '../utils/date';
+import { getCurrentDate, monthInWeeks } from '../utils/date';
 import DaysInWeek from './DaysInWeek';
 import { useSelector } from 'react-redux';
 import { useRef } from 'react';
 
 export default function Calendar({none, getDate, getCalendarFrom, getCalendarTo}) {
+  const date = getCurrentDate();
   const [numMonth, setNumMonth] = useState(date.numberMonth);
   const [nameMonth, setNameMonth] = useState(date.month);
   const [days, setDays] = useState(null);
