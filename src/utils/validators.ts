@@ -24,7 +24,7 @@ export function validateBirthNumber(string: string): boolean {
   return /^[v,i,x,m]{1,4}[а-я]{1,2}\d{6}$/.test(string);
 };
 
-export function validatePhoneNumber(number: string): string | boolean {
+export function validatePhoneNumber(number: string): string {
   const numberWithoutSpace = number.replace(/\s/g, "");
   const joinNum = (splitNum: string[]): string => {
     splitNum[1] = splitNum[1] + " ";
@@ -43,7 +43,7 @@ export function validatePhoneNumber(number: string): string | boolean {
     return joinNum(numberWithoutSpace.split(""));
   };
 
-  return false;
+  return '';
 };
 
 export function validateEmail(string: string): boolean {

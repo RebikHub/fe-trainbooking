@@ -1,19 +1,19 @@
 import React from 'react';
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import TrainRoute from '../components/TrainRoute';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { clearOrderPassengers, clearOrderPayment } from '../store/sliceOrder';
 import { requestPostOrder } from '../store/slicePostOrder';
 import { currentStepFour } from '../store/sliceProgressLine';
 import '../styles/order.css';
 
 export default function Order() {
-  const { route } = useSelector((state) => state.sliceChoice);
-  const { totalPriceAll } = useSelector((state) => state.slicePrice);
-  const { user, departure } = useSelector((state) => state.sliceOrder);
-  const { status } = useSelector((state) => state.slicePostOrder);
-  const dispatch = useDispatch();
+  const { route } = useAppSelector((state) => state.sliceChoice);
+  const { totalPriceAll } = useAppSelector((state) => state.slicePrice);
+  const { user, departure } = useAppSelector((state) => state.sliceOrder);
+  const { status } = useAppSelector((state) => state.slicePostOrder);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {

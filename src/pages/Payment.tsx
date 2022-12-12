@@ -1,19 +1,26 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState } from 'react'
+import React, { ChangeEvent, useState } from 'react'
 import '../styles/payment.css';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { currentStepThree } from '../store/sliceProgressLine';
 import { validateEmail, validateName, validatePhoneNumber } from '../utils/validators';
 import { changeNotice } from '../store/sliceNotice';
 import { useNavigate } from 'react-router-dom';
 import { addUserPayment } from '../store/sliceOrder';
+import { useAppDispatch } from '../store/hooks';
+
+type InputState = {
+  name: string,
+  patronymic: string,
+  surname: string,
+  phone: string,
+  email: string
+};
 
 export default function Payment() {
-  const dispatch = useDispatch();
-  const [method, setMethod] = useState(false);
-  const [ok, setOk] = useState(false);
-  const [inputValue, setInputValue] = useState({
+  const dispatch = useAppDispatch();
+  const [method, setMethod] = useState<boolean>(false);
+  const [ok, setOk] = useState<boolean>(false);
+  const [inputValue, setInputValue] = useState<InputState>({
     name: '',
     patronymic: '',
     surname: '',
@@ -24,7 +31,7 @@ export default function Payment() {
 
   useEffect(() => {
     dispatch(currentStepThree());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (
@@ -39,7 +46,7 @@ export default function Payment() {
       };
   }, [inputValue]);
 
-  function inputFirstName(ev) {
+  function inputFirstName(ev: ChangeEvent<HTMLInputElement>) {
     setInputValue({...inputValue, name: ev.target.value});
   };
 
@@ -52,7 +59,7 @@ export default function Payment() {
     };
   };
 
-  function inputSecondName(ev) {
+  function inputSecondName(ev: ChangeEvent<HTMLInputElement>) {
     setInputValue({...inputValue, patronymic: ev.target.value});
   };
 
@@ -65,7 +72,7 @@ export default function Payment() {
     };
   };
 
-  function inputSurName(ev) {
+  function inputSurName(ev: ChangeEvent<HTMLInputElement>) {
     setInputValue({...inputValue, surname: ev.target.value});
   };
 
@@ -78,7 +85,7 @@ export default function Payment() {
     };
   };
 
-  function inputPhone(ev) {
+  function inputPhone(ev: ChangeEvent<HTMLInputElement>) {
     setInputValue({...inputValue, phone: ev.target.value});
   };
 
@@ -93,7 +100,7 @@ export default function Payment() {
     };
   };
 
-  function inputEmail(ev) {
+  function inputEmail(ev: ChangeEvent<HTMLInputElement>) {
     setInputValue({...inputValue, email: ev.target.value});
   };
 

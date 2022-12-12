@@ -1,12 +1,8 @@
-import { IUser, IOrderDeparture, ISeat } from './../interfaces/interfaces';
+import { IUser, ISeat } from './../interfaces/interfaces';
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Order } from '../interfaces/types';
 
-type State = {
-  user: IUser,
-  departure: IOrderDeparture
-};
-
-const initialState: State = {
+const initialState: Order = {
   user: {
     first_name: '',
     last_name: '',

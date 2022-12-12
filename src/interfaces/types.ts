@@ -1,4 +1,4 @@
-import { IItem } from './interfaces';
+import { IItem, IOrderDeparture, IUser } from './interfaces';
 
 export type Filter = {
   start: number,
@@ -63,4 +63,9 @@ export type Weeks = {
   fourth: Day[],
   fifth: Day[],
   sixth: Day[]
+};
+
+export type Order = {
+  user: IUser,
+  departure: IOrderDeparture
 };

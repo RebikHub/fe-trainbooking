@@ -1,5 +1,6 @@
 import { IPostStatus } from './../interfaces/interfaces';
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Order } from '../interfaces/types';
 
 const initialState: IPostStatus =  {
   status: false,
@@ -11,7 +12,7 @@ export const slicePostOrder = createSlice({
   name: 'slicePostOrder',
   initialState,
   reducers: {
-    requestPostOrder: (state) => {
+    requestPostOrder: (state, actions: PayloadAction<Order>) => {
       state.status = false;
       state.loading = true;
       state.error = false;

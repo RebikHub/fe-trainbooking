@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { clearAllCity } from '../store/sliceChoice';
 import { clearAllFiltering } from '../store/sliceFilter';
 import { clearRouteList } from '../store/sliceGetRoute';
@@ -10,8 +10,16 @@ import { clearAllPrices, clearTotalPrice } from '../store/slicePrice';
 import { clearStepAll } from '../store/sliceProgressLine';
 import '../styles/success.css';
 
+type Stars = {
+  one: string,
+  two: string,
+  three: string,
+  four: string,
+  five: string
+};
+
 export default function SuccessfulOrder() {
-  const [star, setStar] = useState({
+  const [star, setStar] = useState<Stars>({
     one: '',
     two: '',
     three: '',
@@ -19,9 +27,9 @@ export default function SuccessfulOrder() {
     five: ''
   });
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { totalPriceAll } = useSelector((state) => state.slicePrice);
-  const { user } = useSelector((state) => state.sliceOrder);
+  const dispatch = useAppDispatch();
+  const { totalPriceAll } = useAppSelector((state) => state.slicePrice);
+  const { user } = useAppSelector((state) => state.sliceOrder);
 
   function checkOne() {
     setStar({
