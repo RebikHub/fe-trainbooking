@@ -1,38 +1,38 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, SyntheticEvent } from 'react';
 import '../styles/list-routes.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { clearStepAll, currentStepOne } from '../store/sliceProgressLine';
 import TrainRoute from '../components/TrainRoute';
 import { addRoutes, filtering } from '../store/sliceFilter';
 import { filteringPricesRange } from '../utils/minMaxPrices';
 import { sortingDuration, sortingPrices, sortingTime } from '../utils/sortingTrain';
 import { dateForComparison, timeForSort } from '../utils/trainDate';
+import { IItem } from '../interfaces/interfaces';
 
 export default function ListRoutes() {
-  const { loading, route } = useSelector((state) => state.sliceGetRoute);
-  const { fromDate } = useSelector((state) => state.sliceChoice);
+  const { loading, items } = useAppSelector((state) => state.sliceGetRoute);
+  const { fromDate } = useAppSelector((state) => state.sliceChoice);
   const {
     filteredRoutes,
     filterSeats,
     filterPrices,
     filterTimeFrom,
     filterTimeTo
-  } = useSelector((state) => state.sliceFilter);
-  const dispatch = useDispatch();
-  const [list, setList] = useState([]);
-  const [none, setNone] = useState('none');
-  const [select, setSelect] = useState('времени');
-  const [pages, setPages] = useState([]);
-  const [showOnPages, setShowOnPages] = useState(5);
-  const [startSlice, setStartSlice] = useState(0);
-  const [endSlice, setEndSlice] = useState(5);
-  const [lengthPage, setLengthPage] = useState(5);
-  const [currentPage, setCurrentPage] = useState(1);
+  } = useAppSelector((state) => state.sliceFilter);
+  const dispatch = useAppDispatch();
+  const [list, setList] = useState<IItem[]>([]);
+  const [none, setNone] = useState<string>('none');
+  const [select, setSelect] = useState<string>('времени');
+  const [pages, setPages] = useState<number[]>([]);
+  const [showOnPages, setShowOnPages] = useState<number>(5);
+  const [startSlice, setStartSlice] = useState<number>(0);
+  const [endSlice, setEndSlice] = useState<number>(5);
+  const [lengthPage, setLengthPage] = useState<number>(5);
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
   useEffect(() => {
     dispatch(clearStepAll());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => { 
     dispatch(filtering({
@@ -43,7 +43,7 @@ export default function ListRoutes() {
       timeForSort,
       dateForComparison
     }));
-  }, [filterSeats, filterPrices, filterTimeFrom, filterTimeTo, fromDate]);
+  }, [filterSeats, filterPrices, filterTimeFrom, filterTimeTo, fromDate, dispatch]);
 
   useEffect(() => {
     const timer = setTimeout(() => setList(filteredRoutes), 500);
@@ -51,11 +51,11 @@ export default function ListRoutes() {
   }, [filteredRoutes]);
 
   useEffect(() => {
-    if (route.items && route.items.length > 0) {
-      dispatch(addRoutes(route.items));
-      setList(route.items);
+    if (items && items.items.length > 0) {
+      dispatch(addRoutes(items.items));
+      setList(items.items);
     };
-  }, [loading, route]);
+  }, [loading, items, dispatch]);
 
   useEffect(() => {
     if (!loading) {
@@ -70,13 +70,13 @@ export default function ListRoutes() {
       };
       setPages(arr);
     };
-  }, [list, showOnPages]);
+  }, [dispatch, list, loading, showOnPages]);
 
   useEffect(() => {
     if (list.length > 0) {
       swapClassStyle(currentPage);
     };
-  }, [currentPage]);
+  }, [currentPage, list.length]);
 
   function getSort() {
     if (none === 'none') {
@@ -86,32 +86,33 @@ export default function ListRoutes() {
     }
   };
 
-  function getSelect(ev) {
-    setSelect(ev.target.outerText);
-    setNone('none');
-    if (ev.target.outerText === 'времени') {
-      console.log(ev.target.outerText);
-      setList(sortingTime(list));
-    };
-    if (ev.target.outerText === 'стоимости') {
-      setList(sortingPrices(list));
-    };
-    if (ev.target.outerText === 'длительности') {
-      setList(sortingDuration(list));
+  function getSelect(ev: SyntheticEvent<HTMLElement>) {
+    if (ev.currentTarget.textContent) {
+      setSelect(ev.currentTarget.textContent);
+      setNone('none');
+      if (ev.currentTarget.textContent === 'времени') {
+        setList(sortingTime(list));
+      };
+      if (ev.currentTarget.textContent === 'стоимости') {
+        setList(sortingPrices(list));
+      };
+      if (ev.currentTarget.textContent === 'длительности') {
+        setList(sortingDuration(list));
+      };
     };
   };
 
-  function getShowOnPages(ev) {
-    setShowOnPages(Number(ev.target.outerText));
+  function getShowOnPages(ev: SyntheticEvent<HTMLElement>) {
+    setShowOnPages(Number(ev.currentTarget.textContent));
     setStartSlice(0);
-    setLengthPage(Number(ev.target.outerText));
-    setEndSlice(Number(ev.target.outerText));
+    setLengthPage(Number(ev.currentTarget.textContent));
+    setEndSlice(Number(ev.currentTarget.textContent));
   };
 
-  function choicePage(ev) {
-    setCurrentPage(Number(ev.target.outerText));
-    setStartSlice(lengthPage * (Number(ev.target.outerText) - 1));
-    setEndSlice(lengthPage * Number(ev.target.outerText));
+  function choicePage(ev: SyntheticEvent<HTMLElement>) {
+    setCurrentPage(Number(ev.currentTarget.textContent));
+    setStartSlice(lengthPage * (Number(ev.currentTarget.textContent) - 1));
+    setEndSlice(lengthPage * Number(ev.currentTarget.textContent));
   };
 
   function prevPage() {
@@ -144,9 +145,9 @@ export default function ListRoutes() {
 
   };
 
-  function swapClassStyle(page) {
+  function swapClassStyle(page: number) {
     const elements = document.querySelectorAll('.list-routes-page');
-    for (let i of elements) {
+    for (const i of elements) {
       if (i.classList.contains('choice-page')) {
         i.classList.remove('choice-page');
       };

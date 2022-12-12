@@ -46,7 +46,8 @@ export default function ListPassengers() {
       age: totalSeatsAge - age,
       child: totalSeatsChild - child
     });
-  }, [seats]);
+  }, [seats, totalSeatsAge, totalSeatsChild]);
+
 
   function addPassenger() {
     if (amountPassengers >= 1) {
