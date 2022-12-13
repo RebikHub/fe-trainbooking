@@ -1,3 +1,4 @@
+import { storeApi } from './../middleware/storeApi';
 import { configureStore } from "@reduxjs/toolkit";
 import { combineEpics, createEpicMiddleware } from "redux-observable";
 import { getCitiesEpic, getLastRoutesEpic, getRoutesEpic, getSeatsEpic, postOrderEpic, postSubscribe } from "../epic";
@@ -15,16 +16,16 @@ import slicePostOrder from "./slicePostOrder";
 import slicePostSubscribe from "./slicePostSubscribe";
 import sliceNotice from "./sliceNotice";
 
-const epic = combineEpics(
-  getCitiesEpic,
-  getRoutesEpic,
-  getLastRoutesEpic,
-  getSeatsEpic,
-  postOrderEpic,
-  postSubscribe
-);
+// const epic = combineEpics(
+//   getCitiesEpic,
+//   getRoutesEpic,
+//   getLastRoutesEpic,
+//   getSeatsEpic,
+//   postOrderEpic,
+//   postSubscribe
+// );
 
-const epicMiddleware = createEpicMiddleware();
+// const epicMiddleware = createEpicMiddleware();
 
 export const store = configureStore({
   reducer: {
@@ -40,12 +41,13 @@ export const store = configureStore({
     sliceOrder,
     slicePostOrder,
     slicePostSubscribe,
-    sliceNotice
+    sliceNotice,
+    [storeApi.reducerPath]: storeApi.reducer
   },
-  middleware: [epicMiddleware]
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(storeApi.middleware)
 });
 
-epicMiddleware.run(epic);
+// epicMiddleware.run(epic);
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

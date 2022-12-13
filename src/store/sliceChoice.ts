@@ -4,17 +4,17 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 type State = {
   fromDate: string,
   toDate: string,
-  fromCity: null | string,
-  toCity: null | string,
+  fromCity: string,
+  toCity: string,
   searchCity: string,
-  route: null | IDeparture
+  route: IDeparture | null
 };
 
 const initialState: State = {
   fromDate: '',
   toDate: '',
-  fromCity: null,
-  toCity: null,
+  fromCity: '',
+  toCity: '',
   searchCity: '',
   route: null
 };
@@ -41,12 +41,12 @@ export const sliceChoice = createSlice({
     clearAllCity: (state) => {
       state.toDate = '';
       state.fromDate = '';
-      state.toCity = null;
-      state.fromCity = null;
+      state.toCity = '';
+      state.fromCity = '';
     },
     clearChoiceCity: (state) => {
-      state.toCity = null;
-      state.fromCity = null;
+      state.toCity = '';
+      state.fromCity = '';
     },
     choiceRoute: (state, actions: PayloadAction<IDeparture>) => {
       state.route = actions.payload;

@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useGetCityQuery } from '../middleware/storeApi';
 import { choiceCityFrom, choiceCityTo, choiceDateFrom, choiceDateTo, clearChoiceCity, searchCity } from '../store/sliceChoice';
 import { clearAllFiltering } from '../store/sliceFilter';
 import { clearCities } from '../store/sliceGetCity';
@@ -29,6 +30,9 @@ export default function SearchWidget({classStyle}) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   let location = useLocation();
+  // const { data, err, isLoading } = useGetCityQuery('мос')
+
+  // console.log(useGetCityQuery('мос'));
 
   useEffect(() => {
     if (location.pathname === '/') {
@@ -150,12 +154,17 @@ export default function SearchWidget({classStyle}) {
   };
 
   useEffect(() => {
+    let timer = null;
     if (error) {
-      setTimeout(() => setError(false), 2 * 1000);
+      timer = setTimeout(() => setError(false), 2 * 1000);
     };
     if (city.from === '' && city.to === '') {
       dispatch(clearChoiceCity());
     };
+
+    if (timer) {
+      return () => clearTimeout(timer)
+    }
   }, [error, city]);
 
   useEffect(() => {
