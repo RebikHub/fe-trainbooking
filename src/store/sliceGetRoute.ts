@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IGetStatus, IRoute } from "../interfaces/interfaces";
+import { IGetStatus, IRoute, ISearchRoute } from "../interfaces/interfaces";
 
 const initialState: IGetStatus<IRoute | null> = {
   items: null,
@@ -11,7 +11,7 @@ export const sliceGetRoute = createSlice({
   name: 'sliceGetRoute',
   initialState,
   reducers: {
-    getRouteRequest: (state) => {
+    getRouteRequest: (state, actions: PayloadAction<ISearchRoute>) => {
       state.loading = true;
       state.error = false;
     },

@@ -173,3 +173,10 @@ export interface SIAgeTickets extends IClassType {
 export interface SIChildTickets extends IClassType {
   seatsChild: number
 }
+
+export interface ISearchRoute {
+  fromDate: string; 
+  toDate: string;
+  fromCity: IIdName;
+  toCity: IIdName;
+}

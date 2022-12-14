@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import '../styles/calendar.css';
 import { getCurrentDate, monthInWeeks } from '../utils/date';

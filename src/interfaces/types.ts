@@ -69,3 +69,9 @@ export type Order = {
   user: IUser,
   departure: IOrderDeparture
 };
+
+export type SearchInputs = {
+  city?: string,
+  from: string,
+  to: string
+};
