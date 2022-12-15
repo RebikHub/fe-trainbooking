@@ -1,4 +1,3 @@
-import { storeApi } from '../middleware/storeApi';
 import { configureStore } from "@reduxjs/toolkit";
 import sliceChoice from "./sliceChoice";
 import sliceGetCity from "./sliceGetCity";
@@ -29,9 +28,7 @@ export const store = configureStore({
     slicePostOrder,
     slicePostSubscribe,
     sliceNotice,
-    [storeApi.reducerPath]: storeApi.reducer
-  },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(storeApi.middleware)
+  }
 });
 
 export type RootState = ReturnType<typeof store.getState>;

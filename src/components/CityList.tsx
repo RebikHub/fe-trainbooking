@@ -1,7 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { IIdName } from '../interfaces/interfaces';
 import { SearchInputs } from '../interfaces/types';
-import { useGetCityQuery } from '../middleware/storeApi';
 import { useAppSelector } from '../store/hooks';
 import '../styles/city.css';
 
@@ -13,12 +12,13 @@ type Props = {
   getCity: (choiceCity: IIdName) => void
 };
 
-export default function CityList({none, showListFrom, showListTo, cities, getCity}: Props) {
-  // const citiesList = useAppSelector((state) => state.sliceGetCity.items);
-  const [citiesList, setCitiesList] = useState<IIdName[]>([]);
+export default function CityList({none, cities, getCity}: Props) {
+  const citiesList = useAppSelector((state) => state.sliceGetCity.items);
   const [city, setCity] = useState<string>('');
   const ref = useRef(null);
-  const {data, isError, isSuccess, isLoading} = useGetCityQuery(city);
+  
+  console.log(city);
+  
 
   useEffect(() => {
     if (cities.from) {
@@ -30,16 +30,12 @@ export default function CityList({none, showListFrom, showListTo, cities, getCit
     }
   }, [cities])
 
-  useEffect(() => {
-    console.log('data: ', data);
-    console.log('isError: ', isError);
-    console.log('isSuccess: ', isSuccess);
-    console.log('isLoading', isLoading);
+  // useEffect(() => {
     
-    if (null) {
-      setCitiesList(data)
-    }
-  }, [data])
+  //   if (null) {
+  //     setCitiesList(data)
+  //   }
+  // }, [data])
 
   // useEffect(() => {
   //   function outsideClick(ev: SyntheticEvent<HTMLDivElement>) {

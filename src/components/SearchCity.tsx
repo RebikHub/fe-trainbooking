@@ -2,10 +2,9 @@ import React, { useEffect, useState, ChangeEvent } from 'react';
 import { IIdName } from '../interfaces/interfaces';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { choiceCityFrom, choiceCityTo } from '../store/sliceChoice';
-import { clearCities } from '../store/sliceGetCity';
+import { clearCities, getCityThunk } from '../store/sliceGetCity';
 import CityList from './CityList';
 import '../styles/search-widget.css';
-import { useGetCityQuery } from '../middleware/storeApi';
 import { SearchInputs } from '../interfaces/types';
 
 export default function SearchCity() {
@@ -19,6 +18,10 @@ export default function SearchCity() {
   const dispatch = useAppDispatch();
 
   function inputFromCity(ev: ChangeEvent<HTMLInputElement>) {
+    if (ev.target.value.trim() !== '') {
+      dispatch(getCityThunk(ev.target.value)).unwrap();
+    };
+
     setCity({...city, from: ev.target.value});
     if (hidden === 'none') {
       setHidden('city-from');
@@ -26,6 +29,10 @@ export default function SearchCity() {
   };
 
   function inputToCity(ev: ChangeEvent<HTMLInputElement>) {
+    if (ev.target.value.trim() !== '') {
+      dispatch(getCityThunk(ev.target.value)).unwrap();
+    };
+    
     setCity({...city, to: ev.target.value});
     if (hidden === 'none') {
       setHidden('city-to');
