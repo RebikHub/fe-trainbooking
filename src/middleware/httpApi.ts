@@ -11,7 +11,7 @@ const http = axios.create({
 
 function getCities(city: string) {
   return http.get(`routes/cities?name=${city}`, {
-    timeout: 10000
+    timeout: 1000
    });
 };
 

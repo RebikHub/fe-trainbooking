@@ -26,7 +26,7 @@ export default function SearchWidget({classStyle}: Props) {
     if (location.pathname === '/') {
       dispatch(clearStepAll());
     };
-  }, [location.pathname]);
+  }, [dispatch, location.pathname]);
 
   function submit() {
     dispatch(clearRouteList());
