@@ -1,4 +1,4 @@
-import React, { useEffect, useState, ChangeEvent } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import { IIdName } from '../interfaces/interfaces';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { choiceCityFrom, choiceCityTo } from '../store/sliceChoice';
@@ -58,7 +58,6 @@ export default function SearchCity() {
   };
 
   function getCity(choiceCity: IIdName) {
-
     if (hidden === 'city-from') {
       dispatch(choiceCityFrom(choiceCity));
       setCity({...city, from: choiceCity.name});
@@ -97,9 +96,6 @@ export default function SearchCity() {
           onChange={inputToCity}
           onClick={showListCitiesTo}/>
           <CityList none={`${hidden}${transform ? '-transform' : ''}`}
-            showListFrom={showListCitiesFrom}
-            showListTo={showListCitiesTo}
-            cities={city}
             getCity={getCity}/>
       </div>
     </div>

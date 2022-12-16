@@ -1,9 +1,15 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { getLastRoutesThunk } from '../store/sliceGetLastRoutes';
 import '../styles/last-routes.css';
 
 export default function LastRoutes() {
-  const { lastRoutes } = useSelector((state) => state.sliceGetLastRoutes);
+  const lastRoutes = useAppSelector((state) => state.sliceGetLastRoutes.items);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getLastRoutesThunk());
+  }, [dispatch]);
 
   return (
     <div className='last-routes'>

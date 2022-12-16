@@ -18,6 +18,8 @@ export default function ChoiceRoute() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    console.log(route);
+    
     if (route && location.pathname === '/route/coach') {
       navigate('/route');
     };

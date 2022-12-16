@@ -3,11 +3,9 @@ import { IGetStatus, IIdName } from "../interfaces/interfaces";
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import httpServices from "../middleware/httpApi";
 
-export const getCityThunk = createAsyncThunk('sliceGetCity/getCity', async (city: string) => {
+export const getCityThunk = createAsyncThunk('sliceGetCity/getCityThunk', async (city: string) => {
   try {
     const response = await httpServices.getCities(city);
-    console.log(response);
-    
     return response.data;
   } catch (error) {
     return error;

@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { clearAllFiltering } from '../store/sliceFilter';
-import { requestGetLastRoutes } from '../store/sliceGetLastRoutes';
-import { clearRouteList, getRouteRequest } from '../store/sliceGetRoute';
+import { clearRouteList, getRouteThunk } from '../store/sliceGetRoute';
 import { clearStepAll, currentStepOne } from '../store/sliceProgressLine';
 import '../styles/search-widget.css';
 import Error from './Error';
@@ -33,12 +32,10 @@ export default function SearchWidget({classStyle}: Props) {
     dispatch(clearAllFiltering());
     if (!transform && location.pathname === '/' && fromCity !== null && toCity !== null) {
       navigate('/route');
-      dispatch(getRouteRequest({fromDate, toDate, fromCity, toCity}));
+      dispatch(getRouteThunk({fromDate, toDate, fromCity, toCity}));
       dispatch(currentStepOne());
-      dispatch(requestGetLastRoutes());
     } else if (transform && location.pathname === '/route' && fromCity !== null && toCity !== null) {
-      dispatch(getRouteRequest({fromDate, toDate, fromCity, toCity}));
-      dispatch(requestGetLastRoutes());
+      dispatch(getRouteThunk({fromDate, toDate, fromCity, toCity}));
     }  else {
       setError(true)
     };

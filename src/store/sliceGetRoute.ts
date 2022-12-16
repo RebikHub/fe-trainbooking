@@ -1,5 +1,15 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IGetStatus, IRoute, ISearchRoute } from "../interfaces/interfaces";
+import httpServices from "../middleware/httpApi";
+
+export const getRouteThunk = createAsyncThunk('sliceGetCity/getRouteThunk', async (route: ISearchRoute) => {
+  try {
+    const response = await httpServices.getRoutes(route);
+    return response.data;
+  } catch (error) {
+    return error;
+  };
+});
 
 const initialState: IGetStatus<IRoute | null> = {
   items: null,
@@ -11,30 +21,27 @@ export const sliceGetRoute = createSlice({
   name: 'sliceGetRoute',
   initialState,
   reducers: {
-    getRouteRequest: (state, actions: PayloadAction<ISearchRoute>) => {
-      state.loading = true;
-      state.error = false;
-    },
-    getRouteSuccess: (state, actions: PayloadAction<IRoute>) => {
-      state.loading = false;
-      state.items = actions.payload;
-    },
-    getRouteError: (state, actions: PayloadAction<string>) => {
-      state.loading = false;
-      state.error = actions.payload;
-    },
-    clearRouteList: (state) => {
-      state.loading = false;
-      state.error = false;
-      state.items = null;
+    clearRouteList: () => initialState
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getRouteThunk.pending, (state) => {
+        state.loading = true;
+        state.error = false;
+      })
+      .addCase(getRouteThunk.fulfilled, (state, actions: PayloadAction<IRoute>) => {
+        state.loading = false;
+        state.error = false;
+        state.items = actions.payload;
+      })
+      .addCase(getRouteThunk.rejected, (state) => {
+        state.loading = false;
+        state.error = true;
+      })
     }
-  }
-});
+  });
 
 export const {
-  getRouteRequest,
-  getRouteSuccess,
-  getRouteError,
   clearRouteList
 } = sliceGetRoute.actions;
 
