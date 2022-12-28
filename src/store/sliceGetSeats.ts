@@ -1,5 +1,15 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IGetStatus, ISeats } from "../interfaces/interfaces";
+import httpServices from "../middleware/httpApi";
+
+export const getSeatsThunk = createAsyncThunk('sliceGetSeats/getSeatsThunk', async (id: string) => {
+  try {
+    const response = await httpServices.getSeats(id);
+    return response.data;
+  } catch (error) {
+    return error;
+  };
+});
 
 const initialState: IGetStatus<ISeats[]> = {
   items: [],
@@ -10,27 +20,23 @@ const initialState: IGetStatus<ISeats[]> = {
 export const sliceGetSeats = createSlice({
   name: 'sliceGetSeats',
   initialState,
-  reducers: {
-    requestGetSeats: (state, actions: PayloadAction<number>) => {
-      state.loading = true;
-      state.error = false;
-    },
-    successGetSeats: (state, actions: PayloadAction<ISeats[]>) => {
-      state.items = actions.payload;
-      state.loading = false;
-      state.error = false
-    },
-    errorGetSeats: (state, actions: PayloadAction<string>) => {
-      state.loading = false;
-      state.error = actions.payload;
-    },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(getSeatsThunk.pending, (state) => {
+        state.loading = true;
+        state.error = false;
+      })
+      .addCase(getSeatsThunk.fulfilled, (state, actions: PayloadAction<ISeats[]>) => {
+        state.items = actions.payload;
+        state.loading = false;
+        state.error = false
+      })
+      .addCase(getSeatsThunk.rejected, (state) => {
+        state.loading = false;
+        state.error = true;
+      })
   }
 });
-
-export const {
-  requestGetSeats,
-  successGetSeats,
-  errorGetSeats
-} = sliceGetSeats.actions;
 
 export default sliceGetSeats.reducer;

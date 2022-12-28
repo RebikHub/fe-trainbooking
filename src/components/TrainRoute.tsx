@@ -4,7 +4,7 @@ import { IItem } from '../interfaces/interfaces';
 import { TrainSeatsInfo } from '../interfaces/types';
 import { useAppDispatch } from '../store/hooks';
 import { choiceRoute } from '../store/sliceChoice';
-import { requestGetSeats } from '../store/sliceGetSeats';
+import { getSeatsThunk } from '../store/sliceGetSeats';
 import { addRouteId, clearOrder } from '../store/sliceOrder';
 import '../styles/train-route.css';
 import createArray from '../utils/createTrainSeatsArray';
@@ -45,7 +45,7 @@ export default function TrainRoute({route, btnText = 'Выбрать места'
 
   function getCoaches() {
     dispatch(choiceRoute(route));
-    dispatch(requestGetSeats(route.departure._id));
+    dispatch(getSeatsThunk(route.departure._id));
     dispatch(addRouteId(route.departure._id));
     navigate('/route/coach');
   };
