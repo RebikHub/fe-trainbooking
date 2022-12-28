@@ -1,34 +1,28 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { IItem } from '../interfaces/interfaces';
+import { TrainSeatsInfo } from '../interfaces/types';
+import { useAppDispatch } from '../store/hooks';
 import { choiceRoute } from '../store/sliceChoice';
 import { requestGetSeats } from '../store/sliceGetSeats';
 import { addRouteId, clearOrder } from '../store/sliceOrder';
 import '../styles/train-route.css';
+import createArray from '../utils/createTrainSeatsArray';
 import { dateFromAndTo, duration } from '../utils/trainDate';
 import TrainRouteSeats from './TrainRouteSeats';
 
-export default function TrainRoute({route, btnText = 'Выбрать места'}) {
-  const [train, setTrain] = useState([]);
-  const dispatch = useDispatch();
+type Props = {
+  route: IItem,
+  btnText: string
+};
+
+export default function TrainRoute({route, btnText = 'Выбрать места'}: Props) {
+  const [train, setTrain] = useState<TrainSeatsInfo[]>([]);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const arrayInfo = [];
-
-    function createArray(route, array, seatClass, nameClass) {
-      const prices = [];
-      for (const [key, value] of Object.entries(route.departure.price_info[seatClass])) {
-        prices.push(Number(value));
-      };
-      prices.sort((a, b) => a - b);
-      array.push({
-        name: nameClass,
-        seats: route.available_seats_info[seatClass],
-        price: prices[0],
-        seatPrice: route.departure.price_info[seatClass]
-      })
-    }
+    const arrayInfo: TrainSeatsInfo[] = [];
 
     if (route.departure.have_first_class) {
       createArray(route, arrayInfo, 'first', 'Люкс');
@@ -47,7 +41,7 @@ export default function TrainRoute({route, btnText = 'Выбрать места'
     };
 
     setTrain(arrayInfo);
-  }, []);
+  }, [route]);
 
   function getCoaches() {
     dispatch(choiceRoute(route));
@@ -79,7 +73,7 @@ export default function TrainRoute({route, btnText = 'Выбрать места'
             <div className='direction-time'>{dateFromAndTo(route.departure.from.datetime)}</div>
             <div className='direction-from'>
               <h5 className='direction-city'>{route.departure.from.city.name}</h5>
-              <p className='direction-station'>{route.departure.from.city.railway_station_name}</p>
+              <p className='direction-station'>{route.departure.from.city._id}</p>
               <p className='direction-station'>вокзал</p>
             </div>
           </div>
@@ -91,7 +85,7 @@ export default function TrainRoute({route, btnText = 'Выбрать места'
             <div className='direction-time'>{dateFromAndTo(route.departure.to.datetime)}</div>
             <div className='direction-to'>
               <h5 className='direction-city'>{route.departure.to.city.name}</h5>
-              <p className='direction-station'>{route.departure.to.city.railway_station_name}</p>
+              <p className='direction-station'>{route.departure.to.city._id}</p>
               <p className='direction-station'>вокзал</p>
             </div>
           </div>

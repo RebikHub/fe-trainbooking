@@ -1,4 +1,4 @@
-import { IItem, IOrderDeparture, IUser } from './interfaces';
+import { IItem, IOrderDeparture, IPriceClass, IUser } from './interfaces';
 
 export type Filter = {
   start: number,
@@ -74,4 +74,11 @@ export type SearchInputs = {
   city?: string,
   from: string,
   to: string
+};
+
+export type TrainSeatsInfo = {
+  name: string,
+  seats?: number,
+  price: number,
+  seatPrice?: IPriceClass
 };

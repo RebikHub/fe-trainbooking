@@ -1,4 +1,4 @@
-import { IDeparture, IIdName } from './../interfaces/interfaces';
+import { IIdName, IItem } from './../interfaces/interfaces';
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type State = {
@@ -7,7 +7,7 @@ type State = {
   fromCity: IIdName | null,
   toCity: IIdName | null,
   searchCity: string,
-  route: IDeparture | null
+  route: IItem | null
 };
 
 const initialState: State = {
@@ -48,7 +48,7 @@ export const sliceChoice = createSlice({
       state.toCity = null;
       state.fromCity = null;
     },
-    choiceRoute: (state, actions: PayloadAction<IDeparture>) => {
+    choiceRoute: (state, actions: PayloadAction<IItem>) => {
       state.route = actions.payload;
     }
   }

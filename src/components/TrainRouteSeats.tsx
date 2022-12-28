@@ -1,20 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { IPriceClass } from '../interfaces/interfaces';
+import { TrainSeatsInfo } from '../interfaces/types';
 import '../styles/train-route.css';
-
-type Props = {
-  name: string,
-  seats: number,
-  price: number,
-  seatPrice: IPriceClass
-};
 
 type SeatInfo = {
   name: string,
   price?: number,
 };
 
-export default function TrainRouteSeats({name, seats, price, seatPrice}: Props) {
+export default function TrainRouteSeats({name, seats, price, seatPrice}: TrainSeatsInfo) {
   const [hidden, setHidden] = useState<string>('none');
   const [seatInfo, setSeatInfo] = useState<SeatInfo[]>([]);
   const timer = useRef<NodeJS.Timeout>();
@@ -35,21 +28,21 @@ export default function TrainRouteSeats({name, seats, price, seatPrice}: Props) 
     if (Object.prototype.hasOwnProperty.call(seatPrice, 'top_price')) {
       arrayPrice.push({
         name: 'верхние',
-        price: seatPrice.top_price,
+        price: seatPrice?.top_price,
       });
     };
 
     if (Object.prototype.hasOwnProperty.call(seatPrice, 'bottom_price')) {
       arrayPrice.push({
         name: 'нижние',
-        price: seatPrice.bottom_price,
+        price: seatPrice?.bottom_price,
       });
     };
 
     if (Object.prototype.hasOwnProperty.call(seatPrice, 'side_price')) {
       arrayPrice.push({
         name: 'боковые',
-        price: seatPrice.side_price,
+        price: seatPrice?.side_price,
       });
     };
 

@@ -11,7 +11,7 @@ export const sliceGetSeats = createSlice({
   name: 'sliceGetSeats',
   initialState,
   reducers: {
-    requestGetSeats: (state) => {
+    requestGetSeats: (state, actions: PayloadAction<number>) => {
       state.loading = true;
       state.error = false;
     },

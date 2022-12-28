@@ -5,7 +5,7 @@ export interface IRoute {
   items: IItem[];
 }
 
-export interface IItem {
+export interface ITrainRoute {
   have_first_class: boolean;
   have_second_class: boolean;
   have_third_class: boolean;
@@ -16,32 +16,26 @@ export interface IItem {
   min_price: number;
   available_seats: number;
   available_seats_info: IAvailableSeatsInfo;
+}
+
+export interface IItem extends ITrainRoute {
   departure: IDeparture;
 }
 
-export interface IAvailableSeatsInfo {
-  second?: number;
-  third?: number;
-  fourth?: number;
-}
-
-export interface IDeparture {
+export interface IDeparture extends ITrainRoute {
   _id: string;
-  have_first_class: boolean;
-  have_second_class: boolean;
-  have_third_class: boolean;
-  have_fourth_class: boolean;
-  have_wifi: boolean;
-  have_air_conditioning: boolean;
-  is_express: boolean;
-  min_price: number;
   duration: number;
-  available_seats: number;
-  available_seats_info: IAvailableSeatsInfo;
   train: IIdName;
   from: IFrom;
   to: IFrom;
   price_info: IPriceInfo;
+}
+
+export interface IAvailableSeatsInfo {
+  first?: number;
+  second?: number;
+  third?: number;
+  fourth?: number;
 }
 
 export interface IFrom {
@@ -111,16 +105,10 @@ export interface ISeats {
   seats: ISeat[];
 }
 
-export interface ICoach {
+export interface ICoach extends ITrainRoute {
   _id: string;
   name: string;
   class_type: string;
-  have_first_class: boolean;
-  have_second_class: boolean;
-  have_third_class: boolean;
-  have_fourth_class: boolean;
-  have_wifi: boolean;
-  have_air_conditioning: boolean;
   price: number;
   top_price: number;
   bottom_price: number;
@@ -128,7 +116,6 @@ export interface ICoach {
   linens_price: number;
   wifi_price: number;
   is_linens_included: boolean;
-  available_seats: number;
   train: string;
   seats: string;
 }
