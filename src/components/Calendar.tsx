@@ -1,20 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React, { BaseSyntheticEvent, useEffect, useState } from 'react';
 import '../styles/calendar.css';
 import { getCurrentDate, monthInWeeks } from '../utils/date';
 import DaysInWeek from './DaysInWeek';
-import { useSelector } from 'react-redux';
 import { useRef } from 'react';
+import { useAppSelector } from '../store/hooks';
+import { Weeks } from '../interfaces/types';
 
-export default function Calendar({none, getDate, getCalendarFrom, getCalendarTo}) {
+type Props = {
+  none: string,
+  getDate: (date: string) => void,
+  getCalendarFrom: () => void,
+  getCalendarTo: () => void
+};
+
+export default function Calendar({none, getDate, getCalendarFrom, getCalendarTo}: Props) {
   const date = getCurrentDate();
-  const [numMonth, setNumMonth] = useState(date.numberMonth);
-  const [nameMonth, setNameMonth] = useState(date.month);
-  const [days, setDays] = useState(null);
-  const { fromDate } = useSelector((state) => state.sliceChoice);
-  const ref = useRef(null);
+  const [numMonth, setNumMonth] = useState<number>(date.numberMonth);
+  const [nameMonth, setNameMonth] = useState<string>(date.month);
+  const [days, setDays] = useState<Weeks | null>(null);
+  const { fromDate } = useAppSelector((state) => state.sliceChoice);
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    function outsideClick(ev) {
+    function outsideClick(ev: { target: Node | null; }): void {
       if (ref.current && !ref.current.contains(ev.target)) {
         if (none.includes('from')) {
           getCalendarFrom();
@@ -26,7 +34,7 @@ export default function Calendar({none, getDate, getCalendarFrom, getCalendarTo}
     };
     document.addEventListener("mousedown", outsideClick);
     return () => document.removeEventListener("mousedown", outsideClick);
-  }, [ref, none]);
+  }, [ref, none, getCalendarFrom, getCalendarTo]);
 
   useEffect(() => {
     const weeks = monthInWeeks(numMonth);

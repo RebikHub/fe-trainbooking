@@ -24,10 +24,16 @@ function dayOfMonth(year: number, month: number): number[] {
   return arrDay;
 };
 
-function monthInWeeks(): Weeks {
-  const numberMonth = new Date().getMonth();
+function monthInWeeks(numberMonth: number): Weeks {
+  let numMonth = null;
+
+  if (numberMonth === undefined) {
+    numMonth = new Date().getMonth();
+  } else {
+    numMonth = numberMonth + 1;
+  };
+
   const year = new Date().getFullYear();
-  const numMonth = numberMonth + 1;
   const arrCurDays = dayOfMonth(year, numMonth);
   const arrPrevDays = new Date(year, numMonth - 1, 0).getDate();
   const weekDay = ["пн", "вт", "ср", "чт", "пт", "сб", "вс"];

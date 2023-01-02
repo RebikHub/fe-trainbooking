@@ -1,6 +1,5 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { useLocation } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 import ProgressLine from './ProgressLine';
@@ -15,10 +14,10 @@ import { clearStepAll } from '../store/sliceProgressLine';
 import '../styles/header.css';
 
 export default function Header() {
-  const {classHeader, classSearch, classTitle, classLine, success} = useSelector((state) => state.sliceHeaderTransform);
-  const { loading } = useSelector((state) => state.sliceGetRoute);
+  const {classHeader, classSearch, classTitle, classLine, success} = useAppSelector((state) => state.sliceHeaderTransform);
+  const { loading } = useAppSelector((state) => state.sliceGetRoute);
   let location = useLocation();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
 
   useEffect(() => {
@@ -31,7 +30,7 @@ export default function Header() {
     } else if (location.pathname !== '/') {
       dispatch(transformHeader());
     };
-  }, [location.pathname]);
+  }, [dispatch, location.pathname]);
 
   function clearStore() {
     dispatch(clearAllPrices());

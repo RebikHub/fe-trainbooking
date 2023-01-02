@@ -66,9 +66,9 @@ export default function SearchDate() {
             onClick={getCalendarTo}
             onChange={inputDateTo}/>
           <Calendar none={hidden.to}
-          getDate={getDate}
-          getCalendarFrom={getCalendarFrom}
-          getCalendarTo={getCalendarTo}/>
+            getDate={getDate}
+            getCalendarFrom={getCalendarFrom}
+            getCalendarTo={getCalendarTo}/>
         </div>
     </div>
   )
