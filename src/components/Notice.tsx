@@ -1,21 +1,28 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { MutableRefObject, useEffect, useRef } from 'react';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { changeNotice } from '../store/sliceNotice';
 import '../styles/notice.css';
 
-export default function Notice({status}) {
-  const dispatch = useDispatch();
-  const { notice, text } = useSelector((state) => state.sliceNotice);
+type Props = {
+  status: boolean
+};
+
+export default function Notice({status}: Props) {
+  const dispatch = useAppDispatch();
+  const { notice, text } = useAppSelector((state) => state.sliceNotice);
+  const ref: MutableRefObject<NodeJS.Timeout | null> = useRef(null);
 
   useEffect(() => {
     if (notice) {
-      setTimeout(() => dispatch(changeNotice({
+      ref.current = setTimeout(() => dispatch(changeNotice({
         notice: false,
         text: ''
       })), 5 * 1000);
     };
-  }, [notice]);
+    if (ref.current) {
+      return clearTimeout(ref.current)
+    };
+  }, [dispatch, notice]);
 
   return (
     <div className={notice ? 'modal-tickets' : 'none'}>

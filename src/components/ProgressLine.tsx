@@ -1,11 +1,17 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../store/hooks';
 import '../styles/progress-line.css';
 
+type Step = {
+  one: string,
+  two: string,
+  three: string,
+  four: string
+};
+
 export default function ProgressLine() {
-  const {stepOne, stepTwo, stepThree, stepFour} = useSelector((state) => state.sliceProgressLine);
-  const [step, setStep] = useState({
+  const {stepOne, stepTwo, stepThree, stepFour} = useAppSelector((state) => state.sliceProgressLine);
+  const [step, setStep] = useState<Step>({
     one: '',
     two: '',
     three: '',
@@ -42,7 +48,7 @@ export default function ProgressLine() {
       });
     };
 
-  }, [stepOne, stepTwo, stepThree, stepFour])
+  }, [step, stepFour, stepOne, stepThree, stepTwo])
 
   return (
     <div className='progress-line'>
