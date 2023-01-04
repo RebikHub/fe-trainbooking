@@ -1,4 +1,4 @@
-import React, { BaseSyntheticEvent, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../styles/calendar.css';
 import { getCurrentDate, monthInWeeks } from '../utils/date';
 import DaysInWeek from './DaysInWeek';
@@ -22,8 +22,9 @@ export default function Calendar({none, getDate, getCalendarFrom, getCalendarTo}
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    function outsideClick(ev: { target: Node | null; }): void {
-      if (ref.current && !ref.current.contains(ev.target)) {
+    function outsideClick(ev: MouseEvent): void {
+
+      if (ev.target instanceof HTMLElement && !ref.current?.contains(ev.target)) {
         if (none.includes('from')) {
           getCalendarFrom();
         };
@@ -32,7 +33,9 @@ export default function Calendar({none, getDate, getCalendarFrom, getCalendarTo}
         };
       };
     };
+
     document.addEventListener("mousedown", outsideClick);
+
     return () => document.removeEventListener("mousedown", outsideClick);
   }, [ref, none, getCalendarFrom, getCalendarTo]);
 
@@ -41,12 +44,12 @@ export default function Calendar({none, getDate, getCalendarFrom, getCalendarTo}
     setDays(weeks);
   }, [numMonth]);
 
-  function onChoiceDate(day, month) {
+  function onChoiceDate(day: number, month: number): void {
     const choiceDate = date.choiceDate(date.year, month, day);
     const compareChoiceDate = new Date(date.year, month, day).getTime();
     const compareToday = new Date(date.year, date.numberMonth, date.numDate).getTime();
     const arrDate = fromDate.split('.');
-    const compareFromDate = new Date(arrDate[2], +arrDate[1] - 1, arrDate[0]);
+    const compareFromDate = new Date(`${arrDate[2]}-${arrDate[1]}-${arrDate[0]}`).getTime();   
 
     if (fromDate === '' && compareToday < compareChoiceDate) {
       getDate(choiceDate);
