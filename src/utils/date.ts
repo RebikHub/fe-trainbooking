@@ -1,15 +1,26 @@
 import { CurrentDate, Day, Weeks } from "../interfaces/types";
 
-
-function getCurrentDate(): CurrentDate {
-  return {
-    numDate: new Date().getDate(),
-    year: new Date().getFullYear(),
+function getCurrentDate(date: string): CurrentDate {
+  const currentDate = new Date();
+  const result: CurrentDate = {
+    numDate: currentDate.getDate(),
+    year: currentDate.getFullYear(),
     month: new Intl.DateTimeFormat('ru-RU', { month: 'long'}).format(),
-    numberMonth: new Date().getMonth(),
+    numberMonth: currentDate.getMonth(),
     choiceDate: (year, month, day) => new Intl.DateTimeFormat("ru").format(new Date(year, month, day)),
     nameMonth: (year, month) => new Intl.DateTimeFormat('ru-RU', { month: 'long'}).format(new Date(year, month))
-  }
+  };
+
+  if (date) {
+    const splitDate = date.split('.');
+    const dateForMonth = new Date(Number(splitDate[2]), Number(splitDate[1]) - 1, Number(splitDate[0]));
+    result.numDate = +splitDate[0];
+    result.year = +splitDate[2];
+    result.month = new Intl.DateTimeFormat('ru-RU', { month: 'long'}).format(new Date(dateForMonth));
+    result.numberMonth = Number(splitDate[1]) - 1;
+  };
+
+  return result;
 };
 
 function dayOfMonth(year: number, month: number): number[] {

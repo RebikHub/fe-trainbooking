@@ -9,7 +9,7 @@ type Props = {
   onChoiceDate: (day: number, month: number) => void
 };
 
-export default   function DaysInWeek({array, date, currentMonth, otherMonth, onChoiceDate}: Props) {
+export default function DaysInWeek({array, date, currentMonth, otherMonth, onChoiceDate}: Props) {
   return (
     <tr>
       {array.map((el, i) => {

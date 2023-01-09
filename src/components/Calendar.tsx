@@ -8,42 +8,45 @@ import { Weeks } from '../interfaces/types';
 import { choiceDateFrom, choiceDateTo } from '../store/sliceChoice';
 
 type Props = {
-  none: string,
-  getDate?: (date: string) => void,
-  getCalendarFrom?: () => void,
-  getCalendarTo?: () => void
+  classStyle: string,
 };
 
-export default function Calendar({none}: Props) {
-  const date = getCurrentDate();
+export default function Calendar({classStyle}: Props) {
+  const { fromDate } = useAppSelector((state) => state.sliceChoice);
+  const date = getCurrentDate(fromDate);
   const [numMonth, setNumMonth] = useState<number>(date.numberMonth);
   const [nameMonth, setNameMonth] = useState<string>(date.month);
   const [days, setDays] = useState<Weeks | null>(null);
-  const { fromDate } = useAppSelector((state) => state.sliceChoice);
   const ref = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
 
+  function refClassListToggle() {
+    ref.current?.classList.remove(...ref.current.classList)
+    ref.current?.classList.add('none');
+  };
+
   function getDate(choiceDate: string) {
-    if (none.includes('from') && validateCalendarDate(choiceDate)) {
+    if (classStyle.includes('from') && validateCalendarDate(choiceDate)) {
       dispatch(choiceDateFrom(choiceDate));
+      refClassListToggle();
     };
 
-    if (none.includes('to') && validateCalendarDate(choiceDate)) {
+    if (classStyle.includes('to') && validateCalendarDate(choiceDate)) {
       dispatch(choiceDateTo(choiceDate));
+      refClassListToggle();
     };
   };
 
   useEffect(() => {
     function outsideClick(ev: MouseEvent): void {
       if (ev.target instanceof HTMLElement && !ref.current?.contains(ev.target)) {
-        ref.current?.classList.remove(...ref.current.classList)
-        ref.current?.classList.add('none');
+        refClassListToggle();
       };
     };
 
     document.addEventListener("mousedown", outsideClick);
     return () => document.removeEventListener("mousedown", outsideClick);
-  }, [ref, none]);
+  }, [ref]);
 
   useEffect(() => {
     const weeks = monthInWeeks(numMonth);
@@ -62,9 +65,9 @@ export default function Calendar({none}: Props) {
     console.log('compareToday -', compareToday);
     console.log('compareFromDate -', compareFromDate);
     
-    if (fromDate === '' && compareToday < compareChoiceDate) {
+    if (fromDate === '' && compareChoiceDate >= compareToday) {
       getDate(choiceDate);
-    } else if (fromDate !== '' && compareFromDate < compareChoiceDate) {
+    } else if (fromDate !== '' && compareFromDate < compareChoiceDate && classStyle.includes('to')) {
       getDate(choiceDate);
     };
   };
@@ -80,7 +83,7 @@ export default function Calendar({none}: Props) {
   };
 
   return (
-    <div className={none} ref={ref}>
+    <div className={classStyle} ref={ref}>
       <div className='cal-triangle'></div>
       <div className='cal-main'>
         <div className='cal-month'>
