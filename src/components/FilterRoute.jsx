@@ -36,22 +36,19 @@ export default function FilterRoute() {
   const [thereDeparture, setThereDeparture] = useState({
     start: 0,
     end: 86400
-  })
-
+  });
   const [thereArrival, setThereArrival] = useState({
     start: 0,
     end: 86400
-  })
-
+  });
   const [backDeparture, setBackDeparture] = useState({
     start: 0,
     end: 86400
-  })
-
+  });
   const [backArrival, setBackArrival] = useState({
     start: 0,
     end: 86400
-  })
+  });
 
   let { maxPrice, minPrice } = minMaxPrices(currentRoutes);
   const maxThereDeparture = 86400;

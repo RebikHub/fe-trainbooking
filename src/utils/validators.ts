@@ -69,3 +69,7 @@ export function upperCaseBirthNumber(string: string): string {
 
   return splitString.join('');
 };
+
+export function validateCalendarDate(string: string): boolean {
+  return /^\d{2}\.\d{2}\.\d{4}$/.test(string);
+};
