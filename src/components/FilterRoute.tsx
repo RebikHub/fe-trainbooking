@@ -1,19 +1,27 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import Calendar from './Calendar';
 import '../styles/filter.css';
-import { useDispatch, useSelector } from 'react-redux';
 import { choiceDateFrom, choiceDateTo } from '../store/sliceChoice';
 import { addFilterPrices, addFilterSeats, addFilterTimeFrom, addFilterTimeTo } from '../store/sliceFilter';
 import { minMaxPrices } from '../utils/minMaxPrices';
 import secondsToTime from '../utils/secondsToTime';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { SearchInputs } from '../interfaces/types';
+
+const maxThereDeparture = 86400;
+const minThereDeparture = 0;
+const maxThereArrival = 86400;
+const minThereArrival = 0;
+const maxBackDeparture = 86400;
+const minBackDeparture = 0;
+const maxBackArrival = 86400;
+const minBackArrival = 0;
 
 export default function FilterRoute() {
-  const { fromDate, toDate } = useSelector((state) => state.sliceChoice);
-  const { currentRoutes } = useSelector((state) => state.sliceFilter);
-  const dispatch = useDispatch();
-
-  const [hidden, setHidden] = useState({
+  const { fromDate, toDate } = useAppSelector((state) => state.sliceChoice);
+  const { currentRoutes } = useAppSelector((state) => state.sliceFilter);
+  const dispatch = useAppDispatch();
+  const [hidden, setHidden] = useState<SearchInputs>({
     from: 'none',
     to: 'none'
   });
@@ -49,16 +57,7 @@ export default function FilterRoute() {
     start: 0,
     end: 86400
   });
-
   let { maxPrice, minPrice } = minMaxPrices(currentRoutes);
-  const maxThereDeparture = 86400;
-  const minThereDeparture = 0;
-  const maxThereArrival = 86400;
-  const minThereArrival = 0;
-  const maxBackDeparture = 86400;
-  const minBackDeparture = 0;
-  const maxBackArrival = 86400;
-  const minBackArrival = 0;
 
   useEffect(() => {
     if (currentRoutes && currentRoutes.length > 0) {
@@ -75,25 +74,25 @@ export default function FilterRoute() {
         start: price.start,
         end: price.end
       }));
-  }, [price]);
+  }, [dispatch, price]);
 
   useEffect(() => {
       dispatch(addFilterSeats(check));
-  }, [check]);
+  }, [check, dispatch]);
 
   useEffect(() => {
     dispatch(addFilterTimeFrom({
       thereDeparture,
       thereArrival
     }));
-  }, [thereDeparture, thereArrival]);
+  }, [thereDeparture, thereArrival, dispatch]);
 
   useEffect(() => {
     dispatch(addFilterTimeTo({
       backDeparture,
       backArrival
     }));
-  }, [backDeparture, backArrival]);
+  }, [backDeparture, backArrival, dispatch]);
 
   function inputDateFrom(ev) {
     dispatch(choiceDateFrom(ev.target.value));
@@ -217,10 +216,7 @@ export default function FilterRoute() {
             value={fromDate}
             onClick={getCalendarFrom}
             onChange={inputDateFrom}/>
-          <Calendar none={hidden.from}
-            getDate={getDate}
-            getCalendarFrom={getCalendarFrom}
-            getCalendarTo={getCalendarTo}/>
+          <Calendar classStyle={hidden.from}/>
         </div>
         <div className='filter-date-to'>
           <h4 className='filter-date-title'>Дата вовращения</h4>
@@ -228,10 +224,7 @@ export default function FilterRoute() {
             value={toDate}
             onClick={getCalendarTo}
             onChange={inputDateTo}/>
-          <Calendar none={hidden.to}
-            getDate={getDate}
-            getCalendarFrom={getCalendarFrom}
-            getCalendarTo={getCalendarTo}/>
+          <Calendar classStyle={hidden.to}/>
         </div>
       </div>
       <div className='filter-line'></div>
@@ -405,9 +398,8 @@ export default function FilterRoute() {
         <div className='filter-time-title'>
           <span className='filter-time-back-img'></span>
           <h4 className='filter-time-text'>Обратно</h4>
-          <span className={
-            (!none.back && 'filter-time-close-up') || (none.back && 'filter-time-close-down')
-          } onClick={() => setNone({...none, back: !none.back})}></span>
+          <span className={!none.back ? 'filter-time-close-up' : 'filter-time-close-down'}
+            onClick={() => setNone({...none, back: !none.back})}></span>
         </div>
 
         <div className={none.back ? 'none' : `${none.back}`}>

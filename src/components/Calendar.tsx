@@ -57,13 +57,6 @@ export default function Calendar({classStyle}: Props) {
     const choiceDate = date.choiceDate(date.year, month, day);
     const compareChoiceDate = new Date(date.year, month, day).getTime();
     const compareToday = new Date(date.year, date.numberMonth, date.numDate).getTime();
-    const arrDate = fromDate.split('.');
-    const compareFromDate = new Date(`${arrDate[2]}-${arrDate[1]}-${arrDate[0]}`).getTime();   
-
-    console.log('choiceDate -', choiceDate);
-    console.log('compareChoiceDate - ', compareChoiceDate);
-    console.log('compareToday -', compareToday);
-    console.log('compareFromDate -', compareFromDate);
     
     if (fromDate === '' && compareChoiceDate >= compareToday) {
       getDate(choiceDate);
