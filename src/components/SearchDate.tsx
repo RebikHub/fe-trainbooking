@@ -1,12 +1,14 @@
 import React, { SyntheticEvent, useEffect, useRef, useState } from 'react';
-import { useAppSelector } from '../store/hooks';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
 import Calendar from "./Calendar";
 import '../styles/search-widget.css';
+import { clearChoiceDate } from '../store/sliceChoice';
 
 export default function SearchDate() {
   const [current, setCurrent] = useState<string>('');
   const { fromDate, toDate } = useAppSelector((state) => state.sliceChoice);
-  const ref = useRef<HTMLElement | null>(null)
+  const ref = useRef<HTMLElement | null>(null);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (document.querySelector('.calendar-from')) {
@@ -22,6 +24,9 @@ export default function SearchDate() {
   }, [fromDate, toDate]);
 
   function inputFrom(ev: SyntheticEvent<HTMLInputElement>) {
+    if (fromDate !== '') {
+      dispatch(clearChoiceDate());
+    };
     setCurrent('from');
   };
 

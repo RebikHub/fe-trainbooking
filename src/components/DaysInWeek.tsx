@@ -19,6 +19,12 @@ export default function DaysInWeek({array, date, currentMonth, otherMonth, onCho
             key={el.numDay + i}>
               {el.numDay}
             </td>
+        } else if (el.curDay === 'this' && el.numDay < date && currentMonth === otherMonth) {
+          return <td 
+            className="date-other-month" 
+            key={el.numDay + i}>
+              {el.numDay}
+            </td>
         } else if (el.curDay === 'this' && el.numDay === date && currentMonth === otherMonth) {
           return <td 
             className="date-today" 

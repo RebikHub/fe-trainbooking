@@ -107,6 +107,7 @@
   background: rgba(255, 168, 0, 0.31);
   border: 2px solid #FFA800;
   border-radius: 5px;
+  cursor: pointer;
 }
 
 .date-week-end {

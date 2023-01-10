@@ -67,7 +67,7 @@ export default function Calendar({classStyle}: Props) {
     
     if (fromDate === '' && compareChoiceDate >= compareToday) {
       getDate(choiceDate);
-    } else if (fromDate !== '' && compareFromDate < compareChoiceDate && classStyle.includes('to')) {
+    } else if (fromDate !== '' && compareToday <= compareChoiceDate) {
       getDate(choiceDate);
     };
   };
