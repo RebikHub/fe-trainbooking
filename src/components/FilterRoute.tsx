@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import Calendar from './Calendar';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import '../styles/filter.css';
-import { choiceDateFrom, choiceDateTo } from '../store/sliceChoice';
 import { addFilterPrices, addFilterSeats, addFilterTimeFrom, addFilterTimeTo } from '../store/sliceFilter';
 import { minMaxPrices } from '../utils/minMaxPrices';
 import secondsToTime from '../utils/secondsToTime';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { SearchInputs } from '../interfaces/types';
+import { FilterCheck, FilterNone, FilterState, FuncValue } from '../interfaces/types';
+import InputDate from './InputDate';
 
 const maxThereDeparture = 86400;
 const minThereDeparture = 0;
@@ -18,14 +17,15 @@ const maxBackArrival = 86400;
 const minBackArrival = 0;
 
 export default function FilterRoute() {
-  const { fromDate, toDate } = useAppSelector((state) => state.sliceChoice);
+  // const { fromDate, toDate } = useAppSelector((state) => state.sliceChoice);
   const { currentRoutes } = useAppSelector((state) => state.sliceFilter);
   const dispatch = useAppDispatch();
-  const [hidden, setHidden] = useState<SearchInputs>({
-    from: 'none',
-    to: 'none'
-  });
-  const [check, setCheck] = useState({
+  // const [current, setCurrent] = useState<string>('');
+  // const [hidden, setHidden] = useState<SearchInputs>({
+  //   from: 'none',
+  //   to: 'none'
+  // });
+  const [check, setCheck] = useState<FilterCheck>({
     coupe: false,
     reserved: false,
     seated: false,
@@ -33,27 +33,27 @@ export default function FilterRoute() {
     wifi: false,
     express: false
   });
-  const [price, setPrice] = useState({
+  const [price, setPrice] = useState<FilterState>({
     start: 0,
     end: 7000
   });
-  const [none, setNone] = useState({
+  const [none, setNone] = useState<FilterNone>({
     there: true,
     back: true
   });
-  const [thereDeparture, setThereDeparture] = useState({
+  const [thereDeparture, setThereDeparture] = useState<FilterState>({
     start: 0,
     end: 86400
   });
-  const [thereArrival, setThereArrival] = useState({
+  const [thereArrival, setThereArrival] = useState<FilterState>({
     start: 0,
     end: 86400
   });
-  const [backDeparture, setBackDeparture] = useState({
+  const [backDeparture, setBackDeparture] = useState<FilterState>({
     start: 0,
     end: 86400
   });
-  const [backArrival, setBackArrival] = useState({
+  const [backArrival, setBackArrival] = useState<FilterState>({
     start: 0,
     end: 86400
   });
@@ -94,115 +94,115 @@ export default function FilterRoute() {
     }));
   }, [backDeparture, backArrival, dispatch]);
 
-  function inputDateFrom(ev) {
-    dispatch(choiceDateFrom(ev.target.value));
-  };
+  // function inputDateFrom(ev: ChangeEvent<HTMLInputElement>) {
+  //   dispatch(choiceDateFrom(ev.target.value));
+  // };
 
-  function inputDateTo(ev) {
-    dispatch(choiceDateTo(ev.target.value));
-  };
+  // function inputDateTo(ev: ChangeEvent<HTMLInputElement>) {
+  //   dispatch(choiceDateTo(ev.target.value));
+  // };
 
-  function getCalendarFrom() {
-    if (hidden.from === 'none') {
-      setHidden({...hidden, from: 'filter-calendar-from', to: 'none'});
-    } else {
-      setHidden({...hidden, from: 'none'});
-    };
-  };
+  // function getCalendarFrom() {
+  //   if (hidden.from === 'none') {
+  //     setHidden({...hidden, from: 'filter-calendar-from', to: 'none'});
+  //   } else {
+  //     setHidden({...hidden, from: 'none'});
+  //   };
+  // };
 
-  function getCalendarTo() {
-    if (hidden.to === 'none') {
-      setHidden({...hidden, to: 'filter-calendar-to', from: 'none'});
-    } else {
-      setHidden({...hidden, to: 'none'});
-    };
-  };
+  // function getCalendarTo() {
+  //   if (hidden.to === 'none') {
+  //     setHidden({...hidden, to: 'filter-calendar-to', from: 'none'});
+  //   } else {
+  //     setHidden({...hidden, to: 'none'});
+  //   };
+  // };
 
-  function getDate(choiceDate) {
-    if (hidden.from === 'filter-calendar-from') {
-      dispatch(choiceDateFrom(choiceDate));
-      setHidden({...hidden, from: 'none'});
-    };
+  // function getDate(choiceDate) {
+  //   if (hidden.from === 'filter-calendar-from') {
+  //     dispatch(choiceDateFrom(choiceDate));
+  //     setHidden({...hidden, from: 'none'});
+  //   };
 
-    if (hidden.to === 'filter-calendar-to') {
-      dispatch(choiceDateTo(choiceDate));
-      setHidden({...hidden, to: 'none'});
-    };
-  };
+  //   if (hidden.to === 'filter-calendar-to') {
+  //     dispatch(choiceDateTo(choiceDate));
+  //     setHidden({...hidden, to: 'none'});
+  //   };
+  // };
 
-  function changeStartPrice(ev) {
+  function changeStartPrice(ev: ChangeEvent<HTMLInputElement>) {
     if (Number(ev.target.value) <= price.end) {
       setPrice({...price, start: Number(ev.target.value)});
     };
   };
 
-  function changeEndPrice(ev) {
+  function changeEndPrice(ev: ChangeEvent<HTMLInputElement>) {
     if (Number(ev.target.value) >= price.start) {
       setPrice({...price, end: Number(ev.target.value)});
     };
   };
 
-  function changeThereDepartureStart(ev) {
+  function changeThereDepartureStart(ev: ChangeEvent<HTMLInputElement>) {
     if (Number(ev.target.value) <= thereDeparture.end) {
       setThereDeparture({...thereDeparture, start: Number(ev.target.value)});
     };
   };
 
-  function changeThereDepartureEnd(ev) {
+  function changeThereDepartureEnd(ev: ChangeEvent<HTMLInputElement>) {
     if (Number(ev.target.value) >= thereDeparture.start) {
       setThereDeparture({...thereDeparture, end: Number(ev.target.value)});
     };
   };
 
-  function changeThereArrivalStart(ev) {
+  function changeThereArrivalStart(ev: ChangeEvent<HTMLInputElement>) {
     if (Number(ev.target.value) <= thereArrival.end) {
       setThereArrival({...thereArrival, start: Number(ev.target.value)});
     };
   };
 
-  function changeThereArrivalEnd(ev) {
+  function changeThereArrivalEnd(ev: ChangeEvent<HTMLInputElement>) {
     if (Number(ev.target.value) >= thereArrival.start) {
       setThereArrival({...thereArrival, end: Number(ev.target.value)});
     };
   };
 
-  function changeBackDepartureStart(ev) {
+  function changeBackDepartureStart(ev: ChangeEvent<HTMLInputElement>) {
     if (Number(ev.target.value) <= backDeparture.end) {
       setBackDeparture({...backDeparture, start: Number(ev.target.value)});
     };
   };
 
-  function changeBackDepartureEnd(ev) {
+  function changeBackDepartureEnd(ev: ChangeEvent<HTMLInputElement>) {
     if (Number(ev.target.value) >= backDeparture.start) {
       setBackDeparture({...backDeparture, end: Number(ev.target.value)});
     };
   };
 
-  function changeBackArrivalStart(ev) {
+  function changeBackArrivalStart(ev: ChangeEvent<HTMLInputElement>) {
     if (Number(ev.target.value) <= backArrival.end) {
       setBackArrival({...backArrival, start: Number(ev.target.value)});
     };
   };
 
-  function changeBackArrivalEnd(ev) {
+  function changeBackArrivalEnd(ev: ChangeEvent<HTMLInputElement>) {
     if (Number(ev.target.value) >= backArrival.start) {
       setBackArrival({...backArrival, end: Number(ev.target.value)});
     };
   };
 
-  function leftValue(max, min, start) {
+  const leftValue: FuncValue = (max, min, start) => {
     return (100 / (max - min)) * (start - min);
   };
   
-  function rightValue(max, min, end) {
+  const rightValue: FuncValue = (max, min, end) => {
     return (100 / (max - min)) * ((max - min) - (end - min));
   };
   
-  function startValue(max, min, start) {
+  const startValue: FuncValue = (max, min, start) => {
     return 260 * (((100 / (max - min)) * (start - min)) / 100);
   };
   
-  function endValue(max, min, end) {
+  const endValue: FuncValue = (max, min, end) => {
     return 260 * (((100 / (max - min)) * ((max - min) - (end - min))) / 100);
   };
 
@@ -212,19 +212,21 @@ export default function FilterRoute() {
       <div className='filter-date'>
         <div className='filter-date-from'>
           <h4 className='filter-date-title'>Дата поездки</h4>
-          <input type="text" placeholder="ДД.ММ.ГГ"
+          <InputDate inputStyle='' calendarStyle='filter-calendar-from'/>
+          {/* <input type="text" placeholder="ДД.ММ.ГГ"
             value={fromDate}
             onClick={getCalendarFrom}
             onChange={inputDateFrom}/>
-          <Calendar classStyle={hidden.from}/>
+          {current === 'from' ? <Calendar classStyle={'filter-calendar-from'}/> : null} */}
         </div>
         <div className='filter-date-to'>
           <h4 className='filter-date-title'>Дата вовращения</h4>
-          <input type="text" placeholder="ДД.ММ.ГГ"
+          <InputDate inputStyle='' calendarStyle='filter-calendar-to'/>
+          {/* <input type="text" placeholder="ДД.ММ.ГГ"
             value={toDate}
             onClick={getCalendarTo}
             onChange={inputDateTo}/>
-          <Calendar classStyle={hidden.to}/>
+          {current === 'to' ? <Calendar classStyle={'filter-calendar-to'}/> : null} */}
         </div>
       </div>
       <div className='filter-line'></div>
@@ -233,42 +235,48 @@ export default function FilterRoute() {
         <div className='checkbox-coupe'>
           <span className='coupe-img'></span>
           <p className='checkbox-text'>Купе</p>
-          <div className={`check-element check-${check.coupe ? 'true' : 'false'}`} onClick={() => setCheck({...check, coupe: !check.coupe})}>
+          <div className={`check-element check-${check.coupe ? 'true' : 'false'}`}
+            onClick={() => setCheck({...check, coupe: !check.coupe})}>
             <input className='checkbox-input' type="checkbox" defaultChecked={check.coupe}/>
           </div>
         </div>
         <div className='checkbox-reserved-seat'>
           <span className='reserved-seat-img'></span>
           <p className='checkbox-text'>Плацкарт</p>
-          <div className={`check-element check-${check.reserved ? 'true' : 'false'}`} onClick={() => setCheck({...check, reserved: !check.reserved})}>
+          <div className={`check-element check-${check.reserved ? 'true' : 'false'}`}
+            onClick={() => setCheck({...check, reserved: !check.reserved})}>
             <input className='checkbox-input' type="checkbox" defaultChecked={check.reserved}/>
           </div>
         </div>
         <div className='checkbox-seated'>
           <span className='seated-img'></span>
           <p className='checkbox-text'>Сидячий</p>
-          <div className={`check-element check-${check.seated ? 'true' : 'false'}`} onClick={() => setCheck({...check, seated: !check.seated})}>
+          <div className={`check-element check-${check.seated ? 'true' : 'false'}`}
+            onClick={() => setCheck({...check, seated: !check.seated})}>
             <input className='checkbox-input' type="checkbox" defaultChecked={check.seated}/>
           </div>
         </div>
         <div className='checkbox-lux'>
           <span className='lux-img'></span>
           <p className='checkbox-text'>Люкс</p>
-          <div className={`check-element check-${check.lux ? 'true' : 'false'}`} onClick={() => setCheck({...check, lux: !check.lux})}>
+          <div className={`check-element check-${check.lux ? 'true' : 'false'}`}
+            onClick={() => setCheck({...check, lux: !check.lux})}>
             <input className='checkbox-input' type="checkbox" defaultChecked={check.lux}/>
           </div>
         </div>
         <div className='checkbox-wifi'>
           <span className='wifi-img'></span>
           <p className='checkbox-text'>Wi-Fi</p>
-          <div className={`check-element check-${check.wifi ? 'true' : 'false'}`} onClick={() => setCheck({...check, wifi: !check.wifi})}>
+          <div className={`check-element check-${check.wifi ? 'true' : 'false'}`}
+            onClick={() => setCheck({...check, wifi: !check.wifi})}>
             <input className='checkbox-input' type="checkbox" defaultChecked={check.wifi}/>
           </div>
         </div>
         <div className='checkbox-express'>
           <span className='express-img'></span>
           <p className='checkbox-text'>Экспресс</p>
-          <div className={`check-element check-${check.express ? 'true' : 'false'}`} onClick={() => setCheck({...check, express: !check.express})}>
+          <div className={`check-element check-${check.express ? 'true' : 'false'}`}
+            onClick={() => setCheck({...check, express: !check.express})}>
             <input className='checkbox-input' type="checkbox" defaultChecked={check.express}/>
           </div>
         </div>
@@ -316,9 +324,8 @@ export default function FilterRoute() {
         <div className='filter-time-title'>
           <span className='filter-time-there-img'></span>
           <h4 className='filter-time-text'>Туда</h4>
-          <span className={
-            (!none.there && 'filter-time-close-up') || (none.there && 'filter-time-close-down')
-            } onClick={() => setNone({...none, there: !none.there})}></span>
+          <span className={!none.there ? 'filter-time-close-up' : 'filter-time-close-down'}
+            onClick={() => setNone({...none, there: !none.there})}></span>
         </div>
 
         <div className={none.there ? 'none' : `${none.there}`}>

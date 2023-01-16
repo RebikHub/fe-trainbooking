@@ -82,3 +82,24 @@ export type TrainSeatsInfo = {
   price: number,
   seatPrice?: IPriceClass
 };
+
+export type FilterState = {
+  start: number,
+  end: number
+};
+
+export type FilterCheck = {
+  coupe: boolean,
+  reserved: boolean,
+  seated: boolean,
+  lux: boolean,
+  wifi: boolean,
+  express: boolean
+};
+
+export type FilterNone = {
+  there: boolean,
+  back: boolean
+};
+
+export type FuncValue = (max: number, min: number, end: number) => number;
