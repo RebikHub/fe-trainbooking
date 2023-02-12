@@ -81,9 +81,9 @@
   text-align: center;
 }
 
-.cal-table > tbody > tr > td {
+/* .cal-table > tbody > tr > td {
   cursor: pointer;
-}
+} */
 
 .cal-table > tbody > tr > td:hover {
   background-color: #C4C4C4;
@@ -93,8 +93,13 @@
   height: 30px;
 }
 
+.date-month {
+  cursor: pointer;
+}
+
 .date-other-month {
   color: #00000030;
+  cursor: not-allowed;
 }
 
 .date-today {
@@ -102,6 +107,7 @@
   background: rgba(255, 168, 0, 0.31);
   border: 2px solid #FFA800;
   border-radius: 5px;
+  cursor: pointer;
 }
 
 .date-week-end {
