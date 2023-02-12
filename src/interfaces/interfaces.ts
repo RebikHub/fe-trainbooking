@@ -86,7 +86,7 @@ export interface IPersonInfo {
   last_name: string;
   patronymic: string;
   gender: boolean;
-  birthday: Date;
+  birthday: Date | string;
   document_type: string;
   document_data: string;
 }
@@ -102,7 +102,7 @@ export interface IUser {
 
 export interface ISeats {
   coach: ICoach;
-  seats: ISeat[];
+  seats: ISeatAvailable[];
 }
 
 export interface ICoach extends ITrainRoute {
@@ -120,7 +120,7 @@ export interface ICoach extends ITrainRoute {
   seats: string;
 }
 
-export interface ISeat {
+export interface ISeatAvailable {
   index: number;
   available: boolean;
 }

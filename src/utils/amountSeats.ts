@@ -1,7 +1,7 @@
 import { AmountSeats } from './../interfaces/types';
-import { ISeat, ISeats } from './../interfaces/interfaces';
+import { ISeatAvailable, ISeats } from './../interfaces/interfaces';
 
-export function amountSeats(amount: ISeat[], type: string): AmountSeats {
+export function amountSeats(amount: ISeatAvailable[], type: string): AmountSeats {
   let top = 0;
   let bottom = 0;
   let side = 0;

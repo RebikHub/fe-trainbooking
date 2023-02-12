@@ -1,13 +1,20 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState } from 'react';
+import React, { ChangeEvent, SyntheticEvent, useState } from 'react';
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { ISeat } from '../interfaces/interfaces';
+import { StateAgePassenger } from '../interfaces/types';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { addSeatPassenger, removeSeatPassenger } from '../store/sliceOrder';
 import '../styles/passenger.css';
 import { upperCaseBirthNumber, validateBirthNumber, validateDate, validateName, validatePassportNumber, validatePassportSeries } from '../utils/validators';
 
-export default function Passenger({addPassenger, num, agesPassengers}) {
-  const { totalSeatsNumber, seatsChildWithout } = useSelector((state) => state.slicePrice);
+type Props = {
+  addPassenger: () => void,
+  num: number,
+  agesPassengers: StateAgePassenger
+}
+
+export default function Passenger({addPassenger, num, agesPassengers}: Props) {
+  const { totalSeatsNumber, seatsChildWithout } = useAppSelector((state) => state.slicePrice);
   const [none, setNone] = useState({
     main: false,
     age: 'none',
@@ -17,11 +24,12 @@ export default function Passenger({addPassenger, num, agesPassengers}) {
   });
   const [select, setSelect] = useState({
     age: 'Взрослый',
-    docs: 'Паспорт РФ'
+    docs: 'Паспорт РФ',
+    typeDoc: ''
   });
-  const [gender, setGender] = useState(false);
-  const [limited, setLimited] = useState(false);
-  const [dateValue, setDateValue] = useState('');
+  const [gender, setGender] = useState<boolean>(false);
+  const [limited, setLimited] = useState<boolean>(false);
+  const [dateValue, setDateValue] = useState<string>('');
   const [nameValue, setNameValue] = useState({
     name: '',
     patronymic: '',
@@ -32,11 +40,11 @@ export default function Passenger({addPassenger, num, agesPassengers}) {
     passportNumber: '',
     birthNumber: ''
   });
-  const [validText, setValidText] = useState('');
-  const [button, setButton] = useState(false);
-  const dispatch = useDispatch();
+  const [validText, setValidText] = useState<string>('');
+  const [button, setButton] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
 
-  function inputPassportSeries(ev) {
+  function inputPassportSeries(ev: ChangeEvent<HTMLInputElement>) {
     setDocsValue({...docsValue, passportSeries: ev.target.value});
   };
 
@@ -47,7 +55,7 @@ export default function Passenger({addPassenger, num, agesPassengers}) {
     };
   };
 
-  function inputPassportNumber(ev) {
+  function inputPassportNumber(ev: ChangeEvent<HTMLInputElement>) {
     setDocsValue({...docsValue, passportNumber: ev.target.value});
   };
 
@@ -58,7 +66,7 @@ export default function Passenger({addPassenger, num, agesPassengers}) {
     };
   };
 
-  function inputBirthNumber(ev) {
+  function inputBirthNumber(ev: ChangeEvent<HTMLInputElement>) {
     setDocsValue({...docsValue, birthNumber: ev.target.value});
   };
 
@@ -69,7 +77,7 @@ export default function Passenger({addPassenger, num, agesPassengers}) {
     };
   };
 
-  function inputFirstName(ev) {
+  function inputFirstName(ev: ChangeEvent<HTMLInputElement>) {
     setNameValue({...nameValue, name: ev.target.value});
   };
 
@@ -80,7 +88,7 @@ export default function Passenger({addPassenger, num, agesPassengers}) {
     };
   };
 
-  function inputSecondName(ev) {
+  function inputSecondName(ev: ChangeEvent<HTMLInputElement>) {
     setNameValue({...nameValue, patronymic: ev.target.value});
   };
 
@@ -91,7 +99,7 @@ export default function Passenger({addPassenger, num, agesPassengers}) {
     };
   };
 
-  function inputSurName(ev) {
+  function inputSurName(ev: ChangeEvent<HTMLInputElement>) {
     setNameValue({...nameValue, surname: ev.target.value});
   };
 
@@ -102,7 +110,7 @@ export default function Passenger({addPassenger, num, agesPassengers}) {
     };
   };
 
-  function inputDate(ev) {
+  function inputDate(ev: ChangeEvent<HTMLInputElement>) {
     setDateValue(ev.target.value);
   };
 
@@ -117,7 +125,7 @@ export default function Passenger({addPassenger, num, agesPassengers}) {
     if (none.valid) {
       setTimeout(() => setNone({...none, valid: false}), 5 * 1000);
     };
-  }, [none.valid]);
+  }, [none]);
 
   function getSortAge() {
     if (none.age === 'none') {
@@ -127,9 +135,10 @@ export default function Passenger({addPassenger, num, agesPassengers}) {
     }
   };
 
-  function getSelectAge(ev) {
+  function getSelectAge(ev: SyntheticEvent<HTMLDivElement>) {
+    console.log(ev.currentTarget)
     if (agesPassengers.age > 0 && agesPassengers.child > 0) {
-      setSelect({...select, age: ev.target.outerText});
+      setSelect({...select, age: ev.currentTarget.outerText});
     };
 
     if (agesPassengers.age === 0 && agesPassengers.child > 0) {
@@ -155,13 +164,13 @@ export default function Passenger({addPassenger, num, agesPassengers}) {
     }
   };
 
-  function getSelectDocs(ev) {
-    setSelect({...select, docs: ev.target.outerText});
+  function getSelectDocs(ev: SyntheticEvent<HTMLDivElement>) {
+    setSelect({...select, docs: ev.currentTarget.outerText});
     setNone({...none, docs: 'none'});
   };
 
   function addPassengerToStore() {
-    const seats = {
+    const seats: ISeat = {
       coach_id: totalSeatsNumber[num - 1].idCoach,
       person_info: {
         is_adult: select.age === 'Взрослый' ? true : false,
@@ -203,7 +212,7 @@ export default function Passenger({addPassenger, num, agesPassengers}) {
   };
 
   function deletePassenger() {
-    dispatch(removeSeatPassenger(num));
+    dispatch(removeSeatPassenger(num.toString()));
     setButton(false);
     setNone({...none, ok: false});
     setGender(false);

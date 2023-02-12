@@ -1,6 +1,16 @@
 import { IPostStatus } from './../interfaces/interfaces';
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Order } from '../interfaces/types';
+import httpServices from '../middleware/httpApi';
+
+export const postOrderThunk = createAsyncThunk('slicePostOrder/postOrderThunk', async (order: Order) => {
+  try {
+    const response = await httpServices.postOrder(order);
+    return response.data;
+  } catch (error) {
+    return error;
+  };
+});
 
 const initialState: IPostStatus =  {
   status: false,
@@ -11,29 +21,21 @@ const initialState: IPostStatus =  {
 export const slicePostOrder = createSlice({
   name: 'slicePostOrder',
   initialState,
-  reducers: {
-    requestPostOrder: (state, actions: PayloadAction<Order>) => {
-      state.status = false;
+  reducers: {},
+  extraReducers(builder) {
+    builder
+      .addCase(postOrderThunk.pending, (state) => {
       state.loading = true;
-      state.error = false;
-    },
-    successPostOrder: (state, actions: PayloadAction<boolean>) => {
+    })
+      .addCase(postOrderThunk.fulfilled, (state, actions: PayloadAction<boolean>) => {
       state.loading = false;
-      state.error = false;
       state.status = actions.payload;
-    },
-    errorPostOrder: (state, actions: PayloadAction<string>) => {
-      state.status = false;
+    })
+      .addCase(postOrderThunk.rejected, (state) => {
       state.loading = false;
-      state.error = actions.payload;
-    }
+      state.error = true;
+    })
   },
 });
-
-export const {
-  requestPostOrder,
-  successPostOrder,
-  errorPostOrder
-} = slicePostOrder.actions;
 
 export default slicePostOrder.reducer;

@@ -103,3 +103,8 @@ export type FilterNone = {
 };
 
 export type FuncValue = (max: number, min: number, end: number) => number;
+
+export type StateAgePassenger = {
+  age: number,
+  child: number
+};

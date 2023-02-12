@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState, ChangeEvent, useEffect, useRef } from 'react';
 import { IIdName } from '../interfaces/interfaces';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { choiceCityFrom, choiceCityTo } from '../store/sliceChoice';
@@ -16,11 +16,32 @@ export default function SearchCity() {
   const { fromCity, toCity } = useAppSelector((state) => state.sliceChoice);
   const { transform } = useAppSelector((state) => state.sliceHeaderTransform);
   const dispatch = useAppDispatch();
+  const timeRef = useRef<NodeJS.Timeout>();
+
+  useEffect(() => {
+    clearTimeout(timeRef.current) 
+    if (city.to.trim() !== '') {
+      timeRef.current = setTimeout(() => { 
+        dispatch(getCityThunk(city.to)).unwrap();
+      }, 1000) 
+    }
+    return () => clearTimeout(timeRef.current) 
+  }, [city.to, dispatch])
+
+  useEffect(() => {
+    clearTimeout(timeRef.current)
+    if (city.from.trim() !== '') {
+      timeRef.current = setTimeout(() => { 
+        dispatch(getCityThunk(city.from)).unwrap();
+      }, 1000) 
+    }
+    return () => clearTimeout(timeRef.current) 
+  }, [city.from, dispatch])
 
   function inputFromCity(ev: ChangeEvent<HTMLInputElement>) {
-    if (ev.target.value.trim() !== '') {
-      dispatch(getCityThunk(ev.target.value)).unwrap();
-    };
+    // if (ev.target.value.trim() !== '') {
+    //   dispatch(getCityThunk(ev.target.value)).unwrap();
+    // };
 
     setCity({...city, from: ev.target.value});
     if (hidden === 'none') {
@@ -29,9 +50,9 @@ export default function SearchCity() {
   };
 
   function inputToCity(ev: ChangeEvent<HTMLInputElement>) {
-    if (ev.target.value.trim() !== '') {
-      dispatch(getCityThunk(ev.target.value)).unwrap();
-    };
+    // if (ev.target.value.trim() !== '') {
+    //   dispatch(getCityThunk(ev.target.value)).unwrap();
+    // };
     
     setCity({...city, to: ev.target.value});
     if (hidden === 'none') {

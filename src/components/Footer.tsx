@@ -1,19 +1,16 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React from 'react';
-import { useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { HashLink } from 'react-router-hash-link';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
 import Notice from './Notice';
 import '../styles/footer.css';
 import { validateEmail } from '../utils/validators';
 import { changeNotice } from '../store/sliceNotice';
-import { clearStatusSubscribe, requestPostSubscribe } from '../store/slicePostSubscribe';
-import { useEffect } from 'react';
+import { clearStatusSubscribe, postSubscribeThunk } from '../store/slicePostSubscribe';
 
 export default function Footer() {
-  const [input, setInput] = useState('');
-  const { status } = useSelector((state) => state.slicePostSubscribe);
-  const dispatch = useDispatch();
+  const [input, setInput] = useState<string>('');
+  const { status } = useAppSelector((state) => state.slicePostSubscribe);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (status) {
@@ -24,9 +21,9 @@ export default function Footer() {
       setInput('');
       setTimeout(() => dispatch(clearStatusSubscribe()), 5 * 1000);
     };
-  }, [status]);
+  }, [dispatch, status]);
 
-  function inputSubscribe(ev) {
+  function inputSubscribe(ev: ChangeEvent<HTMLInputElement>) {
     setInput(ev.target.value);
   };
 
@@ -37,7 +34,7 @@ export default function Footer() {
         text: 'Email указана некорректно.\n Пример: mail@mail.com'
       }));
     } else {
-      dispatch(requestPostSubscribe(input));
+      dispatch(postSubscribeThunk(input));
     };
   };
 

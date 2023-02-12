@@ -5,11 +5,7 @@ import Passenger from '../components/Passenger';
 import { useEffect } from 'react';
 import { currentStepTwo } from '../store/sliceProgressLine';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-
-type StateAgePassenger = {
-  age: number,
-  child: number
-};
+import { StateAgePassenger } from '../interfaces/types';
 
 export default function ListPassengers() {
   const { totalSeatsAge, totalSeatsChild } = useAppSelector((state) => state.slicePrice);

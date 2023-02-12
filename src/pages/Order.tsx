@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import TrainRoute from '../components/TrainRoute';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { clearOrderPassengers, clearOrderPayment } from '../store/sliceOrder';
-import { requestPostOrder } from '../store/slicePostOrder';
+import { postOrderThunk } from '../store/slicePostOrder';
 import { currentStepFour } from '../store/sliceProgressLine';
 import '../styles/order.css';
 
@@ -37,7 +37,7 @@ export default function Order() {
   };
 
   function confirmOrder() {
-    dispatch(requestPostOrder({
+    dispatch(postOrderThunk({
       user,
       departure
     }));

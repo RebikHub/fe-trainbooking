@@ -10,9 +10,7 @@ const http = axios.create({
 });
 
 function getCities(city: string) {
-  return http.get(`routes/cities?name=${city}`, {
-    timeout: 1000
-   });
+  return http.get(`routes/cities?name=${city}`);
 };
 
 function getRoutes(route: ISearchRoute) {
@@ -32,7 +30,7 @@ function postOrder(data: Order) {
 };
 
 function postSubscribe(data: string) {
-  return http.post('subscribe');
+  return http.post('subscribe', data);
 };
 
 const httpServices = {
@@ -45,15 +43,3 @@ const httpServices = {
 };
 
 export default httpServices;
-
-// const getCities = `${process.env.REACT_APP_API_URL}routes/cities?name=${o.payload}`
-
-// const getRoutes = `${process.env.REACT_APP_API_URL}routes?from_city_id=${o.payload.fromCity._id}&to_city_id=${o.payload.toCity._id}`
-
-// const getLastRoutes = `${process.env.REACT_APP_API_URL}routes/last`
-
-// const getSeats = `${process.env.REACT_APP_API_URL}routes/${o.payload}/seats`
-
-// const postOrder = `${process.env.REACT_APP_API_URL}order`
-
-// const postSubscribe = `${process.env.REACT_APP_API_URL}subscribe`
