@@ -108,3 +108,13 @@ export type StateAgePassenger = {
   age: number,
   child: number
 };
+
+export type SeatsClass = {
+  seatsAge: number,
+  seatsChild: number,
+  seatsNumber?: NumberIdCoach[],
+  amountTickets?: number,
+  seatsPriceAge?: number,
+  seatsPriceChild?: number,
+  totalPrice: number
+};

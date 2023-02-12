@@ -1,25 +1,35 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState } from 'react';
+import React, { BaseSyntheticEvent, useState } from 'react';
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { changeAmountTickets, changeNumberSeats, changePriceSeats, changeServiceLinens, changeServiceWifi } from '../store/slicePrice';
 import { changeNotice } from '../store/sliceNotice';
 import '../styles/coaches.css';
 import { amountSeats, haveSeatsOrNot } from '../utils/amountSeats';
 import { schemeFirstClass, schemeFourthClass, schemeThirdClass } from '../utils/schemeCoach';
+import { ISeatClass, ISeats } from '../interfaces/interfaces';
 
-export default function Coach({classStyle, coach}) {
+type Props = {
+  classStyle: string,
+  coach: ISeats
+}
+
+export default function Coach({classStyle, coach}: Props) {
   const [visible, setVisible] = useState({
-    air: false,
-    wifi: false,
-    linens: false,
-    cup: false
+    ['air' as string]: false,
+    ['wifi' as string]: false,
+    ['linens' as string]: false,
+    ['cup' as string]: false
   });
   const [wifiBought, setWifiBought] = useState(false);
   const [linensBought, setLinensBought] = useState(false);
-  const { firstClass, secondClass, thirdClass, fourthClass } = useSelector((state) => state.slicePrice);
-  const [current, setCurrent] = useState({});
-  const dispatch = useDispatch();
+  const { firstClass, secondClass, thirdClass, fourthClass } = useAppSelector((state) => state.slicePrice);
+  const [current, setCurrent] = useState<ISeatClass>({
+    seatsAge: 0,
+    seatsChild: 0,
+    totalPrice: 0,
+    amountTickets: 0
+  });
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (coach.coach.class_type === 'first') {
@@ -34,9 +44,9 @@ export default function Coach({classStyle, coach}) {
     if (coach.coach.class_type === 'fourth') {
       setCurrent(fourthClass);
     };
-  }, [firstClass, secondClass, thirdClass, fourthClass]);
+  }, [firstClass, secondClass, thirdClass, fourthClass, coach.coach.class_type]);
 
-  function mouseMoveToAir(ev) {
+  function mouseMoveToAir(ev: BaseSyntheticEvent) {
     if (ev.target.classList.contains('service-air-selected') || ev.target.classList.contains('service-air')) {
       setVisible({
         air: true,
@@ -47,7 +57,7 @@ export default function Coach({classStyle, coach}) {
     };
   };
 
-  function mouseMoveToWifi(ev) {
+  function mouseMoveToWifi(ev: BaseSyntheticEvent) {
     if (ev.target.classList.contains('service-wifi') || ev.target.classList.contains('service-wifi-empty')) {
       setVisible({
         air: false,
@@ -58,7 +68,7 @@ export default function Coach({classStyle, coach}) {
     };
   };
 
-  function mouseMoveToLinens(ev) {
+  function mouseMoveToLinens(ev: BaseSyntheticEvent) {
     if (ev.target.classList.contains('service-linens-empty') ||
     ev.target.classList.contains('service-linens') ||
     ev.target.classList.contains('service-included')) {
@@ -71,7 +81,7 @@ export default function Coach({classStyle, coach}) {
     };
   };
 
-  function mouseMoveToCup(ev) {
+  function mouseMoveToCup(ev: BaseSyntheticEvent) {
     if (ev.target.classList.contains('service-coffee')) {
       setVisible({
         air: false,
@@ -128,7 +138,7 @@ export default function Coach({classStyle, coach}) {
     };
   };
 
-  function choiceSeats(ev, price, seat, have) {
+  function choiceSeats(ev: BaseSyntheticEvent, price: number, seat: number, have: string) {
     if (ev.target.classList.contains('seat-selected')) {
       dispatch(changePriceSeats({
         classType: coach.coach.class_type,
@@ -271,7 +281,7 @@ export default function Coach({classStyle, coach}) {
         coach.coach.class_type === 'second' ?
           <span className='seats-info-second'>
             {schemeThirdClass.map((el, i) =>
-              <div className='scheme-seats-second' style={{left: `${41 + 89.63 * (i + 1)}px`}} ket={i}>
+              <div className='scheme-seats-second' style={{left: `${41 + 89.63 * (i + 1)}px`}} key={i}>
                 <span className={`seat-class seat-top-left ${haveSeatsOrNot(el.top[0], coach)}`}
                   onClick={(ev) => choiceSeats(ev, coach.coach.top_price, el.top[0], haveSeatsOrNot(el.top[0], coach))}>{el.top[0]}</span>
                 <span className={`seat-class seat-bot-left ${haveSeatsOrNot(el.bottom[0], coach)}`}

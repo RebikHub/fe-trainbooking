@@ -167,3 +167,16 @@ export interface ISearchRoute {
   fromCity: IIdName;
   toCity: IIdName;
 }
+
+export interface ISeatClass {
+  seatsAge: number;
+  seatsChild: number;
+  totalPrice: number;
+  amountTickets: number;
+};
+
+export interface ISeatsClass extends ISeatClass  {
+  seatsNumber: NumberIdCoach[];
+  seatsPriceAge: number;
+  seatsPriceChild: number;
+};

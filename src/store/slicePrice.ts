@@ -1,22 +1,12 @@
-import { SIAgeTickets, SICoachSeat, SIChildTickets, SIPriceSeat, SIAmountTicket } from './../interfaces/interfaces';
+import { SIAgeTickets, SICoachSeat, SIChildTickets, SIPriceSeat, SIAmountTicket, ISeatsClass } from './../interfaces/interfaces';
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { NumberIdCoach } from "../interfaces/types";
 
-type SeatsClass = {
-  seatsAge: number,
-  seatsChild: number,
-  seatsNumber: NumberIdCoach[],
-  amountTickets: number,
-  seatsPriceAge: number,
-  seatsPriceChild: number,
-  totalPrice: number
-};
-
 type State = {
-  firstClass: SeatsClass,
-  secondClass: SeatsClass,
-  thirdClass: SeatsClass,
-  fourthClass: SeatsClass,
+  firstClass: ISeatsClass,
+  secondClass: ISeatsClass,
+  thirdClass: ISeatsClass,
+  fourthClass: ISeatsClass,
   seatsChildWithout: number,
   totalSeatsAge: number,
   totalSeatsChild: number,

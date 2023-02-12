@@ -1,15 +1,21 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/coaches.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { dateFromAndTo, duration } from '../utils/trainDate';
 import Coach from './Coach';
 import { useEffect } from 'react';
 import { clearAllFiltering } from '../store/sliceFilter';
 import { changeAgeTickets, changeChildTickets, changeChildWithoutTickets, clearAllPrices, clearTotalPrice } from '../store/slicePrice';
+import { IItem, ISeats } from '../interfaces/interfaces';
 
-export default function CoachesType({route, coaches, classStyle}) {
+type Props = {
+  route: IItem | null,
+  coaches: ISeats[],
+  classStyle: string
+}
+
+export default function CoachesType({route, coaches, classStyle}: Props) {
   const [time, setTime] = useState({
     hours: '',
     mins: ''
@@ -23,12 +29,12 @@ export default function CoachesType({route, coaches, classStyle}) {
   const [valueAges, setValueAges] = useState(0);
   const [valueChild, setValueChild] = useState(0);
   const [valueChildWithout, setValueChildWithout] = useState(0);
-  const { firstClass, secondClass, thirdClass, fourthClass } = useSelector((state) => state.slicePrice);
-  const dispatch = useDispatch();
+  const { firstClass, secondClass, thirdClass, fourthClass } = useAppSelector((state) => state.slicePrice);
+  const dispatch = useAppDispatch();
   let navigate = useNavigate();
 
   useEffect(() => {
-    const time = duration(route.departure.duration);
+    const time = duration(route?.departure.duration);
     const timeArr = time.split(':');
     setTime({
       hours: timeArr[0],
@@ -57,38 +63,38 @@ export default function CoachesType({route, coaches, classStyle}) {
     };
     
     setType(objTypes);
-  }, []);
+  }, [coaches, route?.departure.duration]);
 
   useEffect(() => {
     if (valueAges < valueChildWithout) {
       setValueChildWithout(valueAges);
     };
-  }, [valueAges]);
+  }, [valueAges, valueChildWithout]);
 
-  function inputAges(ev) {
-    if (/^[0-5]$/.test(Number(ev.target.value))) {
+  function inputAges(ev: ChangeEvent<HTMLInputElement>) {
+    if (/^[0-5]$/.test(ev.target.value)) {
       dispatch(changeAgeTickets({
         classType: coaches[0].coach.class_type,
         seatsAge: Number(ev.target.value)
       }));
-      setValueAges(ev.target.value);
+      setValueAges(Number(ev.target.value));
     };
   };
 
-  function inputChild(ev) {
-    if (/^[0-5]$/.test(Number(ev.target.value))) {
+  function inputChild(ev: ChangeEvent<HTMLInputElement>) {
+    if (/^[0-5]$/.test(ev.target.value)) {
       dispatch(changeChildTickets({
         classType: coaches[0].coach.class_type,
         seatsChild: Number(ev.target.value)
       }));
-      setValueChild(ev.target.value);
+      setValueChild(Number(ev.target.value));
     };
   };
 
-  function inputChildWithout(ev) {
+  function inputChildWithout(ev: ChangeEvent<HTMLInputElement>) {
     if (Number(ev.target.value) >= 0 && Number(ev.target.value) <= valueAges) {
       dispatch(changeChildWithoutTickets(Number(ev.target.value)));
-      setValueChildWithout(ev.target.value);
+      setValueChildWithout(Number(ev.target.value));
     };
   };
 
@@ -111,23 +117,23 @@ export default function CoachesType({route, coaches, classStyle}) {
           <div className='coach-train-route'>
             <span className='coach-train-img'></span>
             <div className='coach-train-desc'>
-              <h5 className='train-desc-name'>{route.departure.train.name}</h5>
-              <p className='train-desc-city'>{route.departure.from.city.name} &#8594;</p>
-              <p className='train-desc-city'>{route.departure.to.city.name}</p>
+              <h5 className='train-desc-name'>{route?.departure.train.name}</h5>
+              <p className='train-desc-city'>{route?.departure.from.city.name} &#8594;</p>
+              <p className='train-desc-city'>{route?.departure.to.city.name}</p>
             </div>
           </div>
 
           <div className='coach-direction-time'>
             <div className='coach-direction-city'>
-              <h5 className='coach-time'>{dateFromAndTo(route.departure.from.datetime)}</h5>
-              <p className='coach-direction-name'>{route.departure.from.city.name}</p>
-              <p className='coach-direction-station'>{route.departure.from.city.railway_station_name} вокзал</p>
+              <h5 className='coach-time'>{dateFromAndTo(route?.departure.from.datetime)}</h5>
+              <p className='coach-direction-name'>{route?.departure.from.city.name}</p>
+              <p className='coach-direction-station'>{`${route?.departure.from.city} вокзал`}</p>
             </div>
             <div className='direction-arrow'></div>
             <div className='coach-direction-city'>
-              <h5 className='coach-time'>{dateFromAndTo(route.departure.to.datetime)}</h5>
-              <p className='coach-direction-name'>{route.departure.to.city.name}</p>
-              <p className='coach-direction-station'>{route.departure.to.city.railway_station_name} вокзал</p>
+              <h5 className='coach-time'>{dateFromAndTo(route?.departure.to.datetime)}</h5>
+              <p className='coach-direction-name'>{route?.departure.to.city.name}</p>
+              <p className='coach-direction-station'>{`${route?.departure.to.city} вокзал`}</p>
             </div>
           </div>
 
