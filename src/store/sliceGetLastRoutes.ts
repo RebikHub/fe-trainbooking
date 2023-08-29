@@ -1,6 +1,6 @@
 import { IGetStatus, IItem } from './../interfaces/interfaces';
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import httpServices from '../middleware/httpApi';
+import httpServices from '../services/httpApi';
 
 export const getLastRoutesThunk = createAsyncThunk('sliceGetLastRoutes/getLastRoutesThunk', async () => {
   try {

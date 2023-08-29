@@ -5,14 +5,14 @@ import { validateCalendarDate } from '../utils/validators';
 import DaysInWeek from './DaysInWeek';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { Weeks } from '../interfaces/types';
-import { choiceDateFrom, choiceDateTo } from '../store/sliceChoice';
+import { choiceDateFrom, choiceDateTo, sliceChoiceState } from '../store/sliceChoice';
 
 type Props = {
   classStyle: string,
 };
 
-export default function Calendar({classStyle}: Props) {
-  const { fromDate } = useAppSelector((state) => state.sliceChoice);
+export default function Calendar({ classStyle }: Props) {
+  const { fromDate } = useAppSelector(sliceChoiceState);
   const date = getCurrentDate(fromDate);
   const [numMonth, setNumMonth] = useState<number>(date.numberMonth);
   const [nameMonth, setNameMonth] = useState<string>(date.month);
@@ -57,7 +57,7 @@ export default function Calendar({classStyle}: Props) {
     const choiceDate = date.choiceDate(date.year, month, day);
     const compareChoiceDate = new Date(date.year, month, day).getTime();
     const compareToday = new Date(date.year, date.numberMonth, date.numDate).getTime();
-    
+
     if (fromDate === '' && compareChoiceDate >= compareToday) {
       getDate(choiceDate);
     } else if (fromDate !== '' && compareToday <= compareChoiceDate) {
@@ -86,13 +86,13 @@ export default function Calendar({classStyle}: Props) {
         </div>
         <table className='cal-table'>
           <colgroup className='date-column'>
-            <col/>
-            <col/>
-            <col/>
-            <col/>
-            <col/>
-            <col className="date-week-end"/>
-            <col className="date-week-end"/>
+            <col />
+            <col />
+            <col />
+            <col />
+            <col />
+            <col className="date-week-end" />
+            <col className="date-week-end" />
           </colgroup>
           <thead>
             <tr>
@@ -105,17 +105,17 @@ export default function Calendar({classStyle}: Props) {
               <th scope="col" title="Воскресенье">Вс</th>
             </tr>
           </thead>
-            {days !== null ? <tbody>
-              {Object.entries(days).map((el) => 
-                <DaysInWeek
-                  array={el[1]}
-                  date={date.numDate}
-                  currentMonth={date.numberMonth}
-                  otherMonth={numMonth}
-                  onChoiceDate={onChoiceDate}
-                  key={el[0]}/>
-              )}
-            </tbody> : null}
+          {days !== null ? <tbody>
+            {Object.entries(days).map((el) =>
+              <DaysInWeek
+                array={el[1]}
+                date={date.numDate}
+                currentMonth={date.numberMonth}
+                otherMonth={numMonth}
+                onChoiceDate={onChoiceDate}
+                key={el[0]} />
+            )}
+          </tbody> : null}
         </table>
       </div>
     </div>

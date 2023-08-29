@@ -1,10 +1,10 @@
 import React, { useState, ChangeEvent, useEffect, useRef } from 'react';
 import { IIdName } from '../interfaces/interfaces';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { choiceCityFrom, choiceCityTo } from '../store/sliceChoice';
-import { clearCities, getCityThunk } from '../store/sliceGetCity';
-import CityList from './CityList';
+import { choiceCityFrom, choiceCityTo, sliceChoiceState } from '../store/sliceChoice';
+import { clearCities, getCityThunk, sliceGetCityState } from '../store/sliceGetCity';
 import '../styles/search-widget.css';
+import '../styles/city.css';
 import { SearchInputs } from '../interfaces/types';
 
 export default function SearchCity() {
@@ -13,48 +13,41 @@ export default function SearchCity() {
     to: ''
   });
   const [hidden, setHidden] = useState<string>('none');
-  const { fromCity, toCity } = useAppSelector((state) => state.sliceChoice);
+  const { fromCity, toCity } = useAppSelector(sliceChoiceState);
   const { transform } = useAppSelector((state) => state.sliceHeaderTransform);
+  const { items, loading, error } = useAppSelector(sliceGetCityState);
   const dispatch = useAppDispatch();
   const timeRef = useRef<NodeJS.Timeout>();
 
   useEffect(() => {
-    clearTimeout(timeRef.current) 
+    clearTimeout(timeRef.current)
     if (city.to.trim() !== '') {
-      timeRef.current = setTimeout(() => { 
+      timeRef.current = setTimeout(() => {
         dispatch(getCityThunk(city.to)).unwrap();
-      }, 1000) 
+      }, 1000)
     }
-    return () => clearTimeout(timeRef.current) 
+    return () => clearTimeout(timeRef.current)
   }, [city.to, dispatch])
 
   useEffect(() => {
     clearTimeout(timeRef.current)
     if (city.from.trim() !== '') {
-      timeRef.current = setTimeout(() => { 
+      timeRef.current = setTimeout(() => {
         dispatch(getCityThunk(city.from)).unwrap();
-      }, 1000) 
+      }, 1000)
     }
-    return () => clearTimeout(timeRef.current) 
+    return () => clearTimeout(timeRef.current)
   }, [city.from, dispatch])
 
   function inputFromCity(ev: ChangeEvent<HTMLInputElement>) {
-    // if (ev.target.value.trim() !== '') {
-    //   dispatch(getCityThunk(ev.target.value)).unwrap();
-    // };
-
-    setCity({...city, from: ev.target.value});
+    setCity((prev) => ({ ...prev, from: ev.target.value }));
     if (hidden === 'none') {
       setHidden('city-from');
     };
   };
 
   function inputToCity(ev: ChangeEvent<HTMLInputElement>) {
-    // if (ev.target.value.trim() !== '') {
-    //   dispatch(getCityThunk(ev.target.value)).unwrap();
-    // };
-    
-    setCity({...city, to: ev.target.value});
+    setCity((prev) => ({ ...prev, to: ev.target.value }));
     if (hidden === 'none') {
       setHidden('city-to');
     };
@@ -81,12 +74,12 @@ export default function SearchCity() {
   function getCity(choiceCity: IIdName) {
     if (hidden === 'city-from') {
       dispatch(choiceCityFrom(choiceCity));
-      setCity({...city, from: choiceCity.name});
+      setCity({ ...city, from: choiceCity.name });
     };
 
     if (hidden === 'city-to') {
       dispatch(choiceCityTo(choiceCity));
-      setCity({...city, to: choiceCity.name});
+      setCity({ ...city, to: choiceCity.name });
     };
     setHidden('none');
     dispatch(clearCities());
@@ -103,6 +96,11 @@ export default function SearchCity() {
     });
   };
 
+  useEffect(() => {
+    console.log(items, loading, error);
+
+  })
+
   return (
     <div className='search-direction'>
       <h4 className='search-dir-text'>Направление</h4>
@@ -110,14 +108,25 @@ export default function SearchCity() {
         <input className='dir-input-from' type="text" placeholder="Откуда"
           value={city.from}
           onChange={inputFromCity}
-          onClick={showListCitiesFrom}/>
-        <button className='dir-btn' type="button" onClick={swapCity}/>
+          onClick={showListCitiesFrom} />
+        <button className='dir-btn' type="button" onClick={swapCity} />
         <input className='dir-input-to' type="text" placeholder="Куда"
           value={city.to}
           onChange={inputToCity}
-          onClick={showListCitiesTo}/>
-          <CityList none={`${hidden}${transform ? '-transform' : ''}`}
-            getCity={getCity}/>
+          onClick={showListCitiesTo} />
+        <div className={`${hidden}${transform ? '-transform' : ''}`}>
+          <div className='city-list'>
+            {items.length === 0 ?
+              <div className='dots-list'>
+                <div className='dots-list-absolute'>
+                  <div className='loader'></div>
+                </div>
+              </div> :
+              items.map((el) => <p onClick={() => getCity(el)} key={el._id}>{el.name}</p>)}
+          </div>
+        </div>
+        {/* <CityList none={`${hidden}${transform ? '-transform' : ''}`}
+            getCity={getCity}/> */}
       </div>
     </div>
   )

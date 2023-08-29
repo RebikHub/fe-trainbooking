@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IPostStatus } from "../interfaces/interfaces";
-import httpServices from "../middleware/httpApi";
+import httpServices from "../services/httpApi";
 
 export const postSubscribeThunk = createAsyncThunk('slicePostSubscribe/postSubscribeThunk', async (subscribe: string) => {
   try {
@@ -28,16 +28,16 @@ export const slicePostSubscribe = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(postSubscribeThunk.pending, (state) => {
-      state.loading = true;
-    })
+        state.loading = true;
+      })
       .addCase(postSubscribeThunk.fulfilled, (state, actions: PayloadAction<boolean>) => {
-      state.loading = false;
-      state.status = actions.payload;
-    })
+        state.loading = false;
+        state.status = actions.payload;
+      })
       .addCase(postSubscribeThunk.rejected, (state) => {
-      state.loading = false;
-      state.error = true;
-    })
+        state.loading = false;
+        state.error = true;
+      })
   }
 });
 

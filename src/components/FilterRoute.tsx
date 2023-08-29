@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import '../styles/filter.css';
-import { addFilterPrices, addFilterSeats, addFilterTimeFrom, addFilterTimeTo } from '../store/sliceFilter';
+import { addFilterPrices, addFilterSeats, addFilterTimeFrom, addFilterTimeTo, sliceFilterState } from '../store/sliceFilter';
 import { minMaxPrices } from '../utils/minMaxPrices';
 import secondsToTime from '../utils/secondsToTime';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
@@ -17,14 +17,8 @@ const maxBackArrival = 86400;
 const minBackArrival = 0;
 
 export default function FilterRoute() {
-  // const { fromDate, toDate } = useAppSelector((state) => state.sliceChoice);
-  const { currentRoutes } = useAppSelector((state) => state.sliceFilter);
+  const { currentRoutes } = useAppSelector(sliceFilterState);
   const dispatch = useAppDispatch();
-  // const [current, setCurrent] = useState<string>('');
-  // const [hidden, setHidden] = useState<SearchInputs>({
-  //   from: 'none',
-  //   to: 'none'
-  // });
   const [check, setCheck] = useState<FilterCheck>({
     coupe: false,
     reserved: false,
@@ -71,13 +65,13 @@ export default function FilterRoute() {
 
   useEffect(() => {
     dispatch(addFilterPrices({
-        start: price.start,
-        end: price.end
-      }));
+      start: price.start,
+      end: price.end
+    }));
   }, [dispatch, price]);
 
   useEffect(() => {
-      dispatch(addFilterSeats(check));
+    dispatch(addFilterSeats(check));
   }, [check, dispatch]);
 
   useEffect(() => {
@@ -94,114 +88,78 @@ export default function FilterRoute() {
     }));
   }, [backDeparture, backArrival, dispatch]);
 
-  // function inputDateFrom(ev: ChangeEvent<HTMLInputElement>) {
-  //   dispatch(choiceDateFrom(ev.target.value));
-  // };
-
-  // function inputDateTo(ev: ChangeEvent<HTMLInputElement>) {
-  //   dispatch(choiceDateTo(ev.target.value));
-  // };
-
-  // function getCalendarFrom() {
-  //   if (hidden.from === 'none') {
-  //     setHidden({...hidden, from: 'filter-calendar-from', to: 'none'});
-  //   } else {
-  //     setHidden({...hidden, from: 'none'});
-  //   };
-  // };
-
-  // function getCalendarTo() {
-  //   if (hidden.to === 'none') {
-  //     setHidden({...hidden, to: 'filter-calendar-to', from: 'none'});
-  //   } else {
-  //     setHidden({...hidden, to: 'none'});
-  //   };
-  // };
-
-  // function getDate(choiceDate) {
-  //   if (hidden.from === 'filter-calendar-from') {
-  //     dispatch(choiceDateFrom(choiceDate));
-  //     setHidden({...hidden, from: 'none'});
-  //   };
-
-  //   if (hidden.to === 'filter-calendar-to') {
-  //     dispatch(choiceDateTo(choiceDate));
-  //     setHidden({...hidden, to: 'none'});
-  //   };
-  // };
-
   function changeStartPrice(ev: ChangeEvent<HTMLInputElement>) {
     if (Number(ev.target.value) <= price.end) {
-      setPrice({...price, start: Number(ev.target.value)});
+      setPrice({ ...price, start: Number(ev.target.value) });
     };
   };
 
   function changeEndPrice(ev: ChangeEvent<HTMLInputElement>) {
     if (Number(ev.target.value) >= price.start) {
-      setPrice({...price, end: Number(ev.target.value)});
+      setPrice({ ...price, end: Number(ev.target.value) });
     };
   };
 
   function changeThereDepartureStart(ev: ChangeEvent<HTMLInputElement>) {
     if (Number(ev.target.value) <= thereDeparture.end) {
-      setThereDeparture({...thereDeparture, start: Number(ev.target.value)});
+      setThereDeparture({ ...thereDeparture, start: Number(ev.target.value) });
     };
   };
 
   function changeThereDepartureEnd(ev: ChangeEvent<HTMLInputElement>) {
     if (Number(ev.target.value) >= thereDeparture.start) {
-      setThereDeparture({...thereDeparture, end: Number(ev.target.value)});
+      setThereDeparture({ ...thereDeparture, end: Number(ev.target.value) });
     };
   };
 
   function changeThereArrivalStart(ev: ChangeEvent<HTMLInputElement>) {
     if (Number(ev.target.value) <= thereArrival.end) {
-      setThereArrival({...thereArrival, start: Number(ev.target.value)});
+      setThereArrival({ ...thereArrival, start: Number(ev.target.value) });
     };
   };
 
   function changeThereArrivalEnd(ev: ChangeEvent<HTMLInputElement>) {
     if (Number(ev.target.value) >= thereArrival.start) {
-      setThereArrival({...thereArrival, end: Number(ev.target.value)});
+      setThereArrival({ ...thereArrival, end: Number(ev.target.value) });
     };
   };
 
   function changeBackDepartureStart(ev: ChangeEvent<HTMLInputElement>) {
     if (Number(ev.target.value) <= backDeparture.end) {
-      setBackDeparture({...backDeparture, start: Number(ev.target.value)});
+      setBackDeparture({ ...backDeparture, start: Number(ev.target.value) });
     };
   };
 
   function changeBackDepartureEnd(ev: ChangeEvent<HTMLInputElement>) {
     if (Number(ev.target.value) >= backDeparture.start) {
-      setBackDeparture({...backDeparture, end: Number(ev.target.value)});
+      setBackDeparture({ ...backDeparture, end: Number(ev.target.value) });
     };
   };
 
   function changeBackArrivalStart(ev: ChangeEvent<HTMLInputElement>) {
     if (Number(ev.target.value) <= backArrival.end) {
-      setBackArrival({...backArrival, start: Number(ev.target.value)});
+      setBackArrival({ ...backArrival, start: Number(ev.target.value) });
     };
   };
 
   function changeBackArrivalEnd(ev: ChangeEvent<HTMLInputElement>) {
     if (Number(ev.target.value) >= backArrival.start) {
-      setBackArrival({...backArrival, end: Number(ev.target.value)});
+      setBackArrival({ ...backArrival, end: Number(ev.target.value) });
     };
   };
 
   const leftValue: FuncValue = (max, min, start) => {
     return (100 / (max - min)) * (start - min);
   };
-  
+
   const rightValue: FuncValue = (max, min, end) => {
     return (100 / (max - min)) * ((max - min) - (end - min));
   };
-  
+
   const startValue: FuncValue = (max, min, start) => {
     return 260 * (((100 / (max - min)) * (start - min)) / 100);
   };
-  
+
   const endValue: FuncValue = (max, min, end) => {
     return 260 * (((100 / (max - min)) * ((max - min) - (end - min))) / 100);
   };
@@ -212,21 +170,11 @@ export default function FilterRoute() {
       <div className='filter-date'>
         <div className='filter-date-from'>
           <h4 className='filter-date-title'>Дата поездки</h4>
-          <InputDate inputStyle='' calendarStyle='filter-calendar-from'/>
-          {/* <input type="text" placeholder="ДД.ММ.ГГ"
-            value={fromDate}
-            onClick={getCalendarFrom}
-            onChange={inputDateFrom}/>
-          {current === 'from' ? <Calendar classStyle={'filter-calendar-from'}/> : null} */}
+          <InputDate inputStyle='' calendarStyle='filter-calendar-from' />
         </div>
         <div className='filter-date-to'>
           <h4 className='filter-date-title'>Дата вовращения</h4>
-          <InputDate inputStyle='' calendarStyle='filter-calendar-to'/>
-          {/* <input type="text" placeholder="ДД.ММ.ГГ"
-            value={toDate}
-            onClick={getCalendarTo}
-            onChange={inputDateTo}/>
-          {current === 'to' ? <Calendar classStyle={'filter-calendar-to'}/> : null} */}
+          <InputDate inputStyle='' calendarStyle='filter-calendar-to' />
         </div>
       </div>
       <div className='filter-line'></div>
@@ -236,48 +184,48 @@ export default function FilterRoute() {
           <span className='coupe-img'></span>
           <p className='checkbox-text'>Купе</p>
           <div className={`check-element check-${check.coupe ? 'true' : 'false'}`}
-            onClick={() => setCheck({...check, coupe: !check.coupe})}>
-            <input className='checkbox-input' type="checkbox" defaultChecked={check.coupe}/>
+            onClick={() => setCheck({ ...check, coupe: !check.coupe })}>
+            <input className='checkbox-input' type="checkbox" defaultChecked={check.coupe} />
           </div>
         </div>
         <div className='checkbox-reserved-seat'>
           <span className='reserved-seat-img'></span>
           <p className='checkbox-text'>Плацкарт</p>
           <div className={`check-element check-${check.reserved ? 'true' : 'false'}`}
-            onClick={() => setCheck({...check, reserved: !check.reserved})}>
-            <input className='checkbox-input' type="checkbox" defaultChecked={check.reserved}/>
+            onClick={() => setCheck({ ...check, reserved: !check.reserved })}>
+            <input className='checkbox-input' type="checkbox" defaultChecked={check.reserved} />
           </div>
         </div>
         <div className='checkbox-seated'>
           <span className='seated-img'></span>
           <p className='checkbox-text'>Сидячий</p>
           <div className={`check-element check-${check.seated ? 'true' : 'false'}`}
-            onClick={() => setCheck({...check, seated: !check.seated})}>
-            <input className='checkbox-input' type="checkbox" defaultChecked={check.seated}/>
+            onClick={() => setCheck({ ...check, seated: !check.seated })}>
+            <input className='checkbox-input' type="checkbox" defaultChecked={check.seated} />
           </div>
         </div>
         <div className='checkbox-lux'>
           <span className='lux-img'></span>
           <p className='checkbox-text'>Люкс</p>
           <div className={`check-element check-${check.lux ? 'true' : 'false'}`}
-            onClick={() => setCheck({...check, lux: !check.lux})}>
-            <input className='checkbox-input' type="checkbox" defaultChecked={check.lux}/>
+            onClick={() => setCheck({ ...check, lux: !check.lux })}>
+            <input className='checkbox-input' type="checkbox" defaultChecked={check.lux} />
           </div>
         </div>
         <div className='checkbox-wifi'>
           <span className='wifi-img'></span>
           <p className='checkbox-text'>Wi-Fi</p>
           <div className={`check-element check-${check.wifi ? 'true' : 'false'}`}
-            onClick={() => setCheck({...check, wifi: !check.wifi})}>
-            <input className='checkbox-input' type="checkbox" defaultChecked={check.wifi}/>
+            onClick={() => setCheck({ ...check, wifi: !check.wifi })}>
+            <input className='checkbox-input' type="checkbox" defaultChecked={check.wifi} />
           </div>
         </div>
         <div className='checkbox-express'>
           <span className='express-img'></span>
           <p className='checkbox-text'>Экспресс</p>
           <div className={`check-element check-${check.express ? 'true' : 'false'}`}
-            onClick={() => setCheck({...check, express: !check.express})}>
-            <input className='checkbox-input' type="checkbox" defaultChecked={check.express}/>
+            onClick={() => setCheck({ ...check, express: !check.express })}>
+            <input className='checkbox-input' type="checkbox" defaultChecked={check.express} />
           </div>
         </div>
       </div>
@@ -294,10 +242,10 @@ export default function FilterRoute() {
           <div className='range-input'>
             <input className='range-input-in' type="range" min={minPrice} max={maxPrice}
               value={price.start}
-              onChange={changeStartPrice}/>
+              onChange={changeStartPrice} />
             <input className='range-input-out' type="range" min={minPrice} max={maxPrice}
               value={price.end}
-              onChange={changeEndPrice}/>
+              onChange={changeEndPrice} />
             <div className='range-line'>
               <div className='range-line-body' style={{
                 left: `${leftValue(maxPrice, minPrice, price.start)}%`,
@@ -325,7 +273,7 @@ export default function FilterRoute() {
           <span className='filter-time-there-img'></span>
           <h4 className='filter-time-text'>Туда</h4>
           <span className={!none.there ? 'filter-time-close-up' : 'filter-time-close-down'}
-            onClick={() => setNone({...none, there: !none.there})}></span>
+            onClick={() => setNone({ ...none, there: !none.there })}></span>
         </div>
 
         <div className={none.there ? 'none' : `${none.there}`}>
@@ -338,12 +286,12 @@ export default function FilterRoute() {
                 min={minThereDeparture}
                 max={maxThereDeparture}
                 value={thereDeparture.start}
-                onChange={changeThereDepartureStart}/>
+                onChange={changeThereDepartureStart} />
               <input className='range-input-time-out' type="range"
                 min={minThereDeparture}
                 max={maxThereDeparture}
                 value={thereDeparture.end}
-                onChange={changeThereDepartureEnd}/>
+                onChange={changeThereDepartureEnd} />
               <div className='range-time-line'>
                 <div className='range-time-line-body' style={{
                   left: `${leftValue(maxThereDeparture, minThereDeparture, thereDeparture.start)}%`,
@@ -372,17 +320,17 @@ export default function FilterRoute() {
                 min={minThereArrival}
                 max={maxThereArrival}
                 value={thereArrival.start}
-                onChange={changeThereArrivalStart}/>
+                onChange={changeThereArrivalStart} />
               <input className='range-input-time-out' type="range"
                 min={minThereArrival}
                 max={maxThereArrival}
                 value={thereArrival.end}
-                onChange={changeThereArrivalEnd}/>
+                onChange={changeThereArrivalEnd} />
               <div className='range-time-line'>
                 <div className='range-time-line-body' style={{
                   left: `${leftValue(maxThereArrival, minThereArrival, thereArrival.start)}%`,
                   right: `${rightValue(maxThereArrival, minThereArrival, thereArrival.end)}%`
-                  }}></div>
+                }}></div>
               </div>
             </div>
             <div className='time-range-number'>
@@ -406,7 +354,7 @@ export default function FilterRoute() {
           <span className='filter-time-back-img'></span>
           <h4 className='filter-time-text'>Обратно</h4>
           <span className={!none.back ? 'filter-time-close-up' : 'filter-time-close-down'}
-            onClick={() => setNone({...none, back: !none.back})}></span>
+            onClick={() => setNone({ ...none, back: !none.back })}></span>
         </div>
 
         <div className={none.back ? 'none' : `${none.back}`}>
@@ -419,12 +367,12 @@ export default function FilterRoute() {
                 min={minBackDeparture}
                 max={maxBackDeparture}
                 value={backDeparture.start}
-                onChange={changeBackDepartureStart}/>
+                onChange={changeBackDepartureStart} />
               <input className='range-input-time-out' type="range"
                 min={minBackDeparture}
                 max={maxBackDeparture}
                 value={backDeparture.end}
-                onChange={changeBackDepartureEnd}/>
+                onChange={changeBackDepartureEnd} />
               <div className='range-time-line'>
                 <div className='range-time-line-body' style={{
                   left: `${leftValue(maxBackDeparture, minBackDeparture, backDeparture.start)}%`,
@@ -453,12 +401,12 @@ export default function FilterRoute() {
                 min={minBackArrival}
                 max={maxBackArrival}
                 value={backArrival.start}
-                onChange={changeBackArrivalStart}/>
+                onChange={changeBackArrivalStart} />
               <input className='range-input-time-out' type="range"
                 min={minBackArrival}
                 max={maxBackArrival}
                 value={backArrival.end}
-                onChange={changeBackArrivalEnd}/>
+                onChange={changeBackArrivalEnd} />
               <div className='range-time-line'>
                 <div className='range-time-line-body' style={{
                   left: `${leftValue(maxBackArrival, minBackArrival, backArrival.start)}%`,

@@ -1,6 +1,7 @@
 import { Filter, FilterSeats, StartEnd } from './../interfaces/types';
 import { IItem } from './../interfaces/interfaces';
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from '.';
 
 type State = {
   currentRoutes: IItem[],
@@ -70,10 +71,10 @@ export const sliceFilter = createSlice({
     addFilterPrices: (state, actions: PayloadAction<StartEnd>) => {
       state.filterPrices = actions.payload;
     },
-    addFilterTimeFrom: (state, actions: PayloadAction<{thereDeparture: StartEnd, thereArrival: StartEnd}>) => {
+    addFilterTimeFrom: (state, actions: PayloadAction<{ thereDeparture: StartEnd, thereArrival: StartEnd }>) => {
       state.filterTimeFrom = actions.payload;
     },
-    addFilterTimeTo: (state, actions: PayloadAction<{backDeparture: StartEnd, backArrival: StartEnd}>) => {
+    addFilterTimeTo: (state, actions: PayloadAction<{ backDeparture: StartEnd, backArrival: StartEnd }>) => {
       state.filterTimeTo = actions.payload;
     },
     filtering: (state, actions: PayloadAction<Filter>) => {
@@ -82,7 +83,7 @@ export const sliceFilter = createSlice({
 
       if (actions.payload.date !== '') {
         state.filteredRoutes = state.filteredRoutes.filter((el) =>
-         el.departure.from.datetime >= actions.payload.dateForComparison(actions.payload.date)
+          el.departure.from.datetime >= actions.payload.dateForComparison(actions.payload.date)
         );
       };
 
@@ -146,5 +147,7 @@ export const {
   stopFiltering,
   clearAllFiltering
 } = sliceFilter.actions;
+
+export const sliceFilterState = (state: RootState) => state.sliceFilter
 
 export default sliceFilter.reducer;

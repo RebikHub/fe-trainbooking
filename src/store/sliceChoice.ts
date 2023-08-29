@@ -1,3 +1,4 @@
+import { RootState } from '.';
 import { IIdName, IItem } from './../interfaces/interfaces';
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
@@ -69,5 +70,7 @@ export const {
   clearAllCity,
   choiceRoute
 } = sliceChoice.actions;
+
+export const sliceChoiceState = (state: RootState) => state.sliceChoice
 
 export default sliceChoice.reducer;

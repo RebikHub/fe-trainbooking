@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IGetStatus, ISeats } from "../interfaces/interfaces";
-import httpServices from "../middleware/httpApi";
+import httpServices from "../services/httpApi";
 
 export const getSeatsThunk = createAsyncThunk('sliceGetSeats/getSeatsThunk', async (id: string) => {
   try {

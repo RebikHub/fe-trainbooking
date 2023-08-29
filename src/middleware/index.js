@@ -16,17 +16,18 @@ export const getCitiesEpic = (action$) => action$.pipe(
   map(o => requestGetCity(o)),
   switchMap((o) => {
     return ajax.getJSON(`${process.env.REACT_APP_API_URL}routes/cities?name=${o.payload}`).pipe(
-    tap((o) => console.log(o)),
-    retry(3),
-    map((o) => {
-      if (o.error) {
-        errorGetCity(o.error)
-      } else {
-        successGetCity(o)
-      }
-    }),
-    catchError((e) => of(errorGetCity(e)))
-  )})
+      tap((o) => console.log(o)),
+      retry(3),
+      map((o) => {
+        if (o.error) {
+          errorGetCity(o.error)
+        } else {
+          successGetCity(o)
+        }
+      }),
+      catchError((e) => of(errorGetCity(e)))
+    )
+  })
 );
 
 export const getRoutesEpic = (action$) => action$.pipe(
@@ -34,36 +35,39 @@ export const getRoutesEpic = (action$) => action$.pipe(
   debounceTime(2000),
   switchMap((o) => {
     return ajax.getJSON(`${process.env.REACT_APP_API_URL}routes?from_city_id=${o.payload.fromCity._id}&to_city_id=${o.payload.toCity._id}`).pipe(
-    retry(3),
-    map((o) => {
-      if (o.error) {
-        getRouteError(o.error)
-      } else {
-        getRouteSuccess(o)
-      }
-    }),
-    catchError((e) => of(getRouteError(e)))
-  )})
+      retry(3),
+      map((o) => {
+        if (o.error) {
+          getRouteError(o.error)
+        } else {
+          getRouteSuccess(o)
+        }
+      }),
+      catchError((e) => of(getRouteError(e)))
+    )
+  })
 );
 
 export const getLastRoutesEpic = (action$) => action$.pipe(
   ofType(requestGetLastRoutes),
   switchMap(() => {
     return ajax.getJSON(`${process.env.REACT_APP_API_URL}routes/last`).pipe(
-    retry(3),
-    map((o) => successGetLastRoutes(o)),
-    catchError((e) => of(errorGetLastRoutes(e)))
-  )})
+      retry(3),
+      map((o) => successGetLastRoutes(o)),
+      catchError((e) => of(errorGetLastRoutes(e)))
+    )
+  })
 );
 
 export const getSeatsEpic = (action$) => action$.pipe(
   ofType(requestGetSeats),
   switchMap((o) => {
     return ajax.getJSON(`${process.env.REACT_APP_API_URL}routes/${o.payload}/seats`).pipe(
-    retry(3),
-    map((o) => successGetSeats(o)),
-    catchError((e) => of(errorGetSeats(e)))
-  )})
+      retry(3),
+      map((o) => successGetSeats(o)),
+      catchError((e) => of(errorGetSeats(e)))
+    )
+  })
 );
 
 export const postOrderEpic = (action$) => action$.pipe(
@@ -74,10 +78,11 @@ export const postOrderEpic = (action$) => action$.pipe(
       method: 'POST',
       body: JSON.stringify(o)
     }).pipe(
-    retry(3),
-    map((o) => successPostOrder(o.response.status)),
-    catchError((e) => of(errorPostOrder(e)))
-  )})
+      retry(3),
+      map((o) => successPostOrder(o.response.status)),
+      catchError((e) => of(errorPostOrder(e)))
+    )
+  })
 );
 
 export const postSubscribe = (action$) => action$.pipe(
@@ -88,15 +93,9 @@ export const postSubscribe = (action$) => action$.pipe(
       method: 'POST',
       body: JSON.stringify(o)
     }).pipe(
-    retry(3),
-    map((o) => successPostSubscribe(o.response.status)),
-    catchError((e) => of(errorPostSubscribe(e)))
-  )})
+      retry(3),
+      map((o) => successPostSubscribe(o.response.status)),
+      catchError((e) => of(errorPostSubscribe(e)))
+    )
+  })
 );
-
-
-// 63329d7b591d1e00467e8a30
-
-// 63329d7b591d1e00467e8a31
-
-// departure._id  6332a1be591d1e004681f858

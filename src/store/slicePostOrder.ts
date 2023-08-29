@@ -1,7 +1,7 @@
 import { IPostStatus } from './../interfaces/interfaces';
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Order } from '../interfaces/types';
-import httpServices from '../middleware/httpApi';
+import httpServices from '../services/httpApi';
 
 export const postOrderThunk = createAsyncThunk('slicePostOrder/postOrderThunk', async (order: Order) => {
   try {
@@ -12,7 +12,7 @@ export const postOrderThunk = createAsyncThunk('slicePostOrder/postOrderThunk', 
   };
 });
 
-const initialState: IPostStatus =  {
+const initialState: IPostStatus = {
   status: false,
   loading: false,
   error: false
@@ -25,16 +25,16 @@ export const slicePostOrder = createSlice({
   extraReducers(builder) {
     builder
       .addCase(postOrderThunk.pending, (state) => {
-      state.loading = true;
-    })
+        state.loading = true;
+      })
       .addCase(postOrderThunk.fulfilled, (state, actions: PayloadAction<boolean>) => {
-      state.loading = false;
-      state.status = actions.payload;
-    })
+        state.loading = false;
+        state.status = actions.payload;
+      })
       .addCase(postOrderThunk.rejected, (state) => {
-      state.loading = false;
-      state.error = true;
-    })
+        state.loading = false;
+        state.error = true;
+      })
   },
 });
 

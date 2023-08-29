@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IGetStatus, IRoute, ISearchRoute } from "../interfaces/interfaces";
-import httpServices from "../middleware/httpApi";
+import httpServices from "../services/httpApi";
 
 export const getRouteThunk = createAsyncThunk('sliceGetCity/getRouteThunk', async (route: ISearchRoute) => {
   try {
@@ -38,8 +38,8 @@ export const sliceGetRoute = createSlice({
         state.loading = false;
         state.error = true;
       })
-    }
-  });
+  }
+});
 
 export const {
   clearRouteList

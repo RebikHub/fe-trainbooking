@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { useAppSelector } from '../store/hooks';
 import '../styles/details.css';
 import { dateFromAndTo, duration, toDate } from '../utils/trainDate';
+import { sliceChoiceState } from '../store/sliceChoice';
 
 export default function TripDetails() {
-  const { route } = useAppSelector((state) => state.sliceChoice);
+  const { route } = useAppSelector(sliceChoiceState);
   const { totalSeatsAge, totalSeatsChild, totalPriceAge, totalPriceChild, totalPriceAll } = useAppSelector((state) => state.slicePrice);
   const [hiddenThere, setHiddenThere] = useState('');
   const [hiddenPassengers, setHiddenPassengers] = useState('');

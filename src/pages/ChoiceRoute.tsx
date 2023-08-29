@@ -8,41 +8,42 @@ import SearchProgress from '../components/SearchProgress';
 import TripDetails from '../components/TripDetails';
 import { useAppSelector } from '../store/hooks';
 import '../styles/route.css';
+import { sliceChoiceState } from '../store/sliceChoice';
 
 export default function ChoiceRoute() {
   const routeLoading = useAppSelector((state) => state.sliceGetRoute.loading);
   const seatsLoading = useAppSelector((state) => state.sliceGetSeats.loading);
-  const { route } = useAppSelector((state) => state.sliceChoice);
+  const { route } = useAppSelector(sliceChoiceState);
   const postLoading = useAppSelector((state) => state.slicePostOrder.loading);
   const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
     console.log(route);
-    
+
     if (route && location.pathname === '/route/coach') {
       navigate('/route');
     };
   }, [location.pathname, navigate, route]);
 
   if (routeLoading || seatsLoading || postLoading) {
-    return <SearchProgress/>
+    return <SearchProgress />
   };
 
   return (
     <div className='main-route'>
       <div className='left-side'>
         {location.pathname === '/route/passengers' ||
-        location.pathname === '/route/payment' ||
-        location.pathname === '/route/order' ? <TripDetails/> :
+          location.pathname === '/route/payment' ||
+          location.pathname === '/route/order' ? <TripDetails /> :
           <>
-            <FilterRoute/>
-            <LastRoutes/>
+            <FilterRoute />
+            <LastRoutes />
           </>
         }
       </div>
       <div className='right-side'>
-        <Outlet/>
+        <Outlet />
       </div>
     </div>
   );

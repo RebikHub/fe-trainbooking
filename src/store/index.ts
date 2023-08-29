@@ -12,7 +12,7 @@ import sliceOrder from "./sliceOrder";
 import slicePostOrder from "./slicePostOrder";
 import slicePostSubscribe from "./slicePostSubscribe";
 import sliceNotice from "./sliceNotice";
-import httpServices from "../middleware/httpApi";
+import httpServices from "../services/httpApi";
 
 export const store = configureStore({
   reducer: {
@@ -30,13 +30,13 @@ export const store = configureStore({
     slicePostSubscribe,
     sliceNotice,
   },
-  // middleware: (getDefaultMiddleware) =>
-  // getDefaultMiddleware({
-  //   thunk: {
-  //     extraArgument: httpServices,
-  //   },
-  //   serializableCheck: false,
-  // }),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      thunk: {
+        extraArgument: httpServices,
+      },
+      serializableCheck: false,
+    }),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

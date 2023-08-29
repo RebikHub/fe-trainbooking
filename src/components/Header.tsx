@@ -14,7 +14,7 @@ import { clearStepAll } from '../store/sliceProgressLine';
 import '../styles/header.css';
 
 export default function Header() {
-  const {classHeader, classSearch, classTitle, classLine, success} = useAppSelector((state) => state.sliceHeaderTransform);
+  const { classHeader, classSearch, classTitle, classLine, success } = useAppSelector((state) => state.sliceHeaderTransform);
   const { loading } = useAppSelector((state) => state.sliceGetRoute);
   let location = useLocation();
   const dispatch = useAppDispatch();
@@ -22,12 +22,12 @@ export default function Header() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    
+
     if (location.pathname === '/') {
       dispatch(transformHeaderToMain());
     } else if (location.pathname === '/success') {
       dispatch(transformHeaderSuccess());
-    } else if (location.pathname !== '/') {
+    } else {
       dispatch(transformHeader());
     };
   }, [dispatch, location.pathname]);
@@ -44,44 +44,44 @@ export default function Header() {
 
   return (
     <>
-    <header className={classHeader}>
+      <header className={classHeader}>
 
-      <div className='header-logo'>
-        <HashLink to='/'>
-          <h3 className='header-logo-text' onClick={clearStore}>Лого</h3>
-        </HashLink>
-      </div>
+        <div className='header-logo'>
+          <HashLink to='/'>
+            <h3 className='header-logo-text' onClick={clearStore}>Лого</h3>
+          </HashLink>
+        </div>
 
-      <div className='header-nav'>
-        <ul className='header-nav-list'>
-          <li className='header-nav-item'>
-            <HashLink to='/#main-about'>О нас</HashLink>
-          </li>
-          <li className='header-nav-item'>
-            <HashLink to="/#main-how">Как это работает</HashLink>
-          </li>
-          <li className='header-nav-item'>
-            <HashLink to="/#main-reviews">Отзывы</HashLink>
-          </li>
-          <li className='header-nav-item'>
-            <HashLink to="/#footer">Контакты</HashLink>
-          </li>
-        </ul>
-      </div>
+        <div className='header-nav'>
+          <ul className='header-nav-list'>
+            <li className='header-nav-item'>
+              <HashLink to='/#main-about'>О нас</HashLink>
+            </li>
+            <li className='header-nav-item'>
+              <HashLink to="/#main-how">Как это работает</HashLink>
+            </li>
+            <li className='header-nav-item'>
+              <HashLink to="/#main-reviews">Отзывы</HashLink>
+            </li>
+            <li className='header-nav-item'>
+              <HashLink to="/#footer">Контакты</HashLink>
+            </li>
+          </ul>
+        </div>
 
-      <div className={classTitle}>
-        <h4 className='header-title-text'>
-          Вся жизнь - <span>путешествие!</span>
-        </h4>
-      </div>
+        <div className={classTitle}>
+          <h4 className='header-title-text'>
+            Вся жизнь - <span>путешествие!</span>
+          </h4>
+        </div>
 
-      {success ? null : <SearchWidget classStyle={classSearch}/>}
-    </header>
+        {success ? null : <SearchWidget classStyle={classSearch} />}
+      </header>
       {success ? null :
-      <>
-        <div className={classLine}></div>
-        {classLine === 'none' && !loading ? <ProgressLine/> : null}
-      </>}
+        <>
+          <div className={classLine}></div>
+          {classLine === 'none' && !loading ? <ProgressLine /> : null}
+        </>}
     </>
   );
 };

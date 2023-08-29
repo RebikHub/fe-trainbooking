@@ -7,9 +7,10 @@ import { clearOrderPassengers, clearOrderPayment } from '../store/sliceOrder';
 import { postOrderThunk } from '../store/slicePostOrder';
 import { currentStepFour } from '../store/sliceProgressLine';
 import '../styles/order.css';
+import { sliceChoiceState } from '../store/sliceChoice';
 
 export default function Order() {
-  const { route } = useAppSelector((state) => state.sliceChoice);
+  const { route } = useAppSelector(sliceChoiceState);
   const { totalPriceAll } = useAppSelector((state) => state.slicePrice);
   const { user, departure } = useAppSelector((state) => state.sliceOrder);
   const { status } = useAppSelector((state) => state.slicePostOrder);
@@ -47,7 +48,7 @@ export default function Order() {
     <div className='order'>
       <div className='order-route'>
         <h4 className='order-route-title'>Поезд</h4>
-        <TrainRoute route={route} btnText={'Изменить'}/>
+        <TrainRoute route={route} btnText={'Изменить'} />
       </div>
 
       <div className='order-passengers'>

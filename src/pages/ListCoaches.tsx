@@ -8,6 +8,7 @@ import { clearStepAll } from '../store/sliceProgressLine';
 import coachClassTypes from '../utils/coachClassTypes';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { ISeats } from '../interfaces/interfaces';
+import { sliceChoiceState } from '../store/sliceChoice';
 
 type StateButton = {
   disabled: boolean,
@@ -16,7 +17,7 @@ type StateButton = {
 
 export default function ListCoaches() {
   const coaches = useAppSelector((state) => state.sliceGetSeats.items);
-  const { route } = useAppSelector((state) => state.sliceChoice);
+  const { route } = useAppSelector(sliceChoiceState);
   const navigate = useNavigate();
   const [types, setTypes] = useState<ISeats[][]>([]);
   const [button, setButton] = useState<StateButton>({
@@ -66,8 +67,8 @@ export default function ListCoaches() {
     <div className='coaches'>
       <h3 className='coaches-title'>выбор мест</h3>
 
-      {types.map((el, i) =>  <CoachesType coaches={el} route={route} classStyle={i % 2 === 0 ? '-left' : '-right'} key={i}/>)}
-      
+      {types.map((el, i) => <CoachesType coaches={el} route={route} classStyle={i % 2 === 0 ? '-left' : '-right'} key={i} />)}
+
       <button className={`coach-button${button.className}`} type='button' disabled={button.disabled} onClick={toPassengers}>далее</button>
     </div>
   );

@@ -1,15 +1,12 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { IGetStatus, IIdName } from "../interfaces/interfaces";
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import httpServices from "../middleware/httpApi";
+import httpServices from "../services/httpApi";
+import { RootState } from ".";
 
 export const getCityThunk = createAsyncThunk('sliceGetCity/getCityThunk', async (city: string) => {
-  try {
-    const response = await httpServices.getCities(city);
-    return response.data;
-  } catch (error) {
-    return error;
-  };
+  const response = await httpServices.getCities(city);
+  return response.data
 });
 
 const initialState: IGetStatus<IIdName[]> = {
@@ -27,21 +24,23 @@ export const sliceGetCity = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getCityThunk.pending, (state) => {
-      state.loading = true;
-    })
-      .addCase(getCityThunk.fulfilled, (state, actions: PayloadAction<IIdName[]>) => {
-      state.loading = false;
-      state.items = actions.payload;
-    })
+        state.loading = true;
+      })
+      .addCase(getCityThunk.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.items = payload;
+      })
       .addCase(getCityThunk.rejected, (state) => {
-      state.loading = false;
-      state.error = true;
-    })
+        state.loading = false;
+        state.error = true;
+      })
   }
 });
 
 export const {
   clearCities
 } = sliceGetCity.actions;
+
+export const sliceGetCityState = (state: RootState) => state.sliceGetCity
 
 export default sliceGetCity.reducer;

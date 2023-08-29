@@ -3,22 +3,23 @@ import '../styles/list-routes.css';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { clearStepAll, currentStepOne } from '../store/sliceProgressLine';
 import TrainRoute from '../components/TrainRoute';
-import { addRoutes, filtering } from '../store/sliceFilter';
+import { addRoutes, filtering, sliceFilterState } from '../store/sliceFilter';
 import { filteringPricesRange } from '../utils/minMaxPrices';
 import { sortingDuration, sortingPrices, sortingTime } from '../utils/sortingTrain';
 import { dateForComparison, timeForSort } from '../utils/trainDate';
 import { IItem } from '../interfaces/interfaces';
+import { sliceChoiceState } from '../store/sliceChoice';
 
 export default function ListRoutes() {
   const { loading, items } = useAppSelector((state) => state.sliceGetRoute);
-  const { fromDate } = useAppSelector((state) => state.sliceChoice);
+  const { fromDate } = useAppSelector(sliceChoiceState);
   const {
     filteredRoutes,
     filterSeats,
     filterPrices,
     filterTimeFrom,
     filterTimeTo
-  } = useAppSelector((state) => state.sliceFilter);
+  } = useAppSelector(sliceFilterState);
   const dispatch = useAppDispatch();
   const [list, setList] = useState<IItem[]>([]);
   const [none, setNone] = useState<string>('none');
@@ -34,7 +35,7 @@ export default function ListRoutes() {
     dispatch(clearStepAll());
   }, [dispatch]);
 
-  useEffect(() => { 
+  useEffect(() => {
     dispatch(filtering({
       start: filterPrices.start,
       end: filterPrices.end,
@@ -167,7 +168,7 @@ export default function ListRoutes() {
           <span>{list ? list.length : ''}</span>
         </div>
         <div className='list-routes-sort'>
-          <p>сортировать по: 
+          <p>сортировать по:
             <span className='sort-selected' onClick={getSort}>{select}</span>
           </p>
           <div className={none}>
@@ -185,13 +186,13 @@ export default function ListRoutes() {
       </header>
 
       <main className='main-list-routes'>
-        {list.slice(startSlice, endSlice).map((el) => <TrainRoute route={el} key={el.departure._id}/>)}
+        {list.slice(startSlice, endSlice).map((el) => <TrainRoute route={el} key={el.departure._id} />)}
       </main>
 
       <footer className='footer-list-routes'>
         <div className='list-routes-pages'>
           <div className='list-routes-pages-previous' onClick={prevPage}></div>
-          {pages.map((el, i) => 
+          {pages.map((el, i) =>
             <div className='list-routes-page' onClick={choicePage} key={10 + i}>{i + 1}</div>
           )}
           <div className='list-routes-pages-next' onClick={nextPage}></div>

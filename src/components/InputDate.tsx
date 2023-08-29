@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { clearChoiceDate } from '../store/sliceChoice';
+import { clearChoiceDate, sliceChoiceState } from '../store/sliceChoice';
 import Calendar from './Calendar';
 
 type Props = {
@@ -8,9 +8,9 @@ type Props = {
   calendarStyle: string
 };
 
-export default function InputDate({inputStyle = '', calendarStyle}: Props) {
+export default function InputDate({ inputStyle = '', calendarStyle }: Props) {
   const [current, setCurrent] = useState<boolean>(false);
-  const { fromDate, toDate } = useAppSelector((state) => state.sliceChoice);
+  const { fromDate, toDate } = useAppSelector(sliceChoiceState);
   const dispatch = useAppDispatch();
   const ref = useRef<HTMLElement | null>(null);
 
@@ -32,7 +32,7 @@ export default function InputDate({inputStyle = '', calendarStyle}: Props) {
     if (toDate !== '' && calendarStyle.includes('from')) {
       dispatch(clearChoiceDate());
     };
-    
+
     setCurrent(true);
   };
 
@@ -48,8 +48,8 @@ export default function InputDate({inputStyle = '', calendarStyle}: Props) {
         value={calendarStyle.includes('from') ? fromDate : toDate}
         onChange={handlerInput}
         onClick={handlerInput}
-        onBlur={handlerBlur}/>
-      {current ? <Calendar classStyle={calendarStyle}/> : null}
+        onBlur={handlerBlur} />
+      {current ? <Calendar classStyle={calendarStyle} /> : null}
     </>
   );
 };
