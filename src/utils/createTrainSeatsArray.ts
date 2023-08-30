@@ -1,12 +1,12 @@
-import { IAvailableSeatsInfo, IItem, IPriceClass, IPriceInfo } from "../interfaces/interfaces";
-import { TrainSeatsInfo } from "../interfaces/types";
+import { IAvailableSeatsInfo, IItem, IPriceClass, IPriceInfo } from "../types/interfaces";
+import { TrainSeatsInfo } from "../types/types";
 
 export default function createArray(
   route: IItem,
   array: TrainSeatsInfo[],
   seatClass: string,
   nameClass: string
-  ): TrainSeatsInfo[] {
+): TrainSeatsInfo[] {
   const prices: number[] = [];
   const priceClass: IPriceClass | undefined = route.departure.price_info[seatClass as keyof IPriceInfo];
   if (priceClass) {

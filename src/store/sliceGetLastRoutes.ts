@@ -1,14 +1,11 @@
-import { IGetStatus, IItem } from './../interfaces/interfaces';
+import { IGetStatus, IItem } from '../types/interfaces';
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import httpServices from '../services/httpApi';
+import { RootState } from '.';
 
 export const getLastRoutesThunk = createAsyncThunk('sliceGetLastRoutes/getLastRoutesThunk', async () => {
-  try {
-    const response = await httpServices.getLastRoutes();
-    return response.data;
-  } catch (error) {
-    return error;
-  }
+  const response = await httpServices.getLastRoutes();
+  return response.data;
 });
 
 const initialState: IGetStatus<IItem[]> = {
@@ -38,5 +35,7 @@ export const sliceGetLastRoutes = createSlice({
       })
   }
 });
+
+export const sliceGetLastRoutesState = (state: RootState) => state.sliceGetLastRoutes
 
 export default sliceGetLastRoutes.reducer;

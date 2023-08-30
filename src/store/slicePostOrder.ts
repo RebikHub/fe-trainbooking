@@ -1,15 +1,12 @@
-import { IPostStatus } from './../interfaces/interfaces';
+import { IPostStatus } from '../types/interfaces';
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Order } from '../interfaces/types';
+import { Order } from '../types/types';
 import httpServices from '../services/httpApi';
+import { RootState } from '.';
 
 export const postOrderThunk = createAsyncThunk('slicePostOrder/postOrderThunk', async (order: Order) => {
-  try {
-    const response = await httpServices.postOrder(order);
-    return response.data;
-  } catch (error) {
-    return error;
-  };
+  const response = await httpServices.postOrder(order);
+  return response.data;
 });
 
 const initialState: IPostStatus = {
@@ -37,5 +34,7 @@ export const slicePostOrder = createSlice({
       })
   },
 });
+
+export const slicePostOrderState = (state: RootState) => state.slicePostOrder
 
 export default slicePostOrder.reducer;

@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from ".";
 
 type State = {
   notice: boolean,
@@ -24,5 +25,7 @@ export const sliceNotice = createSlice({
 export const {
   changeNotice
 } = sliceNotice.actions;
+
+export const sliceNoticeState = (state: RootState) => state.sliceNotice
 
 export default sliceNotice.reducer;

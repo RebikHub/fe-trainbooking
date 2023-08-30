@@ -1,6 +1,7 @@
-import { IUser, ISeat } from './../interfaces/interfaces';
+import { IUser, ISeat } from '../types/interfaces';
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Order } from '../interfaces/types';
+import { Order } from '../types/types';
+import { RootState } from '.';
 
 const initialState: Order = {
   user: {
@@ -28,7 +29,7 @@ export const sliceOrder = createSlice({
       state.departure.seats = [...state.departure.seats, actions.payload];
     },
     addRouteId: (state, actions: PayloadAction<string>) => {
-      state.departure.route_direction_id = actions.payload; 
+      state.departure.route_direction_id = actions.payload;
     },
     removeSeatPassenger: (state, actions: PayloadAction<string>) => {
       state.departure.seats = state.departure.seats.filter((el) => el.coach_id !== actions.payload);
@@ -80,5 +81,7 @@ export const {
   clearOrderPassengers,
   clearOrderPayment
 } = sliceOrder.actions;
+
+export const sliceOrderState = (state: RootState) => state.sliceOrder
 
 export default sliceOrder.reducer;

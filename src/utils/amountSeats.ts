@@ -1,5 +1,5 @@
-import { AmountSeats } from './../interfaces/types';
-import { ISeatAvailable, ISeats } from './../interfaces/interfaces';
+import { AmountSeats } from '../types/types';
+import { ISeatAvailable, ISeats } from '../types/interfaces';
 
 export function amountSeats(amount: ISeatAvailable[], type: string): AmountSeats {
   let top = 0;
@@ -37,7 +37,7 @@ export function amountSeats(amount: ISeatAvailable[], type: string): AmountSeats
     if (type === 'second') {
       other = 32 - sum;
     };
-    
+
     if (type === 'third') {
       other = 48 - sum;
     };

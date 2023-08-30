@@ -1,4 +1,4 @@
-import { IItem } from './../interfaces/interfaces';
+import { IItem } from '../types/interfaces';
 
 export function sortingPrices(array: IItem[]): IItem[] {
   return [...array].sort((a, b) => a.min_price - b.min_price);

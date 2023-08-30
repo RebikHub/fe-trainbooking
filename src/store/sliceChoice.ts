@@ -1,5 +1,5 @@
 import { RootState } from '.';
-import { IIdName, IItem } from './../interfaces/interfaces';
+import { IIdName, IItem } from '../types/interfaces';
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type State = {

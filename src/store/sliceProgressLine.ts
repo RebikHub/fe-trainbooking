@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { RootState } from ".";
 
 type State = {
   stepOne: boolean,
@@ -45,5 +46,7 @@ export const {
   currentStepFour,
   clearStepAll
 } = sliceProgressLine.actions;
+
+export const sliceProgressLineState = (state: RootState) => state.sliceProgressLine;
 
 export default sliceProgressLine.reducer;

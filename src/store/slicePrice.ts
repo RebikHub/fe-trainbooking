@@ -1,6 +1,7 @@
-import { SIAgeTickets, SICoachSeat, SIChildTickets, SIPriceSeat, SIAmountTicket, ISeatsClass } from './../interfaces/interfaces';
+import { SIAgeTickets, SICoachSeat, SIChildTickets, SIPriceSeat, SIAmountTicket, ISeatsClass } from '../types/interfaces';
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { NumberIdCoach } from "../interfaces/types";
+import { NumberIdCoach } from "../types/types";
+import { RootState } from '.';
 
 type State = {
   firstClass: ISeatsClass,
@@ -244,7 +245,7 @@ export const slicePrice = createSlice({
       state.firstClass.seatsPriceChild = 0;
       state.firstClass.totalPrice = 0;
       state.firstClass.seatsNumber = [];
-      
+
       state.secondClass.seatsAge = 0;
       state.secondClass.seatsChild = 0;
       state.secondClass.amountTickets = 0;
@@ -300,5 +301,7 @@ export const {
   totalChoiceRoute,
   clearTotalPrice
 } = slicePrice.actions;
+
+export const slicePriceState = (state: RootState) => state.slicePrice;
 
 export default slicePrice.reducer;

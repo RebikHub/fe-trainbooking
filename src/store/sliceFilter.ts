@@ -1,5 +1,5 @@
-import { Filter, FilterSeats, StartEnd } from './../interfaces/types';
-import { IItem } from './../interfaces/interfaces';
+import { Filter, FilterSeats, StartEnd } from '../types/types';
+import { IItem } from '../types/interfaces';
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from '.';
 

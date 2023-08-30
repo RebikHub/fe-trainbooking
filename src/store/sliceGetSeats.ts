@@ -1,14 +1,11 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IGetStatus, ISeats } from "../interfaces/interfaces";
+import { IGetStatus, ISeats } from "../types/interfaces";
 import httpServices from "../services/httpApi";
+import { RootState } from ".";
 
 export const getSeatsThunk = createAsyncThunk('sliceGetSeats/getSeatsThunk', async (id: string) => {
-  try {
-    const response = await httpServices.getSeats(id);
-    return response.data;
-  } catch (error) {
-    return error;
-  };
+  const response = await httpServices.getSeats(id);
+  return response.data;
 });
 
 const initialState: IGetStatus<ISeats[]> = {
@@ -38,5 +35,7 @@ export const sliceGetSeats = createSlice({
       })
   }
 });
+
+export const sliceGetSeatsState = (state: RootState) => state.sliceGetSeats
 
 export default sliceGetSeats.reducer;

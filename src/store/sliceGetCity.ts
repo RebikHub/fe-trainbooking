@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { IGetStatus, IIdName } from "../interfaces/interfaces";
+import { IGetStatus, IIdName } from "../types/interfaces";
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import httpServices from "../services/httpApi";
 import { RootState } from ".";

@@ -1,14 +1,51 @@
-import { CurrentDate, Day, Weeks } from "../interfaces/types";
+import { Day, Weeks } from "../types/types";
+
+// function getCurrentDate(date: string): CurrentDate {
+//   const currentDate = new Date();
+//   const result: CurrentDate = {
+//     numDate: currentDate.getDate(),
+//     year: currentDate.getFullYear(),
+//     month: new Intl.DateTimeFormat('ru-RU', { month: 'long' }).format(),
+//     numberMonth: currentDate.getMonth(),
+//     choiceDate: (year, month, day) => new Intl.DateTimeFormat("ru").format(new Date(year, month, day)),
+//     nameMonth: (year, month) => new Intl.DateTimeFormat('ru-RU', { month: 'long' }).format(new Date(year, month))
+//   };
+
+//   if (date) {
+//     const splitDate = date.split('.');
+//     const dateForMonth = new Date(Number(splitDate[2]), Number(splitDate[1]) - 1, Number(splitDate[0]));
+//     result.numDate = +splitDate[0];
+//     result.year = +splitDate[2];
+//     result.month = new Intl.DateTimeFormat('ru-RU', { month: 'long' }).format(new Date(dateForMonth));
+//     result.numberMonth = Number(splitDate[1]) - 1;
+//   };
+
+//   return result;
+// };
+
+type CurrentDate = {
+  numDate: number;
+  year: number;
+  month: string;
+  numberMonth: number;
+  choiceDate: (year: number, month: number, day: number) => string;
+  nameMonth: (year: number, month: number) => string;
+};
 
 function getCurrentDate(date: string): CurrentDate {
   const currentDate = new Date();
+
+  const formatDate = (date: Date): string => {
+    return new Intl.DateTimeFormat('ru-RU', { month: 'long' }).format(date);
+  };
+
   const result: CurrentDate = {
     numDate: currentDate.getDate(),
     year: currentDate.getFullYear(),
-    month: new Intl.DateTimeFormat('ru-RU', { month: 'long'}).format(),
+    month: formatDate(currentDate),
     numberMonth: currentDate.getMonth(),
     choiceDate: (year, month, day) => new Intl.DateTimeFormat("ru").format(new Date(year, month, day)),
-    nameMonth: (year, month) => new Intl.DateTimeFormat('ru-RU', { month: 'long'}).format(new Date(year, month))
+    nameMonth: (year, month) => formatDate(new Date(year, month))
   };
 
   if (date) {
@@ -16,12 +53,13 @@ function getCurrentDate(date: string): CurrentDate {
     const dateForMonth = new Date(Number(splitDate[2]), Number(splitDate[1]) - 1, Number(splitDate[0]));
     result.numDate = +splitDate[0];
     result.year = +splitDate[2];
-    result.month = new Intl.DateTimeFormat('ru-RU', { month: 'long'}).format(new Date(dateForMonth));
+    result.month = formatDate(dateForMonth);
     result.numberMonth = Number(splitDate[1]) - 1;
-  };
+  }
 
   return result;
-};
+}
+
 
 function dayOfMonth(year: number, month: number): number[] {
   const date = new Date(year, month, 0);
@@ -130,7 +168,7 @@ function monthInWeeks(numberMonth: number): Weeks {
       weeks.fifth[i] = day;
     };
   };
-  
+
   for (let i = 0; i < 7; i++) {
     if (!weeks.sixth[i]) {
       count += 1;
@@ -145,4 +183,9 @@ function monthInWeeks(numberMonth: number): Weeks {
   return weeks;
 };
 
-export {getCurrentDate, monthInWeeks};
+function convertDate(date: string) {
+  const newDate = date.split('.').reverse().join('-')
+  return newDate
+}
+
+export { getCurrentDate, monthInWeeks, convertDate };

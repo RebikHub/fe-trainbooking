@@ -1,14 +1,11 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IPostStatus } from "../interfaces/interfaces";
+import { IPostStatus } from "../types/interfaces";
 import httpServices from "../services/httpApi";
+import { RootState } from ".";
 
 export const postSubscribeThunk = createAsyncThunk('slicePostSubscribe/postSubscribeThunk', async (subscribe: string) => {
-  try {
-    const response = await httpServices.postSubscribe(subscribe);
-    return response.data;
-  } catch (error) {
-    return error;
-  };
+  const response = await httpServices.postSubscribe(subscribe);
+  return response.data;
 });
 
 const initialState: IPostStatus = {
@@ -44,5 +41,7 @@ export const slicePostSubscribe = createSlice({
 export const {
   clearStatusSubscribe
 } = slicePostSubscribe.actions;
+
+export const slicePostSubscribeState = (state: RootState) => state.slicePostSubscribe
 
 export default slicePostSubscribe.reducer;

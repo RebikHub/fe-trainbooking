@@ -1,6 +1,6 @@
 import axios from "axios";
-import { ISearchRoute } from "../interfaces/interfaces";
-import { Order } from "../interfaces/types";
+import { ISearchRoute } from "../types/interfaces";
+import { Order } from "../types/types";
 
 const http = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
@@ -14,7 +14,7 @@ function getCities(city: string) {
 };
 
 function getRoutes(route: ISearchRoute) {
-  return http.get(`routes?from_city_id=${route.fromCity._id}&to_city_id=${route.toCity._id}`);
+  return http.get(`routes?from_city_id=${route.fromCity._id}&to_city_id=${route.toCity._id}&date_start=${route.fromDate}&date_end=${route.toDate}`);
 };
 
 function getLastRoutes() {

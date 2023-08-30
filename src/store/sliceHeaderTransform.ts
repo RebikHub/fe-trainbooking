@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { RootState } from ".";
 
 type State = {
   classSearch: string,
@@ -52,5 +53,7 @@ export const {
   transformHeaderToMain,
   transformHeaderSuccess
 } = sliceHeaderTransform.actions;
+
+export const sliceHeaderTransformState = (state: RootState) => state.sliceHeaderTransform
 
 export default sliceHeaderTransform.reducer;

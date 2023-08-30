@@ -1,7 +1,7 @@
 export function duration(time: number | undefined): string {
   if (time) {
-    const mins = Math.floor(time/60);
-    const hours = Math.floor(mins/60);
+    const mins = Math.floor(time / 60);
+    const hours = Math.floor(mins / 60);
     const min = mins - (hours * 60);
     return `${hours}:${min < 10 ? '0' + min : min}`;
   };
@@ -31,7 +31,6 @@ export function toDate(time: number | undefined): string {
 };
 
 export function dateForComparison(date: string): number {
-  console.log(date);
   const splitDate = date.split(".");
   const resultDate = new Date(Number(splitDate[2]), Number(splitDate[1]) - 1, Number(splitDate[0])).setDate(Number(splitDate[0]));
   return resultDate / 1000;

@@ -1,18 +1,11 @@
-import React, { StrictMode } from 'react';
+import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
-import { Provider } from 'react-redux';
-import { BrowserRouter, HashRouter } from 'react-router-dom';
-import { store } from './store';
-import './index.css';
+import './media/styles/index.css';
 import App from './App';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
   .render(
     <StrictMode>
-      <BrowserRouter>
-        <Provider store={store}>
-          <App />
-        </Provider>
-      </BrowserRouter>
+      <App />
     </StrictMode>
   );

@@ -1,14 +1,11 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IGetStatus, IRoute, ISearchRoute } from "../interfaces/interfaces";
+import { IGetStatus, IRoute, ISearchRoute } from "../types/interfaces";
 import httpServices from "../services/httpApi";
+import { RootState } from ".";
 
 export const getRouteThunk = createAsyncThunk('sliceGetCity/getRouteThunk', async (route: ISearchRoute) => {
-  try {
-    const response = await httpServices.getRoutes(route);
-    return response.data;
-  } catch (error) {
-    return error;
-  };
+  const response = await httpServices.getRoutes(route);
+  return response.data;
 });
 
 const initialState: IGetStatus<IRoute | null> = {
@@ -44,5 +41,7 @@ export const sliceGetRoute = createSlice({
 export const {
   clearRouteList
 } = sliceGetRoute.actions;
+
+export const sliceGetRouteState = (state: RootState) => state.sliceGetRoute
 
 export default sliceGetRoute.reducer;
