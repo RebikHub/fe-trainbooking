@@ -5,12 +5,11 @@ import { store } from "./store/index";
 
 
 export default function App() {
-
   return (
-    <Provider store={store}>
-      <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
+      <Provider store={store}>
         <AppRoutes />
-      </BrowserRouter>
-    </Provider >
+      </Provider >
+    </BrowserRouter>
   );
 };
