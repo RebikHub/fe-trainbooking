@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/fe-trainbooking/static/css/main.18e90cb1.css",
-    "main.js": "/fe-trainbooking/static/js/main.a150b697.js",
+    "main.js": "/fe-trainbooking/static/js/main.067135d0.js",
     "static/media/how.png": "/fe-trainbooking/static/media/how.b0986183eac04af1073e.png",
     "static/media/success.png": "/fe-trainbooking/static/media/success.55060ad193adc529cb91.png",
     "static/media/main-search.png": "/fe-trainbooking/static/media/main-search.7bcf03548dede83b9f48.png",
@@ -21,10 +21,10 @@
     "static/media/coach-first.png": "/fe-trainbooking/static/media/coach-first.5798c72692a4ce671cfa.png",
     "index.html": "/fe-trainbooking/index.html",
     "main.18e90cb1.css.map": "/fe-trainbooking/static/css/main.18e90cb1.css.map",
-    "main.a150b697.js.map": "/fe-trainbooking/static/js/main.a150b697.js.map"
+    "main.067135d0.js.map": "/fe-trainbooking/static/js/main.067135d0.js.map"
   },
   "entrypoints": [
     "static/css/main.18e90cb1.css",
-    "static/js/main.a150b697.js"
+    "static/js/main.067135d0.js"
   ]
 }
