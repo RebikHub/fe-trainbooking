@@ -11,7 +11,7 @@
   height: 100%;
   top: 0;
   left: 0;
-  background: url(../images/main.png);
+  background: url(../../media/images/main.png);
   background-repeat: no-repeat;
   background-size: cover;
   transform: matrix(-1, 0, 0, 1, 0, 0);
@@ -33,7 +33,7 @@
   height: 100%;
   top: 0;
   left: 0;
-  background: url(../images/success.png);
+  background: url(../../media/images/success.png);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -147,7 +147,7 @@
   height: 100%;
   top: 0;
   left: 0;
-  background-image: url(../images/main-search.png);
+  background-image: url(../../media/images/main-search.png);
   background-repeat: no-repeat;
   background-size: cover;
   opacity: 0.89;

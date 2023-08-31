@@ -40,7 +40,7 @@
   display: flex;
   width: 32px;
   height: 26px;
-  background-image: url(../images/Subtract.png);
+  background-image: url(../../media/images/Subtract.png);
   cursor: pointer;
   align-self: self-end;
 }
@@ -70,7 +70,7 @@
   display: flex;
   width: 20px;
   height: 20px;
-  background-image: url(../images/show-down.png);
+  background-image: url(../../media/images/show-down.png);
   cursor: pointer;
 }
 
@@ -167,7 +167,7 @@
   display: flex;
   width: 30px;
   height: 20px;
-  background-image: url(../images/dir-right.png);
+  background-image: url(../../media/images/dir-right.png);
   margin: auto;
 }
 
@@ -189,7 +189,7 @@
   display: flex;
   width: 26px;
   height: 26px;
-  background-image: url(../images/man.png);
+  background-image: url(../../media/images/man.png);
 }
 
 .pass-head-title {
@@ -207,16 +207,16 @@
   display: flex;
   width: 20px;
   height: 20px;
-  background-image: url(../images/show-down.png);
+  background-image: url(../../media/images/show-down.png);
   cursor: pointer;
 }
 
 .pass-head-open-down {
-  background-image: url(../images/show-down.png);
+  background-image: url(../../media/images/show-down.png);
 }
 
 .pass-head-open-up {
-  background-image: url(../images/show-up.png);
+  background-image: url(../../media/images/show-up.png);
 }
 
 .pass-amount-price {
@@ -259,7 +259,7 @@
   margin-left: 7px;
   width: 14px;
   height: 17px;
-  background-image: url(../images/sign.png);
+  background-image: url(../../media/images/sign.png);
   background-size: cover;
 }
 
@@ -299,7 +299,7 @@
   display: flex;
   width: 26px;
   height: 32px;
-  background-image: url(../images/total-sign.png);
+  background-image: url(../../media/images/total-sign.png);
   margin-left: 10px;
   align-self: center;
 }

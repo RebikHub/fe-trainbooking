@@ -55,7 +55,7 @@
   display: flex;
   width: 21px;
   height: 27px;
-  background-image: url(../images/sign.png);
+  background-image: url(../../media/images/sign.png);
   background-repeat: no-repeat;
   margin-left: 10px;
   align-self: center;
@@ -103,15 +103,15 @@
 }
 
 .desc-email-img {
-  background-image: url(../images/suc-email.png);
+  background-image: url(../../media/images/suc-email.png);
 }
 
 .desc-print-img {
-  background-image: url(../images/suc-print.png);
+  background-image: url(../../media/images/suc-print.png);
 }
 
 .desc-present-img {
-  background-image: url(../images/suc-present.png);
+  background-image: url(../../media/images/suc-present.png);
 }
 
 .suc-desc-email, .suc-desc-print, .suc-desc-present {

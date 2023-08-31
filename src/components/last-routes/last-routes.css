@@ -61,7 +61,7 @@
 .route-facilities {
   width: 92px;
   height: 20px;
-  background-image: url(../images/facilities.png);
+  background-image: url(../../media/images/facilities.png);
   align-self: center;
 }
 
@@ -93,5 +93,5 @@
 .sign-rub {
   width: 20px;
   height: 25px;
-  background-image: url(../images/sign.png);
+  background-image: url(../../media/images/sign.png);
 }

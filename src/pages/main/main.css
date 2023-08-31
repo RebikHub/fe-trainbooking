@@ -53,7 +53,7 @@
 .main-how {
   position: relative;
   height: 575px;
-  background-image: url(../images/how.png);
+  background-image: url(../../media/images/how.png);
   background-repeat: no-repeat;
   background-size: 100% auto;
   background-color: #D0984C;
@@ -139,13 +139,13 @@
 }
 
 .how-image-first {
-  background-image: url(../images/first.png);
+  background-image: url(../../media/images/first.png);
 }
 
 .how-image-second {
-  background-image: url(../images/second.png);
+  background-image: url(../../media/images/second.png);
 }
 
 .how-image-third {
-  background-image: url(../images/third.png);
+  background-image: url(../../media/images/third.png);
 }

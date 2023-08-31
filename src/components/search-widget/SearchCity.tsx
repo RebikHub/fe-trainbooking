@@ -3,8 +3,7 @@ import { IIdName } from '../../types/interfaces';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { choiceCityFrom, choiceCityTo, sliceChoiceState } from '../../store/sliceChoice';
 import { clearCities, getCityThunk, sliceGetCityState } from '../../store/sliceGetCity';
-import '../styles/search-widget.css';
-import '../styles/city.css';
+import './search-widget.css';
 import { SearchInputs } from '../../types/types';
 import { sliceHeaderTransformState } from '../../store/sliceHeaderTransform';
 

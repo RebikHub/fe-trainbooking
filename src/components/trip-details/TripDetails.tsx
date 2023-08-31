@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useAppSelector } from '../../store/hooks';
-import '../styles/details.css';
+import './details.css';
 import { dateFromAndTo, duration, toDate } from '../../utils/trainDate';
 import { sliceChoiceState } from '../../store/sliceChoice';
 import { slicePriceState } from '../../store/slicePrice';
@@ -45,7 +45,7 @@ export default function TripDetails() {
         <div className={hiddenThere}>
           <div className='there-train-number'>
             <h5 className='there-train-title'>№ Поезда</h5>
-            <p className='there-train-text'>{route?.departure.train._id}</p>
+            <p className='there-train-text'>{route?.departure.train._id.slice(0, 3)}</p>
           </div>
 
           <div className='there-train-name'>

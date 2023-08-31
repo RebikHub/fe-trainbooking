@@ -111,7 +111,7 @@
   margin-left: auto;
   background-repeat: no-repeat;
   background-position: center;
-  background-image: url(../images/left.png);
+  background-image: url(../../media/images/left.png);
 }
 
 .list-routes-page {
@@ -139,7 +139,7 @@
 }
 
 .list-routes-pages-next {
-  background-image: url(../images/right.png);
+  background-image: url(../../media/images/right.png);
   background-repeat: no-repeat;
   background-position: center;
 }

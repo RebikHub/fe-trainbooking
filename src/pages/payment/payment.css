@@ -138,7 +138,7 @@
 
 .method-check-input-ok {
   border: 1px solid #FFA800;
-  background-image: url(../images/ok.png);
+  background-image: url(../../media/images/ok.png);
   background-repeat: no-repeat;
   background-position: center;
 }

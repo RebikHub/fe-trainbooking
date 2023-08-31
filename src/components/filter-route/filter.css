@@ -43,7 +43,7 @@
   padding-left: 8px;
   border-radius: 3px;
   border: none;
-  background-image: url(../images/filter-calendar.png);
+  background-image: url(../../media/images/filter-calendar.png);
   background-repeat: no-repeat;
   background-position: center right 17px;
 }
@@ -88,27 +88,27 @@
 }
 
 .coupe-img {
-  background-image: url(../images/coupe.png);
+  background-image: url(../../media/images/coupe.png);
 }
 
 .reserved-seat-img {
-  background-image: url(../images/reserved.png);
+  background-image: url(../../media/images/reserved.png);
 }
 
 .seated-img {
-  background-image: url(../images/seated.png);
+  background-image: url(../../media/images/seated.png);
 }
 
 .lux-img {
-  background-image: url(../images/lux.png);
+  background-image: url(../../media/images/lux.png);
 }
 
 .wifi-img {
-  background-image: url(../images/wifi.png);
+  background-image: url(../../media/images/wifi.png);
 }
 
 .express-img {
-  background-image: url(../images/express.png);
+  background-image: url(../../media/images/express.png);
 }
 
 .check-element {
@@ -312,11 +312,11 @@
 }
 
 .filter-time-there-img {
-  background-image: url(../images/Subtract.png);
+  background-image: url(../../media/images/Subtract.png);
 }
 
 .filter-time-back-img {
-  background-image: url(../images/Subtract-back.png);
+  background-image: url(../../media/images/Subtract-back.png);
 }
 
 .filter-time-close-down, .filter-time-close-up {
@@ -329,11 +329,11 @@
 }
 
 .filter-time-close-up {
-  background-image: url(../images/show-down.png);
+  background-image: url(../../media/images/show-down.png);
 }
 
 .filter-time-close-down {
-  background-image: url(../images/show-up.png);
+  background-image: url(../../media/images/show-up.png);
 }
 
 .time-range-there {

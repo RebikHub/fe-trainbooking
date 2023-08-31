@@ -21,7 +21,7 @@
   height: 86px;
   border: 2px solid #FFFFFF;
   border-radius: 50%;
-  background-image: url(../images/train.png);
+  background-image: url(../../media/images/train.png);
   background-repeat: no-repeat;
   background-position: center;
 }
@@ -112,7 +112,7 @@
   margin-top: 10px;
   width: 30px;
   height: 20px;
-  background-image: url(../images/dir-right.png);
+  background-image: url(../../media/images/dir-right.png);
 }
 
 /* tickets-seats */
@@ -217,7 +217,7 @@
 .sign-rub {
   width: 20px;
   height: 25px;
-  background-image: url(../images/sign.png);
+  background-image: url(../../media/images/sign.png);
 }
 
 .train-facilities {
@@ -240,35 +240,35 @@
 .train-facilities-wifi {
   width: 24px;
   height: 20px;
-  background-image: url(../images/wifi.png);
+  background-image: url(../../media/images/wifi.png);
 }
 
 .train-facilities-express {
   width: 20px;
   height: 20px;
-  background-image: url(../images/express.png);
+  background-image: url(../../media/images/express.png);
 }
 
 .train-facilities-coffee {
   width: 20px;
   height: 20px;
-  background-image: url(../images/cup.png);
+  background-image: url(../../media/images/cup.png);
 }
 
 .facilities-wifi-have {
   width: 20px;
   height: 20px;
-  background-image: url(../images/have-wifi.png);
+  background-image: url(../../media/images/have-wifi.png);
 }
 .facilities-express-have {
   width: 22px;
   height: 20px;
-  background-image: url(../images/have-express.png);
+  background-image: url(../../media/images/have-express.png);
 }
 .facilities-coffee-have {
   width: 20px;
   height: 20px;
-  background-image: url(../images/have-cup.png);
+  background-image: url(../../media/images/have-cup.png);
 }
 
 .train-choice-btn {

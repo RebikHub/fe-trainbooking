@@ -35,13 +35,13 @@
 
 .choice-train-img-left {
   margin-right: 10px;
-  background-image: url(../images/Subtract-right.png);
+  background-image: url(../../media/images/Subtract-right.png);
 }
 
 .choice-train-img-right {
   margin-right: 10px;
   margin-left: auto;
-  background-image: url(../images/Subtract-left.png);
+  background-image: url(../../media/images/Subtract-left.png);
 }
 
 .choice-train-btn {
@@ -91,7 +91,7 @@
   display: flex;
   width: 30px;
   height: 30px;
-  background-image: url(../images/train-img.png);
+  background-image: url(../../media/images/train-img.png);
   margin: auto 27px auto 35px;
 }
 
@@ -169,7 +169,7 @@
   display: flex;
   width: 30px;
   height: 30px;
-  background-image: url(../images/time-img.png);
+  background-image: url(../../media/images/time-img.png);
   margin: 47px 10px 46px 35px;
 }
 
@@ -305,42 +305,42 @@
 
 .type-fourth-img {
   width: 31px;
-  background-image: url(../images/fourth.png);
+  background-image: url(../../media/images/fourth.png);
 }
 
 .type-third-img {
   width: 50px;
-  background-image: url(../images/third-class.png);
+  background-image: url(../../media/images/third-class.png);
 }
 
 .type-second-img {
   width: 50px;
-  background-image: url(../images/second-class.png);
+  background-image: url(../../media/images/second-class.png);
 }
 
 .type-first-img {
   width: 57px;
-  background-image: url(../images/first-class.png);
+  background-image: url(../../media/images/first-class.png);
 }
 
 .type-fourth-img-active {
   width: 31px;
-  background-image: url(../images/fourth-take.png);
+  background-image: url(../../media/images/fourth-take.png);
 }
 
 .type-third-img-active {
   width: 50px;
-  background-image: url(../images/third-take.png);
+  background-image: url(../../media/images/third-take.png);
 }
 
 .type-second-img-active {
   width: 50px;
-  background-image: url(../images/second-take.png);
+  background-image: url(../../media/images/second-take.png);
 }
 
 .type-first-img-active {
   width: 57px;
-  background-image: url(../images/first-take.png);
+  background-image: url(../../media/images/first-take.png);
 }
 
 .coaches-numbering {
@@ -497,13 +497,13 @@
 }
 
 .service-wifi-empty {
-  background-image: url(../images/wifi-black.png);
+  background-image: url(../../media/images/wifi-black.png);
   cursor: not-allowed;
   opacity: 0.3;
 }
 
 .service-linens-empty {
-  background-image: url(../images/linens-black.png);
+  background-image: url(../../media/images/linens-black.png);
   cursor: not-allowed;
   opacity: 0.3;
 }
@@ -519,39 +519,39 @@
 }
 
 .service-air {
-  background-image: url(../images/air-black.png);
+  background-image: url(../../media/images/air-black.png);
   cursor: not-allowed;
   opacity: 0.3;
 }
 
 .service-wifi {
-  background-image: url(../images/wifi-black.png);
+  background-image: url(../../media/images/wifi-black.png);
 }
 
 .service-linens {
-  background-image: url(../images/linens-black.png);
+  background-image: url(../../media/images/linens-black.png);
 }
 
 .service-coffee {
-  background-image: url(../images/cup-black.png);
+  background-image: url(../../media/images/cup-black.png);
   cursor: not-allowed;
   opacity: 0.3;
 }
 
 .service-air-selected {
-  background-image: url(../images/air-white.png);
+  background-image: url(../../media/images/air-white.png);
 }
 
 .service-wifi-selected {
-  background-image: url(../images/wifi-white.png);
+  background-image: url(../../media/images/wifi-white.png);
 }
 
 .service-linens-selected {
-  background-image: url(../images/linens-white.png);
+  background-image: url(../../media/images/linens-white.png);
 }
 
 .service-coffee-selected {
-  background-image: url(../images/cup-white.png);
+  background-image: url(../../media/images/cup-white.png);
 }
 
 .service-included {
@@ -617,19 +617,19 @@
 }
 
 .seats-info-first {
-  background-image: url(../images/coach-first.png);
+  background-image: url(../../media/images/coach-first.png);
 }
 
 .seats-info-second {
-  background-image: url(../images/coach-second.png);
+  background-image: url(../../media/images/coach-second.png);
 }
 
 .seats-info-third {
-  background-image: url(../images/coach-third.png);
+  background-image: url(../../media/images/coach-third.png);
 }
 
 .seats-info-fourth {
-  background-image: url(../images/coach-fourth.png);
+  background-image: url(../../media/images/coach-fourth.png);
 }
 
 .coach-button, .coach-button-disable {

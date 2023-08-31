@@ -20,7 +20,7 @@ export default function SearchProgress() {
   return (
     <div className='search-progress'>
       <div className='search-progress-line' style={{ width: `${line}%` }}></div>
-      <img className='search-progress-img' src={require('../images/loading.gif')} alt="" />
+      <img className='search-progress-img' src={require('../../media/images/loading.gif')} alt="" />
     </div>
   );
 };

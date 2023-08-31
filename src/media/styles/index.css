@@ -6,32 +6,32 @@
 
 @font-face {
   font-family: 'Roboto';
-  src: url(./media/fonts/Roboto-Regular.ttf);
+  src: url(../fonts/Roboto-Regular.ttf)
 }
 
 @font-face {
   font-family: 'Roboto-black';
-  src: url(./media/fonts/Roboto-Black.ttf);
+  src: url(../fonts/Roboto-Black.ttf);
 }
 
 @font-face {
   font-family: 'Roboto-light';
-  src: url(./media/fonts/Roboto-Light.ttf);
+  src: url(../fonts/Roboto-Light.ttf);
 }
 
 @font-face {
   font-family: 'Roboto-thin';
-  src: url(./media/fonts/Roboto-Thin.ttf);
+  src: url(../fonts/Roboto-Thin.ttf);
 }
 
 @font-face {
   font-family: 'Roboto-bold';
-  src: url(./media/fonts/Roboto-Bold.ttf);
+  src: url(../fonts/Roboto-Bold.ttf);
 }
 
 @font-face {
   font-family: 'Roboto-medium';
-  src: url(./media/fonts/Roboto-Medium.ttf);
+  src: url(../fonts/Roboto-Medium.ttf);
 }
 
 #root {

@@ -53,11 +53,11 @@
 }
 
 .prev-month {
-  background-image: url(../images/left.png);
+  background-image: url(../../media/images/left.png);
 }
 
 .next-month {
-  background-image: url(../images/right.png);
+  background-image: url(../../media/images/right.png);
 }
 
 .cal-month-text {

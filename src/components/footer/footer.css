@@ -43,19 +43,19 @@
 }
 
 .cont-phone::before {
-  background-image: url(../images/phone.png);
+  background-image: url(../../media/images/phone.png);
 }
 
 .cont-email::before {
-  background-image: url(../images/email.png);
+  background-image: url(../../media/images/email.png);
 }
 
 .cont-skype::before {
-  background-image: url(../images/skype.png);
+  background-image: url(../../media/images/skype.png);
 }
 
 .cont-address::before {
-  background-image: url(../images/vector.png);
+  background-image: url(../../media/images/vector.png);
 }
 
 .contacts-item {
@@ -183,47 +183,47 @@
 
 .link-youtube {
   width: 38px;
-  background-image: url(../images/youtube.png);
+  background-image: url(../../media/images/youtube.png);
 }
 
 .link-linkedin {
   width: 32px;
-  background-image: url(../images/linkedin.png);
+  background-image: url(../../media/images/linkedin.png);
 }
 
 .link-googleplus {
   width: 47px;
-  background-image: url(../images/gplus.png);
+  background-image: url(../../media/images/gplus.png);
 }
 
 .link-facebook {
   width: 14px;
-  background-image: url(../images/facebook.png);
+  background-image: url(../../media/images/facebook.png);
 }
 
 .link-twitter {
   width: 37px;
-  background-image: url(../images/twitter.png);
+  background-image: url(../../media/images/twitter.png);
 }
 
 .link-youtube:hover {
-  background-image: url(../images/hover-youtube.png);
+  background-image: url(../../media/images/hover-youtube.png);
 }
 
 .link-linkedin:hover {
-  background-image: url(../images/hover-linkedin.png);
+  background-image: url(../../media/images/hover-linkedin.png);
 }
 
 .link-googleplus:hover {
-  background-image: url(../images/hover-gplus.png);
+  background-image: url(../../media/images/hover-gplus.png);
 }
 
 .link-facebook:hover {
-  background-image: url(../images/hover-facebook.png);
+  background-image: url(../../media/images/hover-facebook.png);
 }
 
 .link-twitter:hover {
-  background-image: url(../images/hover-twitter.png);
+  background-image: url(../../media/images/hover-twitter.png);
 }
 
 .footer-line {
@@ -256,7 +256,7 @@
   width: 36px;
   height: 36px;
   margin: 25px 575px 35px 0;
-  background-image: url(../images/up.png);
+  background-image: url(../../media/images/up.png);
   cursor: pointer;
 }
 
